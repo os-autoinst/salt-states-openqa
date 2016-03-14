@@ -1,0 +1,36 @@
+Richards Scratchpad recording install steps on worker3/4 
+Anything not marked with a * needs to either be saltified or manually done on openqaworker1 and 2 first, then all workers
+
+Plan
+ - tune BIOS
+ - install Leap
+ - minimal install
+ - sane disk setup
+ - NVME used for pool and NFScache
+ - NFSv4 (cuz Ludwig says so)
+ - Install, configure salt
+ - Deploy the rest via salt
+
+Boot, F2 > BIOS > Intel RC > Set Pwr/Perf Profile to Virtualisation
+Install Leap
+Lang UK
+Removed all mess (/dev/md2 not read properly by libstorage in Leap..I hate the Infra JEOS image)
+Partition setup
+ - /dev/sda MSDOS
+  - /dev/sda1 1GB SWAP
+  - /dev/sda2 REST Linux RAID
+ - /dev/sdb MSDOS
+  - /dev/sdb1 1GB SWAP
+  - /dev/sdb2 REST Linux RAID
+ - /dev/md0 2GB RAID0 32 KiB chunk, swap
+ - /dev/md1 REST RAID1 btrfs /
+ - /dev/nvme0n1 MSDOS
+  - /dev/nvme0n1p1 - ext2 /var/lib/openqa/pool noatime, noacl, noxattr
+ - /dev/nvme1n1 MSDOS
+  - /dev/nvme1n1p1 - xfs /var/cache/fscache (no fancy settings, xattr needed by fscache)
+Desktop - Other - Minimal Server
+user - rbrown-local
+user - root, standard R&D rootpw
+Firewall disabled (default)
+SSH enabled (default)
+Save Autoyast (not default)
