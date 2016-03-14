@@ -11,7 +11,8 @@ Plan
  - Deploy the rest via salt
   - worker- Add Kernel Stable Repo & Install Kernel
   - Add openQA Repos 
-  - worker- Install worker Packages
+  - worker- Install worker Packages os-autoinst openqa-worker openqa-common
+  - worker- install qemu if needed
   - worker- Configure NFSv4 mount (suse workers -> openqa.suse.de)
   - worker- Configure FSCache/cacchefilesd service
   - worker- Configure workers.ini (suse workers -> openqa.suse.de)
@@ -48,3 +49,8 @@ user - root, standard R&D rootpw
 Firewall disabled (default)
 SSH enabled (default)
 Save Autoyast (not default)
+
+Reboot, horrific performance, md1_resyncing, KEEP AN EYE
+
+TODO - Serial Console, not redirecting to sol
+
