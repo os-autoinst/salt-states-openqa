@@ -10,7 +10,7 @@ worker-openqa.packages: # Packages that must come from the openQA repo
     - pkgs:
       - openQA-worker
       - xterm-console
-      - freeimpi
+      - freeipmi
     - fromrepo: openQA
 
 worker.packages: # Packages that can come from anywhere
