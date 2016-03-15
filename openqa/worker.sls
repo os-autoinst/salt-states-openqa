@@ -48,5 +48,7 @@ worker.packages: # Packages that can come from anywhere
     - sections:
       global:
         HOST: http://openqa.suse.de
+    - require:
+      - pkg: worker-openqa.packages
 
 
