@@ -47,7 +47,7 @@ worker.packages: # Packages that can come from anywhere
   ini.sections_present:
     - sections:
         global:
-          HOST: http://openqa.suse.de
+          HOST: http://{{ pillar['workerconf']['openqahost'] }}
     - require:
       - pkg: worker-openqa.packages
 
