@@ -54,3 +54,7 @@ Reboot, horrific performance, md1_resyncing, KEEP AN EYE
 
 TODO - Serial Console, not redirecting to sol
 
+openqa.suse.de - added autorefresh to SLE_12_NPI repo
+ installed salt-master from SLE_12_NPI
+ git clone https://gitlab.suse.de/openqa/salt-states-openqa.git /srv/salt
+ 
