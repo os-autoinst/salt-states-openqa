@@ -8,4 +8,4 @@ base:
   'openqaworker*':
     - sshd
 # sshd only here for testing, only screw up the new machines :)
-#    - openqa.worker
+    - openqa.worker

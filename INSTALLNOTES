@@ -14,7 +14,7 @@ Plan
   - worker- Install worker Packages os-autoinst openqa-worker openqa-common
   - worker- install qemu if needed
   - worker- Configure NFSv4 mount (suse workers -> openqa.suse.de)
-  - worker- Configure FSCache/cacchefilesd service
+######## NO  - worker- Configure FSCache/cacchefilesd service
   - worker- Configure workers.ini (suse workers -> openqa.suse.de)
   - worker- Configure client.conf (correct keys for suse/openSUSE)
   - worker- Configure worker services
