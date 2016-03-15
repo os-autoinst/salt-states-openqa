@@ -22,6 +22,7 @@ Plan
   - Configure local users
   - Configure ssh keys for local users
   - web- install openQA
+  - web- cron jobs?
  - Figure out regular salty stuff
   - salt 'openqaworker*' pkg.upgrade_available os-autoinst openqa-worker openqa-common
   - salt 'openqaworker*' pkg.upgrade
@@ -57,4 +58,12 @@ TODO - Serial Console, not redirecting to sol
 openqa.suse.de - added autorefresh to SLE_12_NPI repo
  installed salt-master from SLE_12_NPI
  git clone https://gitlab.suse.de/openqa/salt-states-openqa.git /srv/salt
- 
+ systemctl enable salt-master.service
+ systemctl start salt-master.service
+ systemctl status salt-master.service
+ echo "10.160.0.207 salt salt.openqa.suse.de" >> /etc/hosts
+ zypper in salt-minion
+ systemctl enable salt-minion
+ systemctl start salt-minion
+ salt-key -a openqa.suse.de
+ salt 'openqa.suse.de' state.highstate
