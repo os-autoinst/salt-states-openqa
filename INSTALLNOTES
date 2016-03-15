@@ -67,3 +67,5 @@ openqa.suse.de - added autorefresh to SLE_12_NPI repo
  systemctl start salt-minion
  salt-key -a openqa.suse.de
  salt 'openqa.suse.de' state.highstate
+ setup /srv/salt/.git/hooks/post-merge to log to /var/log/salt/githook_highstate.log
+
