@@ -5,6 +5,17 @@ openQA:
     - gpgcheck: 0
     - autorefresh: 1
 
+kernel_stable:
+  pkgrepo.managed:
+    - humanname: Kernel Stable
+    - baseurl: http://download.opensuse.org/repositories/Kernel:/stable/standard/
+    - gpgcheck: 0
+    - autorefresh: 1
+
+kernel-default:
+  pkg.installed:
+    - fromrepo: kernel_stable
+
 worker-openqa.packages: # Packages that must come from the openQA repo
   pkg.installed:
     - pkgs:
@@ -27,3 +38,5 @@ worker.packages: # Packages that can come from anywhere
     - opts: ro
     - require:
       - pkg: worker-openqa.packages
+
+
