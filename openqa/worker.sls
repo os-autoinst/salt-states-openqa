@@ -13,12 +13,12 @@ kernel_stable:
     - autorefresh: 1
 
 kernel-default:
-  pkg.installed:
+  pkg.latest:
     - refresh: 1
     - fromrepo: kernel_stable
 
 worker-openqa.packages: # Packages that must come from the openQA repo
-  pkg.installed:
+  pkg.latest:
     - refresh: 1
     - pkgs:
       - openQA-worker
@@ -27,7 +27,7 @@ worker-openqa.packages: # Packages that must come from the openQA repo
     - fromrepo: openQA
 
 worker.packages: # Packages that can come from anywhere
-  pkg.installed:
+  pkg.latest:
     - refresh: 1
     - pkgs:
       - xorg-x11-Xvnc
