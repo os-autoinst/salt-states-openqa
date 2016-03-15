@@ -34,7 +34,7 @@ sshd:
   file.append:
     - name: /etc/sudoers
     - template: jinja
-    - text:
+    - sources:
       - salt://sshd/sudoers.tmpl
 
 {% endfor %}
