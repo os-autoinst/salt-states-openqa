@@ -63,6 +63,6 @@ worker.packages: # Packages that can come from anywhere
 {% for i in range(pillar['workerconf'][grains['host']]['numofworkers']) %}
 openqa-worker@{{ i }}:
   service.running:
-    - enable: 1
+    - enable: True
 {% endfor %}
 
