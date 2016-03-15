@@ -44,10 +44,10 @@ worker.packages: # Packages that can come from anywhere
       - pkg: worker-openqa.packages
 
 /etc/openqa/workers.ini:
-  ini.options_present:
+  ini.sections_present:
     - sections:
-      global:
-        HOST: http://openqa.suse.de
+        global:
+          HOST: http://openqa.suse.de
     - require:
       - pkg: worker-openqa.packages
 
