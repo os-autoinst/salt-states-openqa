@@ -51,4 +51,12 @@ worker.packages: # Packages that can come from anywhere
     - require:
       - pkg: worker-openqa.packages
 
+/etc/openqa/client.conf:
+  ini.sections_present:
+    - sections:
+        openqa.suse.de:
+          key: {{ pillar[grains['host']]['client_key'] }}
+          secret: {{ pillar[grains['host']]['client_secret'] }}
+    - require:
+      - pkg: worker-openqa.packages
 
