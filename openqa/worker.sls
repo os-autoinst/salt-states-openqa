@@ -23,7 +23,7 @@ worker.packages: # Packages that can come from anywhere
 /var/lib/openqa/share:
   mount.mounted:
     - device: 'openqa.suse.de:/var/lib/openqa/share'
-    - fstype: nfs4
+    - fstype: nfs
     - opts: ro
     - require:
       - pkg: worker-openqa.packages
