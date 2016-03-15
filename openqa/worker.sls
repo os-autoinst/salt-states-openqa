@@ -15,7 +15,7 @@ kernel_stable:
 kernel-default:
   pkg.installed:
     - refresh: 1
-    - version: '>=4.5'
+    - version: '>=4.4' # needed to fool zypper into the vendor change
     - fromrepo: kernel_stable
 
 worker-openqa.packages: # Packages that must come from the openQA repo
@@ -42,5 +42,11 @@ worker.packages: # Packages that can come from anywhere
     - opts: ro
     - require:
       - pkg: worker-openqa.packages
+
+/etc/openqa/workers.ini
+  ini.options_present:
+    - sections:
+      global:
+        HOST: http://openqa.suse.de
 
 
