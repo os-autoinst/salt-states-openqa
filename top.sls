@@ -2,7 +2,7 @@ base:
   '*':
     - salt.minion
 #    - sshd
-  'openqa.suse.de'
+  'openqa.suse.de':
     - salt.master
 #    - openqa.server
 #  'openqaworker*'
