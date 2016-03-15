@@ -60,7 +60,7 @@ worker.packages: # Packages that can come from anywhere
     - require:
       - pkg: worker-openqa.packages
 
-{% for i in pillar['workerconf'][grains['host']]['numofworkers'] %}
+{% for i in xrange(1,pillar['workerconf'][grains['host']]['numofworkers']) %}
 openqa-worker@{{ i }}
   service.running:
     - enable: 1
