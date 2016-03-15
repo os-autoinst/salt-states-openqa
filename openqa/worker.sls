@@ -43,7 +43,7 @@ worker.packages: # Packages that can come from anywhere
     - require:
       - pkg: worker-openqa.packages
 
-/etc/openqa/workers.ini
+/etc/openqa/workers.ini:
   ini.options_present:
     - sections:
       global:
