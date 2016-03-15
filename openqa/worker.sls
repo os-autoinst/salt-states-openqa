@@ -55,8 +55,8 @@ worker.packages: # Packages that can come from anywhere
   ini.sections_present:
     - sections:
         openqa.suse.de:
-          key: {{ pillar['workerconf'][grains['host']]['client_key'] }}
-          secret: {{ pillar['workerconf'][grains['host']]['client_secret'] }}
+          key: {{ pillar[grains['host']]['client_key'] }}
+          secret: {{ pillar[grains['host']]['client_secret'] }}
     - require:
       - pkg: worker-openqa.packages
 
