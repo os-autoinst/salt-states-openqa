@@ -2,16 +2,14 @@ openQA:
   pkgrepo.managed:
     - humanname: openQA (Leap 42.1)
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.1/
-    - gpgcheck: 1
-    - gpgautoimport: 1
+    - gpgcheck: 0
     - autorefresh: 1
 
 kernel_stable:
   pkgrepo.managed:
     - humanname: Kernel Stable
     - baseurl: http://download.opensuse.org/repositories/Kernel:/stable/standard/
-    - gpgcheck: 1
-    - gpgautoimport: 1
+    - gpgcheck: 0
     - autorefresh: 1
 
 kernel-default:
