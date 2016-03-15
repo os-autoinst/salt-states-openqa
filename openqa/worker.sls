@@ -17,6 +17,7 @@ kernel_stable:
 kernel-default:
   pkg.installed:
     - refresh: 1
+    - version: '>=4.5'
     - fromrepo: kernel_stable
 
 worker-openqa.packages: # Packages that must come from the openQA repo
