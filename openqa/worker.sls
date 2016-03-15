@@ -37,7 +37,7 @@ worker.packages: # Packages that can come from anywhere
 
 /var/lib/openqa/share:
   mount.mounted:
-    - device: 'openqa.suse.de:/var/lib/openqa/share'
+    - device: '{{ pillar['workerconf']['openqahost'] }}:/var/lib/openqa/share'
     - fstype: nfs
     - opts: ro
     - require:
