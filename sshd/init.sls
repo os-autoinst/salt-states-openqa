@@ -33,8 +33,6 @@ sshd:
 
   file.append:
     - name: /etc/sudoers
-    - template: jinja
-    - sources:
-      - salt://sshd/sudoers.tmpl
+    - text: {{ details.get('name','') }} ALL=(ALL) NOPASSWD', 'ALL'
 
 {% endfor %}
