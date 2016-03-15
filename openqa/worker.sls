@@ -14,10 +14,12 @@ kernel_stable:
 
 kernel-default:
   pkg.installed:
+    - refresh: 1
     - fromrepo: kernel_stable
 
 worker-openqa.packages: # Packages that must come from the openQA repo
   pkg.installed:
+    - refresh: 1
     - pkgs:
       - openQA-worker
       - xterm-console
@@ -26,6 +28,7 @@ worker-openqa.packages: # Packages that must come from the openQA repo
 
 worker.packages: # Packages that can come from anywhere
   pkg.installed:
+    - refresh: 1
     - pkgs:
       - xorg-x11-Xvnc
       - qemu-ovmf-x86_64
