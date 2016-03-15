@@ -56,7 +56,7 @@ Reboot, horrific performance, md1_resyncing, KEEP AN EYE
 TODO - Serial Console, not redirecting to sol
 
 openqa.suse.de - added autorefresh to SLE_12_NPI repo
- installed salt-master from SLE_12_NPI
+ #installed salt-master from SLE_12_NPI
  git clone https://gitlab.suse.de/openqa/salt-states-openqa.git /srv/salt
  systemctl enable salt-master.service
  systemctl start salt-master.service
@@ -67,5 +67,17 @@ openqa.suse.de - added autorefresh to SLE_12_NPI repo
  systemctl start salt-minion
  salt-key -a openqa.suse.de
  salt 'openqa.suse.de' state.highstate
- setup /srv/salt/.git/hooks/post-merge to log to /var/log/salt/githook_highstate.log
+ #setup /srv/salt/.git/hooks/post-merge to log to /var/log/salt/githook_highstate.log
+ git clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git /srv/pillar
+ #setup /srv/pillar/.git/hooks/post-merge to log to /var/log/salt/githook_pillar.log
+ 
+workers
+ echo "10.160.0.207 salt salt.openqa.suse.de" >> /etc/hosts
+ zypper in salt-minion
+ zypper rm -u mariadb # not needed, pulled from recommends
+ systemctl enable salt-minion
+ systemctl start salt-minion
+ # on master, salt-key -a <hostname> then salt '*' state.highstate
+
+ 
 
