@@ -2,23 +2,25 @@ openQA:
   pkgrepo.managed:
     - humanname: openQA (Leap 42.1)
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.1/
-    - gpgcheck: 0
+    - gpgcheck: 1
+    - gpgautoimport: 1
     - autorefresh: 1
 
 kernel_stable:
   pkgrepo.managed:
     - humanname: Kernel Stable
     - baseurl: http://download.opensuse.org/repositories/Kernel:/stable/standard/
-    - gpgcheck: 0
+    - gpgcheck: 1
+    - gpgautoimport: 1
     - autorefresh: 1
 
 kernel-default:
-  pkg.latest:
+  pkg.installed:
     - refresh: 1
     - fromrepo: kernel_stable
 
 worker-openqa.packages: # Packages that must come from the openQA repo
-  pkg.latest:
+  pkg.installed:
     - refresh: 1
     - pkgs:
       - openQA-worker
@@ -27,7 +29,7 @@ worker-openqa.packages: # Packages that must come from the openQA repo
     - fromrepo: openQA
 
 worker.packages: # Packages that can come from anywhere
-  pkg.latest:
+  pkg.installed:
     - refresh: 1
     - pkgs:
       - xorg-x11-Xvnc
