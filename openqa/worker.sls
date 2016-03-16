@@ -42,7 +42,7 @@ worker.packages:
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT
-      - openvswitch # for TAP support
+      - openvswitch-switch # for TAP support
       - qemu: '>=2.3'
 
 # Ensure NFS share is mounted and setup on boot
