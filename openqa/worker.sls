@@ -65,5 +65,7 @@ worker.packages: # Packages that can come from anywhere
 openqa-worker@{{ i }}:
   service.running:
     - enable: True
+    - require:
+      - pkg: worker-openqa.packages
 {% endfor %}
 
