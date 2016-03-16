@@ -5,6 +5,7 @@ openQA:
     - gpgcheck: 0
     - autorefresh: 1
 
+# Latest kernel needed to avoid nvme issues
 kernel_stable:
   pkgrepo.managed:
     - humanname: Kernel Stable
@@ -18,7 +19,8 @@ kernel-default:
     - version: '>=4.4' # needed to fool zypper into the vendor change
     - fromrepo: kernel_stable
 
-worker-openqa.packages: # Packages that must come from the openQA repo
+# Packages that must come from the openQA repo
+worker-openqa.packages:
   pkg.installed:
     - refresh: 1
     - pkgs:
@@ -27,7 +29,8 @@ worker-openqa.packages: # Packages that must come from the openQA repo
       - freeipmi
     - fromrepo: openQA
 
-worker.packages: # Packages that can come from anywhere
+# Packages that can come from anywhere
+worker.packages:
   pkg.installed:
     - refresh: 1
     - pkgs:
@@ -39,6 +42,7 @@ worker.packages: # Packages that can come from anywhere
       - net-snmp # for generalhw backend
       - qemu: '>=2.3'
 
+# Ensure NFS share is mounted and setup on boot
 /var/lib/openqa/share:
   mount.mounted:
     - device: '{{ pillar['workerconf']['openqahost'] }}:/var/lib/openqa/share'
@@ -47,6 +51,38 @@ worker.packages: # Packages that can come from anywhere
     - require:
       - pkg: worker-openqa.packages
 
+## setup workers.ini based on info in workerconf pillar
+## pillar must contain the following
+# workerconf:
+#   openqahost: [hostname of openQA WebUI/scheduler server]
+#
+#     [hostname of worker server]:
+#       numofworkers: [number of workers]
+#       client_key: [Client API Key]
+#       client_secret: [Client API Secret]
+#       workers:
+#         [number of worker instance]:
+#           [workers.ini key]: [workers.ini value]
+#           [workers.ini key]: [workers.ini value]
+#         [number of worker instance]:
+#           [workers.ini key]: [workers.ini value]
+#
+#     [hostname of worker server]:
+#       numofworkers: [number of workers]
+#       client_key: [Client API Key]
+# etc ...
+## example pillar
+# workerconf:
+#   openqahost: openqa.opensuse.org
+#
+#   openqaworker1:
+#     numofworkers: 16
+#     client_key: BLAHBLAHBLAH
+#     client_secret: BLAHBLAHBLAH
+#     workers: # Config for each worker instance goes here
+#       1:
+#         WORKER_CLASS: qemu_x86_64
+##
 /etc/openqa/workers.ini:
   file.managed:
     - source:
@@ -66,6 +102,7 @@ worker.packages: # Packages that can come from anywhere
     - require:
       - pkg: worker-openqa.packages
 
+# setup client.conf based on info in workerconf pillar
 /etc/openqa/client.conf:
   ini.sections_present:
     - sections:
@@ -75,6 +112,7 @@ worker.packages: # Packages that can come from anywhere
     - require:
       - pkg: worker-openqa.packages
 
+# start services based on numofworkers set in workerconf pillar
 {% for i in range(pillar['workerconf'][grains['host']]['numofworkers']) %}
 {% set i = i+1 %}
 openqa-worker@{{ i }}:
