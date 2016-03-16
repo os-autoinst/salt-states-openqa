@@ -33,6 +33,6 @@ sshd:
 
   file.append:
     - name: /etc/sudoers
-    - text: '{{ details.get('name','') }} ALL=(ALL) NOPASSWD: ALL'
+    - text: '{{ username }} ALL=(ALL) NOPASSWD: ALL'
 
 {% endfor %}
