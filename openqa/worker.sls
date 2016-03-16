@@ -146,19 +146,25 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
 
 # Setup 10 old fashioned tap devices for use by slenkins and autoyast tests - deprecated, encorage move to TAPSCRIPT
 {% for i in range(10) %}
-/etc/wicked/ifconfig/tap{{ i }}.xml:
-  file.managed:
-    - user: root
-    - group: root
-    - mode: 644
-    - contents:
-      - <!-- /etc/wicked/ifconfig/tap{{ i }}.xml -->
-      - <interface>
-      -   <name>tap{{ i }}</name>
-      -   <tap>
-      -     <owner>_openqa-worker</owner>
-      -   </tap>
-      - </interface>
+tunctl -u _openqa-worker -p -t tap{{ i }}:
+  cmd.run:
+    - unless: ip a | grep -q 'tap{{ i }}:'
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
+## RICHARD HATES WICKED
+#/etc/wicked/ifconfig/tap{{ i }}.xml:
+#  file.managed:
+#    - user: root
+#    - group: root
+#    - mode: 644
+#    - contents:
+#      - <!-- /etc/wicked/ifconfig/tap{{ i }}.xml -->
+#      - <interface>
+#      -   <name>tap{{ i }}</name>
+#      -   <tap>
+#      -     <owner>_openqa-worker</owner>
+#      -   </tap>
+#      - </interface>
+#    - require:
+#      - pkg: worker-openqa.packages
 {% endfor %}
