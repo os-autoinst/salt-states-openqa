@@ -27,6 +27,7 @@ worker-openqa.packages:
       - openQA-worker
       - xterm-console
       - freeipmi
+      - os-autoinst-openvswitch
     - fromrepo: openQA
 
 # Packages that can come from anywhere
@@ -178,6 +179,7 @@ ovs-vsctl add-port br1 tap{{ i }} tag=999:
     - unless: ip a | grep -q 'tap{{ i }}:'
     - require:
       - service: openvswitch
+      - cmd: salt://openqa/ovs-bridge-setup.sh
 {% endfor %}
 
 # Configure os-autoinst-openvswitch bridge configuration file
@@ -197,6 +199,7 @@ os-autoinst-openvswitch:
     - enable: True
     - require:
       - file: /etc/sysconfig/os-autoinst-openvswitch
+      - pkg: worker-openqa.packages
 
 #TODO - setup openvswitch GRE tunnel between workers for slenkins and autoyast tests
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
