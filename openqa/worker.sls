@@ -31,8 +31,10 @@ worker.packages: # Packages that can come from anywhere
   pkg.installed:
     - refresh: 1
     - pkgs:
-      - xorg-x11-Xvnc
-      - qemu-ovmf-x86_64
+      - x3270 # for s390x backend
+      - icewm-lite # for localXvnc console
+      - xorg-x11-Xvnc # for localXvnc console
+      - qemu-ovmf-x86_64 # for UEFI
       - qemu: '>=2.3'
 
 /var/lib/openqa/share:
