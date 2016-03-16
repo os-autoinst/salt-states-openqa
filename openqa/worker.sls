@@ -41,6 +41,8 @@ worker.packages:
       - ipmitool # for ipmi backend and generalhw
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
+      - bridge-utils # for TAPSCRIPT
+      - tunctl # for TAP support
       - qemu: '>=2.3'
 
 # Ensure NFS share is mounted and setup on boot
@@ -142,3 +144,21 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
     - require:
       - pkg: worker.packages
 
+# Setup 10 old fashioned tap devices for use by slenkins and autoyast tests - deprecated, encorage move to TAPSCRIPT
+{% for i in range(10) %}
+/etc/wicked/ifconfig/tap{{ i }}.xml:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 644
+    - contents: |
+      <!-- /etc/wicked/ifconfig/tap{{ i }}.xml -->
+      <interface>
+        <name>tap{{ i }}</name>
+        <tap>
+          <owner>_openqa-worker</owner>
+        </tap>
+      </interface>
+    - require:
+      - pkg: worker-openqa.packages
+{% endfor %}
