@@ -35,6 +35,8 @@ worker.packages: # Packages that can come from anywhere
       - icewm-lite # for localXvnc console
       - xorg-x11-Xvnc # for localXvnc console
       - qemu-ovmf-x86_64 # for UEFI
+      - ipmitool # for ipmi backend and generalhw
+      - net-snmp # for generalhw backend
       - qemu: '>=2.3'
 
 /var/lib/openqa/share:
