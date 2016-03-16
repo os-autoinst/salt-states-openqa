@@ -136,7 +136,7 @@ apparmor:
     - enable: False
 
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability
-setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}
+setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
   cmd.run:
     - unless: getcap /usr/bin/qemu-system-{{ grains['osarch'] }} | grep -q 'cap_net_admin+ep'
     - require:
