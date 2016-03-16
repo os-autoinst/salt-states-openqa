@@ -151,14 +151,14 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
     - user: root
     - group: root
     - mode: 644
-    - contents: |
-      <!-- /etc/wicked/ifconfig/tap{{ i }}.xml -->
-      <interface>
-        <name>tap{{ i }}</name>
-        <tap>
-          <owner>_openqa-worker</owner>
-        </tap>
-      </interface>
+    - contents:
+      - <!-- /etc/wicked/ifconfig/tap{{ i }}.xml -->
+      - <interface>
+      -   <name>tap{{ i }}</name>
+      -   <tap>
+      -     <owner>_openqa-worker</owner>
+      -   </tap>
+      - </interface>
     - require:
       - pkg: worker-openqa.packages
 {% endfor %}
