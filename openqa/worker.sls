@@ -42,7 +42,7 @@ worker.packages:
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT
-      - tunctl # for TAP support
+      - openvswitch # for TAP support
       - qemu: '>=2.3'
 
 # Ensure NFS share is mounted and setup on boot
@@ -137,18 +137,69 @@ apparmor:
   service.dead:
     - enable: False
 
-# TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability
+# TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
 setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
   cmd.run:
     - unless: getcap /usr/bin/qemu-system-{{ grains['osarch'] }} | grep -q 'cap_net_admin+ep'
     - require:
       - pkg: worker.packages
 
-# Setup 10 old fashioned tap devices for use by slenkins and autoyast tests - deprecated, encorage move to TAPSCRIPT
+# slenkins and autoyast use Open vSwitch for it's tap devices and such
+openvswitch:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: worker.packages
+
+# Setup openvswitch bridge br1 used by slenkins and autoyast tests
+salt://openqa/ovs-bridge-setup.sh:
+  cmd.script:
+    - unless: ip a | grep -q 'br1:'
+    - require:
+      - service: openvswitch
+
+# Make openvswitch bridge br1 persistant
+/etc/sysconfig/network/ifcfg-br1:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 644
+    - content:
+      - BOOTPROTO='static'
+      - IPADDR='10.0.2.2/15'
+      - STARTMODE='auto'
+    - require:
+      - cmd: salt://openqa/ovs-bridge-setup.sh
+
+# Setup 10 openvswitch tap devices for use by slenkins and autoyast tests
 {% for i in range(10) %}
-tunctl -u _openqa-worker -p -t tap{{ i }}:
+ovs-vsctl add-port br1 tap{{ i }} tag=999:
   cmd.run:
     - unless: ip a | grep -q 'tap{{ i }}:'
     - require:
-      - pkg: worker.packages
+      - service: openvswitch
 {% endfor %}
+
+# Configure os-autoinst-openvswitch bridge configuration file
+/etc/sysconfig/os-autoinst-openvswitch:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 644
+    - content:
+      - OS_AUTOINST_USE_BRIDGE="br1"
+    - require:
+      - cmd: salt://openqa/ovs-bridge-setup.sh
+
+# Enable os-autoinst-openvswitch helper
+os-autoinst-openvswitch:
+  service.running:
+    - enable: True
+    - require:
+      - file: /etc/sysconfig/os-autoinst-openvswitch
+    - watch:
+      - file: /etc/sysconfig/os-autoinst-openvswitch
+
+#TODO - setup openvswitch GRE tunnel between workers for slenkins and autoyast tests
+# https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
+
