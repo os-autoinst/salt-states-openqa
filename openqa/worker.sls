@@ -197,8 +197,6 @@ os-autoinst-openvswitch:
     - enable: True
     - require:
       - file: /etc/sysconfig/os-autoinst-openvswitch
-    - watch:
-      - file: /etc/sysconfig/os-autoinst-openvswitch
 
 #TODO - setup openvswitch GRE tunnel between workers for slenkins and autoyast tests
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
