@@ -40,6 +40,7 @@ worker.packages:
       - qemu-ovmf-x86_64 # for UEFI
       - ipmitool # for ipmi backend and generalhw
       - net-snmp # for generalhw backend
+      - libcap-progs # for TAPSCRIPT
       - qemu: '>=2.3'
 
 # Ensure NFS share is mounted and setup on boot
@@ -133,4 +134,11 @@ SuSEfirewall2:
 apparmor:
   service.dead:
     - enable: False
+
+# TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability
+setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}
+  cmd.run:
+    - unless: getcap /usr/bin/qemu-system-{{ grains['osarch'] }} | grep -q 'cap_net_admin+ep'
+    - require:
+      - pkg: worker.packages
 
