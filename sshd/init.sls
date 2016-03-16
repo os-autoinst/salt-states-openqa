@@ -31,8 +31,10 @@ sshd:
       - user: {{ username }}
   {% endif %}
 
-  file.append:
-    - name: /etc/sudoers
-    - text: '{{ username }} ALL=(ALL) NOPASSWD: ALL'
+  file.managed:
+    - name: /etc/sudoers.d/{{ username }}
+    - mode: 600
+    - contents:
+      - '{{ username }} ALL=(ALL) NOPASSWD: ALL'
 
 {% endfor %}
