@@ -145,6 +145,8 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
     - require:
       - pkg: worker.packages
 
+#TODO - setup bridge and TAPSCRIPTS for Denis here
+
 # slenkins and autoyast use Open vSwitch for it's tap devices and such
 openvswitch:
   service.running:
@@ -189,9 +191,9 @@ ovs-vsctl add-port br1 tap{{ i }} tag=999:
     - group: root
     - mode: 644
     - content:
-      - OS_AUTOINST_USE_BRIDGE="br1"
+      - OS_AUTOINST_USE_BRIDGE='br1'
     - require:
-      - cmd: salt://openqa/ovs-bridge-setup.sh
+      - pkg: worker-openqa.packages
 
 # Enable os-autoinst-openvswitch helper
 os-autoinst-openvswitch:
