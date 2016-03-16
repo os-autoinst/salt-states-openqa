@@ -52,7 +52,8 @@ worker.packages: # Packages that can come from anywhere
         {% set workerhost = grains['host'] %}
         {% set workerdict = pillar.get('workerconf', {})[workerhost]['workers'] %}
         {% for workerid, details in workerdict.items() %}
-        {{ str(workerid) }}:
+        {% workerid = str(workerid) %}
+        {{ workerid }}:
           {{ details }}
         {% endfor %}
     - require:
