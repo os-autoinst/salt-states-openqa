@@ -44,17 +44,21 @@ worker.packages: # Packages that can come from anywhere
       - pkg: worker-openqa.packages
 
 /etc/openqa/workers.ini:
-  ini.options_present:
-    - sections:
-        global:
-          HOST: http://{{ pillar['workerconf']['openqahost'] }}
-          WORKER_HOSTNAME: {{ grains['fqdn_ip4'][0] }}
-        {% set workerhost = grains['host'] %}
-        {% set workerdict = pillar.get('workerconf', {})[workerhost]['workers'] %}
-        {% for workerid, details in workerdict.items() %}
-        {{ workerid|string }}:
-          {{ details }}
-        {% endfor %}
+  file.managed:
+    - source:
+      - salt://openqa/workers.ini
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 644
+    - defaults:
+      global:
+        HOST: http://{{ pillar['workerconf']['openqahost'] }}
+        WORKER_HOSTNAME: {{ grains['fqdn_ip4'][0] }}
+    - context:
+      {% set workerhost = grains['host'] %}
+      {% set workerdict = pillar.get('workerconf', {})[workerhost]['workers'] %}
+      workers: {{ workerdict }}
     - require:
       - pkg: worker-openqa.packages
 
