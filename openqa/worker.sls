@@ -78,5 +78,17 @@ openqa-worker@{{ i }}:
     - enable: True
     - require:
       - pkg: worker-openqa.packages
+    - watch:
+      - file: /etc/openqa/workers.ini
 {% endfor %}
+
+# os-autoinst needs to upload logs to rather random ports
+SuSEfirewall2:
+  service.dead:
+    - enable: False
+
+# os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
+apparmor:
+  service.dead:
+    - enable: False
 
