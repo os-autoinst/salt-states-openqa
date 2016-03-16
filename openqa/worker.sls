@@ -44,7 +44,7 @@ worker.packages: # Packages that can come from anywhere
       - pkg: worker-openqa.packages
 
 /etc/openqa/workers.ini:
-  ini.sections_present:
+  ini.options_present:
     - sections:
         global:
           HOST: http://{{ pillar['workerconf']['openqahost'] }}
