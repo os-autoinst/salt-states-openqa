@@ -178,7 +178,7 @@ salt://openqa/ovs-bridge-setup.sh:
 {% for i in range(10) %}
 ovs-vsctl add-port br1 tap{{ i }} tag=999:
   cmd.run:
-    - unless: ip a | grep -q 'tap{{ i }}:'
+    - unless: ovs-vsctl list-ports br1 | grep -q 'tap{{ i }}:'
     - require:
       - service: openvswitch
       - cmd: salt://openqa/ovs-bridge-setup.sh
@@ -190,8 +190,8 @@ ovs-vsctl add-port br1 tap{{ i }} tag=999:
     - user: root
     - group: root
     - mode: 644
-    - content:
-      - OS_AUTOINST_USE_BRIDGE='br1'
+    - content |
+        OS_AUTOINST_USE_BRIDGE='br1'
     - require:
       - pkg: worker-openqa.packages
 
