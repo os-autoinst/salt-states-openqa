@@ -48,7 +48,7 @@ worker.packages: # Packages that can come from anywhere
     - sections:
         global:
           HOST: http://{{ pillar['workerconf']['openqahost'] }}
-          WORKER_HOSTNAME: {{ grains['fqdn_ipv4'] }}
+          WORKER_HOSTNAME: {{ grains['fqdn_ip4'] }}
         {% set workerhost = grains['host'] %}
         {% set workerdict = pillar.get('workerconf', {})[workerhost]['workers'] %}
         {% for workerid, details in workerdict.items() %}
