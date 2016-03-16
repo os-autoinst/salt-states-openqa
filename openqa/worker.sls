@@ -167,7 +167,7 @@ salt://openqa/ovs-bridge-setup.sh:
     - user: root
     - group: root
     - mode: 644
-    - content:
+    - contents:
       - BOOTPROTO='static'
       - IPADDR='10.0.2.2/15'
       - STARTMODE='auto'
@@ -190,8 +190,8 @@ ovs-vsctl add-port br1 tap{{ i }} tag=999:
     - user: root
     - group: root
     - mode: 644
-    - content |
-        OS_AUTOINST_USE_BRIDGE='br1'
+    - contents:
+      - OS_AUTOINST_USE_BRIDGE='br1'
     - require:
       - pkg: worker-openqa.packages
 
