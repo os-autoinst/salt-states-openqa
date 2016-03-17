@@ -10,4 +10,4 @@ ovs-vsctl add-br br1
 ip addr add 10.0.2.2/15 dev br1
 ip route add 10.0.0.0/15 dev br1
 ip link set br1 up
-brctl addif br1 {{ pillar['workerconf'][grains['host']]['bridge_port'] }}
+#ovs-vsctl 
