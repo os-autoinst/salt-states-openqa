@@ -159,7 +159,7 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
 # brctl addbr br0
 # SETUP THE DAMN BRIDGE
 # ip link set br0 up
-# brctl addif br0 $$eth0
+# brctl addif br0 {{ pillar['workerconf'][grains['host']]['bridge_port'] }}
 
 # slenkins and autoyast use Open vSwitch for it's tap devices and such
 openvswitch:
@@ -171,7 +171,6 @@ openvswitch:
 # Setup openvswitch bridge br1 used by slenkins and autoyast tests. Requires bridge_port pillar in workerconf.sls for the host
 salt://openqa/ovs-bridge-setup.sh:
   cmd.script:
-    - template: jinja
     - unless: ip a | grep -q 'br1:'
     - require:
       - service: openvswitch
@@ -186,7 +185,6 @@ salt://openqa/ovs-bridge-setup.sh:
       - BOOTPROTO='static'
       - IPADDR='10.0.2.2/15'
       - STARTMODE='auto'
-      - BRIDGE_PORTS='{{ pillar['workerconf'][grains['host']]['bridge_port'] }}'
     - require:
       - cmd: salt://openqa/ovs-bridge-setup.sh
 
@@ -218,6 +216,7 @@ os-autoinst-openvswitch:
     - require:
       - file: /etc/sysconfig/os-autoinst-openvswitch
       - pkg: worker-openqa.packages
+
 
 #TODO - setup openvswitch GRE tunnel between workers for slenkins and autoyast tests
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
