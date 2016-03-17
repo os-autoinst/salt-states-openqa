@@ -44,6 +44,7 @@ worker.packages:
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT
       - openvswitch-switch # for TAP support
+      - SuSEfirewall2 # For TAP support and for other good reasons
       - qemu: '>=2.3'
 
 # Ensure NFS share is mounted and setup on boot
