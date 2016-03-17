@@ -128,10 +128,18 @@ openqa-worker@{{ i }}:
       - file: /etc/openqa/workers.ini
 {% endfor %}
 
-# os-autoinst needs to upload logs to rather random ports
+# Configure firewall and watch on SuSEfirewall2 conf change
 SuSEfirewall2:
-  service.dead:
-    - enable: False
+  service.running:
+    - enable: True
+    - watch:
+      - file: /etc/sysconfig/SuSEfirewall2
+
+# os-autoinst needs to upload logs to rather random ports and ovs needs configuration
+/etc/sysconfig/SuSEfirewall2:
+  file.managed:
+    - source: salt://openqa/SuSEfirewall2.conf
+
 
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
 apparmor:
