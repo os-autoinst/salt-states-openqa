@@ -141,7 +141,6 @@ SuSEfirewall2:
   file.managed:
     - source: salt://openqa/SuSEfirewall2.conf
 
-
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
 apparmor:
   service.dead:
@@ -155,6 +154,10 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
       - pkg: worker.packages
 
 #TODO - setup bridge and copy TAPSCRIPTS for Denis here
+# brctl addbr br0
+# SETUP THE DAMN BRIDGE
+# ip link set br0 up
+# brctl addif br0 $$eth0
 
 # slenkins and autoyast use Open vSwitch for it's tap devices and such
 openvswitch:
@@ -170,7 +173,7 @@ salt://openqa/ovs-bridge-setup.sh:
     - require:
       - service: openvswitch
 
-# Make openvswitch bridge br1 persistant
+# Make openvswitch bridge br1 persistant. Requires bridge_port pillar in workerconf.sls for the host
 /etc/sysconfig/network/ifcfg-br1:
   file.managed:
     - user: root
@@ -180,6 +183,7 @@ salt://openqa/ovs-bridge-setup.sh:
       - BOOTPROTO='static'
       - IPADDR='10.0.2.2/15'
       - STARTMODE='auto'
+      - BRIDGE_PORTS='{{ pillar['workerconf'][grains['host']]['bridge_port'] }}'
     - require:
       - cmd: salt://openqa/ovs-bridge-setup.sh
 
