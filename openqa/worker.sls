@@ -141,6 +141,7 @@ SuSEfirewall2:
 # os-autoinst needs to upload logs to rather random ports and ovs needs configuration
 /etc/sysconfig/SuSEfirewall2:
   file.managed:
+    - template: jinja
     - source: salt://openqa/SuSEfirewall2.conf
 
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that

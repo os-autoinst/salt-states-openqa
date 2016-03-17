@@ -73,8 +73,8 @@ openqa.suse.de - added autorefresh to SLE_12_NPI repo
  
 workers # Below script moved to autoyast.xml
  echo "10.160.0.207 salt salt.openqa.suse.de" >> /etc/hosts
- zypper in -n salt-minion
- zypper rm -n -u mariadb # not needed, pulled from recommends
+ zypper -n in salt-minion
+ zypper -n rm -u mariadb 
  systemctl enable salt-minion
  systemctl start salt-minion
  # on master, salt-key -a <hostname> then salt '*' state.highstate
