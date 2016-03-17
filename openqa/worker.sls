@@ -29,6 +29,8 @@ worker-openqa.packages:
       - freeipmi
       - os-autoinst-openvswitch
     - fromrepo: openQA
+    - require:
+      - pkg: kernel-default
 
 # Packages that can come from anywhere
 worker.packages:
@@ -46,6 +48,8 @@ worker.packages:
       - openvswitch-switch # for TAP support
       - SuSEfirewall2 # For TAP support and for other good reasons
       - qemu: '>=2.3'
+    - require:
+      - pkg: worker-openqa.packages
 
 # Ensure NFS share is mounted and setup on boot
 /var/lib/openqa/share:
