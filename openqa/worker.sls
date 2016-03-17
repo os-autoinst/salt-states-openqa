@@ -135,6 +135,8 @@ SuSEfirewall2:
     - enable: True
     - watch:
       - file: /etc/sysconfig/SuSEfirewall2
+    - require:
+      - pkg: worker.packages
 
 # os-autoinst needs to upload logs to rather random ports and ovs needs configuration
 /etc/sysconfig/SuSEfirewall2:

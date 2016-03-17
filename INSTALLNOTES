@@ -80,7 +80,7 @@ workers # Below script moved to autoyast.xml
  # on master, salt-key -a <hostname> then salt '*' state.highstate
  
 Reinstall workers using autoyast
-ifcfg=*=dhcp autoyast=https://openqa.suse.de/assets/tmp/autoinst.xml ssh=1 sshpassword=linux console=tty0 console=ttyS1,115200
+ifcfg=*=dhcp autoyast=https://openqa.suse.de/assets/tmp/autoinst.xml console=tty0 console=ttyS1,115200
 
  
 
