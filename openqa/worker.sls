@@ -42,7 +42,7 @@ worker.packages:
       - ipmitool # for ipmi backend and generalhw
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
-      - bridge-utils # for TAPSCRIPT
+      - bridge-utils # for TAPSCRIPT and TAP support
       - openvswitch-switch # for TAP support
       - SuSEfirewall2 # For TAP support and for other good reasons
       - qemu: '>=2.3'
@@ -166,9 +166,10 @@ openvswitch:
     - require:
       - pkg: worker.packages
 
-# Setup openvswitch bridge br1 used by slenkins and autoyast tests
+# Setup openvswitch bridge br1 used by slenkins and autoyast tests. Requires bridge_port pillar in workerconf.sls for the host
 salt://openqa/ovs-bridge-setup.sh:
   cmd.script:
+    - template: jinja
     - unless: ip a | grep -q 'br1:'
     - require:
       - service: openvswitch
