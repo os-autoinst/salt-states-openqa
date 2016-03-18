@@ -106,7 +106,7 @@ worker.packages:
         WORKER_HOSTNAME: {{ grains['fqdn_ip4'][0] }}
     - context:
       {% set workerhost = grains['host'] %}
-      {% set workerdict = pillar.get('workerconf', {})[workerhost]['workers'] %}
+      {% set workerdict = pillar.get('workerconf', {})[workerhost].get('workers', {}) %}
       workers: {{ workerdict }}
     - require:
       - pkg: worker-openqa.packages
