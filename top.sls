@@ -5,6 +5,12 @@ base:
   'openqa.suse.de':
     - salt.master
 #    - openqa.server
+  'openqaworker2.suse.de':
+    - openqa.bond0
+  'openqaworker3.suse.de':
+    - openqa.bond0
+  'openqaworker4.suse.de':
+    - openqa.bond0
   'openqaworker*':
     - openqa.worker
     - openqa.scripts
