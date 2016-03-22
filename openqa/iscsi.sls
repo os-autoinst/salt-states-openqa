@@ -1,23 +1,30 @@
-openQA:
-  pkgrepo.managed:
-    - humanname: openQA (Leap 42.1)
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.1/
-    - gpgcheck: 0
-    - autorefresh: 1
+# iSCSI setup for openqaworker - currently only supports openqaworker2
 
-# Latest kernel needed to avoid nvme issues
-kernel_stable:
-  pkgrepo.managed:
-    - humanname: Kernel Stable
-    - baseurl: http://download.opensuse.org/repositories/Kernel:/stable/standard/
-    - gpgcheck: 0
-    - autorefresh: 1
-
-kernel-default:
+# Install iscsi target package
+tgt:
   pkg.installed:
     - refresh: 1
-    - version: '>=4.4' # needed to fool zypper into the vendor change
-    - fromrepo: kernel_stable
+
+# Configure iscsi target service
+tgtd:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: tgt
+
+# Create openqa-iscsi-disk file if it doesn't exist
+dd if=/dev/zero of=/opt/openqa-iscsi-disk seek=1M bs=20480 count=1:
+  cmd.run:
+    - creates: /opt/openqa-iscsi-disk
+    - require:
+      - pkg: tgt
+
+salt://openqa/iscsi-target-setup.sh:
+  cmd.script:
+    - creates: /etc/tgt/conf.d/openqa-scsi-target.conf
+    - require:
+      - cmd: dd if=/dev/zero of=/opt/openqa-iscsi-disk seek=1M bs=20480 count=1
+
 
 # Packages that must come from the openQA repo
 worker-openqa.packages:
@@ -160,6 +167,12 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
     - require:
       - pkg: worker.packages
 
+#TODO - setup bridge and copy TAPSCRIPTS for Denis here
+# brctl addbr br0
+# SETUP THE DAMN BRIDGE
+# ip link set br0 up
+# brctl addif br0 {{ pillar['workerconf'][grains['host']]['bridge_port'] }}
+
 # slenkins and autoyast use Open vSwitch for it's tap devices and such
 openvswitch:
   service.running:
@@ -215,6 +228,7 @@ os-autoinst-openvswitch:
     - require:
       - file: /etc/sysconfig/os-autoinst-openvswitch
       - pkg: worker-openqa.packages
+
 
 #TODO - setup openvswitch GRE tunnel between workers for slenkins and autoyast tests
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc

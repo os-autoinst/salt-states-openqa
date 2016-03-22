@@ -7,6 +7,7 @@ base:
 #    - openqa.server
   'openqaworker2.suse.de':
     - openqa.bond0
+    - openqa.iscsi
   'openqaworker3.suse.de':
     - openqa.bond0
   'openqaworker4.suse.de':
