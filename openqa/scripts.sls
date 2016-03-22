@@ -19,10 +19,10 @@
       file.managed:
         - mode: 755
         - contents:  |
-          #!bin/sh
-          
-          sudo brctl addif br{{ i }} $1
-          sudo ip link set $1 up
+           #!bin/sh
+           
+           sudo brctl addif br{{ i }} $1
+           sudo ip link set $1 up
 
 {% endfor %}
 
