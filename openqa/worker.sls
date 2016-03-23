@@ -165,13 +165,14 @@ openvswitch:
   service.running:
     - enable: True
     - watch:
-      - file: /etc/systemd/system/openvswitch.service
+      - file: /etc/systemd/system/openvswitch.service.d/10-wicked.conf
     - require:
-      - file: /etc/systemd/system/openvswitch.service
+      - file: /etc/systemd/system/openvswitch.service.d/10-wicked.conf
 
 # openvswitch needs to start before the network as documented https://en.opensuse.org/Portal:Wicked/OpenvSwitch
-/etc/systemd/system/openvswitch.service:
+/etc/systemd/system/openvswitch.service.d/10-wicked.conf:
   file.managed:
+    - makedirs: True
     - contents:
       - [Unit]
       - Before=network.service
