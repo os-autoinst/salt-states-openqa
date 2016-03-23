@@ -177,14 +177,7 @@ openvswitch:
     - require:
       - pkg: worker.packages
 
-# Setup openvswitch bridge br1 used by slenkins and autoyast tests. Requires bridge_port pillar in workerconf.sls for the host
-salt://openqa/ovs-bridge-setup.sh:
-  cmd.script:
-    - unless: ip a | grep -q 'br1:'
-    - require:
-      - service: openvswitch
-
-# Make openvswitch bridge br1 persistant. Requires bridge_port pillar in workerconf.sls for the host
+# Make openvswitch bridge br1 persistant
 /etc/sysconfig/network/ifcfg-br1:
   file.managed:
     - user: root
@@ -195,17 +188,7 @@ salt://openqa/ovs-bridge-setup.sh:
       - IPADDR='10.0.2.2/15'
       - STARTMODE='auto'
     - require:
-      - cmd: salt://openqa/ovs-bridge-setup.sh
-
-# Setup 10 openvswitch tap devices for use by slenkins and autoyast tests
-{% for i in range(10) %}
-ovs-vsctl add-port br1 tap{{ i }} tag=999:
-  cmd.run:
-    - unless: ovs-vsctl list-ports br1 | grep -q 'tap{{ i }}$'
-    - require:
-      - service: openvswitch
-      - cmd: salt://openqa/ovs-bridge-setup.sh
-{% endfor %}
+      - pkg: worker-openqa.packages
 
 # Configure os-autoinst-openvswitch bridge configuration file
 /etc/sysconfig/os-autoinst-openvswitch:
@@ -224,7 +207,7 @@ os-autoinst-openvswitch:
     - enable: True
     - require:
       - file: /etc/sysconfig/os-autoinst-openvswitch
-      - pkg: worker-openqa.packages
+      - file: /etc/sysconfig/network/ifcfg-br1
 
 #TODO - setup openvswitch GRE tunnel between workers for slenkins and autoyast tests
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
