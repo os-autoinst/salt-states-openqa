@@ -14,7 +14,7 @@ tgtd:
 
 /usr/share/qemu/ipxe.lkrn:
   file.managed:
-    - source
+    - source:
       - salt://openqa/ipxe.lkrn
 
 # Create openqa-iscsi-disk file if it doesn't exist
