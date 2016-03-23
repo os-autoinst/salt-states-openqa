@@ -173,10 +173,10 @@ openvswitch:
 /etc/systemd/system/openvswitch.service.d/10-wicked.conf:
   file.managed:
     - makedirs: True
-    - contents:
-      - [Unit]
-      - Before=network.service
-      - After=syslog.target
+    - contents:  |
+       [Unit]
+       Before=network.service
+       After=syslog.target
     - require:
       - pkg: worker.packages
 
