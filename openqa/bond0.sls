@@ -64,6 +64,8 @@ wicked ifup br0:
       - file: /etc/sysconfig/network/ifcfg-br0 # if br1 config changes, ifup it
     - require:
       - file: /etc/sysconfig/network/ifcfg-bond0 # bond needs to be there before you can use bridge with it
+      - file: /etc/sysconfig/network/ifcfg-eth0 # don't ifup the bond if old configs lying around
+      - file: /etc/sysconfig/network/ifcfg-eth1 # don't ifup the bond if old configs lying around
       
 wicked ifup br2:
   cmd.wait:
@@ -74,14 +76,6 @@ wicked ifup br3:
   cmd.wait:
     - watch:
       - file: /etc/sysconfig/network/ifcfg-br0 # if br3 config changes, ifup it
-
-wicked ifup bond0:
-  cmd.wait:
-    - watch:
-      - file: /etc/sysconfig/network/ifcfg-bond0 # if bond config changes, ifup it
-    - require:
-      - file: /etc/sysconfig/network/ifcfg-eth0 # don't ifup the bond if old configs lying around
-      - file: /etc/sysconfig/network/ifcfg-eth1 # don't ifup the bond if old configs lying around
 
 /etc/sysconfig/network/ifcfg-eth0:
   file.absent:
