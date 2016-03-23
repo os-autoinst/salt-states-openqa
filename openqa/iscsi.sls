@@ -12,6 +12,7 @@ tgtd:
     - require:
       - pkg: tgt
 
+# Coolo says we shouldn't do this - kernel should be packaged
 /usr/share/qemu/ipxe.lkrn:
   file.managed:
     - source:
