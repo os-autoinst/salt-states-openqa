@@ -164,6 +164,18 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
 openvswitch:
   service.running:
     - enable: True
+    - watch:
+      - file: /etc/systemd/system/openvswitch.service
+    - require:
+      - file: /etc/systemd/system/openvswitch.service
+
+# openvswitch needs to start before the network as documented https://en.opensuse.org/Portal:Wicked/OpenvSwitch
+/etc/systemd/system/openvswitch.service:
+  file.managed:
+    - contents:
+      - [Unit]
+      - Before=network.service
+      - After=syslog.target
     - require:
       - pkg: worker.packages
 
@@ -218,4 +230,5 @@ os-autoinst-openvswitch:
 
 #TODO - setup openvswitch GRE tunnel between workers for slenkins and autoyast tests
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
+
 
