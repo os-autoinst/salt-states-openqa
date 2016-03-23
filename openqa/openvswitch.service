@@ -1,0 +1,13 @@
+[Unit]
+Description=Open vSwitch
+Before=network.service
+After=syslog.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/init.d/openvswitch-switch start
+ExecStop=/etc/init.d/openvswitch-switch stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
