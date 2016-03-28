@@ -2,27 +2,27 @@ openQA:
   pkgrepo.managed:
     - humanname: openQA (Leap 42.1)
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.1/
-    - gpgcheck: 0
-    - autorefresh: 1
+    - gpgcheck: False
+    - autorefresh: True
 
 # Latest kernel needed to avoid nvme issues
 kernel_stable:
   pkgrepo.managed:
     - humanname: Kernel Stable
     - baseurl: http://download.opensuse.org/repositories/Kernel:/stable/standard/
-    - gpgcheck: 0
-    - autorefresh: 1
+    - gpgcheck: False
+    - autorefresh: True
 
 kernel-default:
   pkg.installed:
-    - refresh: 1
+    - refresh: True
     - version: '>=4.4' # needed to fool zypper into the vendor change
     - fromrepo: kernel_stable
 
 # Packages that must come from the openQA repo
 worker-openqa.packages:
   pkg.installed:
-    - refresh: 1
+    - refresh: True
     - pkgs:
       - openQA-worker
       - xterm-console
@@ -35,7 +35,7 @@ worker-openqa.packages:
 # Packages that can come from anywhere
 worker.packages:
   pkg.installed:
-    - refresh: 1
+    - refresh: True
     - pkgs:
       - x3270 # for s390x backend
       - icewm-lite # for localXvnc console
