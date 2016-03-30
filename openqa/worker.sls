@@ -210,7 +210,7 @@ openvswitch:
       - pkg: worker-openqa.packages
 
 # Configure tap devices for openvswitch
-{% for i in range(6) + range(64,70) + range(128,134) %}
+{% for i in [0,1,2,3,4,5,64,65,66,67,68,69,128,129,130,131,132,133] %}
 /etc/sysconfig/network/ifcfg-tap{{ i }}:
   ile.managed:
     - user: root
