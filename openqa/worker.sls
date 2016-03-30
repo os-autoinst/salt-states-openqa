@@ -3,7 +3,7 @@ openQA:
     - humanname: openQA (Leap 42.1)
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.1/
     - gpgcheck: False
-    - autorefresh: True
+    - refresh: True
 
 # Latest kernel needed to avoid nvme issues
 kernel_stable:
@@ -11,7 +11,7 @@ kernel_stable:
     - humanname: Kernel Stable
     - baseurl: http://download.opensuse.org/repositories/Kernel:/stable/standard/
     - gpgcheck: False
-    - autorefresh: True
+    - refresh: True
 
 kernel-default:
   pkg.installed:
