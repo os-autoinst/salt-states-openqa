@@ -160,6 +160,14 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
     - require:
       - pkg: worker.packages
 
+# TAPSCRIPT requires _openqa-worker to be able to sudo
+/etc/sudoers.d/_openqa-worker:
+  file.managed:
+    - mode: 600
+    - contents:
+      - '_openqa-worker ALL=(ALL) NOPASSWD: ALL'
+
+
 # slenkins and autoyast use Open vSwitch for it's tap devices and such
 openvswitch:
   service.running:
