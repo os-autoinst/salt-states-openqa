@@ -1,10 +1,20 @@
+{% if 'Tumbleweed' in grains['oscodename'] %}
+{% set opensuserepopath = "openSUSE_Tumbleweed" %}
+{% elif 'Leap' in grains['oscodename'] %}
+{% set opensuserepopath = "openSUSE_Leap_{{ grains['osrelease'] }}" %}
+{% elif 'Enterprise' in grains['oscodename'] %}
+{% set opensuserepopath = "SLE_12" %}
+{% else %}
+{% set opensuserepopath = "openSUSE_{{ grains['osrelease'] }}" %}
+{% endif %}
 openQA:
   pkgrepo.managed:
-    - humanname: openQA (Leap 42.1)
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.1/
+    - humanname: openQA ({{ opensuserepopath }})
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/{{ opensuserepopath }}/
     - gpgcheck: False
     - refresh: True
 
+{% if 'Leap' in grains['oscodename'] %}
 # Latest kernel needed to avoid nvme issues
 kernel_stable:
   pkgrepo.managed:
@@ -12,12 +22,15 @@ kernel_stable:
     - baseurl: http://download.opensuse.org/repositories/Kernel:/stable/standard/
     - gpgcheck: False
     - refresh: True
+{% endif %}
 
 kernel-default:
   pkg.installed:
     - refresh: True
     - version: '>=4.4' # needed to fool zypper into the vendor change
+    {% if 'Leap' in grains['oscodename'] %}
     - fromrepo: kernel_stable
+    {% endif %}
 
 # Packages that must come from the openQA repo
 worker-openqa.packages:
