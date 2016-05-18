@@ -53,6 +53,7 @@ worker.packages:
       - x3270 # for s390x backend
       - icewm-lite # for localXvnc console
       - xorg-x11-Xvnc # for localXvnc console
+      - xdotool # for ssh-x
       - qemu-ovmf-x86_64 # for UEFI
       - ipmitool # for ipmi backend and generalhw
       - net-snmp # for generalhw backend
