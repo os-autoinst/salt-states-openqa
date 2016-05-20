@@ -54,7 +54,7 @@ worker-openqa.packages:
     - require:
       - pkg: kernel-default
       {% if 'Enterprise' in grains['oscodename'] %}
-      - repo: openQA-modules
+      - pkgrepo: openQA-modules
       {% endif %}
 
 # Packages that can come from anywhere
