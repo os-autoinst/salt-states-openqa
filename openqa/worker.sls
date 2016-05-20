@@ -32,6 +32,15 @@ kernel-default:
     - fromrepo: kernel_stable
     {% endif %}
 
+{% if 'Enterprise' in grains['oscodename'] %}
+openQA-modules:
+  pkgrepo.managed:
+    - humanname: openQA Modules ({{ opensuserepopath }})
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/SLE-12/{{ opensuserepopath }}/
+    - gpgcheck: False
+    - refresh: True
+{% endif %}
+
 # Packages that must come from the openQA repo
 worker-openqa.packages:
   pkg.installed:
@@ -44,6 +53,9 @@ worker-openqa.packages:
     - fromrepo: openQA
     - require:
       - pkg: kernel-default
+      {% if 'Enterprise' in grains['oscodename'] %}
+      - repo: openQA-modules
+      {% endif %}
 
 # Packages that can come from anywhere
 worker.packages:
