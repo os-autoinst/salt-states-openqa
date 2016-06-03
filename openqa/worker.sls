@@ -80,7 +80,7 @@ worker.packages:
 # Ensure NFS share is mounted and setup on boot
 /var/lib/openqa/share:
   mount.mounted:
-    - device: '{{ pillar['workerconf']['openqahost'] }}:/var/lib/openqa/share'
+    - device: {{ pillar['workerconf']['nfspath'] }}
     - fstype: nfs
     - opts: ro
     - require:
