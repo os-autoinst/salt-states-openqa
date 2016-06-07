@@ -1,11 +1,13 @@
 {% if 'Tumbleweed' in grains['oscodename'] %}
 {% set opensuserepopath = "openSUSE_Tumbleweed" %}
 {% elif 'Leap' in grains['oscodename'] %}
-{% set opensuserepopath = "openSUSE_Leap_{{ grains['osrelease'] }}" %}
+{% set openqamodulesrepo = "Leap:/42.1" %}
+{% set opensuserepopath = "openSUSE_Leap_" + grains['osrelease'] %}
 {% elif 'Enterprise' in grains['oscodename'] %}
+{% set openqamodulesrepo = "SLE-12" %}
 {% set opensuserepopath = "SLE_12" %}
 {% else %}
-{% set opensuserepopath = "openSUSE_{{ grains['osrelease'] }}" %}
+{% set opensuserepopath = "openSUSE_" + grains['osrelease'] %}
 {% endif %}
 openQA:
   pkgrepo.managed:
@@ -32,11 +34,11 @@ kernel-default:
     - fromrepo: kernel_stable
     {% endif %}
 
-{% if 'Enterprise' in grains['oscodename'] %}
+{% if openqamodulesrepo %}
 openQA-modules:
   pkgrepo.managed:
     - humanname: openQA Modules ({{ opensuserepopath }})
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/SLE-12/{{ opensuserepopath }}/
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/{{ openqamodulesrepo }}/{{ opensuserepopath }}/
     - gpgcheck: False
     - refresh: True
 {% endif %}
