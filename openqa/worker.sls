@@ -76,6 +76,7 @@ worker.packages:
       - openvswitch-switch # for TAP support
       - SuSEfirewall2 # For TAP support and for other good reasons
       - qemu: '>=2.3'
+      - perl-XML-Writer # for virtualization tests
     - require:
       - pkg: worker-openqa.packages
 
