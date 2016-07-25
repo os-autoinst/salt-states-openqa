@@ -162,6 +162,12 @@ openqa-worker@{{ i }}:
       - file: /etc/openqa/workers.ini
 {% endfor %}
 
+openqa-worker.target:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: worker-openqa.packages
+
 # Configure firewall and watch on SuSEfirewall2 conf change
 SuSEfirewall2:
   service.running:
