@@ -5,7 +5,7 @@
 {% set opensuserepopath = "openSUSE_Leap_" + grains['osrelease'] %}
 {% elif 'Enterprise' in grains['oscodename'] %}
 {% set openqamodulesrepo = "SLE-12" %}
-{% set opensuserepopath = "SLE_12" %}
+{% set opensuserepopath = "SLE_12_SP1" %}
 {% else %}
 {% set opensuserepopath = "openSUSE_" + grains['osrelease'] %}
 {% endif %}
