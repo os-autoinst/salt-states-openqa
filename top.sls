@@ -19,4 +19,6 @@ base:
     - openqa.worker
     - openqa.scripts
     - openqa.iscsi
+  'openqaw2.qa.suse.de':
+    - openqa.tmpfs_pool
 
