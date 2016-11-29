@@ -208,16 +208,12 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
 openvswitch:
   service.running:
     - enable: True
-    - watch:
-      - file: /etc/systemd/system/openvswitch.service
     - require:
       - file: /etc/systemd/system/openvswitch.service
 
-# openvswitch needs to start before the network as documented https://en.opensuse.org/Portal:Wicked/OpenvSwitch
+# Remove old openvswitch systemd override
 /etc/systemd/system/openvswitch.service:
-  file.managed:
-    - source:
-      - salt://openqa/openvswitch.service
+  file.absent:
     - require:
       - pkg: worker.packages
 
