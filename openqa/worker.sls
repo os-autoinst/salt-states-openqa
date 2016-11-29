@@ -1,7 +1,7 @@
 {% if 'Tumbleweed' in grains['oscodename'] %}
 {% set opensuserepopath = "openSUSE_Tumbleweed" %}
 {% elif 'Leap' in grains['oscodename'] %}
-{% set openqamodulesrepo = "Leap:/42.1" %}
+{% set openqamodulesrepo = "Leap:/" + grains['osrelease'] %}
 {% set opensuserepopath = "openSUSE_Leap_" + grains['osrelease'] %}
 {% elif 'Enterprise' in grains['oscodename'] %}
 {% set openqamodulesrepo = "SLE-12" %}
@@ -16,7 +16,7 @@ openQA:
     - gpgcheck: False
     - refresh: True
 
-{% if 'Leap' in grains['oscodename'] %}
+{% if 'Leap 42.1' in grains['oscodename'] %}
 # Latest kernel needed to avoid nvme issues
 kernel_stable:
   pkgrepo.managed:
@@ -30,7 +30,7 @@ kernel-default:
   pkg.installed:
     - refresh: True
     - version: '>=4.4' # needed to fool zypper into the vendor change
-    {% if 'Leap' in grains['oscodename'] %}
+    {% if 'Leap 42.1' in grains['oscodename'] %}
     - fromrepo: kernel_stable
     {% endif %}
 
