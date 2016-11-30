@@ -143,7 +143,7 @@ worker.packages:
 
 # setup client.conf based on info in workerconf pillar
 /etc/openqa/client.conf:
-  ini.sections_present:
+  ini.options_present:
     - sections:
         {{ pillar['workerconf']['openqahost'] }}:
           key: {{ pillar['workerconf'][grains['host']]['client_key'] }}
