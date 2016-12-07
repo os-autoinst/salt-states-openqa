@@ -186,8 +186,7 @@ SuSEfirewall2:
 
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
 apparmor:
-  service.dead:
-    - enable: False
+  pkg.purged
 
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
 setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
