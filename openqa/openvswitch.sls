@@ -4,6 +4,13 @@ openvswitch:
     - enable: True
     - require:
       - file: /etc/systemd/system/openvswitch.service
+    - watch:
+      - file: /etc/sysconfig/network/ifcfg-br1
+
+wicked ifup br1:
+  cmd.wait:
+    - watch:
+      - file: /etc/sysconfig/network/ifcfg-br1
 
 # Remove old openvswitch systemd override
 /etc/systemd/system/openvswitch.service:
@@ -29,8 +36,9 @@ openvswitch:
       - IPADDR='10.0.2.2/15'
       - STARTMODE='auto'
       - OVS_BRIDGE='yes'
+      - COOLOTEST='1'
      {% for i in tapdevices %}
-      - OVS_BRIDGE_PORT_DEVICE_1='tap{{ i }}'
+      - OVS_BRIDGE_PORT_DEVICE_{{ i }}='tap{{ i }}'
      {% endfor %}
     - require:
       - pkg: worker-openqa.packages

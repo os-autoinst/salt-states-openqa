@@ -70,12 +70,12 @@ wicked ifup br0:
 wicked ifup br2:
   cmd.wait:
     - watch:
-      - file: /etc/sysconfig/network/ifcfg-br0 # if br2 config changes, ifup it
+      - file: /etc/sysconfig/network/ifcfg-br2 # if br2 config changes, ifup it
       
 wicked ifup br3:
   cmd.wait:
     - watch:
-      - file: /etc/sysconfig/network/ifcfg-br0 # if br3 config changes, ifup it
+      - file: /etc/sysconfig/network/ifcfg-br3 # if br3 config changes, ifup it
 
 /etc/sysconfig/network/ifcfg-eth0:
   file.absent:
