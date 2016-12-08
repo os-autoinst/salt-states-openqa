@@ -9,6 +9,7 @@ base:
     - openqa.bond0
   'openqaworker3.suse.de':
     - openqa.bond0
+    - openqa.openvswitch
   'openqaworker4.suse.de':
     - openqa.bond0
   'openqaworker*':
