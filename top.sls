@@ -18,4 +18,6 @@ base:
     - openqa.scripts
     - openqa.iscsi
     - openqa.tmpfs_pool
+  'malbec.arch.suse.de':
+    - openqa.worker
 

@@ -29,8 +29,8 @@ kernel_stable:
 kernel-default:
   pkg.installed:
     - refresh: True
-    - version: '>=4.4' # needed to fool zypper into the vendor change
     {% if 'Leap 42.1' in grains['oscodename'] %}
+    - version: '>=4.4' # needed to fool zypper into the vendor change
     - fromrepo: kernel_stable
     {% endif %}
 
@@ -50,7 +50,9 @@ worker-openqa.packages:
     - pkgs:
       - openQA-worker
       - xterm-console
+      {% if grains['osarch'] == 'x86_64' %}
       - freeipmi
+      {% endif %}
       - os-autoinst-openvswitch
     - fromrepo: openQA
     - require:
@@ -76,6 +78,12 @@ worker.packages:
       - openvswitch-switch # for TAP support
       - SuSEfirewall2 # For TAP support and for other good reasons
       - qemu: '>=2.3'
+      {% if grains['osarch'] == 'ppc64le' %}
+      - qemu-ppc
+      {% endif %}
+      {% if grains['osarch'] == 'aarch64' %}
+      - qemu-arm
+      {% endif %}
       - atop
       - perl-XML-Writer # for virtualization tests
     - require:
@@ -184,14 +192,24 @@ SuSEfirewall2:
     - template: jinja
     - source: salt://openqa/SuSEfirewall2.conf
 
+{% if grains['osarch'] == 'ppc64le' %}
+/usr/share/qemu/slof.bin:
+   file.managed:
+     - source: salt://ppc64/new_slof.bin
+{% endif %}
+
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
 apparmor:
   pkg.purged
 
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
-setcap cap_net_admin=ep /usr/bin/qemu-system-{{ grains['osarch'] }}:
+{% set qemu_arch=grains['osarch'] %}
+{% if qemu_arch == 'ppc64le' %}
+{% set qemu_arch = 'ppc64' %}
+{% endif %}
+setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
   cmd.run:
-    - unless: getcap /usr/bin/qemu-system-{{ grains['osarch'] }} | grep -q 'cap_net_admin+ep'
+    - unless: getcap /usr/bin/qemu-system-{{ qemu_arch }} | grep -q 'cap_net_admin+ep'
     - require:
       - pkg: worker.packages
 
