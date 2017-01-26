@@ -198,6 +198,12 @@ SuSEfirewall2:
      - source: salt://ppc64/new_slof.bin
 {% endif %}
 
+{% if grains['osarch'] == 'aarch64' %}
+/dev/raw1394:
+   file.symlink:
+     - target: /dev/null
+{% endif %}
+
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
 apparmor:
   pkg.purged
