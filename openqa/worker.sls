@@ -26,6 +26,16 @@ kernel_stable:
     - refresh: True
 {% endif %}
 
+{% if 'aarch64' in grains['aarch64'] and  'SP 2' in grains['oscodename']  %}
+Qemu-SP3:
+  pkgrepo.managed:
+    - humanname: QEMU-SP3
+    - baseurl: http://download.suse.de/ibs/Devel:/Virt:/SLE-12-SP3/SUSE_SLE-12-SP2_Update_standard/
+    - gpgcheck: False
+    - refresh: True
+    - priority: 98
+{% endif %}
+
 kernel-default:
   pkg.installed:
     - refresh: True
@@ -200,8 +210,11 @@ SuSEfirewall2:
 
 {% if grains['osarch'] == 'aarch64' %}
 /dev/raw1394:
-   file.symlink:
-     - target: /dev/null
+  file.symlink:
+    - target: /dev/null
+/usr/share/qemu/qemu-uefi-aarch64.bin:
+  file.managed:
+    - source: salt://aarch64/qemu-uefi-aarch64.bin
 {% endif %}
 
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
@@ -225,6 +238,3 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - mode: 600
     - contents:
       - '_openqa-worker ALL=(ALL) NOPASSWD: ALL'
-
-
-
