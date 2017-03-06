@@ -4,7 +4,7 @@ openQA:
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.2/
     - refresh: True
     - gpgcheck: False
-    
+
 openQA-perl-modules:
   pkgrepo.managed:
     - humanname: openQA-perl-modules (Leap 42.2)
@@ -25,8 +25,7 @@ server.packages:
         global:
           plugins: AMQP
         amqp:
-          # tmp server for first steps into AMQP world; maintained by dheidler
-          url: amqp://guest:guest@kazhua.suse.de:5672/
+          url: amqps://openqa:b45z45bz645tzrhwer@rabbit.suse.de:5671/
           topic_prefix: suse
     - require:
       - pkg: server.packages
