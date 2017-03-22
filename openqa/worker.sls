@@ -6,6 +6,9 @@
 {% elif 'Enterprise' in grains['oscodename'] %}
 {% set openqamodulesrepo = "SLE-12" %}
 {% set opensuserepopath = "SLE_12_SP1" %}
+{% elif 'aarch64' in grains['cpuarch'] %}
+{% set opensuserepopath = "SLE_12" %}
+{% set opensusemodulesrepo = "SLE_12_SP2" %}
 {% else %}
 {% set opensuserepopath = "openSUSE_" + grains['osrelease'] %}
 {% endif %}
@@ -26,15 +29,21 @@ kernel_stable:
     - refresh: True
 {% endif %}
 
-{% if 'aarch64' in grains['aarch64'] and  'SP 2' in grains['oscodename']  %}
-Qemu-SP3:
+{% if 'aarch64' in grains['osarch'] %}
+# Use sp3 QEMU for aarch64 since we won't salt overdrive2 for now.
+qemu_sp3:
   pkgrepo.managed:
-    - humanname: QEMU-SP3
+    - humanname: Qemu SP3
     - baseurl: http://download.suse.de/ibs/Devel:/Virt:/SLE-12-SP3/SUSE_SLE-12-SP2_Update_standard/
     - gpgcheck: False
     - refresh: True
-    - priority: 98
 {% endif %}
+
+qemu-arm:
+  pkg.installed:
+    - version: '>=2.8'
+    - refresh: True
+    - fromrepo: qemu_sp3
 
 kernel-default:
   pkg.installed:
@@ -92,7 +101,8 @@ worker.packages:
       - qemu-ppc
       {% endif %}
       {% if grains['osarch'] == 'aarch64' %}
-      - qemu-arm
+    - require:
+      - pkg: qemu-arm
       {% endif %}
       - atop
       - perl-XML-Writer # for virtualization tests
