@@ -6,6 +6,9 @@
 {% elif 'Enterprise' in grains['oscodename'] %}
 {% set openqamodulesrepo = "SLE-12" %}
 {% set opensuserepopath = "SLE_12_SP1" %}
+{% elif 'aarch64' in grains['cpuarch'] %}
+{% set opensuserepopath = "SLE_12" %}
+{% set opensusemodulesrepo = "SLE_12_SP2" %}
 {% else %}
 {% set opensuserepopath = "openSUSE_" + grains['osrelease'] %}
 {% endif %}
@@ -25,6 +28,22 @@ kernel_stable:
     - gpgcheck: False
     - refresh: True
 {% endif %}
+
+{% if 'aarch64' in grains['osarch'] %}
+# Use sp3 QEMU for aarch64 since we won't salt overdrive2 for now.
+qemu_sp3:
+  pkgrepo.managed:
+    - humanname: Qemu SP3
+    - baseurl: http://download.suse.de/ibs/Devel:/Virt:/SLE-12-SP3/SUSE_SLE-12-SP2_Update_standard/
+    - gpgcheck: False
+    - refresh: True
+{% endif %}
+
+qemu-arm:
+  pkg.installed:
+    - version: '>=2.8'
+    - refresh: True
+    - fromrepo: qemu_sp3
 
 kernel-default:
   pkg.installed:
@@ -82,7 +101,8 @@ worker.packages:
       - qemu-ppc
       {% endif %}
       {% if grains['osarch'] == 'aarch64' %}
-      - qemu-arm
+    - require:
+      - pkg: qemu-arm
       {% endif %}
       - atop
       - perl-XML-Writer # for virtualization tests
@@ -200,8 +220,11 @@ SuSEfirewall2:
 
 {% if grains['osarch'] == 'aarch64' %}
 /dev/raw1394:
-   file.symlink:
-     - target: /dev/null
+  file.symlink:
+    - target: /dev/null
+/usr/share/qemu/qemu-uefi-aarch64.bin:
+  file.managed:
+    - source: salt://aarch64/qemu-uefi-aarch64.bin
 {% endif %}
 
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
@@ -225,6 +248,3 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - mode: 600
     - contents:
       - '_openqa-worker ALL=(ALL) NOPASSWD: ALL'
-
-
-

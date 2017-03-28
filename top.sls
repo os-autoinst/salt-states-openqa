@@ -18,4 +18,8 @@ base:
     - openqa.tmpfs_pool
   'malbec.arch.suse.de':
     - openqa.worker
-
+  'openqaworker-arm-1.suse.de':
+    - openqa.scripts
+    - openqa.worker
+    - openqa.iscsi
+    - openqa.tmpfs_pool
