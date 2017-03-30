@@ -16,6 +16,8 @@ base:
     - openqa.scripts
     - openqa.iscsi
     - openqa.tmpfs_pool
+  'QA-Power8-5-kvm.qa.suse.de':
+    - openqa.worker
   'malbec.arch.suse.de':
     - openqa.worker
   'openqaworker-arm-1.suse.de':
