@@ -100,14 +100,13 @@ worker.packages:
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
       {% endif %}
-      {% if grains['osarch'] == 'aarch64' %}
-    - require:
-      - pkg: qemu-arm
-      {% endif %}
       - atop
       - perl-XML-Writer # for virtualization tests
     - require:
       - pkg: worker-openqa.packages
+{% if grains['osarch'] == 'aarch64' %}
+      - pkg: qemu-arm
+{% endif %}
 
 # Ensure NFS share is mounted and setup on boot
 /var/lib/openqa/share:
