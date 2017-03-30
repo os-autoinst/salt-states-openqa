@@ -37,13 +37,13 @@ qemu_sp3:
     - baseurl: http://download.suse.de/ibs/Devel:/Virt:/SLE-12-SP3/SUSE_SLE-12-SP2_Update_standard/
     - gpgcheck: False
     - refresh: True
-{% endif %}
 
 qemu-arm:
   pkg.installed:
     - version: '>=2.8'
     - refresh: True
     - fromrepo: qemu_sp3
+{% endif %}
 
 kernel-default:
   pkg.installed:
