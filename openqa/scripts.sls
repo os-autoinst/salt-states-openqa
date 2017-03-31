@@ -24,7 +24,7 @@
            sudo brctl addif br{{ i }} $1
            sudo ip link set $1 up
 
-    /etc/qemu-ifdown-{{ i }}:
+    /etc/qemu-ifdown-br{{ i }}:
       file.managed:
         - user: root
         - group: root
