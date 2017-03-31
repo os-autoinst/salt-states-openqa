@@ -7,7 +7,7 @@ base:
     - openqa.server
   'openqaworker3.suse.de':
     - openqa.openvswitch
-    - openqa.hacustombridges.sls
+    - openqa.hacustombridges
   'openqaworker*':
     - openqa.worker
     - openqa.scripts
