@@ -48,24 +48,4 @@ wicked ifup {{ i }}:
   cmd.wait:
     - watch:
       - file: /etc/sysconfig/network/ifcfg-{{ i }}
-
-/etc/qemu-ifdown-{{ i }}:
-  file.managed:
-    - user: root
-    - group: root
-    - mode: 755
-    - contents:
-      - #!/bin/sh
-      - sudo brctl delif {{ i }} $1
-      - sudo ip link delete $i
-
-/etc/qemu-ifup-{{ i }}:
-  file.managed:
-    - user: root
-    - group: root
-    - mode: 755
-    - contents:
-      - #!/bin/sh
-      - sudo brctl addif {{ i }} $1
-      - sudo ip link set $1 up
 {% endfor %}
