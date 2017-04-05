@@ -32,7 +32,7 @@
         - contents:  |
             #!/bin/sh
             sudo brctl delif br{{ i }} $1
-            sudo ip link delete $i
+            sudo ip link delete $1
 
 {% endfor %}
 
