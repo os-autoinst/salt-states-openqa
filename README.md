@@ -16,7 +16,7 @@ systemctl enable salt-minion
 systemctl start salt-minion
 
 pushd /srv/salt
-clone https://gitlab.suse.de/openqa/salt-states-openqa.git .
+git clone https://gitlab.suse.de/openqa/salt-states-openqa.git .
 sed -i -e "s/openqa.suse.de/$(hostname -f)/" top.sls
 popd
 
