@@ -230,10 +230,12 @@ SuSEfirewall2:
 apparmor:
   pkg.purged
 
-chattr +C /var/lib/openqa/cache:
+btrfs-nocow:
   cmd.run:
+    - name: chattr +C /var/lib/openqa/cache && touch /var/lib/openqa/cache/.nocow
     - creates:
       - /var/lib/openqa/cache/.nocow
+    - onlyif: which btrfs && btrfs filesystem df /var/lib/openqa/cache
 
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
 {% set qemu_arch=grains['osarch'] %}
