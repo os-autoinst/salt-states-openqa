@@ -230,6 +230,11 @@ SuSEfirewall2:
 apparmor:
   pkg.purged
 
+chattr +C /var/lib/openqa/cache:
+  cmd.run:
+    - creates:
+      - /var/lib/openqa/cache/.nocow
+
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
 {% set qemu_arch=grains['osarch'] %}
 {% if qemu_arch == 'ppc64le' %}
