@@ -21,7 +21,7 @@ base:
     - openqa.worker
   'malbec.arch.suse.de':
     - openqa.worker
-  'openqaworker-arm-1.suse.de':
+  'GONE-FOR-NOW-openqaworker-arm-1.suse.de':
     - openqa.scripts
     - openqa.worker
     - openqa.iscsi
