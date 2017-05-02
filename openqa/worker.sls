@@ -237,6 +237,20 @@ btrfs-nocow:
       - /var/lib/openqa/cache/.nocow
     - onlyif: which btrfs && btrfs filesystem df /var/lib/openqa/cache
 
+python-augeas:
+  pkg.installed
+
+grub-conf:
+  augeas.change:
+    - require:
+      - pkg: python-augeas
+    - lens: Shellvars.lns
+    - context: /files/etc/default/grub
+    - changes:
+      - set GRUB_TERMINAL '"serial console"'
+      - set GRUB_CMDLINE_LINUX_DEFAULT '"console=tty0 console=ttyS1,115200"'
+      - set GRUB_SERIAL_COMMAND '"serial --unit=1 --speed=115200"'
+
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
 {% set qemu_arch=grains['osarch'] %}
 {% if qemu_arch == 'ppc64le' %}
