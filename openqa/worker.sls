@@ -215,6 +215,7 @@ SuSEfirewall2:
 /usr/share/qemu/slof.bin:
    file.managed:
      - source: salt://ppc64/new_slof.bin
+     - source_hash: 86f680577aa3dedcb113550b1594c0e1
 {% endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
