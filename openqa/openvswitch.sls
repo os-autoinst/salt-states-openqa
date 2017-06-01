@@ -40,6 +40,9 @@ wicked ifup br1:
      {% for i in tapdevices %}
       - OVS_BRIDGE_PORT_DEVICE_{{ i }}='tap{{ i }}'
      {% endfor %}
+     {% if grains['host'] == 'openqaworker8' or grains['host'] == 'openqaworker9' %}
+      - PRE_UP_SCRIPT="wicked:gre_tunnel_preup.sh"
+     {% endif %}
     - require:
       - pkg: worker-openqa.packages
 
@@ -63,6 +66,25 @@ wicked ifup br1:
     - require:
       - pkg: worker-openqa.packages
 {% endfor %}
+
+{% if grains['host'] == 'openqaworker8' or grains['host'] == 'openqaworker9' %}
+/etc/wicked/scripts/gre_tunnel_preup.sh:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 744
+    - contents:
+      - '#!/bin/sh'
+      - action="$1"
+      - bridge="$2"
+      {% if grains['host'] == 'openqaworker8' %}
+      - REMOTE_IP="{{ salt['pillar.get']('workerconf:openqaworker9:bridge_ip') }}"
+      {% elif grains['host'] == 'openqaworker9' %}
+      - REMOTE_IP="{{ salt['pillar.get']('workerconf:openqaworker8:bridge_ip') }}"
+      {% endif %}
+      - ovs-vsctl --may-exist add-port $bridge gre1 -- set interface gre1 type=gre options:remote_ip=$REMOTE_IP
+{% endif %}
+
 
 # Configure os-autoinst-openvswitch bridge configuration file
 /etc/sysconfig/os-autoinst-openvswitch:

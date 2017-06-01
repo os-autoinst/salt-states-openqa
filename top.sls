@@ -8,6 +8,8 @@ base:
   'openqaworker3.suse.de':
     - openqa.openvswitch
     - openqa.hacustombridges
+  'openqaworker8.suse.de,openqaworker9.suse.de':
+    - openqa.openvswitch
   'openqaworker*':
     - openqa.worker
     - openqa.scripts
