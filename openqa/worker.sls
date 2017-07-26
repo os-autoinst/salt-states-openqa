@@ -120,31 +120,48 @@ worker.packages:
 ## setup workers.ini based on info in workerconf pillar
 ## pillar must contain the following
 # workerconf:
-#   openqahost: [hostname of openQA WebUI/scheduler server]
+#   available_webuis:
+#     [webui_public_facing]:
+#       testpoolurl: [rsync compatible path to grab tests webui_public_facing]
+#     [webui_dev]:
+#       testpoolurl: [rsync compatible path to grab tests from webui_dev]
 #
-#     [hostname of worker server]:
-#       numofworkers: [number of workers]
-#       client_key: [Client API Key]
-#       client_secret: [Client API Secret]
-#       workers:
-#         [number of worker instance]:
-#           [workers.ini key]: [workers.ini value]
-#           [workers.ini key]: [workers.ini value]
-#         [number of worker instance]:
-#           [workers.ini key]: [workers.ini value]
+#   [hostname of worker server]:
+#     numofworkers: [number of workers]
+#     client_key: [Client API Key]
+#     client_secret: [Client API Secret]
+#     webuis:
+#       [webui_public_facing]:
+#         key: [api key for this server]
+#         secret: [api secret for this server]
+#       […]
+#     workers:
+#       [number of worker instance]:
+#         [workers.ini key]: [workers.ini value]
+#         [workers.ini key]: [workers.ini value]
+#       [number of worker instance]:
+#         [workers.ini key]: [workers.ini value]
 #
-#     [hostname of worker server]:
-#       numofworkers: [number of workers]
-#       client_key: [Client API Key]
+#   [hostname of worker server]:
+#     numofworkers: [number of workers]
+#     webuis:
+#       [webui_public_facing]:
+#         key: [api key for this server]
+#         secret: [api secret for this server]
+#       [webui_dev]
 # etc ...
 ## example pillar
 # workerconf:
-#   openqahost: openqa.opensuse.org
+#   available_webuis:
+#     openqa.suse.de:
+#       testpoolurl: rsnyc://openqa.suse.de/tests
 #
 #   openqaworker1:
 #     numofworkers: 16
-#     client_key: BLAHBLAHBLAH
-#     client_secret: BLAHBLAHBLAH
+#     webuis:
+#       [openqa.suse.de]
+#         key: BLAHBLAHBLAH
+#         secret: BLAHBLAHBLAH
 #     workers: # Config for each worker instance goes here
 #       1:
 #         WORKER_CLASS: qemu_x86_64
@@ -159,12 +176,13 @@ worker.packages:
     - mode: 644
     - defaults:
       global:
-        HOST: http://{{ pillar['workerconf']['openqahost'] }}
         WORKER_HOSTNAME: {{ grains['fqdn_ip4'][0] }}
     - context:
       {% set workerhost = grains['host'] %}
       {% set workerdict = pillar.get('workerconf', {})[workerhost].get('workers', {}) %}
+      {% set webuidict = pillar.get('workerconf', {})[workerhost].get('webuis', {}) %}
       workers: {{ workerdict }}
+      webuis: {{ webuidict }}
     - require:
       - pkg: worker-openqa.packages
 
