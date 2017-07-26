@@ -181,6 +181,8 @@ worker.packages:
           key: {{ pillar['workerconf'][workerhost]['webuis'][webui]['key'] }}
           secret: {{ pillar['workerconf'][workerhost]['webuis'][webui]['secret'] }}
         {% endfor %}
+    - require:
+      - pkg: worker-openqa.packages
 
 # start services based on numofworkers set in workerconf pillar
 {% for i in range(pillar['workerconf'][grains['host']]['numofworkers']) %}
