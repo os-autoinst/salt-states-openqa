@@ -190,9 +190,15 @@ worker.packages:
 /etc/openqa/client.conf:
   ini.options_present:
     - sections:
-        {{ pillar['workerconf']['openqahost'] }}:
-          key: {{ pillar['workerconf'][grains['host']]['client_key'] }}
-          secret: {{ pillar['workerconf'][grains['host']]['client_secret'] }}
+        {% set workerhost = grains['host'] %}
+        {% set enabled_webuis = pillar.get('workerconf', {})[workerhost].get('webuis', {}) %}
+
+        {% for webui in enabled_webuis %}
+        {% set specific_key = pillar.get('workerconf', {})[workerhost].get('webuis', {}) %}
+        {{ webui }}:
+          key: {{ pillar['workerconf'][workerhost]['webuis'][webui]['key'] }}
+          secret: {{ pillar['workerconf'][workerhost]['webuis'][webui]['secret'] }}
+        {% endfor %}
     - require:
       - pkg: worker-openqa.packages
 
