@@ -42,6 +42,12 @@ server.packages:
       - pkg: server.packages
 
 /etc/openqa/database.ini:
+  ini.options_absent:
+    - sections:
+      production:
+        - on_connect_call
+        - on_connect_do
+        - sqlite_unicode
   ini.options_present:
     - sections:
        production:
