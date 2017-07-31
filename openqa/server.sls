@@ -36,8 +36,6 @@ server.packages:
           do_push: yes
         openid:
           httpsonly: 1
-        logging:
-          file: /var/log/openqa
     - require:
       - pkg: server.packages
 
