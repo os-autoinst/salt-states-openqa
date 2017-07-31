@@ -43,7 +43,6 @@ server.packages:
 
 /etc/openqa/database.ini:
   ini.options_present:
-    - strict: True
     - sections:
        production:
          dsn: dbi:Pg:dbname=openqa
