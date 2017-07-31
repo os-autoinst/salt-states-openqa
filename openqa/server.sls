@@ -40,3 +40,12 @@ server.packages:
           file: /var/log/openqa
     - require:
       - pkg: server.packages
+
+/etc/openqa/database.ini:
+  ini.options_present:
+    - sections:
+       production:
+         dsn: dbi:Pg:dbname=openqa
+         user: geekotest
+    - require:
+      - pkg: server.packages
