@@ -25,6 +25,19 @@ wicked ifup br1:
 {%     endfor %}
 {%  endfor %}
 
+# Will create a list "multihostworkers" of all multi-host workers to be connected over GRE tunnel(s)
+# Those hosts are identified by WORKER_CLASS value from pillar defined in "multihostclass" variable
+# Only one class is supported and its name have to be unique - will match also the strings that contain it!
+{% set multihostclass = 'tap' %}
+{% set multihostworkers = [] %}
+{% for host in pillar['workerconf'] %}
+{%  for wnum in pillar['workerconf'][host]['workers'] %}
+{%    if multihostclass in pillar['workerconf'][host]['workers'][wnum]['WORKER_CLASS'] %}
+{%      do multihostworkers.append(host) if host not in multihostworkers %}
+{%    endif %}
+{%  endfor %}
+{% endfor %}
+
 # Make openvswitch bridge br1 persistant
 /etc/sysconfig/network/ifcfg-br1:
   file.managed:
@@ -40,7 +53,7 @@ wicked ifup br1:
      {% for i in tapdevices %}
       - OVS_BRIDGE_PORT_DEVICE_{{ i }}='tap{{ i }}'
      {% endfor %}
-     {% if grains['host'] == 'openqaworker8' or grains['host'] == 'openqaworker9' %}
+     {% if grains['host'] in multihostworkers and multihostworkers|length > 1 %}
       - PRE_UP_SCRIPT="wicked:gre_tunnel_preup.sh"
      {% endif %}
     - require:
@@ -67,24 +80,23 @@ wicked ifup br1:
       - pkg: worker-openqa.packages
 {% endfor %}
 
-{% if grains['host'] == 'openqaworker8' or grains['host'] == 'openqaworker9' %}
+{% if grains['host'] in multihostworkers and multihostworkers|length > 1 %}
+{%   set otherworkers = multihostworkers %}
+{%   do otherworkers.remove(grains['host']) %}
 /etc/wicked/scripts/gre_tunnel_preup.sh:
   file.managed:
     - user: root
     - group: root
     - mode: 744
+    - makedirs: true
     - contents:
       - '#!/bin/sh'
       - action="$1"
       - bridge="$2"
-      {% if grains['host'] == 'openqaworker8' %}
-      - REMOTE_IP="{{ salt['pillar.get']('workerconf:openqaworker9:bridge_ip') }}"
-      {% elif grains['host'] == 'openqaworker9' %}
-      - REMOTE_IP="{{ salt['pillar.get']('workerconf:openqaworker8:bridge_ip') }}"
-      {% endif %}
-      - ovs-vsctl --may-exist add-port $bridge gre1 -- set interface gre1 type=gre options:remote_ip=$REMOTE_IP
+     {% for remote in otherworkers %}
+      - ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ pillar['workerconf'][remote]['bridge_ip'] }}
+     {% endfor %}
 {% endif %}
-
 
 # Configure os-autoinst-openvswitch bridge configuration file
 /etc/sysconfig/os-autoinst-openvswitch:
