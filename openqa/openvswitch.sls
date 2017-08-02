@@ -31,11 +31,13 @@ wicked ifup br1:
 {% set multihostclass = 'tap' %}
 {% set multihostworkers = [] %}
 {% for host in pillar['workerconf'] %}
-{%  for wnum in pillar['workerconf'][host]['workers'] %}
-{%    if multihostclass in pillar['workerconf'][host]['workers'][wnum]['WORKER_CLASS'] %}
-{%      do multihostworkers.append(host) if host not in multihostworkers %}
-{%    endif %}
-{%  endfor %}
+{%   if 'workers' in pillar['workerconf'][host] %}
+{%    for wnum in pillar['workerconf'][host]['workers'] %}
+{%      if multihostclass in pillar['workerconf'][host]['workers'][wnum]['WORKER_CLASS'] %}
+{%        do multihostworkers.append(host) if host not in multihostworkers %}
+{%      endif %}
+{%    endfor %}
+{%   endif %}
 {% endfor %}
 
 # Make openvswitch bridge br1 persistant
