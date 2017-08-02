@@ -28,7 +28,7 @@ server.packages:
           scm: git
           download_domains: suse.de nue.suse.com
           recognized_referers: bugzilla.suse.com bugzilla.opensuse.org bugzilla.novell.com bugzilla.microfocus.com progress.opensuse.org github.com build.suse.de
-          max_rss_limit: 400000
+          max_rss_limit: 180000
         amqp:
           url: amqps://openqa:b45z45bz645tzrhwer@rabbit.suse.de:5671/
           topic_prefix: suse
