@@ -9,6 +9,7 @@ base:
     - openqa.openvswitch
     - openqa.hacustombridges
   'openqaworker8.suse.de,openqaworker9.suse.de':
+    - match: list
     - openqa.openvswitch
   'openqaworker*':
     - openqa.worker
