@@ -1,0 +1,15 @@
+<span id="footer-links" class="left">
+{% for entry in links_footer %}
+    {% if links_footer[entry]["position"] == "left" %}
+        <a href="{{ links_footer[entry]["url"] }}">{{ links_footer[entry]["description"] }}</a>
+    {% endif %}
+{% endfor %}
+</span>
+
+<span id="footer-links" class="right">
+{% for entry in links_footer %}
+    {% if links_footer[entry]["position"] == "right" %}
+        <a href="{{ links_footer[entry]["url"] }}">{{ links_footer[entry]["description"] }}</a>
+    {% endif %}
+{% endfor %}
+</span>

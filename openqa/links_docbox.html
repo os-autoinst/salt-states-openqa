@@ -1,0 +1,4 @@
+<h2>Welcome to <%= $appname %> at SUSE</h2>
+{% for entry in links_docbox %}
+  <p><a href="{{ links_docbox[entry]["url"] }}">{{ links_docbox[entry]["description"] }}</a></p>
+{% endfor %}
