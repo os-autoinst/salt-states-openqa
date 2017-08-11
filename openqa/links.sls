@@ -1,24 +1,26 @@
-/templates/branding/openqa.suse.de/links_footer.html.ep:
+/templates/branding/openqa.suse.de/links_footer_left.html.ep:
     file.managed:
-      - source: salt://openqa/links_footer.html
+      - source: salt://openqa/links_footer_left.html
       - template: jinja
         links_footer:
           1:
             url: irc://irc.suse.de/testing
             description: IRC channel
-            position: left
           2:
             url: https://w3.suse.de/~okurz/openqa_suse_de_status.html
             description: Daily openQA review
-            position: left
-          3:
+
+/templates/branding/openqa.suse.de/links_footer_right.html.ep:
+    file.managed:
+      - source: salt://openqa/links_footer_right.html
+      - template: jinja
+        links_footer:
+          1:
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP3:GA
             description: SLE staging dashboard
-            position: right
-          4:
+          2:
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP2:Update:Products:CASP10
             description: CaaSP staging dashboard
-            position: right
 
 /templates/branding/openqa.suse.de/docbox.html.ep:
     file.managed:
