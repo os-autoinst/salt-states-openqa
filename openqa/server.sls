@@ -33,7 +33,7 @@ server.packages:
           url: amqps://openqa:b45z45bz645tzrhwer@rabbit.suse.de:5671/
           topic_prefix: suse
         scm git:
-          do_push: yes
+          do_push: 'yes'
         openid:
           httpsonly: 1
     - require:
