@@ -5,6 +5,7 @@ base:
   'openqa.suse.de':
     - salt.master
     - openqa.server
+    - openqa.links
   'openqaworker3.suse.de':
     - openqa.openvswitch
     - openqa.hacustombridges
