@@ -69,9 +69,6 @@ worker-openqa.packages:
     - pkgs:
       - openQA-worker
       - xterm-console
-      {% if grains['osarch'] == 'x86_64' %}
-      - freeipmi
-      {% endif %}
       - os-autoinst-openvswitch
     - fromrepo: openQA
     - require:
