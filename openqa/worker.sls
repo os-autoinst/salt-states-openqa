@@ -232,13 +232,6 @@ SuSEfirewall2:
     - template: jinja
     - source: salt://openqa/SuSEfirewall2.conf
 
-{% if grains['osarch'] == 'ppc64le' %}
-/usr/share/qemu/slof.bin:
-   file.managed:
-     - source: salt://ppc64/new_slof.bin
-     - source_hash: 86f680577aa3dedcb113550b1594c0e1
-{% endif %}
-
 {% if grains['osarch'] == 'aarch64' %}
 /dev/raw1394:
   file.symlink:
