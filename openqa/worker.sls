@@ -3,9 +3,15 @@
 {% elif 'Leap' in grains['oscodename'] %}
 {% set openqamodulesrepo = "Leap:/" + grains['osrelease'] %}
 {% set opensuserepopath = "openSUSE_Leap_" + grains['osrelease'] %}
-{% elif 'Enterprise' in grains['oscodename'] %}
+{% elif 'SP1' in grains['oscodename'] %}
 {% set openqamodulesrepo = "SLE-12" %}
 {% set opensuserepopath = "SLE_12_SP1" %}
+{% elif 'SP2' in grains['oscodename'] %}
+{% set openqamodulesrepo = "SLE-12" %}
+{% set opensuserepopath = "SLE_12_SP2" %}
+{% elif 'SP3' in grains['oscodename'] %}
+{% set openqamodulesrepo = "SLE-12" %}
+{% set opensuserepopath = "SLE_12_SP3" %}
 {% elif 'aarch64' in grains['cpuarch'] %}
 {% set opensuserepopath = "SLE_12" %}
 {% set opensusemodulesrepo = "SLE_12_SP2" %}
