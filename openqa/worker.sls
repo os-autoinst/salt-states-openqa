@@ -97,7 +97,7 @@ worker.packages:
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT and TAP support
-      - openvswitch-switch # for TAP support
+      - openvswitch # for TAP support
       - SuSEfirewall2 # For TAP support and for other good reasons
       - qemu: '>=2.3'
       {% if grains['osarch'] == 'ppc64le' %}
