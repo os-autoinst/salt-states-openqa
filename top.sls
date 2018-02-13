@@ -27,8 +27,7 @@ base:
     - openqa.worker
   'malbec.arch.suse.de':
     - openqa.worker
-  'GONE-FOR-NOW-openqaworker-arm-1.suse.de':
+  'openqaworker-arm-1.suse.de':
     - openqa.scripts
     - openqa.worker
-    - openqa.iscsi
-    - openqa.tmpfs_pool
+    - openqa.openvswitch
