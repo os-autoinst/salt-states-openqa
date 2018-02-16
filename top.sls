@@ -32,3 +32,5 @@ base:
     - openqa.worker
     - openqa.iscsi
     - openqa.tmpfs_pool
+  'openqaworker-arm-3.suse.de':
+    - openqa.worker
