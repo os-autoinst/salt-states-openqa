@@ -69,7 +69,6 @@ worker.packages:
       {% if grains['osarch'] == 'aarch64' %}
       - qemu-arm
       {% endif %}
-      - atop
       - perl-XML-Writer # for virtualization tests
     - require:
       - pkg: worker-openqa.packages
