@@ -140,14 +140,12 @@ worker.packages:
     - user: root
     - group: root
     - mode: 644
-    - defaults:
-      global:
-        WORKER_HOSTNAME: {{ grains['fqdn_ip4'][0] }}
     - context:
       {% set workerhost = grains['host'] %}
       {% set workerdict = pillar.get('workerconf', {})[workerhost].get('workers', {}) %}
       {% set webuidict = pillar.get('workerconf', {})[workerhost].get('webuis', {}) %}
       {% set globaldict = pillar.get('workerconf', {})[workerhost].get('global', {}) %}
+      {% do globaldict.update({'WORKER_HOSTNAME': grains['fqdn_ip4'][0]}) %}
       workers: {{ workerdict }}
       webuis: {{ webuidict }}
       global: {{ globaldict }}
