@@ -40,11 +40,10 @@ worker-openqa.packages:
       - xterm-console
       - os-autoinst-openvswitch
     - fromrepo: openQA
+    {% if openqamodulesrepo %}
     - require:
-      - pkg: kernel-default
-      {% if 'Enterprise' in grains['oscodename'] %}
       - pkgrepo: openQA-modules
-      {% endif %}
+    %{ endif %}
 
 # Packages that can come from anywhere
 worker.packages:
