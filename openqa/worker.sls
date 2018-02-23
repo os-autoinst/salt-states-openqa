@@ -43,7 +43,7 @@ worker-openqa.packages:
     {% if openqamodulesrepo %}
     - require:
       - pkgrepo: openQA-modules
-    %{ endif %}
+    {% endif %}
 
 # Packages that can come from anywhere
 worker.packages:
