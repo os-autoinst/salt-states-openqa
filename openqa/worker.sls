@@ -101,6 +101,8 @@ worker.packages:
 #         key: [api key for this server]
 #         secret: [api secret for this server]
 #       […]
+#     global:
+#       [workers.ini key]: [workers.ini value]
 #     workers:
 #       [number of worker instance]:
 #         [workers.ini key]: [workers.ini value]
@@ -147,8 +149,10 @@ worker.packages:
       {% set workerhost = grains['host'] %}
       {% set workerdict = pillar.get('workerconf', {})[workerhost].get('workers', {}) %}
       {% set webuidict = pillar.get('workerconf', {})[workerhost].get('webuis', {}) %}
+      {% set globaldict = pillar.get('workerconf', {})[workerhost].get('global', {}) %}
       workers: {{ workerdict }}
       webuis: {{ webuidict }}
+      global: {{ globaldict }}
     - require:
       - pkg: worker-openqa.packages
 
