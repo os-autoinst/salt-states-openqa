@@ -12,9 +12,6 @@
 {% elif 'SP3' in grains['oscodename'] %}
 {% set openqamodulesrepo = "SLE-12" %}
 {% set opensuserepopath = "SLE_12_SP3" %}
-{% elif 'aarch64' in grains['cpuarch'] %}
-{% set opensuserepopath = "SLE_12" %}
-{% set opensusemodulesrepo = "SLE_12_SP2" %}
 {% else %}
 {% set opensuserepopath = "openSUSE_" + grains['osrelease'] %}
 {% endif %}
@@ -24,40 +21,6 @@ openQA:
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA/{{ opensuserepopath }}/
     - gpgcheck: False
     - refresh: True
-
-{% if 'Leap 42.1' in grains['oscodename'] %}
-# Latest kernel needed to avoid nvme issues
-kernel_stable:
-  pkgrepo.managed:
-    - humanname: Kernel Stable
-    - baseurl: http://download.opensuse.org/repositories/Kernel:/stable/standard/
-    - gpgcheck: False
-    - refresh: True
-{% endif %}
-
-{% if 'aarch64' in grains['osarch'] %}
-# Use sp3 QEMU for aarch64 since we won't salt overdrive2 for now.
-qemu_sp3:
-  pkgrepo.managed:
-    - humanname: Qemu SP3
-    - baseurl: http://download.suse.de/ibs/Devel:/Virt:/SLE-12-SP3/SUSE_SLE-12-SP2_Update_standard/
-    - gpgcheck: False
-    - refresh: True
-
-qemu-arm:
-  pkg.installed:
-    - version: '>=2.8'
-    - refresh: True
-    - fromrepo: qemu_sp3
-{% endif %}
-
-kernel-default:
-  pkg.installed:
-    - refresh: True
-    {% if 'Leap 42.1' in grains['oscodename'] %}
-    - version: '>=4.4' # needed to fool zypper into the vendor change
-    - fromrepo: kernel_stable
-    {% endif %}
 
 {% if openqamodulesrepo %}
 openQA-modules:
@@ -103,13 +66,13 @@ worker.packages:
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
       {% endif %}
+      {% if grains['osarch'] == 'aarch64' %}
+      - qemu-arm
+      {% endif %}
       - atop
       - perl-XML-Writer # for virtualization tests
     - require:
       - pkg: worker-openqa.packages
-{% if grains['osarch'] == 'aarch64' %}
-      - pkg: qemu-arm
-{% endif %}
 
 # Ensure NFS share is mounted and setup on boot
 /var/lib/openqa/share:
