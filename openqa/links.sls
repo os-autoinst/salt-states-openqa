@@ -1,4 +1,4 @@
-/templates/branding/openqa.suse.de/links_footer_left.html.ep:
+/usr/share/openqa/templates/branding/openqa.suse.de/links_footer_left.html.ep:
     file.managed:
       - source: salt://openqa/links_footer_left.html
       - template: jinja
@@ -10,7 +10,7 @@
             url: https://w3.suse.de/~okurz/openqa_suse_de_status.html
             description: Daily openQA review
 
-/templates/branding/openqa.suse.de/links_footer_right.html.ep:
+/usr/share/openqa/templates/branding/openqa.suse.de/links_footer_right.html.ep:
     file.managed:
       - source: salt://openqa/links_footer_right.html
       - template: jinja
@@ -22,7 +22,7 @@
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP2:Update:Products:CASP10
             description: CaaSP staging dashboard
 
-/templates/branding/openqa.suse.de/docbox.html.ep:
+/usr/share/openqa/templates/branding/openqa.suse.de/docbox.html.ep:
     file.managed:
       - source: salt://openqa/links_docbox.html
       - template: jinja
