@@ -7,15 +7,12 @@ base:
     - openqa.server
     - openqa.links
   'openqaworker3.suse.de':
-    - openqa.openvswitch
     - openqa.hacustombridges
-  'openqaworker8.suse.de,openqaworker9.suse.de':
-    - match: list
-    - openqa.openvswitch
   'openqaworker*':
     - openqa.worker
     - openqa.scripts
     - openqa.iscsi
+    - openqa.openvswitch
   'openqaw?.qa.suse.de':
     - openqa.worker
     - openqa.scripts
@@ -26,11 +23,4 @@ base:
   'QA-Power8-5-kvm.qa.suse.de':
     - openqa.worker
   'malbec.arch.suse.de':
-    - openqa.worker
-  'GONE-FOR-NOW-openqaworker-arm-1.suse.de':
-    - openqa.scripts
-    - openqa.worker
-    - openqa.iscsi
-    - openqa.tmpfs_pool
-  'openqaworker-arm-3.suse.de':
     - openqa.worker
