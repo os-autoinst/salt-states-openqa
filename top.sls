@@ -20,7 +20,7 @@ base:
     - openqa.tmpfs_pool
   'powerqaworker-qam-1':
     - openqa.worker
-  'QA-Power8-5-kvm.qa.suse.de':
+  'QA-Power8-*-kvm.qa.suse.de':
     - openqa.worker
   'malbec.arch.suse.de':
     - openqa.worker
