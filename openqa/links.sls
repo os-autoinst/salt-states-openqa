@@ -16,9 +16,12 @@
       - template: jinja
         links_footer:
           1:
-            url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP3:GA
-            description: SLE staging dashboard
+            url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP4:GA
+            description: SLE12 staging dashboard
           2:
+            url: https://build.suse.de/project/staging_projects/SUSE:SLE-15:GA
+            description: SLE15 staging dashboard
+          3:
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP3:Update:Products:CASP30
             description: CaaSP staging dashboard
 
