@@ -1,0 +1,3 @@
+ppc64_cpu --smt=off
+modprobe kvm_hv
+chmod 666 /dev/kvm

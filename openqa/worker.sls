@@ -22,6 +22,16 @@ openQA:
     - gpgcheck: False
     - refresh: True
 
+{% if 'ppc64le' in grains['osarch'] %}
+# https://progress.opensuse.org/issues/32563
+devel_virt:
+  pkgrepo.managed:
+    - humanname: Devel:Virt:SLE-12-SP2
+    - baseurl: http://download.suse.de/ibs/Devel:/Virt:/SLE-12-SP2/SUSE_SLE-12-SP2_Update_standard/
+    - gpgcheck: False
+    - refresh: True
+{% endif %}
+
 telegraf-monitoring:
   pkgrepo.managed:
     - humanname: devel go ({{ opensuserepopath }})
@@ -72,6 +82,8 @@ worker.packages:
       - telegraf # to collect metrics
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
+      - qemu-ipxe
+      - qemu-vgabios
       {% endif %}
       {% if grains['osarch'] == 'aarch64' %}
       - qemu-arm
@@ -216,6 +228,23 @@ SuSEfirewall2:
 /dev/raw1394:
   file.symlink:
     - target: /dev/null
+{% endif %}
+
+{% if grains['osarch'] == 'ppc64le' %}
+/etc/rc.d/boot.d/disable_smt:
+  file.managed:
+    - contents:
+      - 'ppc64_cpu --smt=off'
+
+/etc/modules-load.d/kvm.conf:
+  file.managed:
+    - contents:
+      - 'kvm_hv'
+
+/lib/udev/rules.d/80-kvm.rules:
+  file.managed:
+    - contents:
+      - 'KERNEL=="kvm", MODE="0666", GROUP="kvm"'
 {% endif %}
 
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
