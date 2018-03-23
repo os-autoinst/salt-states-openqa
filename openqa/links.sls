@@ -19,7 +19,7 @@
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP3:GA
             description: SLE staging dashboard
           2:
-            url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP2:Update:Products:CASP10
+            url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP3:Update:Products:CASP30
             description: CaaSP staging dashboard
 
 /usr/share/openqa/templates/branding/openqa.suse.de/docbox.html.ep:
