@@ -174,11 +174,21 @@ worker.packages:
 openqa-worker@{{ i }}:
   service.running:
     - enable: True
+{% if loop.first %}
     - require:
       - pkg: worker-openqa.packages
+      - stop_and_disable_all_workers
     - watch:
       - file: /etc/openqa/workers.ini
+{% endif %}
 {% endfor %}
+
+{# Workaround for service.dead worker@* which would just stop services but not disable them #}
+stop_and_disable_all_workers:
+  cmd.run:
+    - name: systemctl list-units --all -t service --no-legend --no-pager | cut -d' ' -f1 | grep openqa-worker | while read service; do systemctl stop $service; systemctl disable $service; done
+    - onchanges:
+      - file: /etc/openqa/workers.ini
 
 openqa-worker.target:
   service.running:
