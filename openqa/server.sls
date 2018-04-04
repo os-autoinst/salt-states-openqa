@@ -1,14 +1,14 @@
 openQA:
   pkgrepo.managed:
-    - humanname: openQA (Leap 42.2)
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.2/
+    - humanname: openQA (Leap 42.3)
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.3/
     - refresh: True
     - gpgcheck: False
 
 openQA-perl-modules:
   pkgrepo.managed:
-    - humanname: openQA-perl-modules (Leap 42.2)
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/Leap:/42.2/openSUSE_Leap_42.2/
+    - humanname: openQA-perl-modules (Leap 42.3)
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/Leap:/42.2/openSUSE_Leap_42.3/
     - refresh: True
     - gpgcheck: False
 
