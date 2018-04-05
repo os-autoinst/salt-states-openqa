@@ -178,23 +178,15 @@ openqa-worker@{{ i }}:
     - require:
       - pkg: worker-openqa.packages
       - stop_and_disable_all_workers
-    - watch:
-      - file: /etc/openqa/workers.ini
 {% endif %}
 {% endfor %}
 
-{# Workaround for service.dead worker@* which would just stop services but not disable them #}
+# Stop and disable first 100 openqa-worker@ service instances
 stop_and_disable_all_workers:
   cmd.run:
-    - name: systemctl list-units --all -t service --no-legend --no-pager | cut -d' ' -f1 | grep openqa-worker | while read service; do systemctl stop $service; systemctl disable $service; done
+    - name: systemctl stop openqa-worker@{1..100}; systemctl disable openqa-worker@{1..100}
     - onchanges:
       - file: /etc/openqa/workers.ini
-
-openqa-worker.target:
-  service.running:
-    - enable: True
-    - require:
-      - pkg: worker-openqa.packages
 
 # Configure firewall and watch on SuSEfirewall2 conf change
 SuSEfirewall2:
