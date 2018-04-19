@@ -1,0 +1,6 @@
+/var/lib/pgsql/data/pg_log/postgresql-*.log {
+    daily
+    minage 15
+    rotate 0
+    missingok
+}
