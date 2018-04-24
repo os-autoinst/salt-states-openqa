@@ -174,17 +174,19 @@ worker.packages:
 openqa-worker@{{ i }}:
   service.running:
     - enable: True
+{% if loop.first %}
     - require:
       - pkg: worker-openqa.packages
-    - watch:
-      - file: /etc/openqa/workers.ini
+      - stop_and_disable_all_workers
+{% endif %}
 {% endfor %}
 
-openqa-worker.target:
-  service.running:
-    - enable: True
-    - require:
-      - pkg: worker-openqa.packages
+# Stop and disable first 100 openqa-worker@ service instances
+stop_and_disable_all_workers:
+  cmd.run:
+    - name: systemctl stop openqa-worker@{1..100}; systemctl disable openqa-worker@{1..100}
+    - onchanges:
+      - file: /etc/openqa/workers.ini
 
 # Configure firewall and watch on SuSEfirewall2 conf change
 SuSEfirewall2:
