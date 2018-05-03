@@ -67,6 +67,7 @@ worker.packages:
       {% endif %}
       {% if grains['osarch'] == 'aarch64' %}
       - qemu-arm
+      - qemu-uefi-aarch64 # Replaces ovmf from linaro
       {% endif %}
       - perl-XML-Writer # for virtualization tests
     - require:
@@ -207,9 +208,6 @@ SuSEfirewall2:
 /dev/raw1394:
   file.symlink:
     - target: /dev/null
-/usr/share/qemu/qemu-uefi-aarch64.bin:
-  file.managed:
-    - source: salt://aarch64/qemu-uefi-aarch64.bin
 {% endif %}
 
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
