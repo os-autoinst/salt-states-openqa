@@ -35,7 +35,7 @@ Will change the retention policy to 12 hours for all existing metrics.
 
 Similarly, the grafana front end is currently provided also with a [docker image] (https://hub.docker.com/r/grafana/grafana/).
 
-It has been configured with a separate volume, to allow configuration persistence outside of the container.
+It has been configured with a separate volume, to allow persistence of the configuration outside of the container itself.
 
 ```
 docker volume create grafana-storage
