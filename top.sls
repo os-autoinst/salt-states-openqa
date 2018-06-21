@@ -4,7 +4,7 @@ base:
     - sshd
   'openqa.suse.de':
     - salt.master
-    - logrotate
+    - etc.master
     - openqa.server
     - openqa.links
   'openqaworker3.suse.de':
