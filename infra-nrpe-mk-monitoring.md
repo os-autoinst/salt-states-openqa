@@ -1,6 +1,6 @@
 ## Description
 
-This file describes the steps required (so far) to configure monitoring for openQA workers using the [thruk] (thruk.suse.de) and [nagios] (https://nagios-devel.suse.de/pnp4nagios/graph?host=openqa.suse.de) instances maintained by Infra.
+This file describes the steps required (so far) to configure monitoring for openQA workers using the [thruk] (https://thruk.suse.de) and [nagios] (https://nagios-devel.suse.de/pnp4nagios/graph?host=openqa.suse.de) instances maintained by Infra.
 
 Step-by-step documentation is described in [this document] (https://wiki.microfocus.net/index.php?title=SUSE-Development/OPS/Services/Monitoring) from the Infra team.
 
