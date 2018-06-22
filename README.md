@@ -8,6 +8,20 @@ This repository contains documentation and scripts used to configure monitoring 
 
 Metrics are being collected via a [shell script] (get-metrics) and sent to a graphite instance via NetCat.
 
+This script can either be called from CRON or from a systemd timer. Configuration files for the systemd timer are included in this repository [here] (openqa-metrics.timer) and [here] (openqa-metrics.service), and run the following commands on a console in order to activate the timer:
+
+```
+cp -i openqa-metrics.timer /etc/systemd/system/
+cp -i openqa-metrics.service /etc/systemd/system/
+systemctl enable --now openqa-metrics.timer
+```
+
+Alternatively, for CRON, the job can be configured as such:
+
+```
+*/5 * * * * /home/acarvajal/get-metrics fqdn-or-ip-to-graphite-server
+```
+
 ### Graphite configuration
 
 The current proof-of-concept uses a graphite docker container as the metric collection service and data source for grafana.
