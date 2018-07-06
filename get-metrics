@@ -208,7 +208,7 @@ picked_jobs
 coredumps_totals
 
 # Get current date and time and output metrics
-DATE=$(date "+%Y-%m-%d %H:%M:%S")
+# DATE=$(date "+%Y-%m-%d %H:%M:%S")
 DATE=$(date +%s)
 report_metrics $1
 exit 0
