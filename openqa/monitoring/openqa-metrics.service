@@ -1,0 +1,7 @@
+[Unit]
+Description=Collect system and openqa metrics and send them to graphite server
+
+[Service]
+Type=oneshot
+ExecStart=/path/to/get-metrics graphite-server-fqdn-or-ip
+

@@ -1,0 +1,214 @@
+#!/bin/bash
+#
+# Collects server metrics and sends them via NetCat to Graphite
+#
+# By Alvaro Carvajal - acarvajal@suse.de
+#
+# Version 1.0.5
+#
+# Requires: vmstat, df, mount, ip, nc
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+LANG=en
+set -e
+
+# Functions
+
+# error: prints an error message and exits the script
+
+error ()
+{
+        echo "ERROR: $@" >&2
+        echo "Exiting..." >&2
+        exit 1
+}
+
+# host_info: sets $HOST, $MACADDR and $IP with server's hostname
+#	     ethernet address and IP address respectively
+
+host_info ()
+{
+    HOST=$(hostname)
+    local IF=$(ip route | awk '$1 == "default" { print $5; exit  }')
+    IF=${IF:-"lo"}
+    read MACADDR IP < <(ip addr show dev $IF | \
+	awk '$1 == "link/ether" { MACADDR = $2 } $1 == "inet" { sub("/.*", "", $2); IP = $2 } END { print MACADDR, IP }')
+}
+
+# fs_info: sets $FS with a comma separated list of filesystem's mount
+#	   points, total space and available space (in bytes)
+
+fs_info ()
+{
+    FS=$(df -B 1 -t btrfs -t xfs -t ext2 -t ext3 -t ext4 --output=size,avail,target,source | \
+        awk '$3 ~ /^\// && !seen[$4] { seen[$4]=1; printf "%s,%s,%s,", $3, $1, $2 }')
+}
+
+# cpu_info: sets $CPU with values for %cpu user, system, idle and wait,
+#	    separated by commas
+
+cpu_info ()
+{
+    if [ -f /tmp/prev-stat ]; then
+        local CUR=$(grep "cpu " /proc/stat)
+        local OLD=$(head -1 /tmp/prev-stat 2>/dev/null)
+        local CURARR=(${CUR// / })
+        local OLDARR=(${OLD// / })
+        local TOTAL="cpu"
+        for (( i=1; i<${#CURARR[@]}; i++)); do
+            TOTAL="$TOTAL $((${CURARR[$i]}-${OLDARR[$i]}))"
+        done
+        CPU=$(echo $TOTAL | awk '$1 == "cpu" {total=$2+$3+$4+$5+$6+$7+$8; user=$2*100/total; sys=$4*100/total; idle=$5*100/total; wait=$6*100/total}
+                                 END {printf "%0.2f,%0.2f,%0.2f,%0.2f\n", user, sys, idle, wait}')
+        echo "$CUR" > /tmp/prev-stat
+    else
+        grep "cpu " /proc/stat > /tmp/prev-stat
+        CPU=$(awk '$1 == "cpu" {total=$2+$3+$4+$5+$6+$7+$8; user=$2*100/total; sys=$4*100/total; idle=$5*100/total; wait=$6*100/total}
+              END {printf "%0.2f,%0.2f,%0.2f,%0.2f\n", user, sys, idle, wait}' < /proc/stat)
+    fi
+}
+
+# mem_info: set $USED, $FREE and $TOTAL with the values of used memory,
+#	    free memory and total memory. Sets $SUSED, $SFREE and $STOTAL
+#	    with the corresponding info for swap memory
+
+mem_info ()
+{
+    read USED FREE TOTAL SUSED SFREE STOTAL < <(vmstat -s -SK | \
+	awk '	$0 ~ /used memory/	{ used = $1 }
+		$0 ~ /free memory/	{ free = $1 }
+		$0 ~ /total memory/	{ total = $1 }
+		$0 ~ /used swap/	{ sused = $1 }
+		$0 ~ /free swap/	{ sfree = $1 }
+		$0 ~ /total swap/	{ stotal = $1 }
+	END { print used, free, total, sused, sfree, stotal }')
+}
+
+# load_info: sets $LOAD with a comma-separated list of load values as
+#	     reported by uptime, ie: 1min load avg, 5 min load avg and
+#	     15min load avg
+
+load_info ()
+{
+    LOAD=$(awk '{ printf "%s,%s,%s\n", $1, $2, $3 }' < /proc/loadavg)
+}
+
+# service_status: get status for services
+
+service_status ()
+{
+    set +e
+    SERVICES="sshd salt-minion openvswitch os-autoinst-openvswitch $(sed -rn -e '/^\[[0-9]+/s/\[([0-9]+)\]/openqa-worker@\1/p' /etc/openqa/workers.ini 2>/dev/null)"
+    set -e
+    SVCSTATUS=$(systemctl is-active $SERVICES | awk '$1 == "active" {print 1} $1 != "active" {print 0}')
+}
+
+# picked_jobs: get jobs picked by worker in the last 5 minutes
+
+picked_jobs ()
+{
+    JOBS=$(sudo journalctl --since=-5min --no-pager | awk 'BEGIN {jobs=0} $0 ~ "worker.+got job" {jobs++} END {print jobs}')
+}
+
+# coredumps_totals: collect total number of core dumps present in the system per coredumptcl
+
+coredumps_totals ()
+{
+    COREDUMPS=$(sudo coredumpctl --no-pager --no-legend|wc -l)
+}
+
+# report_metrics: send metrics via netcat to Graphite server
+
+report_metrics ()
+{
+    # First, verify netcat is available
+    type nc > /dev/null 2>&1 || error "No netcat present on this system"
+
+    # $SERVER serves as the collection name on the DB. The DB is metrics
+    local SERVER=${1:-localhost}
+    #local SERVER=$(echo $IP | sed -e 's/\./_/g' -e 's/^/server_/')
+    local CPUARR=(${CPU//,/ })
+    local LOADARR=(${LOAD//,/ })
+    local FSARR=(${FS//,/ })
+    local SVCARR=(${SERVICES// / })
+    local STATARR=(${SVCSTATUS// / })
+    local NCBLOCK
+
+    # Collect all information into a '\n' separated line in a variable
+    # so it can be passed onto nc
+
+    #CPU info block
+    if [ -n "$CPU" ]; then
+        NCBLOCK="${HOST}.cpu.user ${CPUARR[0]} $DATE"
+        NCBLOCK="$NCBLOCK\n${HOST}.cpu.system ${CPUARR[1]} $DATE"
+        NCBLOCK="$NCBLOCK\n${HOST}.cpu.idle ${CPUARR[2]} $DATE"
+        NCBLOCK="$NCBLOCK\n${HOST}.cpu.wait ${CPUARR[3]} $DATE"
+    fi
+
+    #MEM block
+    if [ -n "$USED" -a -n "$FREE" -a -n "$TOTAL" ]; then
+        NCBLOCK="$NCBLOCK\n${HOST}.mem.used $USED $DATE"
+        NCBLOCK="$NCBLOCK\n${HOST}.mem.free $FREE $DATE"
+        NCBLOCK="$NCBLOCK\n${HOST}.mem.total $TOTAL $DATE"
+    fi
+
+    #SWAP block
+    if [ -n "$SUSED" -a -n "$SFREE" -a -n "$TOTAL" ]; then
+        NCBLOCK="$NCBLOCK\n${HOST}.swap.used $SUSED $DATE"
+        NCBLOCK="$NCBLOCK\n${HOST}.swap.free $SFREE $DATE"
+        NCBLOCK="$NCBLOCK\n${HOST}.swap.total $STOTAL $DATE"
+    fi
+
+    #LOAD block
+    if [ -n "$LOAD" ]; then
+        NCBLOCK="$NCBLOCK\n${HOST}.load.1min ${LOADARR[0]} $DATE"
+        NCBLOCK="$NCBLOCK\n${HOST}.load.5min ${LOADARR[1]} $DATE"
+        NCBLOCK="$NCBLOCK\n${HOST}.load.15min ${LOADARR[2]} $DATE"
+    fi
+
+    #JOBS block
+    if [ -n "$JOBS" ]; then
+        NCBLOCK="$NCBLOCK\n${HOST}.jobs.5min $JOBS $DATE"
+    fi
+
+    # coredumps block
+    if [ -n "$COREDUMPS" ]; then
+        NCBLOCK="$NCBLOCK\n${HOST}.coredumps.total $COREDUMPS $DATE"
+    fi
+
+    #FS block
+    for (( i=0; i<${#FSARR[@]}; i=i+3)); do
+        if [ "${FSARR[$i]}" = "/" ]; then
+	    NCBLOCK="$NCBLOCK\n${HOST}.fs.rootfs.total ${FSARR[(($i+1))]} $DATE"
+	    NCBLOCK="$NCBLOCK\n${HOST}.fs.rootfs.avail ${FSARR[(($i+2))]} $DATE"
+        else
+	    NCBLOCK="$NCBLOCK\n${HOST}.fs.${FSARR[$i]}.total ${FSARR[(($i+1))]} $DATE"
+	    NCBLOCK="$NCBLOCK\n${HOST}.fs.${FSARR[$i]}.avail ${FSARR[(($i+2))]} $DATE"
+        fi
+    done
+
+    #Services block
+    for (( i=0; i<${#SVCARR[@]}; i++)); do
+        NCBLOCK="$NCBLOCK\n${HOST}.service.${SVCARR[$i]} ${STATARR[$i]} $DATE"
+    done
+
+    echo $NCBLOCK | sed -e 's/\\n/\n/g' | nc -w 1 -q 0 $SERVER 2003
+}
+
+# Main
+
+# Get server's stats
+host_info
+fs_info
+cpu_info
+load_info
+mem_info
+service_status
+picked_jobs
+coredumps_totals
+
+# Get current date and time and output metrics
+# DATE=$(date "+%Y-%m-%d %H:%M:%S")
+DATE=$(date +%s)
+report_metrics $1
+exit 0
