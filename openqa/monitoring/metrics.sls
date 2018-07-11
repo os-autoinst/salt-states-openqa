@@ -1,6 +1,6 @@
 /usr/local/share/get-metrics:
   file.managed:
-    - source: salt://openqa/get-metrics
+    - source: salt://openqa/monitoring/get-metrics
     - user: root
     - group: root
     - mode: 555
@@ -9,7 +9,7 @@
 openqa_metrics:
   file.managed:
     - name: /etc/systemd/system/openqa-metrics.service
-    - source: salt://openqa/openqa-metrics.service
+    - source: salt://openqa/monitoring/openqa-metrics.service
     - user: root
     - group: root
     - mode: 644
@@ -22,7 +22,7 @@ openqa_metrics:
 openqa_metrics_timer:
   file.managed:
     - name: /etc/systemd/system/openqa-metrics.timer
-    - source: salt://openqa/openqa-metrics.timer
+    - source: salt://openqa/monitoring/openqa-metrics.timer
     - user: root
     - group: root
     - mode: 644
@@ -35,6 +35,6 @@ openqa_metrics_timer:
 openqa_metrics_running:
   service.running:
     - name: openqa-metrics.timer
+    - enable: True
     - watch:
       - module: openqa_metrics_timer
-
