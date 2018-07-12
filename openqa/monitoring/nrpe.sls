@@ -63,7 +63,6 @@ worker-monitoring.packages:
       - monitoring-plugins-multipath
       - monitoring-plugins-mem
       - monitoring-plugins-load
-      - monitoring-plugins-ipmi-sensor1
       - monitoring-plugins-disk
       - monitoring-plugins-common
     - fromrepo: NPI
