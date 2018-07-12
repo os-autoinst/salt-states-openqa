@@ -4,4 +4,3 @@ Description=Collect system and openqa metrics and send them to graphite server
 [Service]
 Type=oneshot
 ExecStart=/usr/local/share/get-metrics {{ pillar['workerconf']['internal_monitoring'] }}
-

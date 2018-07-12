@@ -6,7 +6,7 @@
     - mode: 555
     - attrs: i
 
-openqa_metrics:
+/etc/systemd/system/openqa-metrics.service:
   file.managed:
     - template: jinja
     - source:
@@ -14,28 +14,18 @@ openqa_metrics:
     - user: root
     - group: root
     - mode: 644
-    - attrs: i
   module.run:
     - name: service.systemctl_reload
-    - onchanges:
-      - file: openqa-metrics
 
-openqa_metrics_timer:
+/etc/systemd/system/openqa-metrics.timer:
   file.managed:
-    - name: /etc/systemd/system/openqa-metrics.timer
     - source: salt://openqa/monitoring/openqa-metrics.timer
     - user: root
     - group: root
     - mode: 644
     - attrs: i
-  module.run:
-    - name: service.systemctl_reload
-    - onchanges:
-      - file: openqa-metrics-timer
 
 openqa_metrics_running:
   service.running:
     - name: openqa-metrics.timer
     - enable: True
-    - watch:
-      - module: openqa_metrics_timer

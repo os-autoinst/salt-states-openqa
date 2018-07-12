@@ -21,11 +21,14 @@ xinetd:
   service.running:
     - enable: True
     - require:
-      - pkg: worker.packages
+      - pkg: worker-monitoring.packages
 
 /etc/nagios/check_zypper-ignores.txt:
   file.managed:
     - source: salt://openqa/monitoring/infra/check_zypper-ignores.txt
+    - require:
+      - pkg: worker.packages
+
 /etc/nrpe.cfg:
   file.managed:
     - source:
@@ -48,8 +51,16 @@ xinetd:
     - dir_mode: 755
     - require:
       - pkg: worker-monitoring.packages
+
+/etc/nagios:
+  file.directory:
+    - name: /etc/nagios
+    - user: root
+    - group: root
     - mode: 755
     - makedirs: True
+    - require:
+      - pkg: worker-monitoring.packages
 
 /etc/xinetd.d/check_mk:
   file.managed:
