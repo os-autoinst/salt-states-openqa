@@ -66,5 +66,5 @@ worker-monitoring.packages:
       - monitoring-plugins-ipmi-sensor1
       - monitoring-plugins-disk
       - monitoring-plugins-common
-    - fromrepo: Infra
+    - fromrepo: NPI
 
