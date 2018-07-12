@@ -38,11 +38,16 @@ xinetd:
       - pkg: worker-monitoring.packages
 
 /etc/nrpe.d:
-  file.directory:
+  file.recurse:
     - name: /etc/nrpe.d
     - source: salt://openqa/monitoring/infra/nrpe.d
     - user: root
     - group: root
+    - makedirs: True
+    - file_mode: 744
+    - dir_mode: 755
+    - require:
+      - pkg: worker-monitoring.packages
     - mode: 755
     - makedirs: True
 
