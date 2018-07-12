@@ -26,6 +26,16 @@ xinetd:
 /etc/nagios/check_zypper-ignores.txt:
   file.managed:
     - source: salt://openqa/monitoring/infra/check_zypper-ignores.txt
+/etc/nrpe.cfg:
+  file.managed:
+    - source:
+      - salt://openqa/monitoring/infra/nrpe.cfg
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - pkg: worker-monitoring.packages
 
 /etc/nrpe.d:
   file.directory:

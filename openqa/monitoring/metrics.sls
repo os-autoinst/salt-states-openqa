@@ -8,8 +8,9 @@
 
 openqa_metrics:
   file.managed:
-    - name: /etc/systemd/system/openqa-metrics.service
-    - source: salt://openqa/monitoring/openqa-metrics.service
+    - template: jinja
+    - source:
+      - salt://openqa/monitoring/openqa-metrics.service
     - user: root
     - group: root
     - mode: 644
