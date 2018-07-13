@@ -23,11 +23,17 @@ xinetd:
     - require:
       - pkg: worker-monitoring.packages
 
+nrpe:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: worker-monitoring.packages
+
 /etc/nagios/check_zypper-ignores.txt:
   file.managed:
     - source: salt://openqa/monitoring/infra/check_zypper-ignores.txt
     - require:
-      - pkg: worker.packages
+      - pkg: worker-monitoring.packages
 
 /etc/nrpe.cfg:
   file.managed:
