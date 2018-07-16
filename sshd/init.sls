@@ -9,6 +9,12 @@ sshd:
     - watch:
       - file: /etc/ssh/sshd_config
 
+nagios_permissions:
+  file.managed:
+    - name: /etc/sudoers.d/nagios
+    - mode: 600
+      - contents: 'nagios ALL=(ALL) NOPASSWD: /usr/sbin/zypp-refresh,/usr/bin/zypper ref,/usr/bin/zypper sl,/usr/bin/zypper --xmlout --non-interactive list-updates -t package -t patch'
+
 {% for username, details in pillar.get('users', {}).items() %}
 {{ username }}:
 
