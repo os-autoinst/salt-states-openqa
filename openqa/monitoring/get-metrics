@@ -98,7 +98,11 @@ load_info ()
 service_status ()
 {
     set +e
-    SERVICES="sshd salt-minion openvswitch os-autoinst-openvswitch $(sed -rn -e '/^\[[0-9]+/s/\[([0-9]+)\]/openqa-worker@\1/p' /etc/openqa/workers.ini 2>/dev/null)"
+    SERVICES="sshd salt-minion openvswitch os-autoinst-openvswitch"
+    local NUMOFWORKERS
+    typeset -i i NUMOFWORKERS
+    NUMOFWORKERS=$(sed -rn '/numofworkers/s/\# numofworkers: ([0-9]+)/\1/p' /etc/openqa/workers.ini 2>/dev/null)
+    for ((i=1; i<=NUMOFWORKERS; ++i)); do SERVICES="$SERVICES openqa-worker@$i"; done
     set -e
     SVCSTATUS=$(systemctl is-active $SERVICES | awk '$1 == "active" {print 1} $1 != "active" {print 0}')
 }
