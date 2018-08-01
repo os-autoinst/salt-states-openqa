@@ -7,7 +7,7 @@
             url: irc://irc.suse.de/testing
             description: IRC channel
           2:
-            url: https://w3.suse.de/~okurz/openqa_suse_de_status.html
+            url: http://s.qa.suse.de/test-status
             description: Daily openQA review
 
 /usr/share/openqa/templates/branding/openqa.suse.de/links_footer_right.html.ep:
@@ -19,7 +19,7 @@
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP4:GA
             description: SLE12 staging dashboard
           2:
-            url: https://build.suse.de/project/staging_projects/SUSE:SLE-15:GA
+            url: https://build.suse.de/project/staging_projects/SUSE:SLE-15-SP1:GA
             description: SLE15 staging dashboard
           3:
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP3:Update:Products:CASP30
