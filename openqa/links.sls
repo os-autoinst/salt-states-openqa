@@ -34,5 +34,8 @@
             url: http://os-autoinst.github.io/openQA/
             description: » More information regarding openQA
           2:
+            url: http://openqa-monitoring.qa.suse.de:3000/d/Bo7E4Qomk/openqa-availability
+            description: » Current openQA status
+          3:
             url: https://wiki.microfocus.net/index.php/OpenQA
             description: » Description of internal setup and administration
