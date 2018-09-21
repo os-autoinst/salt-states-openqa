@@ -2,6 +2,7 @@ base:
   '*':
     - salt.minion
     - sshd
+    - openqa.monitoring.monitoring
   'openqa.suse.de':
     - salt.master
     - etc.master
