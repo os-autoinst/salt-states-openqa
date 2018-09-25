@@ -31,14 +31,22 @@ wicked ifup br1:
 {% set multihostclass = 'tap' %}
 {% set multihostworkers = [] %}
 {% for host in pillar['workerconf'] %}
+{%   if 'global' in pillar['workerconf'][host] %}
+{%     if multihostclass in pillar['workerconf'][host]['global']['WORKER_CLASS'] %}
+{%       do multihostworkers.append(host) %}
+{%     endif %}
+{%   endif %}
+# The class can be defined in both places (global X numbered workers) at the same time
 {%   if 'workers' in pillar['workerconf'][host] %}
-{%    for wnum in pillar['workerconf'][host]['workers'] %}
-{%      if multihostclass in pillar['workerconf'][host]['workers'][wnum]['WORKER_CLASS'] %}
-{%        do multihostworkers.append(host) if host not in multihostworkers %}
-{%      endif %}
-{%    endfor %}
+{%     for wnum in pillar['workerconf'][host]['workers'] %}
+{%       if multihostclass in pillar['workerconf'][host]['workers'][wnum]['WORKER_CLASS'] %}
+{%         do multihostworkers.append(host) %}
+{%       endif %}
+{%     endfor %}
 {%   endif %}
 {% endfor %}
+# Remove duplicate entries and sort them in the list
+{% set multihostworkers = multihostworkers | unique | sort | list %}
 
 # Make openvswitch bridge br1 persistant
 /etc/sysconfig/network/ifcfg-br1:
@@ -74,7 +82,7 @@ wicked ifup br1:
       - IPADDR=''
       - NETMASK=''
       - PREFIXLEN=''
-      - STARTMODE='auto'
+      - STARTMODE='hotplug'
       - TUNNEL='tap'
       - TUNNEL_SET_GROUP='kvm'
       - TUNNEL_SET_OWNER='_openqa-worker'
@@ -82,10 +90,11 @@ wicked ifup br1:
       - pkg: worker-openqa.packages
 {% endfor %}
 
+# Worker for GRE needs to have defined entry bridge_ip: <uplink_address_of_this_worker> in pillar data
+/etc/wicked/scripts/gre_tunnel_preup.sh:
 {% if grains['host'] in multihostworkers and multihostworkers|length > 1 %}
 {%   set otherworkers = multihostworkers %}
 {%   do otherworkers.remove(grains['host']) %}
-/etc/wicked/scripts/gre_tunnel_preup.sh:
   file.managed:
     - user: root
     - group: root
@@ -100,6 +109,8 @@ wicked ifup br1:
      {% for remote in otherworkers %}
       - ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ pillar['workerconf'][remote]['bridge_ip'] }}
      {% endfor %}
+{% else %}
+  file.absent
 {% endif %}
 
 # Configure os-autoinst-openvswitch bridge configuration file
@@ -121,5 +132,4 @@ os-autoinst-openvswitch:
       - file: /etc/sysconfig/os-autoinst-openvswitch
       - file: /etc/sysconfig/network/ifcfg-br1
 
-#TODO - setup openvswitch GRE tunnel between workers for slenkins and autoyast tests
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
