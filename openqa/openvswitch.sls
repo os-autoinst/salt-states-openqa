@@ -32,14 +32,14 @@ wicked ifup br1:
 {% set multihostworkers = [] %}
 {% for host in pillar['workerconf'] %}
 {%   if 'global' in pillar['workerconf'][host] %}
-{%     if multihostclass in pillar['workerconf'][host]['global']['WORKER_CLASS'] %}
+{%     if multihostclass in pillar['workerconf'][host]['global']['WORKER_CLASS'] | default('undefined') %}
 {%       do multihostworkers.append(host) %}
 {%     endif %}
 {%   endif %}
 # The class can be defined in both places (global X numbered workers) at the same time
 {%   if 'workers' in pillar['workerconf'][host] %}
 {%     for wnum in pillar['workerconf'][host]['workers'] %}
-{%       if multihostclass in pillar['workerconf'][host]['workers'][wnum]['WORKER_CLASS'] %}
+{%       if multihostclass in pillar['workerconf'][host]['workers'][wnum]['WORKER_CLASS'] | default('undefined') %}
 {%         do multihostworkers.append(host) %}
 {%       endif %}
 {%     endfor %}
