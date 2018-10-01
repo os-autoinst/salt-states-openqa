@@ -36,5 +36,6 @@ base:
     - openqa.monitoring.nrpe
   'malbec.arch.suse.de':
     - openqa.worker
+    - openqa.openvswitch
     - openqa.monitoring.metrics
     - openqa.monitoring.nrpe
