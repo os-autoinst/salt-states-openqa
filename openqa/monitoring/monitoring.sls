@@ -15,20 +15,10 @@ collectd:
     - enable: True
     - require:
       - pkg: webui-monitoring.packages
-
-#/etc/nrpe.cfg:
-#  file.managed:
-#    - source:
-#      - salt://openqa/monitoring/infra/nrpe.cfg
-#    - template: jinja
-#    - user: root
-#    - group: root
-#    - mode: 644
-#    - require:
-#      - pkg: worker-monitoring.packages
-
-/etc/collectd.conf:
+    - onchanges:
+      - file: /etc/collectd.conf
   file.managed:
+    - name: /etc/collectd.conf
     - source:
       - salt://openqa/monitoring/collectd.conf
     - template: jinja
@@ -38,33 +28,8 @@ collectd:
     - require:
       - pkg: webui-monitoring.packages
 
-#/etc/xinetd.d/check_mk:
-#  file.managed:
-#    - source:
-#      - salt://openqa/monitoring/infra/check_mk
-#    - template: jinja
-#    - user: root
-#    - group: root
-#    - mode: 644
-#    - require:
-#      - pkg: worker-monitoring.packages
-
 webui-monitoring.packages:
   pkg.installed:
     - refresh: True
     - pkgs:
       - collectd
-#  - xinetd
-#  - nrpe
-#  - check_mk-agent
-#  - monitoring-plugins-zypper
-#  - monitoring-plugins-users
-#  - monitoring-plugins-swap
-#  - monitoring-plugins-sar-perf
-#  - monitoring-plugins-procs
-#  - monitoring-plugins-ntp_time
-#  - monitoring-plugins-multipath
-#  - monitoring-plugins-mem
-#  - monitoring-plugins-load
-#  - monitoring-plugins-disk
-#  - monitoring-plugins-common
