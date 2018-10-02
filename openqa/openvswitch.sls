@@ -124,12 +124,14 @@ wicked ifup br1:
     - require:
       - pkg: worker-openqa.packages
 
-# Enable os-autoinst-openvswitch helper
+# Enable os-autoinst-openvswitch helper or restart it if ifcfg-br1 and/or gre_tunnel_preup.sh has changed
 os-autoinst-openvswitch:
   service.running:
     - enable: True
     - require:
       - file: /etc/sysconfig/os-autoinst-openvswitch
+    - onchanges_any:
       - file: /etc/sysconfig/network/ifcfg-br1
+      - file: /etc/wicked/scripts/gre_tunnel_preup.sh
 
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
