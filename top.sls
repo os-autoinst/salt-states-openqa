@@ -38,3 +38,8 @@ base:
     - openqa.worker
     - openqa.monitoring.metrics
     - openqa.monitoring.nrpe
+  'grenache-1':
+    - openqa.worker
+    - openqa.monitoring.metrics
+    - openqa.monitoring.nrpe
+
