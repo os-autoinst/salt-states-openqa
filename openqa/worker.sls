@@ -143,9 +143,9 @@ worker.packages:
     - mode: 644
     - context:
       {% set workerhost = grains['host'] %}
-      {% set workerdict = pillar.get('workerconf', {})[workerhost].get('workers', {}) %}
-      {% set webuidict = pillar.get('workerconf', {})[workerhost].get('webuis', {}) %}
-      {% set globaldict = pillar.get('workerconf', {})[workerhost].get('global', {}) %}
+      {% set workerdict = pillar.get('workerconf', {}).get(workerhost, {}).get('workers', {}) %}
+      {% set webuidict = pillar.get('workerconf', {}).get(workerhost, {}).get('webuis', {}) %}
+      {% set globaldict = pillar.get('workerconf', {}).get(workerhost, {}).get('global', {}) %}
       {% do globaldict.update({'WORKER_HOSTNAME': grains['fqdn_ip4'][0]}) %}
       workers: {{ workerdict }}
       webuis: {{ webuidict }}
@@ -158,7 +158,7 @@ worker.packages:
   ini.options_present:
     - sections:
         {% set workerhost = grains['host'] %}
-        {% set enabled_webuis = pillar.get('workerconf', {})[workerhost].get('webuis', {}) %}
+        {% set enabled_webuis = pillar.get('workerconf', {}).get(workerhost, {}).get('webuis', {}) %}
 
         {% for webui in enabled_webuis %}
         {% set specific_key = pillar.get('workerconf', {})[workerhost].get('webuis', {}) %}
@@ -170,7 +170,7 @@ worker.packages:
       - pkg: worker-openqa.packages
 
 # start services based on numofworkers set in workerconf pillar
-{% for i in range(pillar['workerconf'][grains['host']]['numofworkers']) %}
+{% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0)) %}
 {% set i = i+1 %}
 openqa-worker@{{ i }}:
   service.running:
