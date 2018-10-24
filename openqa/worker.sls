@@ -260,3 +260,14 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - mode: 600
     - contents:
       - '_openqa-worker ALL=(ALL) NOPASSWD: ALL'
+
+/etc/telegraf/telegraf.conf:
+  file.managed:
+    - name: /etc/telegraf/telegraf.conf
+    - source:
+      - salt://openqa/telegraf.conf
+    - user: root
+    - group: root
+    - mode: 600
+    - require:
+      - pkg: worker.packages
