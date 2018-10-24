@@ -19,7 +19,7 @@ wicked ifup br1:
       - pkg: worker.packages
 
 {% set tapdevices = [] %}
-{% for i in range(pillar['workerconf'][grains['host']]['numofworkers']) %}
+{% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0)) %}
 {%   for network in range(0, 3) %}
 {%      do tapdevices.append(i+network*64) %}
 {%     endfor %}
