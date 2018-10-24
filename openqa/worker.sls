@@ -22,6 +22,13 @@ openQA:
     - gpgcheck: False
     - refresh: True
 
+telegraf-monitoring:
+  pkgrepo.managed:
+    - humanname: devel go ({{ opensuserepopath }})
+    - baseurl: https://download.opensuse.org/repositories/devel:/languages:/go/{{ opensuserepopath }}/
+    - gpgcheck: False
+    - refresh: True
+
 {% if openqamodulesrepo %}
 openQA-modules:
   pkgrepo.managed:
@@ -62,6 +69,7 @@ worker.packages:
       - openvswitch # for TAP support
       - SuSEfirewall2 # For TAP support and for other good reasons
       - qemu: '>=2.3'
+      - telegraf # to collect metrics
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
       {% endif %}
