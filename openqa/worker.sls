@@ -22,6 +22,13 @@ openQA:
     - gpgcheck: False
     - refresh: True
 
+telegraf-monitoring:
+  pkgrepo.managed:
+    - humanname: devel go ({{ opensuserepopath }})
+    - baseurl: https://download.opensuse.org/repositories/devel:/languages:/go/{{ opensuserepopath }}/
+    - gpgcheck: False
+    - refresh: True
+
 {% if openqamodulesrepo %}
 openQA-modules:
   pkgrepo.managed:
@@ -62,6 +69,7 @@ worker.packages:
       - openvswitch # for TAP support
       - SuSEfirewall2 # For TAP support and for other good reasons
       - qemu: '>=2.3'
+      - telegraf # to collect metrics
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
       {% endif %}
@@ -252,3 +260,26 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - mode: 600
     - contents:
       - '_openqa-worker ALL=(ALL) NOPASSWD: ALL'
+
+/etc/telegraf/telegraf.conf:
+  file.managed:
+    - name: /etc/telegraf/telegraf.conf
+    - source:
+      - salt://openqa/telegraf.conf
+    - user: root
+    - group: root
+    - mode: 600
+    - require:
+      - pkg: worker.packages
+
+/usr/lib/systemd/system/telegraf.service:
+  file.managed:
+    - name: /usr/lib/systemd/system/telegraf.service
+    - source:
+      - salt://openqa/telegraf.service
+    - user: root
+    - group: root
+    - mode: 600
+    - require:
+      - pkg: worker.packages
+
