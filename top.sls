@@ -32,6 +32,7 @@ base:
     - openqa.monitoring.nrpe
   'QA-Power8-*-kvm.qa.suse.de':
     - openqa.worker
+    - openqa.openvswitch
     - openqa.monitoring.metrics
     - openqa.monitoring.nrpe
   'malbec.arch.suse.de':
