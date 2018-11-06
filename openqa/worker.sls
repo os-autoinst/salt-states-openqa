@@ -264,6 +264,7 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
 /etc/telegraf/telegraf.conf:
   file.managed:
     - name: /etc/telegraf/telegraf.conf
+    - template: jinja
     - source:
       - salt://openqa/telegraf.conf
     - user: root
