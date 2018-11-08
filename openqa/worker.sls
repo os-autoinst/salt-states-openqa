@@ -22,16 +22,6 @@ openQA:
     - gpgcheck: False
     - refresh: True
 
-{% if 'ppc64le' in grains['osarch'] %}
-# https://progress.opensuse.org/issues/32563
-devel_virt:
-  pkgrepo.managed:
-    - humanname: Devel:Virt:SLE-12-SP2
-    - baseurl: http://download.suse.de/ibs/Devel:/Virt:/SLE-12-SP2/SUSE_SLE-12-SP2_Update_standard/
-    - gpgcheck: False
-    - refresh: True
-{% endif %}
-
 telegraf-monitoring:
   pkgrepo.managed:
     - humanname: devel go ({{ opensuserepopath }})
