@@ -223,6 +223,7 @@ SuSEfirewall2:
 {% if grains['osarch'] == 'ppc64le' %}
 /etc/rc.d/boot.d/disable_smt:
   file.managed:
+    - mode: 755
     - contents:
       - 'ppc64_cpu --smt=off'
 
