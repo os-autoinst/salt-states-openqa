@@ -221,10 +221,11 @@ SuSEfirewall2:
 {% endif %}
 
 {% if grains['osarch'] == 'ppc64le' %}
-/etc/rc.d/boot.d/disable_smt:
-  file.managed:
-    - contents:
-      - 'ppc64_cpu --smt=off'
+# As per bsc#1041747 we need a work around
+# this service is provided by powerpc-utils
+smt_off:
+  service.running:
+    - enable: True
 
 /etc/modules-load.d/kvm.conf:
   file.managed:
