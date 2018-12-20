@@ -16,7 +16,7 @@
       - template: jinja
         links_footer:
           1:
-            url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP4:GA
+            url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP5:GA
             description: SLE12 staging dashboard
           2:
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-15-SP1:GA
