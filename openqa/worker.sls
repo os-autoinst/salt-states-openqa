@@ -192,6 +192,18 @@ openqa-worker@{{ i }}:
 {% endif %}
 {% endfor %}
 
+openqa-worker-cacheservice:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: worker-openqa.packages
+
+openqa-worker-cacheservice-minion:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: worker-openqa.packages
+
 # Stop and disable first 100 openqa-worker@ service instances
 stop_and_disable_all_workers:
   cmd.run:
