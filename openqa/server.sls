@@ -61,7 +61,7 @@ server.packages:
     - name: /etc/telegraf/telegraf.conf
     - template: jinja
     - source:
-      - salt://openqa/telegraf.conf
+      - salt://openqa/telegraf-webui.conf
     - user: root
     - group: root
     - mode: 600
