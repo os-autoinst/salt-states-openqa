@@ -80,6 +80,7 @@ worker.packages:
       - qemu-uefi-aarch64 # Replaces ovmf from linaro
       {% endif %}
       - perl-XML-Writer # for virtualization tests
+      - ca-certificates-suse # secure connection with public-cloud-helper
     - require:
       - pkg: worker-openqa.packages
 
