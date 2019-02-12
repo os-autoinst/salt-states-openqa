@@ -15,6 +15,11 @@
 {% else %}
 {% set opensuserepopath = "openSUSE_" + grains['osrelease'] %}
 {% endif %}
+{% if grains['osarch'] == 'x86_64' %}
+{% set ttyconsolearg = "console=tty0 console=ttyS1,115200" %}
+{% else %}
+{% set ttyconsolearg = "" %}
+{% endif %}
 openQA:
   pkgrepo.managed:
     - humanname: openQA ({{ opensuserepopath }})
@@ -273,8 +278,11 @@ grub-conf:
     - context: /files/etc/default/grub
     - changes:
       - set GRUB_TERMINAL '"serial console"'
-      - set GRUB_CMDLINE_LINUX_DEFAULT '"console=tty0 console=ttyS1,115200 nospec"'
+      - set GRUB_CMDLINE_LINUX_DEFAULT '"{{ ttyconsolearg }} nospec kvm.nested=1 kvm_intel.nested=1 kvm_amd.nested=1 kvm-arm.nested=1"'
       - set GRUB_SERIAL_COMMAND '"serial --unit=1 --speed=115200"'
+
+'grub2-mkconfig > /boot/grub2/grub.cfg':
+  cmd.run
 
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
 {% set qemu_arch=grains['osarch'] %}
