@@ -257,8 +257,18 @@ smt_off:
 {% endif %}
 
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
-apparmor:
-  pkg.purged
+apparmor.removed:
+  pkg.purged:
+    - name: apparmor
+
+apparmor.disabled:
+  service.dead:
+    - name: apparmor
+    - enable: False
+
+apparmor.masked:
+  service.masked:
+    - name: apparmor
 
 btrfs-nocow:
   cmd.run:
