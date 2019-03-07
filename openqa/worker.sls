@@ -84,7 +84,9 @@ worker.packages:
       - qemu-arm
       - qemu-uefi-aarch64 # Replaces ovmf from linaro
       {% endif %}
-      - perl-XML-Writer # for virtualization tests
+      - perl-XML-Writer  # for virtualization tests
+      - perl-YAML-Tiny   # for scheduling using yml
+      - perl-Test-Assert # for comparing expected values vs received
       - ca-certificates-suse # secure connection with public-cloud-helper
     - require:
       - pkg: worker-openqa.packages
@@ -334,4 +336,3 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - mode: 600
     - require:
       - pkg: worker.packages
-
