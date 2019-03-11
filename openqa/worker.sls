@@ -86,7 +86,6 @@ worker.packages:
       {% endif %}
       - perl-XML-Writer  # for virtualization tests
       - perl-YAML-Tiny   # for scheduling using yml
-      - perl-Test-Assert # for comparing expected values vs received
       - ca-certificates-suse # secure connection with public-cloud-helper
     - require:
       - pkg: worker-openqa.packages
