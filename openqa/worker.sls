@@ -84,6 +84,7 @@ worker.packages:
       - qemu-arm
       - qemu-uefi-aarch64 # Replaces ovmf from linaro
       {% endif %}
+      - perl-Test-Assert # for comparing expected vs actual in the tests code
       - perl-XML-Writer  # for virtualization tests
       - perl-YAML-Tiny   # for scheduling using yml
       - ca-certificates-suse # secure connection with public-cloud-helper
