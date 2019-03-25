@@ -294,7 +294,9 @@ grub-conf:
       - set GRUB_SERIAL_COMMAND '"serial --unit=1 --speed=115200"'
 
 'grub2-mkconfig > /boot/grub2/grub.cfg':
-  cmd.run
+  cmd.run:
+    - onchanges:
+      - file: /etc/default/grub
 
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
 {% set qemu_arch=grains['osarch'] %}
