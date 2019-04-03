@@ -5,6 +5,7 @@ postfix:
     - reload: True
     - watch:
       - module: configure_relay
+      - alias: root_mail_forward
 
 configure_relay:
   module.run:
@@ -14,3 +15,8 @@ configure_relay:
     - name: postfix.set_main
     - key: myhostname
     - value: openqa.suse.de
+
+root_mail_forward:
+  alias.present:
+    - name: root
+    - target: osd-admins@suse.de, \root
