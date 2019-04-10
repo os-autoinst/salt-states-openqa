@@ -4,7 +4,7 @@ Before=var-lib-openqa-nvme.mount
 
 [Service]
 Type=oneshot
-ExecStart=mkfs.ext2 -F /dev/nvme0n1p1
+ExecStart=/sbin/mkfs.ext2 -F /dev/nvme0n1p1
 
 [Install]
 WantedBy=multi-user.target
