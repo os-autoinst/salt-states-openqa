@@ -1,0 +1,12 @@
+[Unit]
+Description=Prepare NVMe after mounting it
+After=var-lib-openqa-nvme.mount
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mkdir /var/lib/openqa/nvme/cache
+ExecStart=/usr/bin/mkdir /var/lib/openqa/nvme/pool
+ExecStart=/usr/bin/chown _openqa-worker:root /var/lib/openqa/nvme/cache /var/lib/openqa/nvme/pool
+
+[Install]
+WantedBy=multi-user.target
