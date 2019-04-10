@@ -29,7 +29,7 @@
 
 daemon-reload:
   module.wait:
-    - name: systemd.systemctl_reload
+    - name: service.systemctl_reload
     - watch:
       - file: /etc/systemd/system/var-lib-openqa-nvme.mount.d/override.conf
       - file: /etc/systemd/system/openqa-worker@.service.d/override.conf
