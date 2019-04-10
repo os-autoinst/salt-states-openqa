@@ -1,0 +1,10 @@
+[Unit]
+Description=Format NVMe before mounting it
+Before=var-lib-openqa-nvme.mount
+
+[Service]
+Type=oneshot
+ExecStart=mkfs.ext2 -F /dev/nvme0n1p1
+
+[Install]
+WantedBy=multi-user.target
