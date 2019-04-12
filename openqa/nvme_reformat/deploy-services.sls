@@ -7,6 +7,15 @@
     - group: root
     - mode: 600
 
+/etc/systemd/system/openqa_nvme_prepare.service:
+  file.managed:
+    - name: /etc/systemd/system/openqa_nvme_prepare.service
+    - source:
+      - salt://openqa/nvme_reformat/openqa_nvme_prepare.service
+    - user: root
+    - group: root
+    - mode: 600
+
 /etc/systemd/system/openqa-worker@.service.d/override.conf:
   file.managed:
     - name: /etc/systemd/system/openqa-worker@.service.d/override.conf
@@ -34,3 +43,4 @@ daemon-reload:
       - file: /etc/systemd/system/var-lib-openqa-nvme.mount.d/override.conf
       - file: /etc/systemd/system/openqa-worker@.service.d/override.conf
       - file: /etc/systemd/system/openqa_nvme_format.service
+      - file: /etc/systemd/system/openqa_nvme_prepare.service
