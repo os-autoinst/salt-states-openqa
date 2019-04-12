@@ -29,5 +29,5 @@ base:
     - openqa.openvswitch
   'grenache-1.qa.suse.de':
     - openqa.worker
-  'openqaworker-arm-2':
+  'openqaworker-arm-*':
     - openqa.nvme_reformat.deploy-services
