@@ -24,6 +24,6 @@
 */5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-12-SP?-SDK-POOL-{x86_64,aarch64,ppc64le,s390x}-BuildGM-Media1/ ; do ln -sf $i ; done)
 
 # osukup: poo#41441
-*/5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-15-Installer-DVD-s390x-GM-DVD1/ ; do ln -sf $i ; done)
+*/5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-15-{,SP?-}Installer-DVD-s390x-GM-DVD1/ ; do ln -sf $i ; done)
 
 */5    * * * *   root     cd /opt/openqa-scripts && (git fetch --all && git reset --hard origin/master) > /dev/null
