@@ -9,6 +9,48 @@ test:
     - zypper -n in --no-recommends python3-yamllint python3-setuptools
     - yamllint .gitlab-ci.yml
 
+variables:
+  GIT_DEPTH: "3"
+  salt_call: "salt-call -l debug --local state.apply"
+
+.test_setup: &test_setup
+  - ln -s $(pwd -P)/ /srv/salt
+  - . /etc/os-release
+  - zypper -n ar -f http://download.suse.de/ibs/SUSE:/CA/${PRETTY_NAME// /_}/SUSE:CA.repo
+  # try to workaround
+  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
+  # jobs being stuck on problems accessing repos with more verbose output to
+  # prevent the job to be terminated premature with false "success"
+  - zypper -v ref
+  - zypper -n in ca-certificates-suse salt-minion git-core
+  - git clone --depth 3 https://gitlab.suse.de/openqa/salt-pillars-openqa /srv/pillar
+  # make the high state match on the current container hostname as a
+  # simulated worker
+  - sed -i -e "s/openqaworker\*/$HOSTNAME/" /srv/pillar/top.sls
+  # workaround ASCII encoding errors
+  # see https://github.com/saltstack/salt/issues/48522#issuecomment-404226425
+  - export LANG=en_US.UTF-8
+
+test-webui:
+  before_script: *test_setup
+  script:
+    - sed -i -e "s/openqa.suse.de/$HOSTNAME/" top.sls
+    # file must exist after correct salt application and can be inspected
+    # manually
+    - $salt_call; cat /etc/openqa/openqa.ini
+
+test-worker3:
+  before_script: *test_setup
+  script:
+    # just pick any example worker for testing purposes
+    - sed -i -e "s/openqaworker3/$HOSTNAME/" /srv/pillar/openqa/workerconf.sls
+    - sed -i -e "s/openqaworker[^']*/$HOSTNAME*/" top.sls
+    - (
+    - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
+    - $salt_call
+    - )
+    - cat /etc/openqa/workers.ini
+
 deploy:
   only:
     - master@openqa/salt-pillars-openqa

@@ -1,0 +1,2 @@
+docker_opts="${docker_opts:-""}"
+docker run -ti --rm --hostname=openqaworker8 -v /home/okurz/local/openqa/salt-states-openqa:/srv/salt -v /home/okurz/local/openqa/salt-states-openqa/../salt-pillars-openqa:/srv/pillar opensuse/leap:15.1 sh -c 'zypper -n in salt-minion && salt-call --local state.apply'
