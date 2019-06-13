@@ -117,7 +117,7 @@ worker.packages:
 #       [webui_public_facing]:
 #         key: [api key for this server]
 #         secret: [api secret for this server]
-#       […]
+#       [...]
 #     global:
 #       [workers.ini key]: [workers.ini value]
 #     workers:
