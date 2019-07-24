@@ -31,7 +31,7 @@ server.packages:
   ini.options_present:
     - sections:
         global:
-          plugins: AMQP, ObsRsync
+          plugins: AMQP ObsRsync
           branding: openqa.suse.de
           scm: git
           download_domains: suse.de nue.suse.com
