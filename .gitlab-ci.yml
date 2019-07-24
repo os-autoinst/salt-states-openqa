@@ -1,0 +1,8 @@
+image: opensuse/leap:15.1
+
+before_script:
+  - bash t/docker_build.sh opensuse/Leap42.3
+
+test-openqa-trigger-from-ibs:
+  script:
+    - bash t/openqa-trigger-from-ibs.sh

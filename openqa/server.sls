@@ -31,7 +31,7 @@ server.packages:
   ini.options_present:
     - sections:
         global:
-          plugins: AMQP
+          plugins: AMQP, ObsRsync
           branding: openqa.suse.de
           scm: git
           download_domains: suse.de nue.suse.com
@@ -46,6 +46,8 @@ server.packages:
           do_push: 'yes'
         openid:
           httpsonly: 1
+        obs_rsync:
+          home: /usr/lib/openqa-trigger-from-ibs
     - require:
       - pkg: server.packages
 
