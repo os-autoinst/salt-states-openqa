@@ -7,6 +7,7 @@ base:
     - etc.master
     - openqa.server
     - openqa.links
+    - openqa.openqa-trigger-from-ibs
   'openqaworker3.suse.de':
     - openqa.hacustombridges
   'openqaworker*':
