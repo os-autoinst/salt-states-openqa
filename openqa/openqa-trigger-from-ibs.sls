@@ -21,5 +21,10 @@ openqa-trigger-from-ibs:
 
 SUSE:SLE-15-SP2:GA:Staging:B:
   cmd.run:
-    - name: mkdir -p SUSE:SLE-15-SP2:GA:Staging:B && python3 scriptgen.py SUSE:SLE-15-SP2:GA:Staging:B
+    - name: su geekotest -c 'mkdir -p SUSE:SLE-15-SP2:GA:Staging:B && python3 scriptgen.py SUSE:SLE-15-SP2:GA:Staging:B'
+    - cwd: /usr/lib/openqa-trigger-from-ibs
+
+SUSE:SLE-15-SP2:GA:Staging:Y:
+  cmd.run:
+    - name: su geekotest -c 'mkdir -p SUSE:SLE-15-SP2:GA:Staging:Y && python3 scriptgen.py SUSE:SLE-15-SP2:GA:Staging:Y'
     - cwd: /usr/lib/openqa-trigger-from-ibs
