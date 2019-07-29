@@ -1,5 +1,5 @@
 FROM=${1:-'opensuse/leap:42.3'}
-
+command -v docker || zypper -n in --no-recommends docker
 (
 cat << EOF
 FROM $FROM
