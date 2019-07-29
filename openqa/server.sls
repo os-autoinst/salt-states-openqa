@@ -25,6 +25,7 @@ server.packages:
     - pkgs:
       - openQA
       - perl-Mojo-RabbitMQ-Client
+      - perl-IPC-System-Simple
       - telegraf
 
 /etc/openqa/openqa.ini:
