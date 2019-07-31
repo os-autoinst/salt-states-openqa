@@ -47,6 +47,16 @@ server.packages:
           do_push: 'yes'
         openid:
           httpsonly: 1
+        audit/storage_duration:
+          startup: 180
+          jobgroup: 712
+          jobtemplate: 712
+          table: 712
+          iso: 180
+          user: 180
+          asset: 90
+          needle: 90
+          other: 90
         obs_rsync:
           home: /usr/lib/openqa-trigger-from-ibs
     - require:
