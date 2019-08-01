@@ -32,3 +32,7 @@ base:
     - openqa.worker
   'openqaworker-arm-*':
     - openqa.nvme_reformat.deploy-services
+  'openqa-monitor.qa.suse.de':
+    - openqa.monitoring.grafana
+    - openqa.monitoring.influxdb
+    - openqa.monitoring.nginx
