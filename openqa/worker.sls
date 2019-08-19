@@ -24,14 +24,14 @@ openQA:
   pkgrepo.managed:
     - humanname: openQA ({{ opensuserepopath }})
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA/{{ opensuserepopath }}/
-    - gpgcheck: False
+    - gpgautoimport: True
     - refresh: True
 
 telegraf-monitoring:
   pkgrepo.managed:
     - humanname: devel go ({{ opensuserepopath }})
     - baseurl: https://download.opensuse.org/repositories/devel:/languages:/go/{{ opensuserepopath }}/
-    - gpgcheck: False
+    - gpgautoimport: True
     - refresh: True
 
 {% if openqamodulesrepo %}
@@ -39,7 +39,7 @@ openQA-modules:
   pkgrepo.managed:
     - humanname: openQA Modules ({{ opensuserepopath }})
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/{{ openqamodulesrepo }}/{{ opensuserepopath }}/
-    - gpgcheck: False
+    - gpgautoimport: True
     - refresh: True
 {% endif %}
 
