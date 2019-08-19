@@ -1,23 +1,23 @@
-openQA:
+devel_openQA:
   pkgrepo.managed:
-    - humanname: openQA (Leap 42.3)
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_42.3/
+    - humanname: devel:openQA
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_$releasever/
     - refresh: True
-    - gpgcheck: False
+    - gpgautoimport: True
 
-openQA-perl-modules:
+devel_openQA_Leap:
   pkgrepo.managed:
-    - humanname: openQA-perl-modules (Leap 42.3)
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/Leap:/42.3/openSUSE_Leap_42.3/
+    - humanname: devel:openQA:Leap
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/Leap:/$releasever/openSUSE_Leap_$releasever/
     - refresh: True
-    - gpgcheck: False
+    - gpgautoimport: True
 
 telegraf-monitoring:
   pkgrepo.managed:
-    - humanname: devel go (Leap 42.3)
-    - baseurl: https://download.opensuse.org/repositories/devel:/languages:/go/openSUSE_Leap_42.3/
-    - gpgcheck: False
+    - humanname: devel:languages:go
+    - baseurl: https://download.opensuse.org/repositories/devel:/languages:/go/openSUSE_Leap_$releasever/
     - refresh: True
+    - gpgautoimport: True
 
 server.packages:
   pkg.installed:
