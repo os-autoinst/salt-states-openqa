@@ -93,3 +93,10 @@ server.packages:
     - mode: 600
     - require:
       - pkg: server.packages
+
+telegraf:
+  service.running:
+    - watch:
+      - file: /etc/telegraf/telegraf.conf
+    - require:
+      - pkg: server.packages
