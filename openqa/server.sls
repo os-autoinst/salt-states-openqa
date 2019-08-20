@@ -71,6 +71,15 @@ server.packages:
     - require:
       - pkg: server.packages
 
+/etc/apache2/conf.d/server-status.conf:
+  file.managed:
+    - source:
+      - salt://apache2/conf.d/server-status.conf
+    - user: root
+    - group: root
+    - require:
+      - pkg: server.packages
+
 /etc/telegraf/telegraf.conf:
   file.managed:
     - name: /etc/telegraf/telegraf.conf
