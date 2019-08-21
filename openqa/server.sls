@@ -82,6 +82,8 @@ server.packages:
 
 /etc/telegraf/telegraf.conf:
   file.managed:
+    - name: /etc/telegraf/telegraf.conf
+    - template: jinja
     - source:
       - salt://openqa/telegraf-webui.conf
     - user: root
