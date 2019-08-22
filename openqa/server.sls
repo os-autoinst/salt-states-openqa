@@ -30,6 +30,7 @@ server.packages:
       - ntp
       - vsftpd
       - samba
+      - postfix
 
 /etc/openqa/openqa.ini:
   ini.options_present:
@@ -150,17 +151,20 @@ vsftpd:
     - watch:
       - file: /etc/vsftpd.conf
 
-/etc/samba/smb.conf:
+/etc/sysconfig/mail
   file.managed:
     - source:
-      - salt://samba/smb.conf
-    - user: root
-    - group: root
-    - mode: 644
+      - salt://postfix/sysconfig/mail
     - require:
       - pkg: server.packages
 
-smb:
+/etc/sysconfig/postfix
+  file.managed:
+    - source:
+      - salt://postfix/sysconfig/postfix
+
+postfix:
   service.running:
     - watch:
-      - file: /etc/samba/smb.conf
+      - file: /etc/sysconfig/mail
+      - file: /etc/sysconfig/postfix
