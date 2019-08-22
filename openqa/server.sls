@@ -117,8 +117,6 @@ telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
-    - require:
-      - pkg: server.packages
 
 /etc/ntp.conf:
   file.managed:

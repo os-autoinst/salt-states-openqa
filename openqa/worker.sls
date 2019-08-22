@@ -280,7 +280,7 @@ btrfs-nocow:
       - /var/lib/openqa/cache/.nocow
     - onlyif: which btrfs && btrfs filesystem df /var/lib/openqa/cache
 
-python-augeas:
+python3-augeas:
   pkg.installed
 
 grub-conf:
@@ -344,8 +344,6 @@ telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
-    - require:
-      - pkg: server.packages
 
 /etc/ntp.conf:
   file.managed:
