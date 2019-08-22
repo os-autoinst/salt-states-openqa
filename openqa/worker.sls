@@ -74,6 +74,7 @@ worker.packages:
       - openvswitch # for TAP support
       - SuSEfirewall2 # For TAP support and for other good reasons
       - qemu: '>=2.3'
+      - ntp
       - telegraf # to collect metrics
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
@@ -338,3 +339,25 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - mode: 600
     - require:
       - pkg: worker.packages
+
+telegraf:
+  service.running:
+    - watch:
+      - file: /etc/telegraf/telegraf.conf
+    - require:
+      - pkg: server.packages
+
+/etc/ntp.conf:
+  file.managed:
+    - source:
+      - salt://ntpd/ntp.conf
+    - user: root
+    - group: root
+    - mode: 600
+    - require:
+      - pkg: worker.packages
+
+ntpd:
+  service.running:
+    - watch:
+      - file: /etc/ntp.conf

@@ -27,6 +27,7 @@ server.packages:
       - perl-Mojo-RabbitMQ-Client
       - perl-IPC-System-Simple
       - telegraf
+      - ntp
 
 /etc/openqa/openqa.ini:
   ini.options_present:
@@ -118,3 +119,18 @@ telegraf:
       - file: /etc/telegraf/telegraf.conf
     - require:
       - pkg: server.packages
+
+/etc/ntp.conf:
+  file.managed:
+    - source:
+      - salt://ntpd/ntp.conf
+    - user: root
+    - group: root
+    - mode: 600
+    - require:
+      - pkg: server.packages
+
+ntpd:
+  service.running:
+    - watch:
+      - file: /etc/ntp.conf
