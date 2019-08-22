@@ -286,7 +286,7 @@ python3-augeas:
 grub-conf:
   augeas.change:
     - require:
-      - pkg: python-augeas
+      - pkg: python3-augeas
     - lens: Shellvars.lns
     - context: /files/etc/default/grub
     - changes:
