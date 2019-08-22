@@ -29,6 +29,7 @@ server.packages:
       - telegraf
       - ntp
       - vsftpd
+      - samba
 
 /etc/openqa/openqa.ini:
   ini.options_present:
@@ -148,3 +149,18 @@ vsftpd:
   service.running:
     - watch:
       - file: /etc/vsftpd.conf
+
+/etc/samba/smb.conf:
+  file.managed:
+    - source:
+      - salt://samba/smb.conf
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - pkg: server.packages
+
+smb:
+  service.running:
+    - watch:
+      - file: /etc/samba/smb.conf
