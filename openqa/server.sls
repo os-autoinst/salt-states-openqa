@@ -80,6 +80,15 @@ server.packages:
     - require:
       - pkg: server.packages
 
+/etc/apache2/vhosts.d/openqa.conf:
+  file.managed:
+    - source:
+      - salt://apache2/vhosts.d/openqa.conf
+    - user: root
+    - group: root
+    - require:
+      - pkg: server.packages
+
 /etc/telegraf/telegraf.conf:
   file.managed:
     - name: /etc/telegraf/telegraf.conf
