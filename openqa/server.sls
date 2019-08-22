@@ -28,6 +28,7 @@ server.packages:
       - perl-IPC-System-Simple
       - telegraf
       - ntp
+      - vsftpd
 
 /etc/openqa/openqa.ini:
   ini.options_present:
@@ -132,3 +133,18 @@ ntpd:
   service.running:
     - watch:
       - file: /etc/ntp.conf
+
+/etc/vsftpd.conf:
+  file.managed:
+    - source:
+      - salt://vsftpd/vsftpd.conf
+    - user: root
+    - group: root
+    - mode: 600
+    - require:
+      - pkg: server.packages
+
+vsftpd:
+  service.running:
+    - watch:
+      - file: /etc/vsftpd.conf
