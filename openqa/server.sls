@@ -151,14 +151,14 @@ vsftpd:
     - watch:
       - file: /etc/vsftpd.conf
 
-/etc/sysconfig/mail
+/etc/sysconfig/mail:
   file.managed:
     - source:
       - salt://postfix/sysconfig/mail
     - require:
       - pkg: server.packages
 
-/etc/sysconfig/postfix
+/etc/sysconfig/postfix:
   file.managed:
     - source:
       - salt://postfix/sysconfig/postfix
