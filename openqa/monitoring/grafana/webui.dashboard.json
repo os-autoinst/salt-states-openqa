@@ -15,198 +15,16 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1566718276639,
+  "iteration": 1566719332569,
   "links": [],
   "panels": [
-    {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 92,
-      "interval": "10s",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "6.3.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "apache",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "procstat_lookup",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "pid_count"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            },
-            {
-              "condition": "AND",
-              "key": "systemd_unit",
-              "operator": "=",
-              "value": "apache2.service"
-            }
-          ]
-        },
-        {
-          "alias": "cron",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "procstat_lookup",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "pid_count"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            },
-            {
-              "condition": "AND",
-              "key": "systemd_unit",
-              "operator": "=",
-              "value": "openqa-gru.service"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Systemd services up",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
     {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 0
       },
       "id": 33,
       "panels": [],
@@ -224,7 +42,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 1
       },
       "id": 29,
       "interval": "40s",
@@ -438,7 +256,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 9
+        "y": 1
       },
       "id": 31,
       "interval": "1m",
@@ -610,7 +428,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 18
+        "y": 10
       },
       "id": 76,
       "interval": "20s",
@@ -783,7 +601,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 10
       },
       "id": 78,
       "interval": "65s",
@@ -916,7 +734,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 18
       },
       "id": 27,
       "panels": [],
@@ -999,7 +817,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 27
+        "y": 19
       },
       "id": 23,
       "interval": "20s",
@@ -1550,7 +1368,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 27
+        "y": 19
       },
       "id": 25,
       "interval": "10s",
@@ -1769,7 +1587,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 27
       },
       "id": 72,
       "panels": [],
@@ -1915,7 +1733,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 28
       },
       "id": 74,
       "interval": "10s",
@@ -2165,7 +1983,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 44
+        "y": 36
       },
       "id": 21,
       "panels": [],
@@ -2241,7 +2059,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 45
+        "y": 37
       },
       "id": 17,
       "interval": "2m",
@@ -2481,7 +2299,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 45
+        "y": 37
       },
       "id": 19,
       "legend": {
@@ -2718,7 +2536,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 53
+        "y": 45
       },
       "id": 70,
       "panels": [],
@@ -2775,7 +2593,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 54
+        "y": 46
       },
       "height": "400",
       "id": 68,
@@ -2957,7 +2775,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 64
+        "y": 56
       },
       "id": 54,
       "panels": [],
@@ -3010,7 +2828,7 @@
         "h": 6,
         "w": 7,
         "x": 0,
-        "y": 65
+        "y": 57
       },
       "id": 86,
       "interval": "20s",
@@ -3152,7 +2970,7 @@
         "h": 6,
         "w": 9,
         "x": 7,
-        "y": 65
+        "y": 57
       },
       "id": 55,
       "interval": "",
@@ -3344,7 +3162,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 65
+        "y": 57
       },
       "id": 50,
       "interval": "",
@@ -3527,7 +3345,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 71
+        "y": 63
       },
       "id": 60,
       "panels": [],
@@ -3549,7 +3367,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 72
+        "y": 64
       },
       "id": 56,
       "interval": "",
@@ -3745,7 +3563,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 72
+        "y": 64
       },
       "id": 36,
       "interval": "",
@@ -3941,7 +3759,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 72
+        "y": 64
       },
       "id": 46,
       "interval": "",
@@ -4128,7 +3946,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 79
+        "y": 71
       },
       "id": 62,
       "panels": [],
@@ -4150,7 +3968,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 80
+        "y": 72
       },
       "id": 43,
       "interval": "",
@@ -4346,7 +4164,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 80
+        "y": 72
       },
       "id": 38,
       "interval": "",
@@ -4542,7 +4360,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 80
+        "y": 72
       },
       "id": 57,
       "interval": "",
@@ -4729,7 +4547,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 87
+        "y": 79
       },
       "id": 64,
       "panels": [],
@@ -4751,7 +4569,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 88
+        "y": 80
       },
       "id": 44,
       "interval": "",
@@ -4947,7 +4765,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 88
+        "y": 80
       },
       "id": 58,
       "interval": "",
@@ -5143,7 +4961,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 88
+        "y": 80
       },
       "id": 47,
       "interval": "",
@@ -5330,7 +5148,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 95
+        "y": 87
       },
       "id": 66,
       "panels": [],
@@ -5352,7 +5170,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 96
+        "y": 88
       },
       "id": 45,
       "interval": "",
@@ -5548,7 +5366,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 96
+        "y": 88
       },
       "id": 37,
       "interval": "",
@@ -5744,7 +5562,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 96
+        "y": 88
       },
       "id": 48,
       "interval": "",
@@ -5931,7 +5749,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 103
+        "y": 95
       },
       "id": 10,
       "panels": [],
@@ -5949,7 +5767,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 104
+        "y": 96
       },
       "id": 80,
       "interval": "30s",
@@ -6079,7 +5897,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 104
+        "y": 96
       },
       "id": 82,
       "interval": "12s",
@@ -6203,7 +6021,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 104
+        "y": 96
       },
       "id": 84,
       "interval": "12s",
@@ -6443,7 +6261,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 112
+        "y": 104
       },
       "id": 88,
       "interval": "20s",
@@ -6605,7 +6423,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 112
+        "y": 104
       },
       "id": 15,
       "isNew": true,
@@ -6789,7 +6607,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 112
+        "y": 104
       },
       "id": 14,
       "isNew": true,
@@ -7307,7 +7125,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 118
+        "y": 110
       },
       "id": 8,
       "panels": [],
@@ -7329,7 +7147,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 119
+        "y": 111
       },
       "id": 2,
       "isNew": true,
@@ -7639,7 +7457,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 126
+        "y": 118
       },
       "id": 4,
       "isNew": true,
@@ -7941,7 +7759,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 126
+        "y": 118
       },
       "id": 6,
       "isNew": true,
@@ -8157,5 +7975,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 43
+  "version": 2
 }
