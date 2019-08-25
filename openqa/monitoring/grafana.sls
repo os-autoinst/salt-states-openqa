@@ -46,3 +46,12 @@ reverse-proxy-group:
           enabled: true
           org_name: 'SUSE'
           org_role: 'Viewer'
+
+/etc/grafana/provisioning/dashboards/salt.yaml:
+  file.managed:
+    source: salt://openqa/monitoring/grafana/salt.yaml
+
+/var/lib/grafana/dashboards/webui.dashboard.json:
+  file.managed:
+    source: salt://openqa/monitoring/grafana/webui.dashboard.json
+
