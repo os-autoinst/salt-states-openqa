@@ -46,6 +46,11 @@ reverse-proxy-group:
           enabled: true
           org_name: 'SUSE'
           org_role: 'Viewer'
+        smtp:
+          enabled: true
+          host: 'localhost:25'
+          from_address: 'osd-admin@suse.de'
+          from_name: 'Grafana'
 
 /etc/grafana/provisioning/dashboards/salt.yaml:
   file.managed:
