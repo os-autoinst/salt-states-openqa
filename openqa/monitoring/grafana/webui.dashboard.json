@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1566719332569,
+  "iteration": 1566804768506,
   "links": [],
   "panels": [
     {
@@ -828,7 +828,7 @@
         "max": true,
         "min": true,
         "rightSide": true,
-        "show": false,
+        "show": true,
         "total": false,
         "values": true
       },
@@ -3400,7 +3400,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -3530,7 +3531,7 @@
       "yaxes": [
         {
           "format": "iops",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -3596,7 +3597,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -3726,7 +3728,7 @@
       "yaxes": [
         {
           "format": "bytes",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -3745,6 +3747,64 @@
       }
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "max"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "max"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Disk I/O time for /dev/vda alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -3792,7 +3852,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -3900,7 +3961,15 @@
           "tags": []
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 1000
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -3922,7 +3991,7 @@
       "yaxes": [
         {
           "format": "ms",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -4001,7 +4070,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -4131,7 +4201,7 @@
       "yaxes": [
         {
           "format": "iops",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -4197,7 +4267,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -4327,7 +4398,7 @@
       "yaxes": [
         {
           "format": "bytes",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -4346,6 +4417,64 @@
       }
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "max"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                200
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "max"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Disk I/O time for /dev/vdb alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -4393,7 +4522,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -4501,7 +4631,15 @@
           "tags": []
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 1000
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -4523,7 +4661,7 @@
       "yaxes": [
         {
           "format": "ms",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -4602,7 +4740,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -4732,7 +4871,7 @@
       "yaxes": [
         {
           "format": "iops",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -4798,7 +4937,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -4928,7 +5068,7 @@
       "yaxes": [
         {
           "format": "bytes",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -4947,6 +5087,64 @@
       }
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Disk I/O time for /dev/vdc alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -4994,7 +5192,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -5102,7 +5301,16 @@
           "tags": []
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 1000,
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -5124,7 +5332,7 @@
       "yaxes": [
         {
           "format": "ms",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -5203,7 +5411,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -5333,7 +5542,7 @@
       "yaxes": [
         {
           "format": "iops",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -5399,7 +5608,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -5529,7 +5739,7 @@
       "yaxes": [
         {
           "format": "bytes",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -5548,6 +5758,87 @@
       }
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                100000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                4000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                4000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Disk I/O time for /dev/vdd alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -5595,7 +5886,8 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
-          "alias": "/.*write$/"
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -5703,7 +5995,15 @@
           "tags": []
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 100000
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -5725,7 +6025,7 @@
       "yaxes": [
         {
           "format": "ms",
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -7975,5 +8275,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 2
+  "version": 3
 }
