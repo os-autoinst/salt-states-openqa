@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1566816864714,
+  "iteration": 1566821397499,
   "links": [],
   "panels": [
     {
@@ -3753,7 +3753,7 @@
           {
             "evaluator": {
               "params": [
-                1000
+                10000
               ],
               "type": "gt"
             },
@@ -3769,7 +3769,7 @@
             },
             "reducer": {
               "params": [],
-              "type": "max"
+              "type": "avg"
             },
             "type": "query"
           },
@@ -3781,7 +3781,7 @@
               "type": "gt"
             },
             "operator": {
-              "type": "and"
+              "type": "or"
             },
             "query": {
               "params": [
@@ -3792,7 +3792,30 @@
             },
             "reducer": {
               "params": [],
-              "type": "max"
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
             },
             "type": "query"
           }
@@ -3967,7 +3990,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 1000
+          "value": 10000
         }
       ],
       "timeFrom": null,
@@ -4423,7 +4446,7 @@
           {
             "evaluator": {
               "params": [
-                2000
+                100000
               ],
               "type": "gt"
             },
@@ -4439,14 +4462,14 @@
             },
             "reducer": {
               "params": [],
-              "type": "max"
+              "type": "avg"
             },
             "type": "query"
           },
           {
             "evaluator": {
               "params": [
-                2000
+                1000
               ],
               "type": "gt"
             },
@@ -4462,7 +4485,30 @@
             },
             "reducer": {
               "params": [],
-              "type": "max"
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
             },
             "type": "query"
           }
@@ -4492,7 +4538,7 @@
         "y": 72
       },
       "id": 57,
-      "interval": "",
+      "interval": "10s",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -4637,7 +4683,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 2000
+          "value": 100000
         }
       ],
       "timeFrom": null,
@@ -5093,7 +5139,7 @@
           {
             "evaluator": {
               "params": [
-                1000
+                100000
               ],
               "type": "gt"
             },
@@ -5126,6 +5172,29 @@
             "query": {
               "params": [
                 "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "A",
                 "5m",
                 "now"
               ]
@@ -5307,8 +5376,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 1000,
-          "yaxis": "left"
+          "value": 100000
         }
       ],
       "timeFrom": null,
@@ -8275,5 +8343,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 4
+  "version": 5
 }
