@@ -40,6 +40,10 @@ sshd:
 {% endfor %}
 
 nagios_permissions:
+  pkg.installed:
+    - pkgs:
+      - sudo
+
   file.managed:
     - name: /etc/sudoers.d/nagios
     - mode: 600
