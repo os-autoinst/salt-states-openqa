@@ -11,11 +11,6 @@
 {% set openqamodulesrepo = "SLE-12" %}
 {% set openqarepopath = "SLE_12_SP3" %}
 {% endif %}
-{% if grains['osarch'] == 'x86_64' %}
-{% set ttyconsolearg = "console=tty0 console=ttyS1,115200" %}
-{% else %}
-{% set ttyconsolearg = "" %}
-{% endif %}
 devel_openQA:
   pkgrepo.managed:
     - humanname: devel_openQA
