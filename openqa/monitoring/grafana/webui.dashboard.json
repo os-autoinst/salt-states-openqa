@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1566821397499,
+  "iteration": 1567061183537,
   "links": [],
   "panels": [
     {
@@ -562,7 +562,7 @@
           {
             "evaluator": {
               "params": [
-                3
+                4
               ],
               "type": "gt"
             },
@@ -685,7 +685,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 3
+          "value": 4
         }
       ],
       "timeFrom": null,
@@ -828,7 +828,7 @@
         "max": true,
         "min": true,
         "rightSide": true,
-        "show": true,
+        "show": false,
         "total": false,
         "values": true
       },
@@ -2604,7 +2604,7 @@
         "current": true,
         "max": true,
         "min": true,
-        "show": true,
+        "show": false,
         "sort": "current",
         "sortDesc": true,
         "total": false,
@@ -4469,7 +4469,7 @@
           {
             "evaluator": {
               "params": [
-                1000
+                2000
               ],
               "type": "gt"
             },
@@ -4492,7 +4492,7 @@
           {
             "evaluator": {
               "params": [
-                1000
+                2000
               ],
               "type": "gt"
             },
@@ -5855,7 +5855,7 @@
           {
             "evaluator": {
               "params": [
-                4000
+                8000
               ],
               "type": "gt"
             },
@@ -5878,7 +5878,7 @@
           {
             "evaluator": {
               "params": [
-                4000
+                8000
               ],
               "type": "gt"
             },
@@ -6927,7 +6927,7 @@
         "msResolution": false,
         "shared": true,
         "sort": 0,
-        "value_type": "cumulative"
+        "value_type": "individual"
       },
       "type": "graph",
       "xaxis": {
@@ -7454,7 +7454,7 @@
         "msResolution": false,
         "shared": true,
         "sort": 0,
-        "value_type": "cumulative"
+        "value_type": "individual"
       },
       "type": "graph",
       "xaxis": {
@@ -8343,5 +8343,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 5
+  "version": 6
 }
