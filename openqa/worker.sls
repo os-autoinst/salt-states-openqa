@@ -1,3 +1,9 @@
+{% if grains['osarch'] == 'x86_64' %}
+{% set ttyconsolearg = "console=tty0 console=ttyS1,115200" %}
+{% else %}
+{% set ttyconsolearg = "" %}
+{% endif %}
+
 # Packages that must come from the openQA repo
 worker-openqa.packages:
   pkg.installed:
@@ -7,10 +13,6 @@ worker-openqa.packages:
       - xterm-console
       - os-autoinst-openvswitch
     - fromrepo: openQA
-    {% if openqamodulesrepo %}
-    - require:
-      - pkgrepo: openQA-modules
-    {% endif %}
 
 # Packages that can come from anywhere
 worker.packages:
