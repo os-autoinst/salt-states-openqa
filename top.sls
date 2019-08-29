@@ -2,6 +2,7 @@ base:
   '*':
     - salt.minion
     - sshd
+    - auto-update
   'openqa.suse.de':
     - salt.master
     - etc.master
