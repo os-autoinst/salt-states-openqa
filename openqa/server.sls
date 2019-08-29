@@ -1,24 +1,3 @@
-devel_openQA:
-  pkgrepo.managed:
-    - humanname: devel:openQA
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/openSUSE_Leap_$releasever/
-    - refresh: True
-    - gpgautoimport: True
-
-devel_openQA_Leap:
-  pkgrepo.managed:
-    - humanname: devel:openQA:Leap
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/Leap:/$releasever/openSUSE_Leap_$releasever/
-    - refresh: True
-    - gpgautoimport: True
-
-telegraf-monitoring:
-  pkgrepo.managed:
-    - humanname: devel:languages:go
-    - baseurl: https://download.opensuse.org/repositories/devel:/languages:/go/openSUSE_Leap_$releasever/
-    - refresh: True
-    - gpgautoimport: True
-
 server.packages:
   pkg.installed:
     - refresh: True

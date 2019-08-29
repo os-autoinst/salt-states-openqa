@@ -5,12 +5,14 @@ base:
   'openqa.suse.de':
     - salt.master
     - etc.master
+    - openqa.repos
     - openqa.server
     - openqa.links
     - openqa.openqa-trigger-from-ibs
   'openqaworker3.suse.de':
     - openqa.hacustombridges
   'openqaworker*':
+    - openqa.repos
     - openqa.worker
     - openqa.scripts
     - openqa.iscsi
