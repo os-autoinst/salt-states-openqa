@@ -1,7 +1,3 @@
-# compatibility handling of old instances
-/etc/zypp/repos.d/devel_openQA_Leap.repo:
-  file.absent
-
 {% if 'Tumbleweed' in grains['oscodename'] %}
 {% set openqarepopath = "openSUSE_Tumbleweed" %}
 {% elif 'Leap' in grains['oscodename'] %}
