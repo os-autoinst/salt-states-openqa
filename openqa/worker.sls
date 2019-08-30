@@ -12,6 +12,8 @@ worker-openqa.packages:
       - openQA-worker
       - xterm-console
       - os-autoinst-openvswitch
+    - require:
+      - openqa: repos
 
 # Packages that can come from anywhere
 worker.packages:
