@@ -10,6 +10,8 @@ server.packages:
       - vsftpd
       - samba
       - postfix
+    - require:
+      - openqa: repos
 
 /etc/openqa/openqa.ini:
   ini.options_present:
