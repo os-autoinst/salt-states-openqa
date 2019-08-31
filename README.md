@@ -8,7 +8,7 @@ They should be generic enough to also be useful (with some modification) for oth
 
 ```sh
 eval $(cat /etc/os-release)
-releasever=${NAME/-/_}_${VERSION/-/_}; releasever=${releasever/SLES/SLE}
+releasever=${NAME/[- ]/_}_${VERSION/-/_}; releasever=${releasever/SLES/SLE}
 zypper ar -G http://download.suse.de/ibs/SUSE:/CA/${releasever}/SUSE:CA.repo
 zypper ar -G http://download.opensuse.org/repositories/systemsmanagement:/saltstack/${releasever}/systemsmanagement:saltstack.repo
 zypper ref
