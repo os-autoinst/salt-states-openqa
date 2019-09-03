@@ -1,0 +1,7 @@
+[Unit]
+Description=Automatically patch system packages.
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=zypper -n patch --replacefiles --auto-agree-with-licenses --force-resolution --download-in-advance
