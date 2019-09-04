@@ -2,7 +2,7 @@
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_format.service
     - source:
-      - salt://openqa/nvme_reformat/openqa_nvme_format.service
+      - salt://openqa/nvme_store/openqa_nvme_format.service
     - user: root
     - group: root
     - mode: 600
@@ -11,7 +11,7 @@
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_prepare.service
     - source:
-      - salt://openqa/nvme_reformat/openqa_nvme_prepare.service
+      - salt://openqa/nvme_store/openqa_nvme_prepare.service
     - user: root
     - group: root
     - mode: 600
@@ -20,7 +20,7 @@
   file.managed:
     - name: /etc/systemd/system/openqa-worker@.service.d/override.conf
     - source:
-      - salt://openqa/nvme_reformat/openqa-worker@_override.conf
+      - salt://openqa/nvme_store/openqa-worker@_override.conf
     - makedirs: true
     - user: root
     - group: root
@@ -30,7 +30,7 @@
   file.managed:
     - name: /etc/systemd/system/var-lib-openqa-nvme.mount.d/override.conf
     - source:
-      - salt://openqa/nvme_reformat/var-lib-openqa-nvme.mount_override.conf
+      - salt://openqa/nvme_store/var-lib-openqa-nvme.mount_override.conf
     - makedirs: true
     - user: root
     - group: root

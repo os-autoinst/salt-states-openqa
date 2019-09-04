@@ -33,7 +33,7 @@ base:
   'grenache-1.qa.suse.de':
     - openqa.worker
   'openqaworker-arm-*':
-    - openqa.nvme_reformat.deploy-services
+    - openqa.nvme_store
     - haveged
   'openqa-monitor.qa.suse.de':
     - openqa.monitoring.grafana
