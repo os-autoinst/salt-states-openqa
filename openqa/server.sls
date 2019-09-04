@@ -3,6 +3,7 @@ server.packages:
     - refresh: True
     - pkgs:
       - openQA
+      - apache2
       - perl-Mojo-RabbitMQ-Client
       - perl-IPC-System-Simple
       - telegraf
