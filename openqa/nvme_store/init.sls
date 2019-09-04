@@ -44,3 +44,29 @@ daemon-reload:
       - file: /etc/systemd/system/openqa-worker@.service.d/override.conf
       - file: /etc/systemd/system/openqa_nvme_format.service
       - file: /etc/systemd/system/openqa_nvme_prepare.service
+
+/var/lib/openqa/cache:
+  mount.mounted:
+    - device: /var/lib/openqa/nvme/cache
+    - fstype: none
+    - opts: bind
+    - mkmnt: True
+
+/etc/systemd/system/var-lib-openqa-cache.mount.d/override.conf:
+  file.managed:
+    - source:
+      - salt://openqa/nvme_store/needs_nvme.mount_override.conf
+    - makedirs: true
+
+/var/lib/openqa/pool:
+  mount.mounted:
+    - device: /var/lib/openqa/nvme/pool
+    - fstype: none
+    - opts: bind
+    - mkmnt: True
+
+/etc/systemd/system/var-lib-openqa-pool.mount.d/override.conf:
+  file.managed:
+    - source:
+      - salt://openqa/nvme_store/needs_nvme.mount_override.conf
+    - makedirs: true
