@@ -18,6 +18,8 @@ base:
     - openqa.scripts
     - openqa.iscsi
     - openqa.openvswitch
+  'openqaworker5':
+    - openqa.kvm
   'openqaw?.qa.suse.de':
     - openqa.worker
     - openqa.scripts
@@ -28,11 +30,16 @@ base:
   'QA-Power8-*-kvm.qa.suse.de':
     - openqa.worker
     - openqa.openvswitch
+  'QA-Power8-4-kvm.qa.suse.de':
+    - openqa.kvm
+  'QA-Power8-5-kvm.qa.suse.de':
+    - openqa.kvm
   'malbec.arch.suse.de':
     - openqa.worker
     - openqa.openvswitch
   'grenache-1.qa.suse.de':
     - openqa.worker
+    - openqa.kvm
   'openqaworker-arm-*':
     - openqa.nvme_reformat.deploy-services
     - haveged
