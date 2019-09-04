@@ -1,3 +1,6 @@
+include:
+ - openqa.repos
+
 server.packages:
   pkg.installed:
     - refresh: True
@@ -11,8 +14,6 @@ server.packages:
       - vsftpd
       - samba
       - postfix
-    - require:
-      - openqa: repos
 
 /etc/openqa/openqa.ini:
   ini.options_present:
