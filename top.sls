@@ -41,7 +41,7 @@ base:
     - openqa.worker
     - openqa.kvm
   'openqaworker-arm-*':
-    - openqa.nvme_reformat.deploy-services
+    - openqa.nvme_store
     - haveged
   'openqa-monitor.qa.suse.de':
     - openqa.monitoring.grafana
