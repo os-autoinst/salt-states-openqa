@@ -4,6 +4,9 @@
 {% set ttyconsolearg = "" %}
 {% endif %}
 
+include:
+ - openqa.repos
+
 # Packages that must come from the openQA repo
 worker-openqa.packages:
   pkg.installed:
@@ -12,8 +15,6 @@ worker-openqa.packages:
       - openQA-worker
       - xterm-console
       - os-autoinst-openvswitch
-    - require:
-      - openqa: repos
 
 # Packages that can come from anywhere
 worker.packages:
