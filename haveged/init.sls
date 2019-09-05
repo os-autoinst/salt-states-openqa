@@ -2,6 +2,7 @@
   file.managed:
     - source:
       - salt://haveged/override.conf
+    - makedirs: True
   module.run:
     - name: service.systemctl_reload
     - onchanges:
