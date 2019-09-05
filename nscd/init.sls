@@ -2,7 +2,7 @@
   file.managed:
     - source:
       - salt://nscd/mkdir_nscd
-    - mode: 644
+    - mode: 755
 
 /etc/systemd/system/nscd.service.d/override.conf:
   file.managed:
