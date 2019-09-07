@@ -15,3 +15,9 @@ auto_update_timer:
     - name: service.systemctl_reload
     - onchanges:
       - file: auto_update_timer
+
+auto-update.timer:
+  service.running:
+    - enable: True
+    - require:
+      - auto_update_timer
