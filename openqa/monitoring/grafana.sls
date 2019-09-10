@@ -64,3 +64,11 @@ reverse-proxy-group:
   file.managed:
     - source: salt://openqa/monitoring/grafana/webui.services.json
     - template: jinja
+
+{% for worker, items in salt['mine.get']('roles:worker', 'grains.item', tgt_type='grain') | dictsort() -%}
+/var/lib/grafana/dashboards/worker-{{ items['nodename'] }}.json:
+  file.managed:
+    - source: salt://openqa/monitoring/grafana/worker.json.template
+    - template: jinja
+    - worker: {{ items['nodename'] }}
+{% endfor %}
