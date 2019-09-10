@@ -1,7 +1,7 @@
 {% if 'Tumbleweed' in grains['oscodename'] %}
   {% if 'aarch64' in grains['cpuarch'] %}
     {% set qsfrepopath = "openSUSE_Factory_ARM_images" %}
-  {% if 'ppc64le' in grains['cpuarch'] %}
+  {% elif 'ppc64le' in grains['cpuarch'] %}
     {% set qsfrepopath = "openSUSE_Factory_PowerPC" %}
   {% elif 's390x' in grains['cpuarch'] %}
     {% set qsfrepopath = "openSUSE_Factory_zSystems_standard" %}
