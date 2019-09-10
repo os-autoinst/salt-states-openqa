@@ -1,16 +1,18 @@
 {% if 'Tumbleweed' in grains['oscodename'] %}
   {% if 'aarch64' in grains['cpuarch'] %}
     {% set qsfrepopath = "openSUSE_Factory_ARM_images" %}
+  {% if 'ppc64le' in grains['cpuarch'] %}
+    {% set qsfrepopath = "openSUSE_Factory_PowerPC" %}
   {% elif 's390x' in grains['cpuarch'] %}
     {% set qsfrepopath = "openSUSE_Factory_zSystems_standard" %}
   {% elif 'x86_64' in grains['cpuarch'] %}
     {% set qsfrepopath = "openSUSE_Tumbleweed" %}
   {% endif %}
-{% elif 'Leap' in grains['oscodename'] %}
+{% elif 'Leap 15.1' in grains['oscodename'] %}
   {% if 'aarch64' in grains['cpuarch'] %}
-    {% set qsfrepopath = "openSUSE_Leap_$releasever_ARM" %}
+    {% set qsfrepopath = "openSUSE_Leap_15.1_ARM" %}
   {% elif 'x86_64' in grains['cpuarch'] %}
-    {% set qsfrepopath = "openSUSE_Leap_$releasever" %}
+    {% set qsfrepopath = "openSUSE_Leap_15.1" %}
   {% endif %}
 {% elif '12 SP4' in grains['oscodename'] %}
   {% set qsfrepopath = "SLE_12_SP4_Backports" %}
@@ -18,6 +20,7 @@
   {% set qsfrepopath = "SLE_15_SP1_Backports" %}
 {% endif %}
 
+{% if qsfrepopath is defined %}
 kvm.repo:
   pkgrepo.managed:
     - humanname: QSF
@@ -41,3 +44,4 @@ kvm.auto-restart-libvirtd-timer-started:
     - enable: True
     - require:
       - pkg: kvm.packages
+{% endif %}
