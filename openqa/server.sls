@@ -45,7 +45,8 @@ server.packages:
           needle: 90
           other: 90
         obs_rsync:
-          home: /usr/lib/openqa-trigger-from-ibs
+          home: /opt/openqa-trigger-from-ibs
+          project_status_url: https://api.suse.de/public/build/%%PROJECT/_result?package=000product
     - require:
       - pkg: server.packages
 
