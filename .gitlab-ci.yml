@@ -17,7 +17,8 @@ deploy:
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
   - echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-  - ssh -o "CheckHostIP no" root@openqa.suse.de "(
+  - chmod 644 ~/.ssh/known_hosts
+  - ssh root@openqa.suse.de "(
        cd /srv &&
        mkdir -p salt &&
        chown root:salt salt &&
@@ -28,7 +29,7 @@ deploy:
        git checkout -f master &&
        git pull
        )"
-  - ssh -o "CheckHostIP no" root@openqa.suse.de "(
+  - ssh openqa.suse.de "(
        cd /srv &&
        mkdir -p pillar &&
        chown root:salt pillar &&
@@ -39,4 +40,4 @@ deploy:
        git checkout -f master &&
        git pull
        )"
-  - ssh -o "CheckHostIP no" root@openqa.suse.de "salt \* state.highstate"
+  - ssh openqa.suse.de "salt \* state.highstate"
