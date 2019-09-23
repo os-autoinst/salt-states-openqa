@@ -1,5 +1,12 @@
 default:
-  image: registry.opensuse.org/opensuse/infrastructure/images/opensuse_leap_15.0/images/opensuse-leap-15.0:current
+  image: registry.opensuse.org/opensuse/infrastructure/images/opensuse_leap_15.0/images/opensuse/leap:15.0
+
+# only really test this file itself so far
+test:
+  image: registry.opensuse.org/opensuse/leap:15.1
+  script:
+    - zypper -n in --no-recommends python3-yamllint python3-setuptools
+    - yamllint .gitlab-ci.yml
 
 deploy:
   only:
