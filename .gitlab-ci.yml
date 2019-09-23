@@ -34,4 +34,4 @@ deploy:
        git checkout -f master &&
        git pull
        )"'
-  - 'ssh -o "CheckHostIP no" root@openqa.suse.de "salt \* test.ping"'
+  - 'ssh -o "CheckHostIP no" root@openqa.suse.de "salt \* state.highstate"'
