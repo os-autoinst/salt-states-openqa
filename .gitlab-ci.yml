@@ -23,7 +23,7 @@ deploy:
        mkdir -p salt &&
        chown root:salt salt &&
        cd salt &&
-       git status || git clone https://gitlab.suse.de/openqa/salt-states-openqa.git . &&
+       git status || git clone --depth 3 https://gitlab.suse.de/openqa/salt-states-openqa.git . &&
        git fetch origin &&
        git reset --hard origin/master &&
        git checkout -f master &&
@@ -34,7 +34,7 @@ deploy:
        mkdir -p pillar &&
        chown root:salt pillar &&
        cd pillar &&
-       git status || git clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git . &&
+       git status || git clone --depth 3 https://gitlab.suse.de/openqa/salt-pillars-openqa.git . &&
        git fetch origin &&
        git reset --hard origin/master &&
        git checkout -f master &&
