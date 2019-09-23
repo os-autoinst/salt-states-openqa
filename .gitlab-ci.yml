@@ -1,12 +1,10 @@
 default:
-  image: opensuse/leap:15.1
+  image: registry.opensuse.org/opensuse/infrastructure/images/opensuse_leap_15.0/images/opensuse-leap-15.0:current
 
 deploy:
   only:
   - master@openqa/salt-states-openqa
   script:
-  - 'zypper ref'
-  - 'zypper -n in openssh'
   - 'eval $(ssh-agent -s)'
   - 'echo "$DEPLOYMENT_KEY" | ssh-add -'
   - 'mkdir -p ~/.ssh'
