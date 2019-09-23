@@ -5,12 +5,12 @@ deploy:
   only:
   - master@openqa/salt-states-openqa
   script:
-  - 'eval $(ssh-agent -s)'
-  - 'echo "$DEPLOYMENT_KEY" | ssh-add -'
-  - 'mkdir -p ~/.ssh'
-  - 'chmod 700 ~/.ssh'
-  - 'echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts'
-  - 'ssh -o "CheckHostIP no" root@openqa.suse.de "(
+  - eval $(ssh-agent -s)
+  - echo "$DEPLOYMENT_KEY" | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+  - ssh -o "CheckHostIP no" root@openqa.suse.de "(
        cd /srv &&
        mkdir -p salt &&
        chown root:salt salt &&
@@ -20,8 +20,8 @@ deploy:
        git reset --hard origin/master &&
        git checkout -f master &&
        git pull
-       )"'
-  - 'ssh -o "CheckHostIP no" root@openqa.suse.de "(
+       )"
+  - ssh -o "CheckHostIP no" root@openqa.suse.de "(
        cd /srv &&
        mkdir -p pillar &&
        chown root:salt pillar &&
@@ -31,5 +31,5 @@ deploy:
        git reset --hard origin/master &&
        git checkout -f master &&
        git pull
-       )"'
-  - 'ssh -o "CheckHostIP no" root@openqa.suse.de "salt \* state.highstate"'
+       )"
+  - ssh -o "CheckHostIP no" root@openqa.suse.de "salt \* state.highstate"
