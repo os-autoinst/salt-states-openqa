@@ -1,3 +1,5 @@
+---
+# yamllint disable rule:line-length
 default:
   image: registry.opensuse.org/opensuse/infrastructure/images/opensuse_leap_15.0/images/opensuse/leap:15.0
 
@@ -10,15 +12,15 @@ test:
 
 deploy:
   only:
-  - master@openqa/salt-states-openqa
+    - master@openqa/salt-states-openqa
   script:
-  - eval $(ssh-agent -s)
-  - echo "$DEPLOYMENT_KEY" | ssh-add -
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-  - chmod 644 ~/.ssh/known_hosts
-  - ssh root@openqa.suse.de "(
+    - eval $(ssh-agent -s)
+    - echo "$DEPLOYMENT_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh root@openqa.suse.de "(
        cd /srv &&
        mkdir -p salt &&
        chown root:salt salt &&
@@ -29,7 +31,7 @@ deploy:
        git checkout -f master &&
        git pull
        )"
-  - ssh openqa.suse.de "(
+    - ssh openqa.suse.de "(
        cd /srv &&
        mkdir -p pillar &&
        chown root:salt pillar &&
@@ -40,4 +42,4 @@ deploy:
        git checkout -f master &&
        git pull
        )"
-  - ssh openqa.suse.de "salt \* state.highstate"
+    - ssh openqa.suse.de "salt \* state.highstate"
