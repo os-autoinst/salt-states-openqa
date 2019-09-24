@@ -24,3 +24,12 @@ popd
 
 salt-call --local state.apply
 ```
+
+## Test .gitlab-ci.yml locally
+
+For the special deployment steps one can define the necessary variables
+locally and override:
+
+```
+sudo gitlab-runner exec docker --env "SSH_PRIVATE_KEY=$SSH_PRIVATE_KEY" --env "TARGET=my.machine" --env "…" deploy
+```
