@@ -25,6 +25,12 @@ salt-call --local state.apply
 
 ## Test .gitlab-ci.yml locally
 
+Run
+
+```
+make test
+```
+
 For the special deployment steps one can define the necessary variables
 locally and override:
 
