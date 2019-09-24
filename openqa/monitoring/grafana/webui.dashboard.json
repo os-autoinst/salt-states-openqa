@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1567768401777,
+  "iteration": 1569300943344,
   "links": [],
   "panels": [
     {
@@ -1329,7 +1329,7 @@
           {
             "evaluator": {
               "params": [
-                20
+                25
               ],
               "type": "gt"
             },
@@ -1538,7 +1538,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 200
+          "value": 200,
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -8367,5 +8368,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 9
+  "version": 10
 }
