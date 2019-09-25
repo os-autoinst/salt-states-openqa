@@ -8,7 +8,7 @@
 #-0 */6 * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles
 # okurz: 2017-07-18: Enabled explicit syncing of sle12 and sle15
 # okurz: 2017-08-23: Appending all output to /var/log/openqa_rsync.log and not relying on mixed output in log and mail to user
--*/5 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles sle15_sp2 >> /var/log/openqa_rsync.log 2>&1
+# Disabled, now managed at https://openqa.suse.de/admin/obs_rsync/SUSE:SLE-15-SP2:GA:TEST -*/5 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles sle15_sp2 >> /var/log/openqa_rsync.log 2>&1
 -*/5 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles sle12_sp5 >> /var/log/openqa_rsync.log 2>&1
 -*/4 * * * * geekotest /opt/openqa-scripts/openqa-iso-sync-staging >> /var/log/openqa_rsync_staging.log 2>&1
 -13 */4 * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-vmdp >> /var/log/openqa_rsync.log 2>&1
