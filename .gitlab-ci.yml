@@ -1,37 +1,38 @@
-default:
-  image: opensuse/leap:15.1
+---
+# yamllint disable rule:line-length
+image: registry.opensuse.org/opensuse/infrastructure/images/opensuse_leap_15.0/images/opensuse/leap:15.0
+
+# only really test this file itself so far
+test:
+  image: registry.opensuse.org/opensuse/leap:15.1
+  script:
+    - zypper -n in --no-recommends python3-yamllint python3-setuptools
+    - yamllint .gitlab-ci.yml
 
 deploy:
   only:
-  - master@openqa/salt-states-openqa
+    - master@openqa/salt-states-openqa
   script:
-  - 'zypper ref'
-  - 'zypper -n in openssh'
-  - 'eval $(ssh-agent -s)'
-  - 'echo "$DEPLOYMENT_KEY" | ssh-add -'
-  - 'mkdir -p ~/.ssh'
-  - 'chmod 700 ~/.ssh'
-  - 'echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts'
-  - 'ssh -o "CheckHostIP no" root@openqa.suse.de "(
-       cd /srv &&
-       mkdir -p salt &&
-       chown root:salt salt &&
-       cd salt &&
-       git status || git clone https://gitlab.suse.de/openqa/salt-states-openqa.git . &&
-       git fetch origin &&
-       git reset --hard origin/master &&
-       git checkout -f master &&
-       git pull
-       )"'
-  - 'ssh -o "CheckHostIP no" root@openqa.suse.de "(
-       cd /srv &&
-       mkdir -p pillar &&
-       chown root:salt pillar &&
-       cd pillar &&
-       git status || git clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git . &&
-       git fetch origin &&
-       git reset --hard origin/master &&
-       git checkout -f master &&
-       git pull
-       )"'
-  - 'ssh -o "CheckHostIP no" root@openqa.suse.de "salt \* state.highstate"'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - set -ex
+    - export TARGET=${TARGET:-"openqa.suse.de"}
+    - ssh $TARGET "(
+       set -x; cd /srv &&
+       for i in salt pillar; do
+         [ "\$i" = "salt" ] && repo="states" || repo="pillars";
+         mkdir -p \$i &&
+         chown root:salt \$i &&
+         (cd \$i &&
+           git status || git clone --depth 3 https://gitlab.suse.de/openqa/salt-\$repo-openqa.git . &&
+           git fetch origin &&
+           git reset --hard origin/master &&
+           git checkout -f master &&
+           git pull);
+       done
+       )"
+    - ssh $TARGET "salt \* state.highstate"
