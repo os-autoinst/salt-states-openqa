@@ -101,10 +101,12 @@ server.packages:
     - require:
       - pkg: server.packages
 
+{%- if not grains.get('noservices', False) %}
 telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
+{%- endif %}
 
 /etc/vsftpd.conf:
   file.managed:
@@ -116,10 +118,12 @@ telegraf:
     - require:
       - pkg: server.packages
 
+{%- if not grains.get('noservices', False) %}
 vsftpd:
   service.running:
     - watch:
       - file: /etc/vsftpd.conf
+{%- endif %}
 
 /etc/sysconfig/mail:
   file.managed:
@@ -133,8 +137,10 @@ vsftpd:
     - source:
       - salt://postfix/sysconfig/postfix
 
+{%- if not grains.get('noservices', False) %}
 postfix:
   service.running:
     - watch:
       - file: /etc/sysconfig/mail
       - file: /etc/sysconfig/postfix
+{%- endif %}

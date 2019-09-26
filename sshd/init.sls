@@ -2,12 +2,14 @@
   file.managed:
     - source: salt://sshd/sshd_config
 
+{%- if not grains.get('noservices', False) %}
 sshd:
   service.running:
     - enable: True
     - reload: True
     - watch:
       - file: /etc/ssh/sshd_config
+{%- endif %}
 
 sudo:
   pkg.installed

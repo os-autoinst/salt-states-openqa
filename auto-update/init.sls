@@ -1,3 +1,4 @@
+{%- if not grains.get('noservices', False) %}
 auto_update_service:
   file.managed:
     - name: /etc/systemd/system/auto-update.service
@@ -21,3 +22,4 @@ auto-update.timer:
     - enable: True
     - require:
       - auto_update_timer
+{%- endif %}

@@ -15,6 +15,7 @@ NPI:
     - gpgcheck: False
     - refresh: True
 
+{%- if not grains.get('noservices', False) %}
 xinetd:
   service.running:
     - enable: True
@@ -26,6 +27,7 @@ nrpe:
     - enable: True
     - require:
       - pkg: worker-monitoring.packages
+{%- endif %}
 
 /etc/nagios/check_zypper-ignores.txt:
   file.managed:

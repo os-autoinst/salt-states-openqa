@@ -148,6 +148,7 @@ worker.packages:
     - require:
       - pkg: worker-openqa.packages
 
+{%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
 {% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0)) %}
 {% set i = i+1 %}
@@ -179,7 +180,9 @@ stop_and_disable_all_workers:
     - name: systemctl stop openqa-worker@{1..100}; systemctl disable openqa-worker@{1..100}
     - onchanges:
       - file: /etc/openqa/workers.ini
+{%- endif %}
 
+ {%- if not grains.get('noservices', False) %}
 # Configure firewall and watch on SuSEfirewall2 conf change
 SuSEfirewall2:
   service.running:
@@ -188,6 +191,7 @@ SuSEfirewall2:
       - file: /etc/sysconfig/SuSEfirewall2
     - require:
       - pkg: worker.packages
+ {%- endif %}
 
 # os-autoinst needs to upload logs to rather random ports and ovs needs configuration
 /etc/sysconfig/SuSEfirewall2:
@@ -202,11 +206,13 @@ SuSEfirewall2:
 {% endif %}
 
 {% if grains['osarch'] == 'ppc64le' %}
+{%- if not grains.get('noservices', False) %}
 # As per bsc#1041747 we need a work around
 # this service is provided by powerpc-utils
 smt_off:
   service.running:
     - enable: True
+{%- endif %}
 
 /etc/modules-load.d/kvm.conf:
   file.managed:
@@ -224,6 +230,7 @@ apparmor.removed:
   pkg.purged:
     - name: apparmor
 
+{%- if not grains.get('noservices', False) %}
 apparmor.disabled:
   service.dead:
     - name: apparmor
@@ -232,6 +239,7 @@ apparmor.disabled:
 apparmor.masked:
   service.masked:
     - name: apparmor
+{%- endif %}
 
 btrfs-nocow:
   cmd.run:
@@ -297,7 +305,9 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - require:
       - pkg: worker.packages
 
+{%- if not grains.get('noservices', False) %}
 telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
+{%- endif %}
