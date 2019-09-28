@@ -1,5 +1,6 @@
 include:
  - openqa.repos
+ - openqa.journal
 
 server.packages:
   pkg.installed:

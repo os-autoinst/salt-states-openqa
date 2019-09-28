@@ -6,6 +6,7 @@
 
 include:
  - openqa.repos
+ - openqa.journal
 
 # Packages that must come from the openQA repo
 worker-openqa.packages:
@@ -318,9 +319,3 @@ ntpd:
   service.running:
     - watch:
       - file: /etc/ntp.conf
-
-# Make sure the journal is stored persistently, e.g. to debug vanishing/stuck
-# workers
-/var/log/journal:
-  file.directory:
-    - makedirs: True
