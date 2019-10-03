@@ -50,7 +50,7 @@
         "for": "60m",
         "frequency": "1m",
         "handler": 1,
-        "message": "Triggering reboot of openqaworker-arm-1 - see https://gitlab.suse.de/nicksinger/grafana-webhook-actions/-/jobs for details, status and history",
+        "message": "Triggering reboot of openqaworker-arm-1 - see https://gitlab.suse.de/openqa/grafana-webhook-actions/-/jobs for details, status and history",
         "name": "openqaworker-arm-1 offline",
         "noDataState": "no_data",
         "notifications": [
@@ -221,7 +221,7 @@
         "for": "60m",
         "frequency": "1m",
         "handler": 1,
-        "message": "Triggering reboot of openqaworker-arm-2 - see https://gitlab.suse.de/nicksinger/grafana-webhook-actions/-/jobs for details, status and history",
+        "message": "Triggering reboot of openqaworker-arm-2 - see https://gitlab.suse.de/openqa/grafana-webhook-actions/-/jobs for details, status and history",
         "name": "openqaworker-arm-2 offline",
         "noDataState": "no_data",
         "notifications": [
@@ -392,7 +392,7 @@
         "for": "60m",
         "frequency": "1m",
         "handler": 1,
-        "message": "Triggering reboot of openqaworker-arm-3 - see https://gitlab.suse.de/nicksinger/grafana-webhook-actions/-/jobs for details, status and history",
+        "message": "Triggering reboot of openqaworker-arm-3 - see https://gitlab.suse.de/openqa/grafana-webhook-actions/-/jobs for details, status and history",
         "name": "openqaworker-arm-3 offline",
         "noDataState": "no_data",
         "notifications": [
@@ -559,5 +559,5 @@
   "timezone": "",
   "title": "Automatic actions",
   "uid": "1bNU0StZz",
-  "version": 3
+  "version": 7
 }
