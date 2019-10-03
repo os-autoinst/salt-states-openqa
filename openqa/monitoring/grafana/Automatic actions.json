@@ -51,7 +51,7 @@
         "frequency": "1m",
         "handler": 1,
         "message": "Triggering reboot of openqaworker-arm-1 - see https://gitlab.suse.de/nicksinger/grafana-webhook-actions/-/jobs for details, status and history",
-        "name": "openqaworker-arm-1 is offline",
+        "name": "openqaworker-arm-1 offline",
         "noDataState": "no_data",
         "notifications": [
           {
