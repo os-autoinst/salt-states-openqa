@@ -1,6 +1,6 @@
 ---
 # yamllint disable rule:line-length
-image: registry.opensuse.org/opensuse/infrastructure/images/opensuse_leap_15.0/images/opensuse/leap:15.0
+image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
 
 # only really test this file itself so far
 test:
@@ -17,12 +17,7 @@ variables:
   - ln -s $(pwd -P)/ /srv/salt
   - . /etc/os-release
   - zypper -n ar -f http://download.suse.de/ibs/SUSE:/CA/${PRETTY_NAME// /_}/SUSE:CA.repo
-  # try to workaround
-  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
-  # jobs being stuck on problems accessing repos with more verbose output to
-  # prevent the job to be terminated premature with false "success"
-  - zypper -v ref
-  - zypper -n in ca-certificates-suse salt-minion git-core
+  - zypper -n in ca-certificates-suse
   - git clone --depth 3 https://gitlab.suse.de/openqa/salt-pillars-openqa /srv/pillar
   # make the high state match on the current container hostname as a
   # simulated worker
