@@ -11,6 +11,7 @@ test:
 
 deploy:
   only:
+    - master@openqa/salt-pillars-openqa
     - master@openqa/salt-states-openqa
   script:
     - eval $(ssh-agent -s)
