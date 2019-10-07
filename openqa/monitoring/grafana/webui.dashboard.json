@@ -14,8 +14,8 @@
   },
   "editable": true,
   "gnetId": null,
-  "graphTooltip": 0,
-  "iteration": 1569300943344,
+  "graphTooltip": 1,
+  "iteration": 1570437851433,
   "links": [],
   "panels": [
     {
@@ -8368,5 +8368,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 10
+  "version": 11
 }
