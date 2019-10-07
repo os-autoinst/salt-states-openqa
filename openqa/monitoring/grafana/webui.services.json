@@ -52,7 +52,11 @@
         "handler": 1,
         "name": "{{ service }}.service alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
