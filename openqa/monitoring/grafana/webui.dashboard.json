@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1570437851433,
+  "iteration": 1570445425241,
   "links": [],
   "panels": [
     {
@@ -416,7 +416,11 @@
         "handler": 1,
         "name": "Average Ping time (ms) alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -553,7 +557,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "alert": {
@@ -589,7 +598,11 @@
         "handler": 1,
         "name": "HTTP Response alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -726,7 +739,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "collapsed": false,
@@ -799,7 +817,11 @@
         "message": "IOwait too high",
         "name": "CPU usage alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {
         "idle": "#EAB839",
@@ -1297,7 +1319,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "alert": {
@@ -1356,7 +1383,11 @@
         "handler": 1,
         "name": "CPU Load alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -1580,7 +1611,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "collapsed": false,
@@ -1722,7 +1758,11 @@
         "message": "One of the file systems is too full",
         "name": "File systems alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -1976,7 +2016,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "collapsed": false,
@@ -2048,7 +2093,11 @@
         "message": "Minion workers down",
         "name": "Workers alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -2229,7 +2278,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "alert": {
@@ -2288,7 +2342,11 @@
         "message": "Too many failed Minion jobs",
         "name": "Minion Jobs alert",
         "noDataState": "alerting",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -2529,7 +2587,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "collapsed": false,
@@ -2601,7 +2664,11 @@
         "handler": 1,
         "name": "Memory usage alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -2791,7 +2858,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "collapsed": false,
@@ -2840,7 +2912,11 @@
         "handler": 1,
         "name": "NTP offset alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -2977,7 +3053,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "aliasColors": {},
@@ -3850,7 +3931,11 @@
         "handler": 1,
         "name": "Disk I/O time for /dev/vda alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -4054,7 +4139,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "collapsed": false,
@@ -4543,7 +4633,11 @@
         "handler": 1,
         "name": "Disk I/O time for /dev/vdc alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -4747,7 +4841,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "collapsed": false,
@@ -5236,7 +5335,11 @@
         "handler": 1,
         "name": "Disk I/O time for /dev/vdd alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -5440,7 +5543,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "collapsed": false,
@@ -5929,7 +6037,11 @@
         "handler": 1,
         "name": "Disk I/O time for /dev/vdb alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -6134,7 +6246,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "collapsed": false,
@@ -6800,7 +6917,11 @@
         "message": "Too few apache workers idle",
         "name": "Workers alert",
         "noDataState": "no_data",
-        "notifications": []
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
       "aliasColors": {},
       "bars": false,
@@ -6983,7 +7104,12 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ]
     },
     {
       "aliasColors": {},
@@ -8368,5 +8494,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 11
+  "version": 12
 }
