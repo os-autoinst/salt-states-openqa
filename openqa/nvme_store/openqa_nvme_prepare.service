@@ -1,6 +1,7 @@
 [Unit]
 Description=Prepare NVMe after mounting it
 After=var-lib-openqa-nvme.mount
+DefaultDependencies=no
 
 [Service]
 Type=oneshot

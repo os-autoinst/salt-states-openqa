@@ -1,6 +1,7 @@
 [Unit]
 Description=Format NVMe before mounting it
 Before=var-lib-openqa-nvme.mount
+DefaultDependencies=no
 
 [Service]
 Type=oneshot
