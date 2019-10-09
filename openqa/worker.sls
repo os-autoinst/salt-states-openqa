@@ -294,9 +294,6 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - name: /usr/lib/systemd/system/telegraf.service
     - source:
       - salt://openqa/telegraf.service
-    - user: root
-    - group: root
-    - mode: 600
     - require:
       - pkg: worker.packages
 
