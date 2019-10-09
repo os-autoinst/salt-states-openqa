@@ -1356,7 +1356,7 @@
           {
             "evaluator": {
               "params": [
-                25
+                40
               ],
               "type": "gt"
             },
@@ -8494,5 +8494,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 12
+  "version": 13
 }
