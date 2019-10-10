@@ -9,6 +9,9 @@ sshd:
     - watch:
       - file: /etc/ssh/sshd_config
 
+sudo:
+  pkg.installed
+
 {% for username, details in pillar.get('users', {}).items() %}
 {{ username }}:
 
@@ -40,10 +43,6 @@ sshd:
 {% endfor %}
 
 nagios_permissions:
-  pkg.installed:
-    - pkgs:
-      - sudo
-
   file.managed:
     - name: /etc/sudoers.d/nagios
     - mode: 600
