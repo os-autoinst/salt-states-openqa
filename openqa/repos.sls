@@ -23,7 +23,7 @@ devel_openQA:
     - refresh: True
     - priority: 95
 
-{% if openqamodulesrepo %}
+{% if openqamodulesrepo is defined %}
 devel_openQA_Modules:
   pkgrepo.managed:
     - humanname: devel_openQA_Modules
