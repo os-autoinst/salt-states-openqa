@@ -1,6 +1,7 @@
 include:
  - openqa.repos
  - openqa.journal
+ - openqa.ntp
 
 server.packages:
   pkg.installed:
@@ -11,7 +12,6 @@ server.packages:
       - perl-Mojo-RabbitMQ-Client
       - perl-IPC-System-Simple
       - telegraf
-      - ntp
       - vsftpd
       - samba
       - postfix
@@ -105,21 +105,6 @@ telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
-
-/etc/ntp.conf:
-  file.managed:
-    - source:
-      - salt://ntpd/ntp.conf
-    - user: root
-    - group: root
-    - mode: 600
-    - require:
-      - pkg: server.packages
-
-ntpd:
-  service.running:
-    - watch:
-      - file: /etc/ntp.conf
 
 /etc/vsftpd.conf:
   file.managed:
