@@ -7,6 +7,7 @@
 {% set openqamodulesrepo = "SLE-12" %}
 {% set openqarepopath = "SLE_12_SP3" %}
 {% endif %}
+{%- if grains.osrelease < '15.2' %}
 telegraf-monitoring:
   pkgrepo.managed:
     - humanname: telegraf-monitoring
@@ -14,6 +15,7 @@ telegraf-monitoring:
     - gpgautoimport: True
     - refresh: True
     - priority: 105
+{%- endif %}
 
 devel_openQA:
   pkgrepo.managed:
