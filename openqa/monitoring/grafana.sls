@@ -1,3 +1,10 @@
+{% set dashboard_template_folder = '/var/lib/grafana/dashboards/' %}
+
+{% set nodenames = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
+{% set node_dashboardnames = (nodenames | map('regex_replace', '^(.*)$', 'worker-\\1.json'))|list %} #we name our dashboards "worker-$nodename.json"
+{% set manual_dashboardnames = ['webui.dashboard.json', 'webui.services.json'] %}
+{% set preserved_dashboards = node_dashboardnames + manual_dashboardnames %}
+
 server-monitoring-software.repo:
   pkgrepo.managed:
     - humanname: Server Monitoring Software
@@ -56,19 +63,33 @@ reverse-proxy-group:
   file.managed:
     - source: salt://openqa/monitoring/grafana/salt.yaml
 
-/var/lib/grafana/dashboards/webui.dashboard.json:
-  file.managed:
-    - source: salt://openqa/monitoring/grafana/webui.dashboard.json
+#remove all dashboards which are not preserved (see manual_dashboardnames above)
+#and that do not appear in the mine anymore (e.g. decommissioned workers)
+dashboard-cleanup:
+{% if preserved_dashboards|length > 0 %}
+  cmd.run: #this find statement only works if we have at least one dashboard to preserve
+    - cwd: {{dashboard_template_folder}}
+    - name: find -type f ! -name {{preserved_dashboards|join(' ! -name ')}} -exec rm {} \;
+{% else %}
+  file.directory: #if we have absolutely no node, just purge the folder
+    - name: {{dashboard_template_folder}}
+    - clean: True
+{% endif %}
 
-/var/lib/grafana/dashboards/webui.services.json:
+#create dashboards manually defined but managed by salt
+{% for manual_dashboardname in manual_dashboardnames %}
+{{"/".join([dashboard_template_folder, manual_dashboardname])}}: #works even if variables already contain slashes
   file.managed:
-    - source: salt://openqa/monitoring/grafana/webui.services.json
+    - source: salt://openqa/monitoring/grafana/{{manual_dashboardname}}
     - template: jinja
+{% endfor %}
 
-{% for worker, items in salt['mine.get']('roles:worker', 'grains.item', tgt_type='grain') | dictsort() -%}
-/var/lib/grafana/dashboards/worker-{{ items['nodename'] }}.json:
+#create dashboards for each worker contained in the mine
+#iterating over node_dashboardnames would be cleaner but we need the nodename itself for the template
+{% for nodename in nodenames -%}
+{{"/".join([dashboard_template_folder, dashboard_name])}}:
   file.managed:
     - source: salt://openqa/monitoring/grafana/worker.json.template
     - template: jinja
-    - worker: {{ items['nodename'] }}
+    - worker: {{nodename}}
 {% endfor %}
