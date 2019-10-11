@@ -33,7 +33,9 @@ worker.packages:
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT and TAP support
       - openvswitch # for TAP support
+{%- if grains.osrelease < '15.2' %}
       - SuSEfirewall2 # For TAP support and for other good reasons
+{%- endif %}
       - qemu: '>=2.3'
       - telegraf # to collect metrics
       {% if grains['osarch'] == 'ppc64le' %}
@@ -182,6 +184,7 @@ stop_and_disable_all_workers:
       - file: /etc/openqa/workers.ini
 {%- endif %}
 
+{%- if grains.osrelease < '15.2' %}
  {%- if not grains.get('noservices', False) %}
 # Configure firewall and watch on SuSEfirewall2 conf change
 SuSEfirewall2:
@@ -198,6 +201,7 @@ SuSEfirewall2:
   file.managed:
     - template: jinja
     - source: salt://openqa/SuSEfirewall2.conf
+{%- endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
 /dev/raw1394:
