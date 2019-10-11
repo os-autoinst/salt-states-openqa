@@ -2,8 +2,14 @@
 # yamllint disable rule:line-length
 image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
 
+stages:
+  - test-static
+  - test
+  - deploy
+
 # only really test this file itself so far
-test:
+test-yaml:
+  stage: test-static
   image: registry.opensuse.org/opensuse/leap:15.1
   script:
     - zypper -n in --no-recommends python3-yamllint python3-setuptools
@@ -11,35 +17,71 @@ test:
 
 variables:
   GIT_DEPTH: "3"
-  salt_call: "salt-call -l debug --local state.apply"
+  # make sure to apply workaround for
+  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
+  # within script sections as salt calls can take long
+  salt_call: "salt-call --local -l debug state.apply"
 
 .test_setup: &test_setup
-  - ln -s $(pwd -P)/ /srv/salt
-  - . /etc/os-release
-  - zypper -n ar -f http://download.suse.de/ibs/SUSE:/CA/${PRETTY_NAME// /_}/SUSE:CA.repo
-  - zypper -n in ca-certificates-suse
-  - git clone --depth 3 https://gitlab.suse.de/openqa/salt-pillars-openqa /srv/pillar
-  # make the high state match on the current container hostname as a
-  # simulated worker
-  - sed -i -e "s/openqaworker\*/$HOSTNAME/" /srv/pillar/top.sls
-  # workaround ASCII encoding errors
-  # see https://github.com/saltstack/salt/issues/48522#issuecomment-404226425
-  - export LANG=en_US.UTF-8
+  stage: test
+  before_script:
+    - ln -s $(pwd -P)/ /srv/salt
+    - . /etc/os-release
+    - zypper -n ar -f http://download.suse.de/ibs/SUSE:/CA/${PRETTY_NAME// /_}/SUSE:CA.repo
+    - zypper -n in ca-certificates-suse
+    - git clone --depth 3 https://gitlab.suse.de/openqa/salt-pillars-openqa /srv/pillar
+    # workaround ASCII encoding errors
+    # see https://github.com/saltstack/salt/issues/48522#issuecomment-404226425
+    - export LANG=en_US.UTF-8
+    # https://salt-formulas.readthedocs.io/en/latest/develop/testing-formulas.html#common-practices
+    - "echo 'noservices: True' >> /etc/salt/grains"
+
+test-general-mock:
+  <<: *test_setup
+  stage: test-static
+  script: $salt_call mock=True
+
+test-webui-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: webui' >> /etc/salt/grains"
+    - $salt_call mock=True
+
+test-worker-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: worker' >> /etc/salt/grains"
+    - $salt_call mock=True
+
+test-general-test:
+  <<: *test_setup
+  script: $salt_call test=True
+
+test-general:
+  <<: *test_setup
+  script:
+    - $salt_call
 
 test-webui:
-  before_script: *test_setup
+  <<: *test_setup
   script:
-    - sed -i -e "s/openqa.suse.de/$HOSTNAME/" top.sls
+    - "echo 'roles: webui' >> /etc/salt/grains"
+    - (
+    - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
+    - $salt_call
+    - )
     # file must exist after correct salt application and can be inspected
     # manually
-    - $salt_call; cat /etc/openqa/openqa.ini
+    - cat /etc/openqa/openqa.ini
 
-test-worker3:
-  before_script: *test_setup
+test-worker:
+  <<: *test_setup
   script:
+    - "echo 'roles: worker' >> /etc/salt/grains"
     # just pick any example worker for testing purposes
     - sed -i -e "s/openqaworker3/$HOSTNAME/" /srv/pillar/openqa/workerconf.sls
-    - sed -i -e "s/openqaworker[^']*/$HOSTNAME*/" top.sls
     - (
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
@@ -47,6 +89,7 @@ test-worker3:
     - cat /etc/openqa/workers.ini
 
 deploy:
+  stage: deploy
   only:
     - master@openqa/salt-pillars-openqa
     - master@openqa/salt-states-openqa
