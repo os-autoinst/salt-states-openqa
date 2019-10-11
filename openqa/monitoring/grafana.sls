@@ -87,7 +87,7 @@ dashboard-cleanup:
 #create dashboards for each worker contained in the mine
 #iterating over node_dashboardnames would be cleaner but we need the nodename itself for the template
 {% for nodename in nodenames -%}
-{{"/".join([dashboard_template_folder, dashboard_name])}}:
+{{"/".join([dashboard_template_folder, "worker-" + nodename + ".json"])}}: #same as for manual dashboards too
   file.managed:
     - source: salt://openqa/monitoring/grafana/worker.json.template
     - template: jinja
