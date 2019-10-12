@@ -8,6 +8,7 @@ include:
  - openqa.repos
  - openqa.journal
  - openqa.ntp
+ - sudo
 
 # Packages that must come from the openQA repo
 worker-openqa.packages:
@@ -38,6 +39,9 @@ worker.packages:
 {%- endif %}
       - qemu: '>=2.3'
       - telegraf # to collect metrics
+      {% if grains['osarch'] == 'x86_64' %}
+      - qemu-x86
+      {% endif %}
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
       - qemu-ipxe
@@ -54,6 +58,10 @@ worker.packages:
     - require:
       - pkg: worker-openqa.packages
 
+nfs-client:
+  pkg.installed
+
+{%- if not grains.get('noservices', False) %}
 # Ensure NFS share is mounted and setup on boot
 /var/lib/openqa/share:
   mount.mounted:
@@ -62,6 +70,7 @@ worker.packages:
     - opts: ro
     - require:
       - pkg: worker-openqa.packages
+{%- endif %}
 
 ## setup workers.ini based on info in workerconf pillar
 ## pillar must contain the following
@@ -282,12 +291,15 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - require:
       - pkg: worker.packages
 
+
 # TAPSCRIPT requires _openqa-worker to be able to sudo
 /etc/sudoers.d/_openqa-worker:
   file.managed:
     - mode: 600
     - contents:
       - '_openqa-worker ALL=(ALL) NOPASSWD: ALL'
+    - require:
+      - sudo
 
 /etc/telegraf/telegraf.conf:
   file.managed:
