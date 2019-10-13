@@ -278,7 +278,8 @@ grub-conf:
 'grub2-mkconfig > /boot/grub2/grub.cfg':
   cmd.run:
     - onchanges:
-      - file: /etc/default/grub
+      - augeas: grub-conf
+    - onlyif: grub2-probe /boot
 
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability
 {% set qemu_arch=grains['osarch'] %}
