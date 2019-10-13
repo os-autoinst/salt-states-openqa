@@ -280,7 +280,7 @@ grub-conf:
     - onchanges:
       - file: /etc/default/grub
 
-# TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
+# TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability
 {% set qemu_arch=grains['osarch'] %}
 {% if qemu_arch == 'ppc64le' %}
 {% set qemu_arch = 'ppc64' %}
