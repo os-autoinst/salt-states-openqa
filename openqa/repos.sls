@@ -24,6 +24,7 @@ devel_openQA:
     - gpgautoimport: True
     - refresh: True
     - priority: 95
+    - keeppackages: True
 
 {% if openqamodulesrepo is defined %}
 devel_openQA_Modules:
@@ -33,4 +34,5 @@ devel_openQA_Modules:
     - gpgautoimport: True
     - refresh: True
     - priority: 90
+    - keeppackages: True
 {% endif %}
