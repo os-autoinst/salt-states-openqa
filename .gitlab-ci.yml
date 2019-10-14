@@ -121,4 +121,8 @@ deploy:
            git pull);
        done
        )"
+    # workaround for https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
+    - (
+    - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - ssh $TARGET "salt \* state.highstate"
+    - )
