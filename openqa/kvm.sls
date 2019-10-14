@@ -38,10 +38,12 @@ kvm.packages:
     - require:
       - pkgrepo: kvm.repo
 
+{%- if not grains.get('noservices', False) %}
 kvm.auto-restart-libvirtd-timer-started:
   service.running:
     - name: restart-libvirtd.timer
     - enable: True
     - require:
       - pkg: kvm.packages
+{%- endif %}
 {% endif %}

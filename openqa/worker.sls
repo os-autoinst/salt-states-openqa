@@ -7,6 +7,8 @@
 include:
  - openqa.repos
  - openqa.journal
+ - openqa.ntp
+ - sudo
 
 # Packages that must come from the openQA repo
 worker-openqa.packages:
@@ -32,10 +34,14 @@ worker.packages:
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT and TAP support
       - openvswitch # for TAP support
+{%- if grains.osrelease < '15.2' %}
       - SuSEfirewall2 # For TAP support and for other good reasons
+{%- endif %}
       - qemu: '>=2.3'
-      - ntp
       - telegraf # to collect metrics
+      {% if grains['osarch'] == 'x86_64' %}
+      - qemu-x86
+      {% endif %}
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
       - qemu-ipxe
@@ -52,6 +58,10 @@ worker.packages:
     - require:
       - pkg: worker-openqa.packages
 
+nfs-client:
+  pkg.installed
+
+{%- if not grains.get('noservices', False) %}
 # Ensure NFS share is mounted and setup on boot
 /var/lib/openqa/share:
   mount.mounted:
@@ -60,6 +70,7 @@ worker.packages:
     - opts: ro
     - require:
       - pkg: worker-openqa.packages
+{%- endif %}
 
 ## setup workers.ini based on info in workerconf pillar
 ## pillar must contain the following
@@ -148,6 +159,7 @@ worker.packages:
     - require:
       - pkg: worker-openqa.packages
 
+{%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
 {% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0)) %}
 {% set i = i+1 %}
@@ -179,7 +191,10 @@ stop_and_disable_all_workers:
     - name: systemctl stop openqa-worker@{1..100}; systemctl disable openqa-worker@{1..100}
     - onchanges:
       - file: /etc/openqa/workers.ini
+{%- endif %}
 
+{%- if grains.osrelease < '15.2' %}
+ {%- if not grains.get('noservices', False) %}
 # Configure firewall and watch on SuSEfirewall2 conf change
 SuSEfirewall2:
   service.running:
@@ -188,12 +203,14 @@ SuSEfirewall2:
       - file: /etc/sysconfig/SuSEfirewall2
     - require:
       - pkg: worker.packages
+ {%- endif %}
 
 # os-autoinst needs to upload logs to rather random ports and ovs needs configuration
 /etc/sysconfig/SuSEfirewall2:
   file.managed:
     - template: jinja
     - source: salt://openqa/SuSEfirewall2.conf
+{%- endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
 /dev/raw1394:
@@ -202,11 +219,13 @@ SuSEfirewall2:
 {% endif %}
 
 {% if grains['osarch'] == 'ppc64le' %}
+{%- if not grains.get('noservices', False) %}
 # As per bsc#1041747 we need a work around
 # this service is provided by powerpc-utils
 smt_off:
   service.running:
     - enable: True
+{%- endif %}
 
 /etc/modules-load.d/kvm.conf:
   file.managed:
@@ -224,6 +243,7 @@ apparmor.removed:
   pkg.purged:
     - name: apparmor
 
+{%- if not grains.get('noservices', False) %}
 apparmor.disabled:
   service.dead:
     - name: apparmor
@@ -232,6 +252,7 @@ apparmor.disabled:
 apparmor.masked:
   service.masked:
     - name: apparmor
+{%- endif %}
 
 btrfs-nocow:
   cmd.run:
@@ -257,9 +278,10 @@ grub-conf:
 'grub2-mkconfig > /boot/grub2/grub.cfg':
   cmd.run:
     - onchanges:
-      - file: /etc/default/grub
+      - augeas: grub-conf
+    - onlyif: grub2-probe /boot
 
-# TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability - Denis to investigate moving to openvswitch
+# TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability
 {% set qemu_arch=grains['osarch'] %}
 {% if qemu_arch == 'ppc64le' %}
 {% set qemu_arch = 'ppc64' %}
@@ -270,12 +292,15 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - require:
       - pkg: worker.packages
 
+
 # TAPSCRIPT requires _openqa-worker to be able to sudo
 /etc/sudoers.d/_openqa-worker:
   file.managed:
     - mode: 600
     - contents:
       - '_openqa-worker ALL=(ALL) NOPASSWD: ALL'
+    - require:
+      - sudo
 
 /etc/telegraf/telegraf.conf:
   file.managed:
@@ -297,22 +322,9 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - require:
       - pkg: worker.packages
 
+{%- if not grains.get('noservices', False) %}
 telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
-
-/etc/ntp.conf:
-  file.managed:
-    - source:
-      - salt://ntpd/ntp.conf
-    - user: root
-    - group: root
-    - mode: 600
-    - require:
-      - pkg: worker.packages
-
-ntpd:
-  service.running:
-    - watch:
-      - file: /etc/ntp.conf
+{%- endif %}

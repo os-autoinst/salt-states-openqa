@@ -1,4 +1,5 @@
 # slenkins and autoyast use Open vSwitch for it's tap devices and such
+{%- if not grains.get('noservices', False) %}
 openvswitch:
   service.running:
     - enable: True
@@ -6,11 +7,17 @@ openvswitch:
       - file: /etc/systemd/system/openvswitch.service
     - watch:
       - file: /etc/sysconfig/network/ifcfg-br1
+{%- endif %}
 
+wicked:
+  pkg.installed
+
+{%- if not grains.get('noservices', False) %}
 wicked ifup br1:
   cmd.wait:
     - watch:
       - file: /etc/sysconfig/network/ifcfg-br1
+{%- endif %}
 
 # Remove old openvswitch systemd override
 /etc/systemd/system/openvswitch.service:
@@ -125,6 +132,7 @@ wicked ifup br1:
       - pkg: worker-openqa.packages
 
 # Enable os-autoinst-openvswitch helper or restart it if ifcfg-br1 and/or gre_tunnel_preup.sh has changed
+{%- if not grains.get('noservices', False) %}
 os-autoinst-openvswitch:
   service.running:
     - enable: True
@@ -133,5 +141,6 @@ os-autoinst-openvswitch:
     - onchanges_any:
       - file: /etc/sysconfig/network/ifcfg-br1
       - file: /etc/wicked/scripts/gre_tunnel_preup.sh
+{%- endif %}
 
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc

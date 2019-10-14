@@ -1,6 +1,7 @@
 include:
  - openqa.repos
  - openqa.journal
+ - openqa.ntp
 
 server.packages:
   pkg.installed:
@@ -11,7 +12,6 @@ server.packages:
       - perl-Mojo-RabbitMQ-Client
       - perl-IPC-System-Simple
       - telegraf
-      - ntp
       - vsftpd
       - samba
       - postfix
@@ -101,25 +101,12 @@ server.packages:
     - require:
       - pkg: server.packages
 
+{%- if not grains.get('noservices', False) %}
 telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
-
-/etc/ntp.conf:
-  file.managed:
-    - source:
-      - salt://ntpd/ntp.conf
-    - user: root
-    - group: root
-    - mode: 600
-    - require:
-      - pkg: server.packages
-
-ntpd:
-  service.running:
-    - watch:
-      - file: /etc/ntp.conf
+{%- endif %}
 
 /etc/vsftpd.conf:
   file.managed:
@@ -131,10 +118,12 @@ ntpd:
     - require:
       - pkg: server.packages
 
+{%- if not grains.get('noservices', False) %}
 vsftpd:
   service.running:
     - watch:
       - file: /etc/vsftpd.conf
+{%- endif %}
 
 /etc/sysconfig/mail:
   file.managed:
@@ -148,8 +137,10 @@ vsftpd:
     - source:
       - salt://postfix/sysconfig/postfix
 
+{%- if not grains.get('noservices', False) %}
 postfix:
   service.running:
     - watch:
       - file: /etc/sysconfig/mail
       - file: /etc/sysconfig/postfix
+{%- endif %}

@@ -1,15 +1,100 @@
 ---
 # yamllint disable rule:line-length
-image: registry.opensuse.org/opensuse/infrastructure/images/opensuse_leap_15.0/images/opensuse/leap:15.0
+image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
+
+stages:
+  - test-static
+  - test
+  - deploy
 
 # only really test this file itself so far
-test:
+test-yaml:
+  stage: test-static
   image: registry.opensuse.org/opensuse/leap:15.1
   script:
     - zypper -n in --no-recommends python3-yamllint python3-setuptools
     - yamllint .gitlab-ci.yml
 
+variables:
+  GIT_DEPTH: "3"
+  # make sure to apply workaround for
+  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
+  # within script sections as salt calls can take long
+  salt_call: "salt-call --local -l debug state.apply"
+
+.test_setup: &test_setup
+  stage: test
+  before_script:
+    - ln -s $(pwd -P)/ /srv/salt
+    - . /etc/os-release
+    - zypper -n ar -f http://download.suse.de/ibs/SUSE:/CA/${PRETTY_NAME// /_}/SUSE:CA.repo
+    - zypper -n in ca-certificates-suse
+    - git clone --depth 3 https://gitlab.suse.de/openqa/salt-pillars-openqa /srv/pillar
+    # workaround ASCII encoding errors
+    # see https://github.com/saltstack/salt/issues/48522#issuecomment-404226425
+    - export LANG=en_US.UTF-8
+    # https://salt-formulas.readthedocs.io/en/latest/develop/testing-formulas.html#common-practices
+    - "echo 'noservices: True' >> /etc/salt/grains"
+
+test-general-mock:
+  <<: *test_setup
+  stage: test-static
+  script: $salt_call mock=True
+
+test-webui-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: webui' >> /etc/salt/grains"
+    - $salt_call mock=True
+
+test-worker-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: worker' >> /etc/salt/grains"
+    # Ensure all salt state internal requirements to be able to execute all
+    # even in a mocked environment where the dependencies would not be
+    # automatically pulled in. This is not a problem for non-mocked
+    # environments because of correctly specified package dependencies
+    - zypper -n in python3-augeas
+    - $salt_call mock=True
+
+test-general-test:
+  <<: *test_setup
+  script: $salt_call test=True
+
+test-general:
+  <<: *test_setup
+  script:
+    - $salt_call
+
+test-webui:
+  <<: *test_setup
+  script:
+    - "echo 'roles: webui' >> /etc/salt/grains"
+    - (
+    - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
+    - $salt_call
+    - )
+    # file must exist after correct salt application and can be inspected
+    # manually
+    - cat /etc/openqa/openqa.ini
+
+test-worker:
+  <<: *test_setup
+  script:
+    - "echo 'roles: worker' >> /etc/salt/grains"
+    # just pick any example worker for testing purposes
+    - sed -i -e "s/openqaworker3/$HOSTNAME/" /srv/pillar/openqa/workerconf.sls
+    - (
+    - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
+    - $salt_call
+    - )
+    - cat /etc/openqa/workers.ini
+
 deploy:
+  stage: deploy
   only:
     - master@openqa/salt-pillars-openqa
     - master@openqa/salt-states-openqa

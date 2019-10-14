@@ -1,13 +1,18 @@
+include:
+ - sudo
+
 /etc/ssh/sshd_config:
   file.managed:
     - source: salt://sshd/sshd_config
 
+{%- if not grains.get('noservices', False) %}
 sshd:
   service.running:
     - enable: True
     - reload: True
     - watch:
       - file: /etc/ssh/sshd_config
+{%- endif %}
 
 {% for username, details in pillar.get('users', {}).items() %}
 {{ username }}:
@@ -36,16 +41,16 @@ sshd:
     - mode: 600
     - contents:
       - '{{ username }} ALL=(ALL) NOPASSWD: ALL'
+    - require:
+      - sudo
 
 {% endfor %}
 
 nagios_permissions:
-  pkg.installed:
-    - pkgs:
-      - sudo
-
   file.managed:
     - name: /etc/sudoers.d/nagios
     - mode: 600
     - contents:
       - 'nagios ALL=(ALL) NOPASSWD: /usr/sbin/zypp-refresh,/usr/bin/zypper ref,/usr/bin/zypper sl,/usr/bin/zypper --xmlout --non-interactive list-updates -t package -t patch'
+    - require:
+      - sudo

@@ -1,3 +1,6 @@
+cronie:
+  pkg.installed
+
 /etc/logrotate.d/postgresql:
   file.managed:
     - source: salt://etc/master/logrotate.d/postgresql

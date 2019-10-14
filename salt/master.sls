@@ -3,16 +3,6 @@ saltmaster.packages:
     - pkgs:
       - salt-master
 
-git -C /srv/salt pull >/dev/null 2>&1:
-  cron.absent:
-    - user: root
-    - minute: '*/5'
-    
-git -C /srv/pillar pull >/dev/null 2>&1:
-  cron.absent:
-    - user: root
-    - minute: '*/5'
-
 # see https://build.opensuse.org/package/view_file/openSUSE:Leap:15.1/salt/use-adler32-algorithm-to-compute-string-checksums.patch
 /etc/salt/master:
   file.replace:
