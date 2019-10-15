@@ -26,7 +26,6 @@ base:
   'openqaworker-arm-*':
     - openqa.nvme_store
     - haveged
-    - nscd
   'openqa-monitor.qa.suse.de':
     - openqa.monitoring.grafana
     - openqa.monitoring.influxdb
