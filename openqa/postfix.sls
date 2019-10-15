@@ -1,3 +1,4 @@
+{%- if not grains.get('noservices', False) %}
 postfix:
   service.running:
     - name: postfix
@@ -6,6 +7,7 @@ postfix:
     - watch:
       - module: configure_relay
       - alias: root_mail_forward
+{%- endif %}
 
 configure_relay:
   module.run:
