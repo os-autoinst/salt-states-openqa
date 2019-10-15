@@ -18,5 +18,3 @@
 
 # osukup: poo#41441
 */5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-15-{,SP?-}Installer-DVD-s390x-GM-DVD1/ ; do ln -sf $i ; done)
-
-*/5    * * * *   root     cd /opt/openqa-scripts && (git fetch --quiet --all && git reset --quiet --hard origin/master)
