@@ -10,7 +10,8 @@ openvswitch:
 {%- endif %}
 
 wicked:
-  pkg.installed
+  pkg.installed:
+    - refresh: False
 
 {%- if not grains.get('noservices', False) %}
 wicked ifup br1:

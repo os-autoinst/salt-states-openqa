@@ -1,5 +1,6 @@
 ntp:
-  pkg.installed
+  pkg.installed:
+    - refresh: False
 
 /etc/ntp.conf:
   file.managed:

@@ -31,7 +31,7 @@ kvm.repo:
 
 kvm.packages:
   pkg.installed:
-    - refresh: True
+    - refresh: False
     - pkgs:
       - auto-restart-libvirtd
     - fromrepo: QSF

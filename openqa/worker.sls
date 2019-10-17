@@ -13,7 +13,7 @@ include:
 # Packages that must come from the openQA repo
 worker-openqa.packages:
   pkg.installed:
-    - refresh: True
+    - refresh: False
     - pkgs:
       - openQA-worker
       - xterm-console
@@ -22,7 +22,7 @@ worker-openqa.packages:
 # Packages that can come from anywhere
 worker.packages:
   pkg.installed:
-    - refresh: True
+    - refresh: False
     - pkgs:
       - x3270 # for s390x backend
       - icewm-lite # for localXvnc console
@@ -59,7 +59,8 @@ worker.packages:
       - pkg: worker-openqa.packages
 
 nfs-client:
-  pkg.installed
+  pkg.installed:
+    - refresh: False
 
 {%- if not grains.get('noservices', False) %}
 # Ensure NFS share is mounted and setup on boot
@@ -262,7 +263,8 @@ btrfs-nocow:
     - onlyif: which btrfs && btrfs filesystem df /var/lib/openqa/cache
 
 python3-augeas:
-  pkg.installed
+  pkg.installed:
+    - refresh: False
 
 grub-conf:
   augeas.change:

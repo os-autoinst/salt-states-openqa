@@ -2,18 +2,18 @@ geekotest:
   user:
     - present
 
-git:
-  pkg.installed
-
-python3:
-  pkg.installed
-
 /opt/openqa-trigger-from-ibs:
   file.directory:
     - name: /opt/openqa-trigger-from-ibs
     - user: geekotest
 
 openqa-trigger-from-ibs:
+  pkg.installed:
+    - refresh: False
+    - pkgs:
+      - git
+      - python3
+
   git.latest:
     - name: https://gitlab.suse.de/openqa/openqa-trigger-from-ibs
     - target: /opt/openqa-trigger-from-ibs

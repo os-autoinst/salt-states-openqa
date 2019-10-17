@@ -2,7 +2,8 @@
 # and https://github.com/aplanas/salt/commit/0315a25cf38a4c001008a3e68917b4611e368197
 {%- if grains.osrelease < '15.2' %}
 patch:
-  pkg.installed
+  pkg.installed:
+    - refresh: False
 
 /usr/lib/python{{ grains['pythonversion'][0:2]|join('.') }}/site-packages/salt/grains/core.py:
   file.patch:

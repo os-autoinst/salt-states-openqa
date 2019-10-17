@@ -1,2 +1,3 @@
 sudo:
-  pkg.installed
+  pkg.installed:
+    - refresh: False
