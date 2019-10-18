@@ -1,17 +1,17 @@
 {% if 'Tumbleweed' in grains['oscodename'] %}
-{% set openqarepopath = "openSUSE_Tumbleweed" %}
+{% set repo = "openSUSE_Tumbleweed" %}
 {% elif 'Leap' in grains['oscodename'] %}
 {% set openqamodulesrepo = "Leap:/$releasever" %}
-{% set openqarepopath = "openSUSE_Leap_$releasever" %}
+{% set repo = "openSUSE_Leap_$releasever" %}
 {% elif 'SP3' in grains['oscodename'] %}
 {% set openqamodulesrepo = "SLE-12" %}
-{% set openqarepopath = "SLE_12_SP3" %}
+{% set repo = "SLE_12_SP3" %}
 {% endif %}
 {%- if grains.osrelease < '15.2' %}
 telegraf-monitoring:
   pkgrepo.managed:
     - humanname: telegraf-monitoring
-    - baseurl: https://download.opensuse.org/repositories/devel:/languages:/go/{{ openqarepopath }}/
+    - baseurl: https://download.opensuse.org/repositories/devel:/languages:/go/{{ repo }}/
     - gpgautoimport: True
     - refresh: True
     - priority: 105
@@ -27,10 +27,20 @@ telegraf-monitoring:
 
 {%- endif %}
 
+SUSE_CA:
+  pkgrepo.managed:
+    - humanname: SUSE_CA
+    - baseurl: http://download.suse.de/ibs/SUSE:/CA/{{ repo }}/
+
+/etc/zypp/repos.d/SUSE_CA.repo:
+  file.append:
+    - text:
+      - gpgautoimport=1
+
 devel_openQA:
   pkgrepo.managed:
     - humanname: devel_openQA
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/{{ openqarepopath }}/
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA/{{ repo }}/
     - gpgautoimport: True
     - refresh: True
     - priority: 95
@@ -46,7 +56,7 @@ devel_openQA:
 devel_openQA_Modules:
   pkgrepo.managed:
     - humanname: devel_openQA_Modules
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/{{ openqamodulesrepo }}/{{ openqarepopath }}/
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/{{ openqamodulesrepo }}/{{ repo }}/
     - gpgautoimport: True
     - refresh: True
     - priority: 90
