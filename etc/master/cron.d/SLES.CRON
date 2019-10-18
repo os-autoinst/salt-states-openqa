@@ -2,13 +2,6 @@
 # Check: https://gitlab.suse.de/openqa/salt-states-openqa
 # if you need to do something here urgently, ask in #testing irc channel
 #
-# okurz: 2017-01-11: Changed interval from every 6h to every some minutes as
-# openqa-iso-sync-sles now checks for builds being completed on IBS and only
-# syncing complete builds
-#-0 */6 * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles
-# okurz: 2017-07-18: Enabled explicit syncing of sle12 and sle15
-# okurz: 2017-08-23: Appending all output to /var/log/openqa_rsync.log and not relying on mixed output in log and mail to user
-# Disabled, now managed at https://openqa.suse.de/admin/obs_rsync/SUSE:SLE-15-SP2:GA:TEST -*/5 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles sle15_sp2 >> /var/log/openqa_rsync.log 2>&1
 -*/5 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles sle12_sp5 >> /var/log/openqa_rsync.log 2>&1
 -*/4 * * * * geekotest /opt/openqa-scripts/openqa-iso-sync-staging >> /var/log/openqa_rsync_staging.log 2>&1
 -13 */4 * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-vmdp >> /var/log/openqa_rsync.log 2>&1
@@ -16,8 +9,6 @@
 -21 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-jeos >> /var/log/openqa_rsync.log 2>&1
 -*/15 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-ses >> /var/log/openqa_rsync.log 2>&1
 -*/15    * * * *   geekotest     env updateall=1 /usr/share/openqa/script/fetchneedles
-# mloviska: sync SLERT12, let's wait for sp5
-#-30 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles sle12_sp5_rt >> /var/log/openqa_rsync.log 2>&1
 # sometimes gitlab.s.d is unresponsive and there are new needles coming in and we did not pull in time before someone created new needles from the webui so make sure this is synced at least once a day
 47 3 * * * geekotest (cd /var/lib/openqa/share/tests/sle/products/sle/needles && git pull --rebase >/dev/null && git push origin HEAD:master >/dev/null 2>&1)
 
@@ -27,5 +18,3 @@
 
 # osukup: poo#41441
 */5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-15-{,SP?-}Installer-DVD-s390x-GM-DVD1/ ; do ln -sf $i ; done)
-
-*/5    * * * *   root     cd /opt/openqa-scripts && (git fetch --quiet --all && git reset --quiet --hard origin/master)
