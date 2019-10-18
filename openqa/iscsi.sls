@@ -1,7 +1,8 @@
 # iSCSI setup for openqaworker - currently only supports openqaworker2
 
 qemu:
-  pkg.installed
+  pkg.installed:
+    - refresh: False
 
 # Coolo says we shouldn't do this - kernel should be packaged
 /usr/share/qemu/ipxe.lkrn:
@@ -12,7 +13,7 @@ qemu:
 # Install iscsi target package
 tgt:
   pkg.installed:
-    - refresh: 1
+    - refresh: False
 
 # Create openqa-iscsi-disk file if it doesn't exist
 dd if=/dev/zero of=/opt/openqa-iscsi-disk seek=1M bs=20480 count=1:

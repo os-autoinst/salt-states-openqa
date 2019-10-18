@@ -81,7 +81,7 @@ nrpe:
 
 worker-monitoring.packages:
   pkg.installed:
-    - refresh: True
+    - refresh: False
     - pkgs:
       - xinetd
       - nrpe

@@ -1,5 +1,6 @@
 cronie:
-  pkg.installed
+  pkg.installed:
+    - refresh: False
 
 /etc/logrotate.d/postgresql:
   file.managed:

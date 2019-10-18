@@ -5,7 +5,7 @@ include:
 
 server.packages:
   pkg.installed:
-    - refresh: True
+    - refresh: False
     - pkgs:
       - openQA
       - apache2
