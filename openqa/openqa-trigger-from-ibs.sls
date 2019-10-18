@@ -2,9 +2,11 @@ geekotest:
   user:
     - present
 
-/opt/openqa-trigger-from-ibs:
+{% set dir = '/opt/openqa-trigger-from-ibs/' %}
+{% set script_test = '[[ -f print_openqa.sh && -f print_rsync_iso.sh && -f print_rsync_repo.sh && -f read_files.sh ]]' %}
+{{ dir }}:
   file.directory:
-    - name: /opt/openqa-trigger-from-ibs
+    - name: {{ dir }}
     - user: geekotest
 
 openqa-trigger-from-ibs:
@@ -16,17 +18,18 @@ openqa-trigger-from-ibs:
 
   git.latest:
     - name: https://gitlab.suse.de/openqa/openqa-trigger-from-ibs
-    - target: /opt/openqa-trigger-from-ibs
+    - target: {{ dir }}
     - user: geekotest
 
-SUSE:SLE-15-SP2:GA:TEST:
+{% macro scriptgen(prj) -%}
+{{ prj }}:
   cmd.run:
-    - name: su geekotest -c 'mkdir -p SUSE:SLE-15-SP2:GA:TEST && python3 script/scriptgen.py SUSE:SLE-15-SP2:GA:TEST'
-    - cwd: /opt/openqa-trigger-from-ibs/
+    - name: su geekotest -c 'mkdir -p {{ prj }} && python3 script/scriptgen.py {{ prj }}'
+    - cwd: {{ dir }}
+{%- endmacro %}
+
+{{ scriptgen('SUSE:SLE-15-SP2:GA:TEST') }}
 
 {% for i in ['A','B','C','D','E','F','G','H','S','Y','V'] %}
-SUSE:SLE-15-SP2:GA:Staging:{{ i }}:
-  cmd.run:
-    - name: su geekotest -c 'mkdir -p SUSE:SLE-15-SP2:GA:Staging:{{ i }} && python3 script/scriptgen.py SUSE:SLE-15-SP2:GA:Staging:{{ i }}'
-    - cwd: /opt/openqa-trigger-from-ibs/
+{{ scriptgen('SUSE:SLE-15-SP2:GA:Staging:' + i) }}
 {% endfor %}
