@@ -19,7 +19,7 @@
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP5:GA
             description: SLE12 staging dashboard
           2:
-            url: https://build.suse.de/project/staging_projects/SUSE:SLE-15-SP1:GA
+            url: https://build.suse.de/project/staging_projects/SUSE:SLE-15-SP2:GA
             description: SLE15 staging dashboard
           3:
             url: https://build.suse.de/project/staging_projects/SUSE:SLE-12-SP3:Update:Products:CASP30
@@ -31,11 +31,11 @@
       - template: jinja
         links_docbox:
           1:
-            url: http://os-autoinst.github.io/openQA/
+            url: http://open.qa
             description: » More information regarding openQA
           2:
-            url: http://openqa-monitoring.qa.suse.de:3000/d/Bo7E4Qomk/openqa-availability
-            description: » Current openQA status
+            url: https://stats.openqa-monitor.qa.suse.de
+            description: » Current openQA monitoring status
           3:
-            url: https://wiki.microfocus.net/index.php/OpenQA
+            url: https://wiki.suse.net/index.php/OpenQA
             description: » Description of internal setup and administration
