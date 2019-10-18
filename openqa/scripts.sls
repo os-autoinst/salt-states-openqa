@@ -1,15 +1,3 @@
-https://gitlab.suse.de/openqa/scripts.git:
-  git.cloned:
-    - target: /opt/openqa-scripts
-
-openqa_scripts_config:
-  # allow deployment to checked out branch from
-  # https://gitlab.suse.de/openqa/scripts/blob/master/.gitlab-ci.yml
-  git.config_set:
-    - name: receive.denyCurrentBranch
-    - value: ignore
-    - repo: /opt/openqa-scripts
-
 {% for machine, scripts in pillar.get('scripts', {}).items() %}
   {% for script, content in scripts.items() %}
 /etc/openqa/scripts/{{ machine }}_{{ script }}.sh:

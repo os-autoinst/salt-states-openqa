@@ -144,3 +144,15 @@ postfix:
       - file: /etc/sysconfig/mail
       - file: /etc/sysconfig/postfix
 {%- endif %}
+
+https://gitlab.suse.de/openqa/scripts.git:
+  git.cloned:
+    - target: /opt/openqa-scripts
+
+openqa_scripts_config:
+  # allow deployment to checked out branch from
+  # https://gitlab.suse.de/openqa/scripts/blob/master/.gitlab-ci.yml
+  git.config_set:
+    - name: receive.denyCurrentBranch
+    - value: ignore
+    - repo: /opt/openqa-scripts
