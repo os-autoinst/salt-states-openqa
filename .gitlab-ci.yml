@@ -35,6 +35,8 @@ variables:
     - export LANG=en_US.UTF-8
     # https://salt-formulas.readthedocs.io/en/latest/develop/testing-formulas.html#common-practices
     - "echo 'noservices: True' >> /etc/salt/grains"
+    # speed up salt a lot, see https://github.com/saltstack/salt/issues/48773#issuecomment-443599880
+    - echo -e 'disable_grains:\n  - esxi\n\ndisable_modules:\n  - vsphere' >> /etc/salt/minion
 
 test-general-mock:
   <<: *test_setup
