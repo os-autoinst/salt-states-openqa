@@ -15,6 +15,16 @@ telegraf-monitoring:
     - gpgautoimport: True
     - refresh: True
     - priority: 105
+
+# workaround for https://progress.opensuse.org/issues/58331
+# not using ini.options_present due to
+# https://github.com/saltstack/salt/issues/33669
+/etc/zypp/repos.d/telegraf-monitoring.repo:
+  file.append:
+    - text:
+      - gpgautoimport=1
+      - keeppackages=1
+
 {%- endif %}
 
 devel_openQA:
@@ -26,6 +36,12 @@ devel_openQA:
     - priority: 95
     - keeppackages: True
 
+/etc/zypp/repos.d/devel_openQA.repo:
+  file.append:
+    - text:
+      - gpgautoimport=1
+      - keeppackages=1
+
 {% if openqamodulesrepo is defined %}
 devel_openQA_Modules:
   pkgrepo.managed:
@@ -35,4 +51,10 @@ devel_openQA_Modules:
     - refresh: True
     - priority: 90
     - keeppackages: True
+
+/etc/zypp/repos.d/devel_openQA_Modules.repo:
+  file.append:
+    - text:
+      - gpgautoimport=1
+      - keeppackages=1
 {% endif %}

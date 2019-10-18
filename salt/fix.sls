@@ -4,9 +4,15 @@
 patch:
   pkg.installed
 
-/usr/lib/python{{ grains['pythonversion'][0:2]|join('.') }}/site-packages/salt/grains/core.py:
+{% set pythonversion = grains['pythonversion'][0:2]|join('.') %}
+# in never versions of salt file.patch unfortunately triggers ugly error
+# messages in the minion log, see https://github.com/saltstack/salt/issues/52329
+/usr/lib/python{{ pythonversion }}/site-packages/salt/modules/file.py:
+  file.patch:
+    - source: salt://salt/gh_saltstack_salt_52329_error_reverse_patch_output.patch
+
+/usr/lib/python{{ pythonversion }}/site-packages/salt/grains/core.py:
   file.patch:
     - source: salt://salt/ignore_host_not_found.patch
-    - hash: md5=8dd403bafbf324fb2d83fb0b5b9b38a1
     - strip: 1
 {%- endif %}
