@@ -1,7 +1,8 @@
-Richards Scratchpad recording install steps on worker3/4 
+Originally based on Richards Scratchpad recording install steps on worker3/4 
 Anything not marked with a * needs to either be saltified or manually done on openqaworker1 and 2 first, then all workers
 
-Plan
+## Plan
+
  - tune BIOS
  - install Leap
  - minimal install
@@ -13,9 +14,9 @@ Plan
   - Add openQA Repos 
   - worker- Install worker Packages os-autoinst openqa-worker openqa-common
   - worker- install qemu if needed
-  - worker- Configure NFSv4 mount (suse workers -> openqa.suse.de)
+  - worker- Configure NFSv4 mount (workers -> webUI)
 ######## NO  - worker- Configure FSCache/cacchefilesd service
-  - worker- Configure workers.ini (suse workers -> openqa.suse.de)
+  - worker- Configure workers.ini (workers -> webUI)
   - worker- Configure client.conf (correct keys for suse/openSUSE)
   - worker- Configure worker services
   - Configure sshd (no direct root access)
@@ -51,39 +52,33 @@ Firewall disabled (default)
 SSH enabled (default)
 Save Autoyast (not default)
 
-Reboot, horrific performance, md1_resyncing, KEEP AN EYE
+## Setup of web UI
 
-TODO - Serial Console, not redirecting to sol
-
-openqa.suse.de - added autorefresh to SLE_12_NPI repo
- #installed salt-master from SLE_12_NPI
+ #install salt-master
+ host="${host:-"openqa.suse.de"}"
  git clone https://gitlab.suse.de/openqa/salt-states-openqa.git /srv/salt
- systemctl enable salt-master.service
- systemctl start salt-master.service
- systemctl status salt-master.service
- echo "10.160.0.207 salt salt.openqa.suse.de" >> /etc/hosts
- zypper in salt-minion
- systemctl enable salt-minion
- systemctl start salt-minion
- salt-key -a openqa.suse.de
- salt 'openqa.suse.de' state.highstate
+ systemctl enable --now salt-master
+ systemctl status salt-master
+ echo "10.160.0.207 salt salt.${host}" >> /etc/hosts
+ zypper -n in salt-minion
+ systemctl enable --now salt-minion
+ salt-key -a ${host}
+ salt ${host} state.highstate
  #setup /srv/salt/.git/hooks/post-merge to log to /var/log/salt/githook_highstate.log
  git clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git /srv/pillar
  #setup /srv/pillar/.git/hooks/post-merge to log to /var/log/salt/githook_pillar.log
- 
-workers # Below script moved to autoyast.xml
- echo "10.160.0.207 salt salt.openqa.suse.de" >> /etc/hosts
- zypper -n in salt-minion
- zypper -n rm -u mariadb 
- systemctl enable salt-minion
- systemctl start salt-minion
- # on master, salt-key -a <hostname> then salt '*' state.highstate
+
+## Setup of workers
+
+Below script moved to autoyast.xml for openqa.suse.de:
+
+
+```
+echo "10.160.0.207 salt salt.openqa.suse.de" >> /etc/hosts
+zypper -n in salt-minion
+systemctl enable --now salt-minion
+# on master, salt-key -a <hostname> then salt '*' state.highstate
+```
  
 Reinstall workers using autoyast
 ifcfg=*=dhcp autoyast=https://openqa.suse.de/assets/tmp/autoinst.xml console=tty0 console=ttyS1,115200
-FIX AUTOYAST FILE
-
-fun salt snippits
- salt 'openqaworker*' status.loadavg
- 
-
