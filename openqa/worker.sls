@@ -330,3 +330,13 @@ telegraf:
     - watch:
       - file: /etc/telegraf/telegraf.conf
 {%- endif %}
+
+/etc/sysctl.d/50-vm-bytes.conf:
+  file.managed:
+    - source:
+      - salt://etc/worker/50-vm-bytes.conf
+
+'sysctl -p /etc/sysctl.d/50-vm-bytes.conf':
+  cmd.run:
+    - onchanges:
+      - file: /etc/sysctl.d/50-vm-bytes.conf
