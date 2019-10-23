@@ -5,7 +5,6 @@
 -*/5 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles sle12_sp5 sle12sp5_wsl >> /var/log/openqa_rsync.log 2>&1
 -*/4 * * * * geekotest /opt/openqa-scripts/openqa-iso-sync-staging >> /var/log/openqa_rsync_staging.log 2>&1
 -13 */4 * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-vmdp >> /var/log/openqa_rsync.log 2>&1
--17 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-caasp >> /var/log/openqa_rsync.log 2>&1
 -21 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-jeos >> /var/log/openqa_rsync.log 2>&1
 -*/15 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-ses >> /var/log/openqa_rsync.log 2>&1
 -*/15    * * * *   geekotest     env updateall=1 /usr/share/openqa/script/fetchneedles
