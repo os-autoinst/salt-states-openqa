@@ -22,7 +22,6 @@ telegraf-monitoring:
 /etc/zypp/repos.d/telegraf-monitoring.repo:
   file.append:
     - text:
-      - gpgautoimport=1
       - keeppackages=1
 
 {%- endif %}
@@ -31,11 +30,7 @@ SUSE_CA:
   pkgrepo.managed:
     - humanname: SUSE_CA
     - baseurl: http://download.suse.de/ibs/SUSE:/CA/{{ repo }}/
-
-/etc/zypp/repos.d/SUSE_CA.repo:
-  file.append:
-    - text:
-      - gpgautoimport=1
+    - gpgautoimport: True
 
 devel_openQA:
   pkgrepo.managed:
@@ -49,7 +44,6 @@ devel_openQA:
 /etc/zypp/repos.d/devel_openQA.repo:
   file.append:
     - text:
-      - gpgautoimport=1
       - keeppackages=1
 
 {% if openqamodulesrepo is defined %}
@@ -65,6 +59,5 @@ devel_openQA_Modules:
 /etc/zypp/repos.d/devel_openQA_Modules.repo:
   file.append:
     - text:
-      - gpgautoimport=1
       - keeppackages=1
 {% endif %}
