@@ -174,6 +174,12 @@ openqa-worker@{{ i }}:
 {% endif %}
 {% endfor %}
 
+openqa-worker.target:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: worker-openqa.packages
+
 openqa-worker-cacheservice:
   service.running:
     - enable: True
