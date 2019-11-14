@@ -45,6 +45,8 @@ server.packages:
           asset: 90
           needle: 90
           other: 90
+        assets/storage_duration:
+          CURRENT: 30
         obs_rsync:
           home: /opt/openqa-trigger-from-ibs
           project_status_url: https://api.suse.de/public/build/%%PROJECT/_result?package=000product
