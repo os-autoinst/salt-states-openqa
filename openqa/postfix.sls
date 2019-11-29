@@ -7,6 +7,8 @@ postfix:
     - watch:
       - module: configure_relay
       - alias: root_mail_forward
+      - file: /etc/sysconfig/mail
+      - file: /etc/sysconfig/postfix
 {%- endif %}
 
 configure_relay:

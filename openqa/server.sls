@@ -139,14 +139,6 @@ vsftpd:
     - source:
       - salt://postfix/sysconfig/postfix
 
-{%- if not grains.get('noservices', False) %}
-postfix:
-  service.running:
-    - watch:
-      - file: /etc/sysconfig/mail
-      - file: /etc/sysconfig/postfix
-{%- endif %}
-
 https://gitlab.suse.de/openqa/scripts.git:
   git.cloned:
     - target: /opt/openqa-scripts
