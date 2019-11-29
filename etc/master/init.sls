@@ -11,3 +11,6 @@ cronie:
 /etc/cron.d/SLES.CRON:
   file.managed:
     - source: salt://etc/master/cron.d/SLES.CRON
+/etc/cron.hourly/logrotate:
+  file.managed:
+    - source: salt://etc/master/cron.hourly/logrotate
