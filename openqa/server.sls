@@ -2,6 +2,7 @@ include:
  - openqa.repos
  - openqa.journal
  - openqa.ntp
+ - logrotate
 
 server.packages:
   pkg.installed:
