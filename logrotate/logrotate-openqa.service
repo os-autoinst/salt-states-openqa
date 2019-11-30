@@ -1,0 +1,12 @@
+[Unit]
+Description=Rotate openQA log files
+Documentation=man:logrotate(8) man:logrotate.conf(5)
+ConditionACPower=true
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/logrotate /etc/logrotate.d/openqa
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+Environment=HOME=/root
