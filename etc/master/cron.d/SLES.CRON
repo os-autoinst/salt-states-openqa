@@ -2,6 +2,7 @@
 # Check: https://gitlab.suse.de/openqa/salt-states-openqa
 # if you need to do something here urgently, ask in #testing irc channel
 #
+-*/15 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-sles sle12_sp5_rt >> /var/log/openqa_rsync.log 2>&1
 -13 */4 * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-vmdp >> /var/log/openqa_rsync.log 2>&1
 -21 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-jeos >> /var/log/openqa_rsync.log 2>&1
 -*/15 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-ses >> /var/log/openqa_rsync.log 2>&1
