@@ -14,4 +14,4 @@ salt-master:
 timeout:
   file.append:
     - name: /etc/salt/master
-    - text: 'timeout: 30'
+    - text: 'timeout: 90'
