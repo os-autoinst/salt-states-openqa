@@ -4,4 +4,4 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/zypper -n patch --with-update --replacefiles --auto-agree-with-licenses --force-resolution --download-in-advance
+ExecStart=/usr/bin/zypper -n patch --replacefiles --auto-agree-with-licenses --force-resolution --download-in-advance
