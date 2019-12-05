@@ -12,8 +12,11 @@ patch:
   file.patch:
     - source: salt://salt/gh_saltstack_salt_52329_error_reverse_patch_output.patch
 
+# apply only for non-x86_64 which have an older versions of python3-salt
+  {% if 'aarch64' in grains['cpuarch'] or 'ppc64le' in grains['cpuarch'] %}
 /usr/lib/python{{ pythonversion }}/site-packages/salt/grains/core.py:
   file.patch:
     - source: salt://salt/ignore_host_not_found.patch
     - strip: 1
+  {% endif %}
 {%- endif %}
