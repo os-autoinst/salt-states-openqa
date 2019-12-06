@@ -31,6 +31,7 @@ SUSE_CA:
     - humanname: SUSE_CA
     - baseurl: http://download.suse.de/ibs/SUSE:/CA/{{ repo }}/
     - gpgautoimport: True
+    - priority: 110
 
 devel_openQA:
   pkgrepo.managed:
