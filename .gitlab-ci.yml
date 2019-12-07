@@ -24,6 +24,8 @@ variables:
 
 .test_setup: &test_setup
   stage: test
+  except:
+    - master@openqa/salt-pillars-openqa
   before_script:
     - ln -s $(pwd -P)/ /srv/salt
     - . /etc/os-release
