@@ -1,10 +1,7 @@
-# slenkins and autoyast use Open vSwitch for it's tap devices and such
 {%- if not grains.get('noservices', False) %}
 openvswitch:
   service.running:
     - enable: True
-    - require:
-      - file: /etc/systemd/system/openvswitch.service
     - watch:
       - file: /etc/sysconfig/network/ifcfg-br1
 {%- endif %}
@@ -19,12 +16,6 @@ wicked ifup br1:
     - watch:
       - file: /etc/sysconfig/network/ifcfg-br1
 {%- endif %}
-
-# Remove old openvswitch systemd override
-/etc/systemd/system/openvswitch.service:
-  file.absent:
-    - require:
-      - pkg: worker.packages
 
 {% set tapdevices = [] %}
 {% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0)) %}
