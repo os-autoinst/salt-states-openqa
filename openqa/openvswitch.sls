@@ -67,7 +67,6 @@ wicked ifup br1:
       - IPADDR='10.0.2.2/15'
       - STARTMODE='auto'
       - OVS_BRIDGE='yes'
-      - COOLOTEST='1'
      {% for i in tapdevices %}
       - OVS_BRIDGE_PORT_DEVICE_{{ i }}='tap{{ i }}'
      {% endfor %}
