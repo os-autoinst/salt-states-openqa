@@ -1,3 +1,5 @@
+# https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
+
 {%- if not grains.get('noservices', False) %}
 openvswitch:
   service.running:
@@ -132,6 +134,14 @@ os-autoinst-openvswitch:
     - onchanges_any:
       - file: /etc/sysconfig/network/ifcfg-br1
       - file: /etc/wicked/scripts/gre_tunnel_preup.sh
-{%- endif %}
 
-# https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
+/etc/systemd/system/os-autoinst-openvswitch.service.d/override.conf:
+  file.managed:
+    - source:
+      - salt://openqa/os-autoinst-openvswitch_override.conf
+    - makedirs: True
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+      - file: /etc/systemd/system/os-autoinst-openvswitch.service.d/override.conf
+{%- endif %}
