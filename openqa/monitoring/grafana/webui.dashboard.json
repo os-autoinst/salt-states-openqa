@@ -15,11 +15,12 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1570445425241,
+  "iteration": 1576399153465,
   "links": [],
   "panels": [
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -36,6 +37,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -249,6 +251,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "decimals": null,
       "fill": 1,
       "fillGradient": 0,
@@ -426,6 +429,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -447,6 +451,11 @@
       },
       "lines": true,
       "linewidth": 1,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -557,12 +566,7 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "alert": {
@@ -608,6 +612,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -629,6 +634,11 @@
       },
       "lines": true,
       "linewidth": 1,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -739,15 +749,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -857,6 +863,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -1319,12 +1330,7 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "alert": {
@@ -1393,6 +1399,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -1415,6 +1422,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -1611,15 +1623,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1661,7 +1669,7 @@
           {
             "evaluator": {
               "params": [
-                90
+                94
               ],
               "type": "gt"
             },
@@ -1768,6 +1776,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1789,6 +1798,11 @@
       },
       "lines": true,
       "linewidth": 1,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -1974,8 +1988,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 300,
-          "yaxis": "left"
+          "value": 300
         }
       ],
       "timeFrom": null,
@@ -2016,15 +2029,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2103,6 +2112,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2125,6 +2135,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -2278,12 +2293,7 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "alert": {
@@ -2352,6 +2362,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2373,6 +2384,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -2587,15 +2603,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2704,6 +2716,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -2858,15 +2875,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2922,6 +2935,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2943,6 +2957,11 @@
       },
       "lines": true,
       "linewidth": 1,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -3053,12 +3072,7 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "aliasColors": {},
@@ -3446,6 +3460,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3973,6 +3988,11 @@
       "linewidth": 1,
       "links": [],
       "maxPerRow": 6,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -4139,15 +4159,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -4675,6 +4691,11 @@
       "linewidth": 1,
       "links": [],
       "maxPerRow": 6,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -4841,15 +4862,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -5377,6 +5394,11 @@
       "linewidth": 1,
       "links": [],
       "maxPerRow": 6,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -5543,15 +5565,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -6079,6 +6097,11 @@
       "linewidth": 1,
       "links": [],
       "maxPerRow": 6,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -6246,15 +6269,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -6271,6 +6290,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -6401,6 +6421,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -6525,6 +6546,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -6765,6 +6787,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -6953,6 +6976,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -7104,12 +7132,7 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "aliasColors": {},
@@ -7640,6 +7663,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -8436,7 +8460,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 19,
+  "schemaVersion": 20,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -8494,5 +8518,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 14
+  "version": 15
 }
