@@ -11,7 +11,7 @@
     uncompresscmd /usr/bin/xzdec
 }
 
-/var/log/openqa_scheduler {
+/var/log/openqa_scheduler /var/log/openqa_gru {
     compress
     hourly
     maxage 5
