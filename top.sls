@@ -1,6 +1,5 @@
 base:
   '*':
-    - salt.fix
     - salt.minion
     - sshd
     - auto-update
