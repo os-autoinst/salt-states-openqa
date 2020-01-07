@@ -39,6 +39,7 @@ worker.packages:
 {%- endif %}
       - qemu: '>=2.3'
       - telegraf # to collect metrics
+      - iputils # ping for telegraf
       {% if grains['osarch'] == 'x86_64' %}
       - qemu-x86
       {% endif %}
