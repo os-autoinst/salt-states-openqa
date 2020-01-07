@@ -1,10 +1,9 @@
-# slenkins and autoyast use Open vSwitch for it's tap devices and such
+# https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
+
 {%- if not grains.get('noservices', False) %}
 openvswitch:
   service.running:
     - enable: True
-    - require:
-      - file: /etc/systemd/system/openvswitch.service
     - watch:
       - file: /etc/sysconfig/network/ifcfg-br1
 {%- endif %}
@@ -19,12 +18,6 @@ wicked ifup br1:
     - watch:
       - file: /etc/sysconfig/network/ifcfg-br1
 {%- endif %}
-
-# Remove old openvswitch systemd override
-/etc/systemd/system/openvswitch.service:
-  file.absent:
-    - require:
-      - pkg: worker.packages
 
 {% set tapdevices = [] %}
 {% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0)) %}
@@ -67,7 +60,6 @@ wicked ifup br1:
       - IPADDR='10.0.2.2/15'
       - STARTMODE='auto'
       - OVS_BRIDGE='yes'
-      - COOLOTEST='1'
      {% for i in tapdevices %}
       - OVS_BRIDGE_PORT_DEVICE_{{ i }}='tap{{ i }}'
      {% endfor %}
@@ -142,6 +134,14 @@ os-autoinst-openvswitch:
     - onchanges_any:
       - file: /etc/sysconfig/network/ifcfg-br1
       - file: /etc/wicked/scripts/gre_tunnel_preup.sh
-{%- endif %}
 
-# https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
+/etc/systemd/system/os-autoinst-openvswitch.service.d/override.conf:
+  file.managed:
+    - source:
+      - salt://openqa/os-autoinst-openvswitch_override.conf
+    - makedirs: True
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+      - file: /etc/systemd/system/os-autoinst-openvswitch.service.d/override.conf
+{%- endif %}
