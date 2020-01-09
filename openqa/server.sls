@@ -151,8 +151,3 @@ openqa_scripts_config:
     - name: receive.denyCurrentBranch
     - value: ignore
     - repo: /opt/openqa-scripts
-
-/etc/tmpfiles.d/openqa_tmp.conf:
-  file.managed:
-    - source:
-      - salt://etc/master/openqa_tmp.conf
