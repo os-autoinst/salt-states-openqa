@@ -2,7 +2,7 @@
 
 {% set nodenames = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
 {% set node_dashboardnames = (nodenames | map('regex_replace', '^(.*)$', 'worker-\\1.json'))|list %} #we name our dashboards "worker-$nodename.json"
-{% set manual_dashboardnames = ['webui.dashboard.json', 'webui.services.json'] %}
+{% set manual_dashboardnames = ['webui.dashboard.json', 'webui.services.json', 'failed_systemd_services.json'] %}
 {% set preserved_dashboards = node_dashboardnames + manual_dashboardnames %}
 
 server-monitoring-software.repo:
