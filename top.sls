@@ -22,7 +22,7 @@ base:
     - openqa.kvm
   'QA-Power8-*-kvm.qa.suse.de':
     - openqa.kvm
-  'openqaworker-arm-*':
+  'G@roles:worker and G@osarch:aarch64':
     - haveged
   'G@roles:nvme_store':
     - openqa.nvme_store
