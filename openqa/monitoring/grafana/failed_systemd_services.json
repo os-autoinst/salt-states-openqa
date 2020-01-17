@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 38,
   "links": [],
   "panels": [
     {
@@ -93,9 +92,10 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select last(\"failed\") from systemd_failed where (\"failed\">0) and (\"machine\"='') group by host",
+          "query": "select last(\"failed\") from systemd_failed where $timeFilter and (\"failed\">0) and (\"machine\"='') group by host",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -116,7 +116,7 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
+      "timeFrom": "15m",
       "timeShift": null,
       "title": "Currently failing services",
       "transform": "table",
@@ -488,5 +488,5 @@
   "timezone": "",
   "title": "Failed systemd services",
   "uid": "KToPYLEWz",
-  "version": 8
+  "version": 9
 }
