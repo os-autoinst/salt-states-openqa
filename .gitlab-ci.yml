@@ -128,6 +128,7 @@ deploy:
     # workaround for https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
     - (
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
-    - ssh $TARGET "salt \* saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,"
-    - ssh $TARGET "salt \* state.highstate"
+    - ssh $TARGET "echo 'Currently the following minions are down:'; diff <(sudo salt --timeout 1 '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort) <(sudo salt --timeout 1 --hide-timeout '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort); echo '==================='"
+    - ssh $TARGET "salt --hide-timeout \* saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,"
+    - ssh $TARGET "salt --hide-timeout \* state.highstate"
     - )
