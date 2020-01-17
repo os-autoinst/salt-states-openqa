@@ -56,7 +56,7 @@ reverse-proxy-group:
         smtp:
           enabled: true
           host: 'localhost:25'
-          from_address: 'osd-admin@suse.de'
+          from_address: 'osd-admins@suse.de'
           from_name: 'Grafana'
 
 /etc/grafana/provisioning/dashboards/salt.yaml:
