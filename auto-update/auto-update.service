@@ -1,7 +1,11 @@
 [Unit]
 Description=Automatically patch system packages.
 After=network.target
+StartLimitInterval=3600
+StartLimitBurst=12
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/usr/bin/zypper -n patch --replacefiles --auto-agree-with-licenses --force-resolution --download-in-advance
+Restart=on-failure
+RestartSec=300
