@@ -5,11 +5,11 @@
 {% set manual_dashboardnames = ['webui.dashboard.json', 'webui.services.json', 'failed_systemd_services.json', 'automatic_actions.json', 'openqa_jobs.json'] %}
 {% set preserved_dashboards = node_dashboardnames + manual_dashboardnames %}
 
+{% from 'openqa/repo_config.sls' import repo %}
 server-monitoring-software.repo:
   pkgrepo.managed:
     - humanname: Server Monitoring Software
-    - baseurl: https://download.opensuse.org/repositories/server:/monitoring/openSUSE_Leap_$releasever/
-    - enabled: True
+    - baseurl: https://download.opensuse.org/repositories/server:/monitoring/{{ repo }}
     - gpgautoimport: True
     - require_in:
       - pkg: grafana
