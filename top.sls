@@ -28,4 +28,3 @@ base:
   'openqa-monitor.qa.suse.de':
     - openqa.monitoring.grafana
     - openqa.monitoring.influxdb
-    - openqa.monitoring.nginx

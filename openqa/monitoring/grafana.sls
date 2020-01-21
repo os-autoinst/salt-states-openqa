@@ -24,9 +24,14 @@ server-monitoring-software.repo:
     - group: grafana
     - mode: 770
 
+include:
+ - openqa.monitoring.nginx
+
 reverse-proxy-group:
   group.present:
   - addusers:
+    - nginx
+  - require:
     - nginx
 
 /etc/grafana/grafana.ini:
