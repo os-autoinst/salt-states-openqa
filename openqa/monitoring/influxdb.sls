@@ -1,7 +1,8 @@
+{% from 'openqa/repo_config.sls' import repo %}
 databases.repo:
   pkgrepo.managed:
     - humanname: Databases
-    - baseurl: https://download.opensuse.org/repositories/server:/database/openSUSE_Leap_$releasever/
+    - baseurl: https://download.opensuse.org/repositories/server:/database/{{ repo }}
     - enabled: True
     - gpgautoimport: True
     - require_in:
