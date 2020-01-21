@@ -25,6 +25,6 @@ base:
   'openqaworker-arm-*':
     - openqa.nvme_store
     - haveged
-  'openqa-monitor.qa.suse.de':
+  'G@roles:monitor':
     - openqa.monitoring.grafana
     - openqa.monitoring.influxdb

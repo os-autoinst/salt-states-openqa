@@ -74,11 +74,13 @@ install_grafana_renderer:
     - runas: grafana
     - creates: /var/lib/grafana/plugins/grafana-image-renderer
 
+{%- if not grains.get('noservices', False) %}
 restart_grafana_service:
   service.running:
     - name: grafana-server.service
     - watch:
       - cmd: install_grafana_renderer
+{%- endif %}
 
 #remove all dashboards which are not preserved (see manual_dashboardnames above)
 #and that do not appear in the mine anymore (e.g. decommissioned workers)
