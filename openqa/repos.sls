@@ -1,12 +1,10 @@
-{% if 'Tumbleweed' in grains['oscodename'] %}
-{% set repo = "openSUSE_Tumbleweed" %}
-{% elif 'Leap' in grains['oscodename'] %}
+{% from 'openqa/repo_config.sls' import repo %}
+{% if 'Leap' in grains['oscodename'] %}
 {% set openqamodulesrepo = "Leap:/$releasever" %}
-{% set repo = "openSUSE_Leap_$releasever" %}
 {% elif 'SP3' in grains['oscodename'] %}
 {% set openqamodulesrepo = "SLE-12" %}
-{% set repo = "SLE_12_SP3" %}
 {% endif %}
+
 {%- if grains.osrelease < '15.2' %}
 telegraf-monitoring:
   pkgrepo.managed:

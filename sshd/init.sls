@@ -1,6 +1,10 @@
 include:
  - sudo
 
+openssh:
+  pkg.installed:
+    - refresh: False
+
 /etc/ssh/sshd_config:
   file.managed:
     - source: salt://sshd/sshd_config

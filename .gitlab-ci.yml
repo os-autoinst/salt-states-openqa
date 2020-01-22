@@ -64,6 +64,13 @@ test-worker-mock:
     - zypper -n in python3-augeas
     - $salt_call mock=True
 
+test-monitor-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: monitor' >> /etc/salt/grains"
+    - $salt_call mock=True
+
 test-general-test:
   <<: *test_setup
   script: $salt_call test=True
@@ -96,6 +103,15 @@ test-worker:
     - $salt_call
     - )
     - cat /etc/openqa/workers.ini
+
+test-monitor:
+  <<: *test_setup
+  script:
+    - "echo 'roles: monitor' >> /etc/salt/grains"
+    - (
+    - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
+    - $salt_call
+    - )
 
 deploy:
   stage: deploy
