@@ -22,9 +22,10 @@ base:
     - openqa.kvm
   'QA-Power8-*-kvm.qa.suse.de':
     - openqa.kvm
-  'openqaworker-arm-*':
-    - openqa.nvme_store
+  'G@roles:worker and G@osarch:aarch64':
     - haveged
+  'G@roles:nvme_store':
+    - openqa.nvme_store
   'G@roles:monitor':
     - openqa.monitoring.grafana
     - openqa.monitoring.influxdb

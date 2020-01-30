@@ -1,11 +1,12 @@
 [Unit]
-Description=Format NVMe before mounting it
-Before=var-lib-openqa-nvme.mount
+Description=Setup NVMe before mounting it
+Before=var-lib-openqa.mount
 DefaultDependencies=no
 
 [Service]
 Type=oneshot
-ExecStart=/sbin/mkfs.ext2 -F /dev/nvme0n1p1
+ExecStart=/bin/sh -c 'grep -q "md0.*nvme.n1" /proc/mdstat || mdadm --create /dev/md0 --level=0 --force --raid-devices=$(ls /dev/nvme?n1 | wc -l) --run /dev/nvme?n1'
+ExecStart=/sbin/mkfs.ext2 -F /dev/md0
 
 [Install]
 WantedBy=multi-user.target

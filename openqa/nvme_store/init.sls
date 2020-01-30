@@ -1,3 +1,11 @@
+# apply for all NVMes which are not the only storage
+{% if grains['SSDs']|map('regex_search', '(nvme)')|select|list|length > 0 and grains['disks']|length > 0 %}
+server.packages:
+  pkg.installed:
+    - refresh: False
+    - pkgs:
+      - mdadm
+
 /etc/systemd/system/openqa_nvme_format.service:
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_format.service
@@ -17,44 +25,33 @@
       - salt://openqa/nvme_store/openqa-worker@_override.conf
     - makedirs: true
 
-/etc/systemd/system/var-lib-openqa-nvme.mount.d/override.conf:
+# ensure old device entries are removed
+/etc/fstab:
+  file.comment:
+    - regex: UUID.*/var/lib/openqa(?!/share)
+
+/var/lib/openqa:
+  mount.mounted:
+    - device: /dev/md0
+    - fstype: ext2
+    - mkmnt: True
+    # the mount should only be done at boot time as we depend on device
+    # preparation
+    - mount: False
+
+/etc/systemd/system/var-lib-openqa.mount.d/override.conf:
   file.managed:
-    - name: /etc/systemd/system/var-lib-openqa-nvme.mount.d/override.conf
+    - name: /etc/systemd/system/var-lib-openqa.mount.d/override.conf
     - source:
-      - salt://openqa/nvme_store/var-lib-openqa-nvme.mount_override.conf
+      - salt://openqa/nvme_store/var-lib-openqa.mount_override.conf
     - makedirs: true
 
 daemon-reload:
   module.wait:
     - name: service.systemctl_reload
     - watch:
-      - file: /etc/systemd/system/var-lib-openqa-nvme.mount.d/override.conf
+      - file: /etc/systemd/system/var-lib-openqa.mount.d/override.conf
       - file: /etc/systemd/system/openqa-worker@.service.d/override.conf
       - file: /etc/systemd/system/openqa_nvme_format.service
       - file: /etc/systemd/system/openqa_nvme_prepare.service
-
-/var/lib/openqa/cache:
-  mount.mounted:
-    - device: /var/lib/openqa/nvme/cache
-    - fstype: none
-    - opts: bind
-    - mkmnt: True
-
-/etc/systemd/system/var-lib-openqa-cache.mount.d/override.conf:
-  file.managed:
-    - source:
-      - salt://openqa/nvme_store/needs_nvme.mount_override.conf
-    - makedirs: true
-
-/var/lib/openqa/pool:
-  mount.mounted:
-    - device: /var/lib/openqa/nvme/pool
-    - fstype: none
-    - opts: bind
-    - mkmnt: True
-
-/etc/systemd/system/var-lib-openqa-pool.mount.d/override.conf:
-  file.managed:
-    - source:
-      - salt://openqa/nvme_store/needs_nvme.mount_override.conf
-    - makedirs: true
+{% endif %}
