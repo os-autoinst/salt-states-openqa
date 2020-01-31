@@ -84,12 +84,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
         "name": "{{ worker }}: Memory usage alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -340,12 +340,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
         "name": "{{ worker }}: CPU Usage alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -848,12 +848,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
         "name": "{{ worker }}: OpenQA Ping time alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -1384,12 +1384,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
         "name": "{{ worker }}: partitions usage (%) alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -1798,12 +1798,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
         "name": "{{ worker }}: Disk I/O time alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -3061,12 +3061,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
         "name": "{{ worker }}: NTP offset alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
