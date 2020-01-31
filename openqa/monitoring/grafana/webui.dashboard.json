@@ -6053,7 +6053,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "name": "Disk I/O time for /dev/vdb alert",
+        "name": "Disk I/O time for /dev/vde alert",
         "noDataState": "no_data",
         "notifications": [
           {
