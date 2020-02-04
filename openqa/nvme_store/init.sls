@@ -25,11 +25,6 @@ server.packages:
       - salt://openqa/nvme_store/openqa-worker@_override.conf
     - makedirs: true
 
-# ensure old device entries are removed
-/etc/fstab:
-  file.comment:
-    - regex: UUID.*/var/lib/openqa(?!/share)
-
 /var/lib/openqa:
   mount.mounted:
     - device: /dev/md0
