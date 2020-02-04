@@ -1,5 +1,5 @@
 # apply for all NVMes which are not the only storage
-{% if grains['SSDs']|map('regex_search', '(nvme)')|select|list|length > 0 and grains['disks']|length > 0 %}
+{% if grains['SSDs']|map('regex_search', '(nvme)')|select|list|length > 0 and (grains['disks']|length > 0 or grains['SSDs']|map('regex_search', '(nvme)')|reject|list|length > 0) %}
 server.packages:
   pkg.installed:
     - refresh: False
