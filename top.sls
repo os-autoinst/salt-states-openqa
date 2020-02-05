@@ -18,8 +18,6 @@ base:
     - openqa.openvswitch
   'openqaworker3.suse.de':
     - openqa.hacustombridges
-  'openqaworker5':
-    - openqa.kvm
   'G@roles:worker and G@osarch:aarch64':
     - haveged
   'G@roles:nvme_store':
