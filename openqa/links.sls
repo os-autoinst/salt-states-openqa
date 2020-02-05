@@ -1,4 +1,4 @@
-/usr/share/openqa/templates/branding/openqa.suse.de/links_footer_left.html.ep:
+/usr/share/openqa/templates/webapi/branding/openqa.suse.de/links_footer_left.html.ep:
     file.managed:
       - source: salt://openqa/links_footer_left.html
       - template: jinja
@@ -10,7 +10,7 @@
             url: http://s.qa.suse.de/test-status
             description: Daily openQA review
 
-/usr/share/openqa/templates/branding/openqa.suse.de/links_footer_right.html.ep:
+/usr/share/openqa/templates/webapi/branding/openqa.suse.de/links_footer_right.html.ep:
     file.managed:
       - source: salt://openqa/links_footer_right.html
       - template: jinja
@@ -19,7 +19,7 @@
             url: https://build.suse.de/staging_workflows/SUSE:SLE-15-SP2:GA
             description: SLE15 staging dashboard
 
-/usr/share/openqa/templates/branding/openqa.suse.de/docbox.html.ep:
+/usr/share/openqa/templates/webapi/branding/openqa.suse.de/docbox.html.ep:
     file.managed:
       - source: salt://openqa/links_docbox.html
       - template: jinja
