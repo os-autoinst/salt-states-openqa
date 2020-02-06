@@ -5,8 +5,8 @@ DefaultDependencies=no
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c 'grep -q "md0.*nvme.n1" /proc/mdstat || mdadm --create /dev/md0 --level=0 --force --raid-devices=$(ls /dev/nvme?n1 | wc -l) --run /dev/nvme?n1'
-ExecStart=/sbin/mkfs.ext2 -F /dev/md0
+ExecStart=/bin/sh -c 'grep -q "md/openqa.*nvme.n1" /proc/mdstat || mdadm --create /dev/md/openqa --level=0 --force --raid-devices=$(ls /dev/nvme?n1 | wc -l) --run /dev/nvme?n1'
+ExecStart=/sbin/mkfs.ext2 -F /dev/md/openqa
 
 [Install]
 WantedBy=multi-user.target

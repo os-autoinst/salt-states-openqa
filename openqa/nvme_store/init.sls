@@ -27,7 +27,7 @@ server.packages:
 
 /var/lib/openqa:
   mount.mounted:
-    - device: /dev/md0
+    - device: /dev/md/openqa
     - fstype: ext2
     - mkmnt: True
     # the mount should only be done at boot time as we depend on device
