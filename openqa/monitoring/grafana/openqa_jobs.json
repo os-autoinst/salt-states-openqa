@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
   "links": [],
   "panels": [
     {
@@ -710,7 +709,7 @@
           {
             "evaluator": {
               "params": [
-                100
+                400
               ],
               "type": "gt"
             },
@@ -828,7 +827,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 100
+          "value": 400
         }
       ],
       "timeFrom": null,
@@ -878,7 +877,7 @@
           {
             "evaluator": {
               "params": [
-                5
+                25
               ],
               "type": "gt"
             },
@@ -992,7 +991,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 5
+          "value": 25
         }
       ],
       "timeFrom": null,
@@ -1076,5 +1075,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 10
+  "version": 18
 }
