@@ -1045,7 +1045,7 @@
     "list": []
   },
   "time": {
-    "from": "now-90d",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
