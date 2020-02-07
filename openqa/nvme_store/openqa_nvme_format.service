@@ -5,7 +5,15 @@ DefaultDependencies=no
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c 'grep -q "md/openqa.*nvme.n1" /proc/mdstat || mdadm --create /dev/md/openqa --level=0 --force --raid-devices=$(ls /dev/nvme?n1 | wc -l) --run /dev/nvme?n1'
+
+# Create striped storage for openQA from all NVMe devices when / resides on
+# another device or from a potential third NVMe partition when there is only a
+# single NVMe device for the complete storage
+ExecStart=/bin/sh -c 'grep -q "md/openqa.*nvme" /proc/mdstat || lsblk -n | grep -v nvme | grep "/$" && mdadm --create /dev/md/openqa --level=0 --force --raid-devices=$(ls /dev/nvme?n1 | wc -l) --run /dev/nvme?n1 || mdadm --create /dev/md/openqa --level=0 --force --raid-devices=1 --run /dev/nvme0n1p3'
+# Ensure device is correctly initialized but also spend a little time before
+# trying to create a filesystem to prevent a "busy" error
+ExecStart=/bin/sh -c 'grep nvme /proc/mdstat'
+ExecStart=/bin/sh -c 'mdadm --detail --scan | grep openqa'
 ExecStart=/sbin/mkfs.ext2 -F /dev/md/openqa
 
 [Install]
