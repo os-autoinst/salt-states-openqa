@@ -2,7 +2,6 @@
 # Check: https://gitlab.suse.de/openqa/salt-states-openqa
 # if you need to do something here urgently, ask in #testing irc channel
 #
--13 */4 * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-vmdp >> /var/log/openqa_rsync.log 2>&1
 -*/15 * * * *   geekotest     /opt/openqa-scripts/openqa-iso-sync-ses >> /var/log/openqa_rsync.log 2>&1
 -*/1 * * * *   geekotest     env updateall=1 /usr/share/openqa/script/fetchneedles
 # okurz: 2017-08-17: https://progress.opensuse.org/issues/21038 [qam] test fails in bootloader_s390 - missing install image on ftp server, the same is done for SDK images
