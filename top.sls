@@ -13,6 +13,7 @@ base:
   'G@roles:worker':
     - openqa.repos
     - openqa.worker
+    - openqa.nvme_store
     - openqa.scripts
     - openqa.iscsi
     - openqa.openvswitch
@@ -20,8 +21,6 @@ base:
     - openqa.hacustombridges
   'G@roles:worker and G@osarch:aarch64':
     - haveged
-  'G@roles:nvme_store':
-    - openqa.nvme_store
   'G@roles:monitor':
     - openqa.monitoring.grafana
     - openqa.monitoring.influxdb
