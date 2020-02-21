@@ -1,11 +1,11 @@
-# apply for all NVMes which are not the only storage
-{% if grains['SSDs']|map('regex_search', '(nvme)')|select|list|length > 0 and (grains['disks']|length > 0 or grains['SSDs']|map('regex_search', '(nvme)')|reject|list|length > 0) %}
 server.packages:
   pkg.installed:
     - refresh: False
     - pkgs:
       - mdadm
 
+# apply for NVMes only
+{% if grains['SSDs']|map('regex_search', '(nvme)')|select|list|length > 0 %}
 /etc/systemd/system/openqa_nvme_format.service:
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_format.service
