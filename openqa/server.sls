@@ -156,7 +156,7 @@ apache2:
 {%- endif %}
 
 {%- if not grains.get('noservices', False) %}
-salt-master:
+salt-master.service:
   service.running:
     - watch:
       - file: /etc/salt/master
