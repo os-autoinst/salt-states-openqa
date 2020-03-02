@@ -14,4 +14,8 @@ salt-master:
 timeout:
   file.append:
     - name: /etc/salt/master
-    - text: 'timeout: 90'
+    - text: |
+        timeout: 90
+        ext_pillar:
+          - file_tree:
+              root_dir: /srv/pillar
