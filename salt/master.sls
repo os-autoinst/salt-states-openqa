@@ -11,7 +11,8 @@ salt-master:
 
 # Prevent slow machines to run into timeout in their response
 # https://progress.opensuse.org/issues/58956
-timeout:
+# and ext_pillar
+master_config:
   file.append:
     - name: /etc/salt/master
     - text: |
