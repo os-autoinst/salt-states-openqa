@@ -81,6 +81,16 @@ server.packages:
     - require:
       - pkg: server.packages
 
+# ext_pillar is not available with master-less mode so using "noservices"
+# check as workaround to disable the following in our test environment
+{%- if not grains.get('noservices', False) %}
+{% for i in ['key', 'crt'] %}
+/etc/apache2/ssl.{{i}}/openqa.suse.de.{{i}}:
+  file.managed:
+    - contents_pillar: openqa.suse.de.{{i}}
+{% endfor %}
+{%- endif %}
+
 /etc/telegraf/telegraf.conf:
   file.managed:
     - name: /etc/telegraf/telegraf.conf
@@ -134,6 +144,22 @@ vsftpd:
   service.running:
     - watch:
       - file: /etc/vsftpd.conf
+{%- endif %}
+
+{%- if not grains.get('noservices', False) %}
+apache2:
+  service.running:
+    - watch:
+      - file: /etc/apache2/vhosts.d/openqa.conf
+      - file: /etc/apache2/ssl.key/openqa.suse.de.key
+      - file: /etc/apache2/ssl.crt/openqa.suse.de.crt
+{%- endif %}
+
+{%- if not grains.get('noservices', False) %}
+salt-master:
+  service.running:
+    - watch:
+      - file: /etc/salt/master
 {%- endif %}
 
 /etc/sysconfig/mail:
