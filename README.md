@@ -4,7 +4,8 @@ This contains salt states used to configure an openQA infrastructure, for exampl
 
 They should be generic enough to also be useful (with some modification) for others
 
-## Local test deployment
+## Testing
+### Local test deployment
 
 ```sh
 . /etc/os-release
@@ -29,7 +30,7 @@ salt-call --local state.apply
 ```
 
 
-## Test .gitlab-ci.yml locally
+### Test .gitlab-ci.yml locally
 
 Run
 
@@ -43,3 +44,27 @@ locally and override:
 ```
 sudo gitlab-runner exec docker --env "SSH_PRIVATE_KEY=$SSH_PRIVATE_KEY" --env "TARGET=my.machine" --env "…" deploy
 ```
+
+
+## Communication
+
+If you have questions, visit us on IRC in [#opensuse-factory](irc://chat.freenode.net/opensuse-factory)
+
+
+## Contribute
+
+Feel free to add issues in the project or send pull requests.
+
+
+### Rules for commits
+
+* For git commit messages use the rules stated on
+  [How to Write a Git Commit Message](http://chris.beams.io/posts/git-commit/) as
+  a reference
+
+If this is too much hassle for you feel free to provide incomplete pull
+requests for consideration or create an issue with a code change proposal.
+
+## License
+
+This project is licensed under the MIT license, see LICENSE file for details.
