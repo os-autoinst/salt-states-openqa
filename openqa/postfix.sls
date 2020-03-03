@@ -18,7 +18,7 @@ configure_relay:
     - value: relay.suse.de
     - name: postfix.set_main
     - key: myhostname
-    - value: openqa.suse.de
+    - value: {{grains['fqdn']}}
 
 root_mail_forward:
   alias.present:
