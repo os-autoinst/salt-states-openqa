@@ -877,7 +877,7 @@
           {
             "evaluator": {
               "params": [
-                25
+                200
               ],
               "type": "gt"
             },
@@ -991,7 +991,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 25
+          "value": 200
         }
       ],
       "timeFrom": null,
