@@ -52,4 +52,4 @@ openqa-trigger-from-ibs-plugin:
 {% endfor %}
 
 {{ scriptgen('SUSE:SLE-12-SP5:Update:Products:SLERT') }}
-{{ scriptgen('Virtualization:WSL') }}
+{{ scriptgen('SUSE:SLE-15-SP2:Update:WSL') }}
