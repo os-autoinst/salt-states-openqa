@@ -903,7 +903,7 @@
         "frequency": "10s",
         "handler": 1,
         "name": "New incompletes alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -1075,5 +1075,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 18
+  "version": 19
 }
