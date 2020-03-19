@@ -50,7 +50,7 @@ server.packages:
           CURRENT: 30
         obs_rsync:
           home: /opt/openqa-trigger-from-ibs
-          project_status_url: https://api.suse.de/public/build/%%PROJECT/_result?package=000product
+          project_status_url: https://api.suse.de/public/build/%%PROJECT/_result
     - require:
       - pkg: server.packages
 
