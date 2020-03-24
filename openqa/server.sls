@@ -16,6 +16,7 @@ server.packages:
       - vsftpd
       - samba
       - postfix
+      - ca-certificates-suse  # for https://gitlab.suse.de/openqa/scripts
 
 /etc/openqa/openqa.ini:
   ini.options_present:
