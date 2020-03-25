@@ -338,6 +338,13 @@ telegraf:
       - file: /etc/telegraf/telegraf.conf
 {%- endif %}
 
+# prevent I/O stuck for very long time by automatically crashing (and
+# rebooting)
+# see https://progress.opensuse.org/issues/41882#note-34
+kernel.softlockup_panic:
+  sysctl.present:
+    - value: 1
+
 /etc/sysctl.d/50-vm-bytes.conf:
   file.managed:
     - source:
