@@ -116,8 +116,9 @@ server.packages:
       - pkg: server.packages
 
 {%- if not grains.get('noservices', False) %}
-telegraf:
+telegraf_sql_queries:
   postgres_user.present:
+    - name: telegraf
     - login: True
   postgres_privileges.present:
     - object_name: jobs
@@ -125,6 +126,24 @@ telegraf:
     - privileges:
       - SELECT
     - maintenance_db: openqa
+
+telegraf_db_job_groups:
+  postgres_privileges.present:
+    - object_name: job_groups
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
+
+telegraf_db_job_group_parents:
+  postgres_privileges.present:
+    - object_name: job_group_parents
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
+
+telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
