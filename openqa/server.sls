@@ -121,6 +121,7 @@ telegraf_sql_queries:
     - name: telegraf
     - login: True
   postgres_privileges.present:
+    - name: telegraf
     - object_name: jobs
     - object_type: table
     - privileges:
@@ -129,6 +130,7 @@ telegraf_sql_queries:
 
 telegraf_db_job_groups:
   postgres_privileges.present:
+    - name: telegraf
     - object_name: job_groups
     - object_type: table
     - privileges:
@@ -137,6 +139,7 @@ telegraf_db_job_groups:
 
 telegraf_db_job_group_parents:
   postgres_privileges.present:
+    - name: telegraf
     - object_name: job_group_parents
     - object_type: table
     - privileges:
