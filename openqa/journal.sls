@@ -3,3 +3,9 @@
 /var/log/journal:
   file.directory:
     - makedirs: True
+
+rsyslog:
+  pkg.purged
+
+syslog-service:
+  pkg.purged
