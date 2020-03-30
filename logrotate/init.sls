@@ -2,6 +2,12 @@ logrotate:
   pkg.installed:
     - refresh: False
 
+/etc/systemd/system/logrotate.service.d/override.conf:
+  file.managed:
+    - source:
+      - salt://logrotate/override.conf
+    - makedirs: True
+
 /etc/systemd/system/logrotate.timer.d/override.conf:
    file.absent
 
@@ -28,6 +34,7 @@ daemon-reload:
   module.wait:
     - name: service.systemctl_reload
     - watch:
+      - file: /etc/systemd/system/logrotate.service.d/override.conf
       - file: /etc/systemd/system/logrotate-openqa.service
       - file: /etc/systemd/system/logrotate-openqa.timer
 {%- endif %}
