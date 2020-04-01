@@ -10,9 +10,8 @@ stages:
 # only really test this file itself so far
 test-yaml:
   stage: test-static
-  image: registry.opensuse.org/opensuse/leap:15.1
+  image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:yamllint
   script:
-    - zypper -n in --no-recommends python3-yamllint python3-setuptools
     - yamllint .gitlab-ci.yml
 
 variables:
