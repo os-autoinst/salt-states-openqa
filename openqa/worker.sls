@@ -354,8 +354,3 @@ kernel.softlockup_panic:
   cmd.run:
     - onchanges:
       - file: /etc/sysctl.d/50-vm-bytes.conf
-
-/etc/tmpfiles.d/tmp.conf:
-  file.managed:
-    - source:
-      - salt://etc/worker/tmp.conf
