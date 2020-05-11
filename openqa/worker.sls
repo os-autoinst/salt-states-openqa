@@ -24,6 +24,7 @@ worker.packages:
   pkg.installed:
     - refresh: False
     - pkgs:
+      - kdump
       - x3270 # for s390x backend
       - icewm-lite # for localXvnc console
       - xorg-x11-Xvnc # for localXvnc console
@@ -352,3 +353,21 @@ kernel.softlockup_panic:
   cmd.run:
     - onchanges:
       - file: /etc/sysctl.d/50-vm-bytes.conf
+
+kdump-conf:
+  augeas.change:
+    - require:
+      - pkg: python3-augeas
+    - lens: Shellvars.lns
+    - context: /files/etc/sysconfig/kdump
+    - changes:
+      - set KDUMP_SMTP_SERVER '"relay.suse.de"'
+      - set KDUMP_NOTIFICATION_TO '"osd-admins@suse.de"'
+
+{%- if not grains.get('noservices', False) %}
+kdump:
+  service.running:
+    - enable: True
+    - watch:
+      - file: /etc/sysconfig/kdump
+{%- endif %}
