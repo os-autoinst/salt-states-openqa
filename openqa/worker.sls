@@ -369,7 +369,7 @@ kdump:
   service.running:
     - enable: True
     - watch:
-      - file: /etc/sysconfig/kdump
+      - augeas: kdump-conf
 {%- endif %}
 
 rebootmgr:
