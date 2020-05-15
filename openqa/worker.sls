@@ -192,10 +192,10 @@ openqa-worker-cacheservice-minion:
     - require:
       - pkg: worker-openqa.packages
 
-# Stop and disable first 100 openqa-worker@ service instances
+# Stop and disable all openqa-worker@ service instances
 stop_and_disable_all_workers:
   cmd.run:
-    - name: systemctl stop openqa-worker@{1..100}; systemctl disable openqa-worker@{1..100}
+    - name: systemctl disable --now openqa-worker@\*
     - onchanges:
       - file: /etc/openqa/workers.ini
 {%- endif %}
