@@ -12,3 +12,7 @@
 
 # remove sync logs older than 2 month
 0 0 * * SUN geekotest find /opt/openqa-trigger-from-ibs/ -name '.run_*' -type d -ctime +60 -prune -exec rm -r {}/ \;
+
+# remove videos older than 1 month if free disk space is getting low (result disk usage >= 95 %)
+# see https://progress.opensuse.org/issues/66922
+0 0 * * * geekotest ([ "$(df --output=pcent /results/testresults | sed '1d;s/[^0-9]//g')" -ge 95 ] && find /results/testresults -type f -iname '*.ogv' -mtime +28 -delete)
