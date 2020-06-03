@@ -2,7 +2,7 @@
 databases.repo:
   pkgrepo.managed:
     - humanname: Databases
-    - baseurl: https://download.opensuse.org/repositories/server:/database/{{ repo }}
+    - baseurl: http://download.opensuse.org/repositories/server:/database/{{ repo }}
     - enabled: True
     - gpgautoimport: True
     - require_in:
