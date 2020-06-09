@@ -23,7 +23,7 @@ openqa-trigger-from-ibs:
       - ca-certificates-suse
 
   git.latest:
-    - name: https://github.com/andrii-suse/openqa-trigger-from-obs
+    - name: https://github.com/os-autoinst/openqa-trigger-from-obs
     - target: {{ dir }}
     - user: geekotest
 
