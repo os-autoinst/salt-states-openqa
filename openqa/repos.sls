@@ -9,7 +9,7 @@
 telegraf-monitoring:
   pkgrepo.managed:
     - humanname: telegraf-monitoring
-    - baseurl: https://download.opensuse.org/repositories/devel:/languages:/go/{{ repo }}/
+    - baseurl: http://download.opensuse.org/repositories/devel:/languages:/go/{{ repo }}/
     - gpgautoimport: True
     - refresh: True
     - priority: 105

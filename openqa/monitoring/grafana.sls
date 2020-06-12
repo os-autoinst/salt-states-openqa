@@ -9,7 +9,7 @@
 server-monitoring-software.repo:
   pkgrepo.managed:
     - humanname: Server Monitoring Software
-    - baseurl: https://download.opensuse.org/repositories/server:/monitoring/{{ repo }}
+    - baseurl: http://download.opensuse.org/repositories/server:/monitoring/{{ repo }}
     - gpgautoimport: True
     - require_in:
       - pkg: grafana
