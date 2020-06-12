@@ -46,7 +46,7 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "15m",
+        "for": "6m",
         "frequency": "1m",
         "handler": 1,
         "message": "Triggering reboot of openqaworker-arm-1 - see https://gitlab.suse.de/openqa/grafana-webhook-actions/-/jobs for details, status and history",
@@ -220,7 +220,7 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "15m",
+        "for": "6m",
         "frequency": "1m",
         "handler": 1,
         "message": "Triggering reboot of openqaworker-arm-2 - see https://gitlab.suse.de/openqa/grafana-webhook-actions/-/jobs for details, status and history",
@@ -394,7 +394,7 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "15m",
+        "for": "6m",
         "frequency": "1m",
         "handler": 1,
         "message": "Triggering reboot of openqaworker-arm-3 - see https://gitlab.suse.de/openqa/grafana-webhook-actions/-/jobs for details, status and history",
