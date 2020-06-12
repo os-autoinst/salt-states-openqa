@@ -365,9 +365,10 @@ kdump-conf:
       - set KDUMP_NOTIFICATION_TO '"osd-admins@suse.de"'
 
 {%- if not grains.get('noservices', False) %}
+# as kdump needs reserved memory which is only made effective by a reboot we
+# must not start the service but only enable it to be started on bootup
 kdump:
-  service.running:
-    - enable: True
+  service.enabled:
     - watch:
       - augeas: kdump-conf
 {%- endif %}
