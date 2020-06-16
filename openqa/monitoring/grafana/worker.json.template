@@ -16,12 +16,12 @@
   "editable": true,
   "gnetId": 5955,
   "graphTooltip": 1,
-  "id": 17,
-  "iteration": 1570446484220,
+  "iteration": 1592298433776,
   "links": [],
   "panels": [
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -130,6 +130,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -282,12 +287,7 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "alert": {
@@ -388,6 +388,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -549,12 +554,7 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "aliasColors": {},
@@ -864,6 +864,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -885,6 +886,11 @@
       },
       "lines": true,
       "linewidth": 1,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -988,18 +994,14 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1127,6 +1129,7 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1429,6 +1432,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -1546,12 +1554,7 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "aliasColors": {},
@@ -1845,6 +1848,11 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "connected",
       "options": {
         "dataLinks": []
@@ -1990,15 +1998,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      },
-      "notifications": [
-        {
-          "uid": "2ACofrdWz"
-        }
-      ]
+      }
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3077,6 +3081,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -3098,6 +3103,11 @@
       },
       "lines": true,
       "linewidth": 1,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
@@ -3217,16 +3227,346 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
+      }
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                2000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                100
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "C",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "",
+        "name": "{{ worker }}: Minion Jobs alert",
+        "noDataState": "alerting",
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
       },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 93
+      },
+      "id": 65104,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
       "notifications": [
         {
           "uid": "2ACofrdWz"
         }
-      ]
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Failed",
+          "color": "#C4162A"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Active",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "openqa_minion_jobs",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "active"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ worker }}"
+            }
+          ]
+        },
+        {
+          "alias": "Delayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "openqa_minion_jobs",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "delayed"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ worker }}"
+            }
+          ]
+        },
+        {
+          "alias": "Failed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "openqa_minion_jobs",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "failed"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ worker }}"
+            }
+          ]
+        },
+        {
+          "alias": "Inactive",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "openqa_minion_jobs",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "inactive"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ worker }}"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 2000
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Minion Jobs",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 19,
+  "schemaVersion": 20,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -3300,5 +3640,5 @@
   "timezone": "browser",
   "title": "Worker dashoard ({{ worker }})",
   "uid": "WD{{ worker }}",
-  "version": 16
+  "version": 4
 }
