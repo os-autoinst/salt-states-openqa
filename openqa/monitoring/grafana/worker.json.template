@@ -3284,7 +3284,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "message": "",
+        "message": "to remove all failed jobs on the machine \n\n```\n/usr/share/openqa/script/openqa-workercache eval 'my $jobs = app->minion->jobs({states => [\"failed\"]}); while (my $job = $jobs->next) { $job->remove }'\n```",
         "name": "{{ worker }}: Minion Jobs alert",
         "noDataState": "alerting",
         "notifications": [
@@ -3640,5 +3640,5 @@
   "timezone": "browser",
   "title": "Worker dashoard ({{ worker }})",
   "uid": "WD{{ worker }}",
-  "version": 4
+  "version": 5
 }
