@@ -3638,7 +3638,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Worker dashoard ({{ worker }})",
+  "title": "Worker dashboard ({{ worker }})",
   "uid": "WD{{ worker }}",
   "version": 7
 }
