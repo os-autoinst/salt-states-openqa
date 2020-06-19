@@ -2,7 +2,8 @@
 
 {% set nodenames = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
 {% set node_dashboardnames = (nodenames | map('regex_replace', '^(.*)$', 'worker-\\1.json'))|list %} #we name our dashboards "worker-$nodename.json"
-{% set manual_dashboardnames = ['webui.dashboard.json', 'webui.services.json', 'failed_systemd_services.json', 'automatic_actions.json', 'openqa_jobs.json'] %}
+{% set manual_dashboardnames = ['webui.dashboard.json', 'webui.services.json', 'failed_systemd_services.json', 'automatic_actions.json', 'openqa_jobs.json', 'status_overview.json'] %}
+{% set grafana_plugins = ['grafana-image-renderer', 'blackmirror1-singlestat-math-panel'] %}
 {% set preserved_dashboards = node_dashboardnames + manual_dashboardnames %}
 
 {% from 'openqa/repo_config.sls' import repo %}
@@ -68,19 +69,19 @@ reverse-proxy-group:
   file.managed:
     - source: salt://openqa/monitoring/grafana/salt.yaml
 
-install_grafana_renderer:
+{% for plugin in grafana_plugins %}
+install_{{plugin}}:
   cmd.run:
-    - name: /usr/sbin/grafana-cli plugins install grafana-image-renderer
+    - name: /usr/sbin/grafana-cli plugins install {{plugin}}
     - runas: grafana
-    - creates: /var/lib/grafana/plugins/grafana-image-renderer
-
+    - creates: /var/lib/grafana/plugins/{{plugin}}
 {%- if not grains.get('noservices', False) %}
-restart_grafana_service:
   service.running:
     - name: grafana-server.service
     - watch:
-      - cmd: install_grafana_renderer
+      - cmd: {{plugin}}
 {%- endif %}
+{% endfor %}
 
 #remove all dashboards which are not preserved (see manual_dashboardnames above)
 #and that do not appear in the mine anymore (e.g. decommissioned workers)
