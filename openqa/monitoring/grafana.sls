@@ -12,12 +12,14 @@ server-monitoring-software.repo:
     - humanname: Server Monitoring Software
     - baseurl: http://download.opensuse.org/repositories/server:/monitoring/{{ repo }}
     - gpgautoimport: True
+    - refresh: True
+    - priority: 105
     - require_in:
       - pkg: grafana
 
   pkg.latest:
     - name: grafana
-    - refresh: True
+    - refresh: False
 
 /var/run/grafana:
   file.directory:
