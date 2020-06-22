@@ -9,4 +9,3 @@ def ppc_powervm():
 
 if __name__ == '__main__':
     grains = ppc_powervm()
-    print("grains: %s" % grains)

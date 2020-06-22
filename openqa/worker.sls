@@ -225,7 +225,7 @@ SuSEfirewall2:
     - target: /dev/null
 {% endif %}
 
-{% if grains['osarch'] == 'ppc64le' and not grains['ppc_powervm'] %}
+{% if grains['osarch'] == 'ppc64le' and 'ppc_powervm' in grains and not grains['ppc_powervm'] %}
 {%- if not grains.get('noservices', False) %}
 # As per bsc#1041747 we need a work around
 # this service is provided by powerpc-utils
