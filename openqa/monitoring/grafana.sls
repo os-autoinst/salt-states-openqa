@@ -81,7 +81,7 @@ install_{{plugin}}:
   service.running:
     - name: grafana-server.service
     - watch:
-      - cmd: {{plugin}}
+      - cmd: install_{{plugin}}
 {%- endif %}
 {% endfor %}
 
