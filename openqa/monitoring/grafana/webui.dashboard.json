@@ -601,7 +601,7 @@
         "frequency": "1m",
         "handler": 1,
         "name": "HTTP Response alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -8542,5 +8542,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 18
+  "version": 19
 }
