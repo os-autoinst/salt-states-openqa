@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 40,
   "links": [],
   "panels": [
     {
@@ -262,7 +261,7 @@
           {
             "evaluator": {
               "params": [
-                7200
+                28800
               ],
               "type": "gt"
             },
@@ -507,7 +506,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 7200
+          "value": 28800
         }
       ],
       "timeFrom": null,
@@ -1653,5 +1652,5 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 21
+  "version": 22
 }
