@@ -272,7 +272,7 @@
             "query": {
               "params": [
                 "A",
-                "5m",
+                "15m",
                 "now"
               ]
             },
@@ -284,7 +284,7 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "5m",
+        "for": "15m",
         "frequency": "1m",
         "handler": 1,
         "message": "Check for overall decrease of \"time to start\".\n\nPossible reasons for regression:\n\n* Not enough ressources\n* Too many tests scheduled due to misconfiguration",
@@ -1653,5 +1653,5 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 20
+  "version": 21
 }
