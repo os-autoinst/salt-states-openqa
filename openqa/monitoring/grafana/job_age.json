@@ -577,13 +577,13 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "3h",
         "frequency": "1h",
         "handler": 1,
         "message": "Jobs not scheduled for 2 days (172800s).\n\nPossible reasons:\n\n* There are no online workers for selected scheduled jobs, misconfiguration on the side of tests likely",
         "name": "Job age (scheduled) (max) alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -1652,5 +1652,5 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 22
+  "version": 23
 }
