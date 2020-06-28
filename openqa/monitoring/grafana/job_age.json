@@ -291,7 +291,7 @@
         "noDataState": "keep_state",
         "notifications": [
           {
-            "uid": "2ACofrdWz"
+            "uid": "Hkt_jeWMk"
           }
         ]
       },
@@ -1652,5 +1652,5 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 23
+  "version": 24
 }
