@@ -9,7 +9,7 @@ Type=oneshot
 # Create striped storage for openQA from all NVMe devices when / resides on
 # another device or from a potential third NVMe partition when there is only a
 # single NVMe device for the complete storage
-ExecStart=/bin/sh -c 'grep -q "md/openqa.*nvme" /proc/mdstat || lsblk -n | grep -v nvme | grep "/$" && (mdadm --stop /dev/md/openqa 2>&1 >/dev/null; mdadm --create /dev/md/openqa --level=0 --force --raid-devices=$(ls /dev/nvme?n1 | wc -l) --run /dev/nvme?n1) || mdadm --create /dev/md/openqa --level=0 --force --raid-devices=1 --run /dev/nvme0n1p3'
+ExecStart=/bin/sh -c 'lsblk -n | grep -q "raid" || lsblk -n | grep -v nvme | grep "/$" && (mdadm --stop /dev/md/openqa >/dev/null 2>&1; mdadm --create /dev/md/openqa --level=0 --force --raid-devices=$(ls /dev/nvme?n1 | wc -l) --run /dev/nvme?n1) || mdadm --create /dev/md/openqa --level=0 --force --raid-devices=1 --run /dev/nvme0n1p3'
 # Ensure device is correctly initialized but also spend a little time before
 # trying to create a filesystem to prevent a "busy" error
 ExecStart=/bin/sh -c 'grep nvme /proc/mdstat'
