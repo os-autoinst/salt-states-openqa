@@ -34,7 +34,6 @@ worker.packages:
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT and TAP support
-      - openvswitch # for TAP support
 {%- if grains.osrelease < '15.2' %}
       - SuSEfirewall2 # For TAP support and for other good reasons
 {%- endif %}
