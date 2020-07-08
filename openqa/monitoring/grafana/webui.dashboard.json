@@ -3964,12 +3964,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
-        "for": "5m",
+        "executionErrorState": "keep_state",
+        "for": "6m",
         "frequency": "1m",
         "handler": 1,
         "name": "Disk I/O time for /dev/vda alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -4667,12 +4667,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
-        "for": "5m",
+        "executionErrorState": "keep_state",
+        "for": "6m",
         "frequency": "1m",
         "handler": 1,
         "name": "Disk I/O time for /dev/vdc alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -5370,12 +5370,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
-        "for": "5m",
+        "executionErrorState": "keep_state",
+        "for": "6m",
         "frequency": "1m",
         "handler": 1,
         "name": "Disk I/O time for /dev/vdd alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -6073,12 +6073,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
-        "for": "5m",
+        "executionErrorState": "keep_state",
+        "for": "6m",
         "frequency": "1m",
         "handler": 1,
         "name": "Disk I/O time for /dev/vde alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -8542,5 +8542,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 20
+  "version": 21
 }
