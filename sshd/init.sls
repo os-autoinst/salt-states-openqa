@@ -18,6 +18,12 @@ sshd:
       - file: /etc/ssh/sshd_config
 {%- endif %}
 
+AAAAC3NzaC1lZDI1NTE5AAAAINy2519eyXRQF1qexQhEEjuAtMrgpnndeTbQBm4VSzR8:
+  ssh_auth.present:
+    - user: root
+    - enc: ssh-ed25519
+    - comment: root@backup-vm
+
 {% for username, details in pillar.get('users', {}).items() %}
 {{ username }}:
 
