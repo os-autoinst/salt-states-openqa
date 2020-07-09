@@ -67,6 +67,24 @@ reverse-proxy-group:
           from_address: 'osd-admins@suse.de'
           from_name: 'Grafana'
 
+/etc/grafana/ldap.toml:
+  ini.options_present:
+    - separator: '='
+    - strict: True
+    - sections:
+        '[servers]':
+          host: '"ldap.suse.de"'
+          port: 389
+          use_ssl: 'true'
+          start_tls: 'true'
+          ssl_skip_verify: 'false'
+          search_filter: '"(&(uid=%s)(objectClass=account))"'
+          search_base_dns: '["dc=suse,dc=de"]'
+        servers.attributes:
+          name: '"cn"'
+          username: '"uid"'
+          email: '""'
+
 /etc/grafana/provisioning/dashboards/salt.yaml:
   file.managed:
     - source: salt://openqa/monitoring/grafana/salt.yaml
