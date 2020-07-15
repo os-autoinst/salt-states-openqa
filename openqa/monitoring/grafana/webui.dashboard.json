@@ -6029,7 +6029,7 @@
           {
             "evaluator": {
               "params": [
-                4000
+                8000
               ],
               "type": "gt"
             },
@@ -6052,7 +6052,7 @@
           {
             "evaluator": {
               "params": [
-                4000
+                8000
               ],
               "type": "gt"
             },
@@ -8542,5 +8542,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 21
+  "version": 22
 }
