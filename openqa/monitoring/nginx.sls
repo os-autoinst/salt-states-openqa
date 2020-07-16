@@ -1,5 +1,3 @@
 nginx:
   pkg.latest:
-    - refresh: True
-    - pkgs:
-      - nginx
+    - refresh: False
