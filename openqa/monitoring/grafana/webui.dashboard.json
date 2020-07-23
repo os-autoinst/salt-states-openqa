@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1576399153465,
+  "iteration": 1595517124128,
   "links": [],
   "panels": [
     {
@@ -782,7 +782,7 @@
             "query": {
               "params": [
                 "D",
-                "5m",
+                "1h",
                 "now"
               ]
             },
@@ -805,13 +805,13 @@
             "query": {
               "params": [
                 "D",
-                "1m",
+                "15m",
                 "now"
               ]
             },
             "reducer": {
               "params": [],
-              "type": "avg"
+              "type": "median"
             },
             "type": "query"
           }
@@ -839,7 +839,7 @@
       "datasource": "InfluxDB",
       "editable": true,
       "error": false,
-      "fill": 4,
+      "fill": 10,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
@@ -861,7 +861,7 @@
         "values": true
       },
       "lines": true,
-      "linewidth": 1,
+      "linewidth": 0,
       "links": [],
       "notifications": [
         {
@@ -8542,5 +8542,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 22
+  "version": 23
 }
