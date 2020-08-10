@@ -49,7 +49,7 @@ openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP2:GA:TEST') }}
 
 {% for i in ['A','B','C','D','E','F','G','H','S','Y','V'] %}
-{{ scriptgen('SUSE:SLE-15-SP2:GA:Staging:' + i) }}
+{{ scriptgen('SUSE:SLE-15-SP3:GA:Staging:' + i) }}
 {% endfor %}
 
 {{ scriptgen('SUSE:SLE-12-SP5:Update:Products:SLERT') }}
