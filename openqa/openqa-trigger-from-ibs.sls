@@ -17,6 +17,8 @@ geekotest:
 openqa-trigger-from-ibs:
   pkg.installed:
     - refresh: False
+    # python3 is now a capability provided by a minor version package
+    - resolve_capabilities: True
     - pkgs:
       - git
       - python3
@@ -30,6 +32,8 @@ openqa-trigger-from-ibs:
 openqa-trigger-from-ibs-plugin:
   pkg.installed:
     - refresh: False
+    # python3 is now a capability provided by a minor version package
+    - resolve_capabilities: True
     - pkgs:
       - git
       - python3
