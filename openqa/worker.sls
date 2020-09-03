@@ -270,6 +270,8 @@ btrfs-nocow:
 
 python3-augeas:
   pkg.installed:
+    # python3 is now a capability provided by a minor version package
+    - resolve_capabilities: True
     - refresh: False
 
 grub-conf:
