@@ -1,0 +1,35 @@
+deploy:
+  stage: deploy
+  only:
+    - master@openqa/salt-pillars-openqa
+    - master@openqa/salt-states-openqa
+  script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - set -ex
+    - export TARGET=${TARGET:-"openqa.suse.de"}
+    - ssh $TARGET "(
+       set -x; cd /srv &&
+       for i in salt pillar; do
+         [ "\$i" = "salt" ] && repo="states" || repo="pillars";
+         mkdir -p \$i &&
+         chown root:salt \$i &&
+         (cd \$i &&
+           git status || git clone --depth 3 https://gitlab.suse.de/openqa/salt-\$repo-openqa.git . &&
+           git fetch origin &&
+           git reset --hard origin/master &&
+           git checkout -f master &&
+           git pull);
+       done
+       )"
+    # workaround for https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
+    - (
+    - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
+    - ssh $TARGET "echo 'Currently the following minions are down:'; diff <(sudo salt --timeout 1 '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort) <(sudo salt --timeout 1 --hide-timeout '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort); echo '==================='"
+    - ssh $TARGET "salt --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,,"
+    - ssh $TARGET "salt --hide-timeout \* state.highstate queue=True"
+    - )
