@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1595517124128,
+  "iteration": 1599380880982,
   "links": [],
   "panels": [
     {
@@ -2047,6 +2047,7 @@
     },
     {
       "alert": {
+        "alertRuleTags": {},
         "conditions": [
           {
             "evaluator": {
@@ -2096,10 +2097,10 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "5m",
+        "for": "8m",
         "frequency": "1m",
         "handler": 1,
-        "message": "Minion workers down",
+        "message": "Minion workers down.\n\nCheck systemd services on the openQA host",
         "name": "Workers alert",
         "noDataState": "no_data",
         "notifications": [
@@ -8542,5 +8543,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 23
+  "version": 25
 }
