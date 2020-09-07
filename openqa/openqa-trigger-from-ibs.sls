@@ -30,14 +30,6 @@ openqa-trigger-from-ibs:
     - user: geekotest
 
 openqa-trigger-from-ibs-plugin:
-  pkg.installed:
-    - refresh: False
-    # python3 is now a capability provided by a minor version package
-    - resolve_capabilities: True
-    - pkgs:
-      - git
-      - python3
-
   git.latest:
     - name: https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin
     - target: {{ plugindir }}
