@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1599380880982,
+  "iteration": 1599636657729,
   "links": [],
   "panels": [
     {
@@ -795,7 +795,7 @@
           {
             "evaluator": {
               "params": [
-                42
+                50
               ],
               "type": "gt"
             },
@@ -817,10 +817,10 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "30s",
+        "for": "5m",
         "frequency": "15s",
         "handler": 1,
-        "message": "IOwait too high",
+        "message": "IOwait too high\n\nCheck system journal on the host at the time of alert to see if there are any unexpected events coinciding with the alert.\n\nhttps://progress.opensuse.org/issues/69664 describes that a higher IO usage could be related to recent changes to openQA to load more test modules in parallel.",
         "name": "CPU usage alert",
         "noDataState": "no_data",
         "notifications": [
@@ -8543,5 +8543,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 25
+  "version": 26
 }
