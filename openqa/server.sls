@@ -49,6 +49,8 @@ server.packages:
           other: 90
         assets/storage_duration:
           CURRENT: 30
+        misc_limits:
+          untracked_assets_storage_duration: 7
         obs_rsync:
           home: /opt/openqa-trigger-from-ibs
           project_status_url: https://api.suse.de/public/build/%%PROJECT/_result
