@@ -52,6 +52,8 @@ server.packages:
         obs_rsync:
           home: /opt/openqa-trigger-from-ibs
           project_status_url: https://api.suse.de/public/build/%%PROJECT/_result
+        job_settings_ui:
+          keys_to_render_as_links: YAML_SCHEDULE,YAML_TEST_DATA,AUTOYAST
     - require:
       - pkg: server.packages
 
