@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 5955,
   "graphTooltip": 1,
-  "iteration": 1592298433776,
+  "iteration": 1600770057284,
   "links": [],
   "panels": [
     {
@@ -290,68 +290,6 @@
       }
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                2000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                1
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "{{ worker }}: CPU Usage alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -508,16 +446,7 @@
           ]
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 2000,
-          "yaxis": "left"
-        }
-      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -3640,5 +3569,5 @@
   "timezone": "browser",
   "title": "Worker dashboard ({{ worker }})",
   "uid": "WD{{ worker }}",
-  "version": 7
+  "version": 10
 }
