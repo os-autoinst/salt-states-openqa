@@ -111,5 +111,9 @@ test-monitor:
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
     - )
+    # some checks on the changed or generated files
+    - ls /etc/nginx/vhosts.d/
+    - grep -q 'monitor.qa.suse.de' /etc/nginx/vhosts.d/02-grafana.conf && echo "expected nginx config file for grafana exists"
+
 
 include: 'deploy.yml'
