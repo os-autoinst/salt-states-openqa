@@ -286,12 +286,12 @@
         "for": "2h",
         "frequency": "1m",
         "handler": 1,
-        "message": "Check for overall decrease of \"time to start\".\n\nPossible reasons for regression:\n\n* Not enough ressources\n* Too many tests scheduled due to misconfiguration",
+        "message": "Check for overall decrease of \"time to start\".\n\nPossible reasons for regression:\n\n* Not enough ressources\n* Too many tests scheduled due to misconfiguration\n\nRelated progress issue: https://progress.opensuse.org/issues/65975",
         "name": "Job age (scheduled) (median) alert",
         "noDataState": "keep_state",
         "notifications": [
           {
-            "uid": "Hkt_jeWMk"
+            "uid": "2ACofrdWz"
           }
         ]
       },
@@ -1652,5 +1652,5 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 25
+  "version": 26
 }
