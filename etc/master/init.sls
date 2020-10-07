@@ -13,3 +13,6 @@ cronie:
     - source: salt://etc/master/cron.d/SLES.CRON
 /etc/cron.hourly/logrotate:
   file.absent
+/etc/exports:
+  file.managed:
+    - source: salt://etc/master/exports
