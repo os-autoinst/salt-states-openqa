@@ -4361,7 +4361,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O requests for /dev/vdc",
+      "title": "Disk I/O requests for /dev/vdc (/assets)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -4558,7 +4558,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O bytes for /dev/vdc",
+      "title": "Disk I/O bytes for /dev/vdc (/assets)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -4853,7 +4853,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O time for /dev/vdc",
+      "title": "Disk I/O time for /dev/vdc (/assets)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -5064,7 +5064,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O requests for /dev/vdd",
+      "title": "Disk I/O requests for /dev/vdd (/results)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -5261,7 +5261,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O bytes for /dev/vdd",
+      "title": "Disk I/O bytes for /dev/vdd (/results)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -5556,7 +5556,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O time for /dev/vdd",
+      "title": "Disk I/O time for /dev/vdd (/results)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -5603,7 +5603,7 @@
       },
       "id": 62,
       "panels": [],
-      "title": "IO of vde (/results)",
+      "title": "IO of vde (/space-slow)",
       "type": "row"
     },
     {
@@ -5767,7 +5767,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O requests for /dev/vde (/results)",
+      "title": "Disk I/O requests for /dev/vde (/space-slow)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -5964,7 +5964,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O bytes for /dev/vde (/results)",
+      "title": "Disk I/O bytes for /dev/vde (/space-slow)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -6260,7 +6260,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O time for /dev/vde (/results)",
+      "title": "Disk I/O time for /dev/vde (/space-slow)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -8863,5 +8863,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 27
+  "version": 28
 }
