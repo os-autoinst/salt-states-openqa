@@ -51,3 +51,7 @@ openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-12-SP5:Update:Products:SLERT') }}
 {{ scriptgen('SUSE:SLE-15-SP2:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15:Update:Products:MicroOS') }}
+
+{% for i in ['A','B'] %}
+{{ scriptgen('SUSE:SLE-15:MicroOS:Staging:' + i) }}
+{% endfor %}
