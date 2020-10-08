@@ -2,6 +2,14 @@ cronie:
   pkg.installed:
     - refresh: False
 
+{%- if not grains.get('noservices', False) %}
+nfs-server:
+  service.running:
+    - restart: True
+    - watch:
+      - file: /etc/exports
+{%- endif %}
+
 /etc/logrotate.d/postgresql:
   file.managed:
     - source: salt://etc/master/logrotate.d/postgresql
