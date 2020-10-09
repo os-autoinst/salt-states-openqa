@@ -261,7 +261,7 @@
           {
             "evaluator": {
               "params": [
-                50400
+                72000
               ],
               "type": "gt"
             },
@@ -283,8 +283,8 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "2h",
-        "frequency": "1m",
+        "for": "3h",
+        "frequency": "5m",
         "handler": 1,
         "message": "Check for overall decrease of \"time to start\".\n\nPossible reasons for regression:\n\n* Not enough ressources\n* Too many tests scheduled due to misconfiguration\n\nRelated progress issue: https://progress.opensuse.org/issues/65975",
         "name": "Job age (scheduled) (median) alert",
@@ -506,7 +506,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 50400
+          "value": 72000
         }
       ],
       "timeFrom": null,
@@ -1652,5 +1652,5 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 26
+  "version": 27
 }
