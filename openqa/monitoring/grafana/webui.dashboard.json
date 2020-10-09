@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1602099301247,
+  "iteration": 1602268140553,
   "links": [],
   "panels": [
     {
@@ -3555,7 +3555,7 @@
       },
       "id": 60,
       "panels": [],
-      "title": "IO of vda",
+      "title": "IO of vda (/ , fast storage)",
       "type": "row"
     },
     {
@@ -3719,7 +3719,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O requests for /dev/vda",
+      "title": "Disk I/O requests for /dev/vda (/)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -3916,7 +3916,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O bytes for /dev/vda",
+      "title": "Disk I/O bytes for /dev/vda (/)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -4030,7 +4030,7 @@
         "for": "6m",
         "frequency": "1m",
         "handler": 1,
-        "name": "Disk I/O time for /dev/vda alert",
+        "name": "Disk I/O time for /dev/vda (/) alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -4211,7 +4211,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O time for /dev/vda",
+      "title": "Disk I/O time for /dev/vda (/)",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -4256,9 +4256,9 @@
         "x": 0,
         "y": 71
       },
-      "id": 64,
+      "id": 92,
       "panels": [],
-      "title": "IO of vdc",
+      "title": "IO of vdb (/srv , fast storage)",
       "type": "row"
     },
     {
@@ -4277,6 +4277,709 @@
         "w": 8,
         "x": 0,
         "y": 72
+      },
+      "id": 90,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "max": true,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "maxPerRow": 6,
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "repeatedByRow": true,
+      "seriesOverrides": [
+        {
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_name: $col",
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE (\"host\" = 'openqa' AND \"name\" = 'vdb') AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$tag_name: $col",
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(writes),1s) as \"write\" FROM \"diskio\" WHERE   (\"host\" = 'openqa' AND \"name\" = 'vdb') AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Disk I/O requests for /dev/vdb (/srv)",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "iops",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "editable": true,
+      "error": false,
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 72
+      },
+      "id": 93,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "max": true,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "maxPerRow": 6,
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "repeatedByRow": true,
+      "seriesOverrides": [
+        {
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_name: $col",
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(read_bytes),1s) as \"read\" FROM \"diskio\" WHERE (\"host\" = 'openqa' AND \"name\" = 'vdb')  AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$tag_name: $col",
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(write_bytes),1s) as \"write\" FROM \"diskio\" WHERE (\"host\" = 'openqa' and \"name\" = 'vdb') AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Disk I/O bytes for /dev/vdb (/srv)",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bytes",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                100000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                8000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                8000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "6m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Disk I/O time for /dev/vdb (/srv) alert",
+        "noDataState": "keep_state",
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
+      },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "editable": true,
+      "error": false,
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 72
+      },
+      "id": 94,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "max": true,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "maxPerRow": 6,
+      "notifications": [
+        {
+          "uid": "2ACofrdWz"
+        }
+      ],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "repeatedByRow": true,
+      "seriesOverrides": [
+        {
+          "alias": "/.*write$/",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_name: $col",
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(read_time),1s) as \"read\" FROM \"diskio\" WHERE  (\"host\" = 'openqa' AND \"name\" = 'vdb')  AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$tag_name: $col",
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(write_time),1s) as \"write\" FROM \"diskio\" WHERE  (\"host\" = 'openqa' AND \"name\" = 'vdb') AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 100000
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Disk I/O time for /dev/vdb (/srv)",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "ms",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 79
+      },
+      "id": 64,
+      "panels": [],
+      "title": "IO of vdc (/assets , cheap+slow storage)",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "editable": true,
+      "error": false,
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 80
       },
       "id": 44,
       "interval": "",
@@ -4473,7 +5176,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 72
+        "y": 80
       },
       "id": 58,
       "interval": "",
@@ -4685,7 +5388,7 @@
           {
             "evaluator": {
               "params": [
-                1000
+                20000
               ],
               "type": "gt"
             },
@@ -4708,7 +5411,7 @@
           {
             "evaluator": {
               "params": [
-                1000
+                20000
               ],
               "type": "gt"
             },
@@ -4733,7 +5436,8 @@
         "for": "6m",
         "frequency": "1m",
         "handler": 1,
-        "name": "Disk I/O time for /dev/vdc alert",
+        "message": "Threshold set to 20s for cheap+slow storage (rotating disk).",
+        "name": "Disk I/O time for /dev/vdc (/assets) alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -4755,7 +5459,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 72
+        "y": 80
       },
       "id": 47,
       "interval": "",
@@ -4957,11 +5661,11 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 79
+        "y": 87
       },
       "id": 66,
       "panels": [],
-      "title": "IO of vdd",
+      "title": "IO of vdd (/results, fast storage)",
       "type": "row"
     },
     {
@@ -4979,7 +5683,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 80
+        "y": 88
       },
       "id": 45,
       "interval": "",
@@ -5176,7 +5880,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 80
+        "y": 88
       },
       "id": 37,
       "interval": "",
@@ -5436,7 +6140,7 @@
         "for": "6m",
         "frequency": "1m",
         "handler": 1,
-        "name": "Disk I/O time for /dev/vdd alert",
+        "name": "Disk I/O time for /dev/vdd (/results) alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -5458,7 +6162,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 80
+        "y": 88
       },
       "id": 48,
       "interval": "",
@@ -5660,7 +6364,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 87
+        "y": 95
       },
       "id": 62,
       "panels": [],
@@ -5682,7 +6386,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 88
+        "y": 96
       },
       "id": 43,
       "interval": "",
@@ -5879,7 +6583,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 88
+        "y": 96
       },
       "id": 38,
       "interval": "",
@@ -6091,7 +6795,7 @@
           {
             "evaluator": {
               "params": [
-                8000
+                20000
               ],
               "type": "gt"
             },
@@ -6114,7 +6818,7 @@
           {
             "evaluator": {
               "params": [
-                8000
+                20000
               ],
               "type": "gt"
             },
@@ -6139,7 +6843,8 @@
         "for": "6m",
         "frequency": "1m",
         "handler": 1,
-        "name": "Disk I/O time for /dev/vde alert",
+        "message": "Threshold set to 20s for cheap+slow storage (rotating disk).",
+        "name": "Disk I/O time for /dev/vde (/space-slow) alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -6161,7 +6866,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 88
+        "y": 96
       },
       "id": 57,
       "interval": "10s",
@@ -6314,8 +7019,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 100000,
-          "yaxis": "left"
+          "value": 100000
         }
       ],
       "timeFrom": null,
@@ -6364,7 +7068,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 95
+        "y": 103
       },
       "id": 10,
       "panels": [],
@@ -6383,7 +7087,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 96
+        "y": 104
       },
       "id": 80,
       "interval": "30s",
@@ -6514,7 +7218,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 96
+        "y": 104
       },
       "id": 82,
       "interval": "12s",
@@ -6639,7 +7343,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 96
+        "y": 104
       },
       "id": 84,
       "interval": "12s",
@@ -6880,7 +7584,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 104
+        "y": 112
       },
       "id": 88,
       "interval": "20s",
@@ -7046,7 +7750,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 104
+        "y": 112
       },
       "id": 15,
       "isNew": true,
@@ -7235,7 +7939,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 104
+        "y": 112
       },
       "id": 14,
       "isNew": true,
@@ -7754,7 +8458,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 110
+        "y": 118
       },
       "id": 8,
       "panels": [],
@@ -7821,7 +8525,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 111
+        "y": 119
       },
       "id": 2,
       "isNew": true,
@@ -8096,7 +8800,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 118
+        "y": 126
       },
       "id": 89,
       "isNew": true,
@@ -8406,7 +9110,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 125
+        "y": 133
       },
       "id": 4,
       "isNew": true,
@@ -8708,7 +9412,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 125
+        "y": 133
       },
       "id": 6,
       "isNew": true,
@@ -8924,5 +9628,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 29
+  "version": 30
 }
