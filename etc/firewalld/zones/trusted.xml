@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<zone target="ACCEPT">
+  <short>Trusted</short>
+  <description>All network connections are accepted.</description>
+  <interface name="br1"/>
+  <interface name="ovs-system"/>
+  <interface name="{{ pillar['workerconf'][grains['host']]['bridge_port'] }}"/>
+  <masquerade/>
+</zone>

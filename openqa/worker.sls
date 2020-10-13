@@ -34,9 +34,7 @@ worker.packages:
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT and TAP support
-{%- if grains.osrelease < '15.2' %}
-      - SuSEfirewall2 # For TAP support and for other good reasons
-{%- endif %}
+      - firewalld # For TAP support and for other good reasons
       - qemu: '>=2.3'
       - telegraf # to collect metrics
       - iputils # ping for telegraf
@@ -199,24 +197,33 @@ stop_and_disable_all_workers:
       - file: /etc/openqa/workers.ini
 {%- endif %}
 
-{%- if grains.osrelease < '15.2' %}
- {%- if not grains.get('noservices', False) %}
-# Configure firewall and watch on SuSEfirewall2 conf change
-SuSEfirewall2:
+# Configure firewalld: os-autoinst needs to upload logs to rather random ports and ovs needs configuration
+{%- if not grains.get('noservices', False) %}
+firewalld:
   service.running:
     - enable: True
-    - watch:
-      - file: /etc/sysconfig/SuSEfirewall2
+    - watch_any:
+      - file: /etc/firewalld/firewalld.conf
+      - file: /etc/firewalld/zones/trusted.xml
     - require:
       - pkg: worker.packages
- {%- endif %}
-
-# os-autoinst needs to upload logs to rather random ports and ovs needs configuration
-/etc/sysconfig/SuSEfirewall2:
+{%- endif %}
+firewalld_config:
+  file.replace:
+    - name: /etc/firewalld/firewalld.conf
+    - pattern: '^DefaultZone=.*$'
+    - repl: 'DefaultZone=trusted'
+    - append_if_not_found: True
+    - require:
+      - pkg: worker.packages
+firewalld_zones:
   file.managed:
     - template: jinja
-    - source: salt://openqa/SuSEfirewall2.conf
-{%- endif %}
+    - names:
+      - /etc/firewalld/zones/trusted.xml:
+        - source: salt://etc/firewalld/zones/trusted.xml
+    - require:
+      - pkg: worker.packages
 
 {% if grains['osarch'] == 'aarch64' %}
 /dev/raw1394:
