@@ -15,11 +15,29 @@ zypper in ca-certificates-suse git-core salt-minion
 echo "file_client: local" >> /etc/salt/minion
 systemctl enable --now salt-minion
 
-pushd /srv/salt
-git clone https://gitlab.suse.de/openqa/salt-states-openqa.git .
+# checkout repositories
+pushd /srv
+git clone https://gitlab.suse.de/openqa/salt-states-openqa.git salt    # actual salt recipes
+git clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git pillar # credentials such as SSH keys
 popd
 
+# apply all states
 salt-call --local state.apply
+
+# show verbose debug output
+salt-call --local -l debug state.apply
+
+# apply specific state (this example applies the state "firewalld" from file "workers.sls" within directory "openqa")
+salt-call --local state.sls_id firewalld openqa.worker
+
+# perform dry-run
+salt-call --local state.sls_id firewalld openqa.worker test=True
+
+# show all states in sls file (this example shows states from file "workers.sls" within directory "openqa")
+salt-call --local state.show_sls openqa.worker
+
+# show top-level structure defined in file "top.sls"
+salt-call --local state.show_top
 ```
 
 Specific roles can be specified in salt grains, also for testing, e.g.:
