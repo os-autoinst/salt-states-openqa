@@ -18,6 +18,13 @@ server.packages:
       - postfix
       - ca-certificates-suse  # for https://gitlab.suse.de/openqa/scripts
 
+/etc/fstab:
+  file.managed:
+    - source:
+      - salt://fstab
+    - user: root
+    - group: root
+
 /etc/openqa/openqa.ini:
   ini.options_present:
     - sections:
