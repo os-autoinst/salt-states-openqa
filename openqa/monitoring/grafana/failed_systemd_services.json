@@ -155,7 +155,7 @@
         "for": "3m",
         "frequency": "1m",
         "handler": 1,
-        "name": "Failed systemd services alert (workers)",
+        "name": "Failed systemd services alert (except openqa.suse.de)",
         "noDataState": "no_data",
         "notifications": [
           {
@@ -259,7 +259,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Failed systemd services (workers)",
+      "title": "Failed systemd services (except openqa.suse.de)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -488,5 +488,5 @@
   "timezone": "",
   "title": "Failed systemd services",
   "uid": "KToPYLEWz",
-  "version": 9
+  "version": 10
 }
