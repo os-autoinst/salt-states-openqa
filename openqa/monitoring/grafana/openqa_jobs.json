@@ -132,7 +132,7 @@
             },
             {
               "params": [
-                "0"
+                "null"
               ],
               "type": "fill"
             }
@@ -176,7 +176,7 @@
             },
             {
               "params": [
-                "0"
+                "null"
               ],
               "type": "fill"
             }
@@ -219,7 +219,7 @@
             },
             {
               "params": [
-                "0"
+                "null"
               ],
               "type": "fill"
             }
@@ -372,7 +372,7 @@
           "measurement": "openqa_jobs_by_group",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_group\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval), \"group\" fill(0)",
+          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_group\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval), \"group\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -499,7 +499,7 @@
             },
             {
               "params": [
-                "0"
+                "null"
               ],
               "type": "fill"
             }
@@ -507,7 +507,7 @@
           "measurement": "openqa_jobs_by_arch",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_arch\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval), \"arch\" fill(0)",
+          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_arch\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval), \"arch\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -628,7 +628,7 @@
             },
             {
               "params": [
-                "0"
+                "null"
               ],
               "type": "fill"
             }
@@ -1395,5 +1395,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 23
+  "version": 24
 }
