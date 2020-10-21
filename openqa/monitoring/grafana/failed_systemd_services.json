@@ -146,7 +146,7 @@
             },
             "reducer": {
               "params": [],
-              "type": "avg"
+              "type": "max"
             },
             "type": "query"
           }
@@ -155,7 +155,8 @@
         "for": "3m",
         "frequency": "1m",
         "handler": 1,
-        "name": "Failed systemd services alert (workers)",
+        "message": "Check failed systemd services on hosts with `systemctl --failed`.\n\nHint: Go to parent dashboard https://stats.openqa-monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.",
+        "name": "Failed systemd services alert (except openqa.suse.de)",
         "noDataState": "no_data",
         "notifications": [
           {
@@ -178,6 +179,7 @@
         "y": 0
       },
       "id": 6,
+      "interval": "1m",
       "legend": {
         "avg": false,
         "current": false,
@@ -205,6 +207,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "alias": "Sum of failed systemd services",
           "groupBy": [
             {
               "params": [
@@ -259,7 +262,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Failed systemd services (workers)",
+      "title": "Failed systemd services (except openqa.suse.de)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -488,5 +491,5 @@
   "timezone": "",
   "title": "Failed systemd services",
   "uid": "KToPYLEWz",
-  "version": 9
+  "version": 10
 }
