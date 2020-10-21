@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1602351533458,
+  "iteration": 1603266510155,
   "links": [],
   "panels": [
     {
@@ -7332,11 +7332,52 @@
       }
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                500000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "The apache response time exceeded the alert threshold.\n\n* Check the load of the web UI host\n* Consider restarting the openQA web UI service and/or apache\n\nAlso see https://progress.opensuse.org/issues/73633",
+        "name": "Apache Response Time alert",
+        "noDataState": "keep_state",
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "description": "Response time measured by the apache proxy for requests with exclusion of some known routes which are allowed to run for much longer.",
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -7531,11 +7572,19 @@
           "tags": []
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 500000
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Response Time",
+      "title": "Apache Response Time",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -9628,5 +9677,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 31
+  "version": 32
 }
