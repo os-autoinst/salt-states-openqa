@@ -9,18 +9,21 @@ server.packages:
 /etc/systemd/system/openqa_nvme_format.service:
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_format.service
+    - mode: 644
     - source:
       - salt://openqa/nvme_store/openqa_nvme_format.service
 
 /etc/systemd/system/openqa_nvme_prepare.service:
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_prepare.service
+    - mode: 644
     - source:
       - salt://openqa/nvme_store/openqa_nvme_prepare.service
 
 /etc/systemd/system/openqa-worker@.service.d/override.conf:
   file.managed:
     - name: /etc/systemd/system/openqa-worker@.service.d/override.conf
+    - mode: 644
     - source:
       - salt://openqa/nvme_store/openqa-worker@_override.conf
     - makedirs: true
@@ -37,6 +40,7 @@ server.packages:
 /etc/systemd/system/var-lib-openqa.mount.d/override.conf:
   file.managed:
     - name: /etc/systemd/system/var-lib-openqa.mount.d/override.conf
+    - mode: 644
     - source:
       - salt://openqa/nvme_store/var-lib-openqa.mount_override.conf
     - makedirs: true
