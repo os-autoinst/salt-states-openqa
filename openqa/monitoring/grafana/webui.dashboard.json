@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1603266510155,
+  "iteration": 1603349018616,
   "links": [],
   "panels": [
     {
@@ -2359,6 +2359,7 @@
     },
     {
       "alert": {
+        "alertRuleTags": {},
         "conditions": [
           {
             "evaluator": {
@@ -2411,7 +2412,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "message": "Too many failed Minion jobs",
+        "message": "Too many failed Minion jobs\n\nReview the failed jobs on\nhttps://openqa.suse.de/minion/jobs?state=failed\nand after investigation remove the failed jobs.",
         "name": "Minion Jobs alert",
         "noDataState": "alerting",
         "notifications": [
@@ -2425,6 +2426,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "description": "See minion job details on https://openqa.suse.de/minion/jobs",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -9677,5 +9679,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 32
+  "version": 33
 }
