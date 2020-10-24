@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1603349018616,
+  "iteration": 1603537666017,
   "links": [],
   "panels": [
     {
@@ -2162,7 +2162,7 @@
         "frequency": "1m",
         "handler": 1,
         "message": "Minion workers down.\n\nCheck systemd services on the openQA host",
-        "name": "Workers alert",
+        "name": "openQA minion workers alert",
         "noDataState": "no_data",
         "notifications": [
           {
@@ -2320,7 +2320,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Workers",
+      "title": "openQA minion workers",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -9679,5 +9679,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 33
+  "version": 34
 }
