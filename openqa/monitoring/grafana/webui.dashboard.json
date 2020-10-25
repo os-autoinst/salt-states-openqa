@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1603537666017,
+  "iteration": 1603635416636,
   "links": [],
   "panels": [
     {
@@ -2157,13 +2157,13 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "10m",
         "frequency": "1m",
         "handler": 1,
         "message": "Minion workers down.\n\nCheck systemd services on the openQA host",
         "name": "openQA minion workers alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -9679,5 +9679,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 34
+  "version": 35
 }
