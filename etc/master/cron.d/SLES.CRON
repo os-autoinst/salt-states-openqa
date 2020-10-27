@@ -7,8 +7,8 @@
 */5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-12-{,SP?-}Server-DVD-s390x-GM-DVD1/ ; do ln -sf $i ; done)
 */5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-12-SP?-SDK-POOL-{x86_64,aarch64,ppc64le,s390x}-BuildGM-Media1/ ; do ln -sf $i ; done)
 
-# osukup: poo#41441
-*/5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-15-{,SP?-}Installer-DVD-s390x-GM-DVD1/ ; do ln -sf $i ; done)
+# osukup: poo#41441; okurz: poo#75373
+*/5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-15-*-s390x-GM-*1/ ; do ln -sf $i ; done)
 
 # remove sync logs older than 2 month
 0 0 * * SUN geekotest find /opt/openqa-trigger-from-ibs/ -name '.run_*' -type d -ctime +60 -prune -exec rm -r {}/ \;
