@@ -6,6 +6,7 @@ base:
   'G@roles:webui':
     - salt.master
     - etc.master
+    - openqa.ntp
     - openqa.repos
     - openqa.server
     - openqa.links
