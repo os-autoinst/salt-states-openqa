@@ -113,7 +113,7 @@
         "y": 1
       },
       "id": 12054,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -135,7 +135,7 @@
           "uid": "2ACofrdWz"
         }
       ],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -307,7 +307,7 @@
         "y": 11
       },
       "id": 65092,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -331,7 +331,7 @@
           "uid": "2ACofrdWz"
         }
       ],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -503,7 +503,7 @@
         "y": 21
       },
       "id": 54694,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -519,7 +519,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -633,7 +633,7 @@
         "y": 21
       },
       "id": 28239,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -652,7 +652,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -1088,7 +1088,7 @@
         "y": 37
       },
       "id": 13782,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1107,7 +1107,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -1345,7 +1345,7 @@
         "y": 37
       },
       "id": 65090,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -1366,7 +1366,7 @@
           "uid": "2ACofrdWz"
         }
       ],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -1503,7 +1503,7 @@
         "y": 45
       },
       "id": 60200,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1521,7 +1521,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -1759,7 +1759,7 @@
         "y": 45
       },
       "id": 56720,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1782,7 +1782,7 @@
           "uid": "2ACofrdWz"
         }
       ],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -1961,7 +1961,7 @@
         "y": 54
       },
       "id": 42026,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1977,7 +1977,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -2154,7 +2154,7 @@
         "y": 62
       },
       "id": 28572,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -2171,7 +2171,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -2349,7 +2349,7 @@
         "y": 70
       },
       "id": 65094,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -2366,7 +2366,7 @@
       "lines": true,
       "linewidth": 2,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -2603,7 +2603,7 @@
         "y": 77
       },
       "id": 58901,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -2620,7 +2620,7 @@
       "lines": false,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
@@ -2793,7 +2793,7 @@
         "y": 77
       },
       "id": 50643,
-      "interval": "10s",
+      "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -2810,7 +2810,7 @@
       "lines": false,
       "linewidth": 2,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
