@@ -193,6 +193,29 @@ telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
+
+readonly_db_access:
+  postgres_user.present:
+    - name: openqa
+    - password: openqa
+
+readonly_db_access_jobs:
+  postgres_privileges.present:
+    - name: openqa
+    - object_name: jobs
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
+
+readonly_db_access_job_modules:
+  postgres_privileges.present:
+    - name: openqa
+    - object_name: job_modules
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
 {%- endif %}
 
 /etc/vsftpd.conf:
