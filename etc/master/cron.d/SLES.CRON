@@ -13,6 +13,12 @@
 # remove sync logs older than 2 month
 0 0 * * SUN geekotest find /opt/openqa-trigger-from-ibs/ -name '.run_*' -type d -ctime +60 -prune -exec rm -r {}/ \;
 
-# remove videos older than 1 month if free disk space is getting low (result disk usage >= 95 %)
+# remove videos older than 1 month if free disk space is getting low (result disk usage >= $limit %)
+# The limit is selected to be lower than the monitoring alert limit so that
+# alerts are prevented when this last-resort actions are done when job group
+# retention periods would still keep too many results.
+# As the check first calls "df" the cost of calling it much more often is
+# negligible while we ensure to not call multiple instances of the find process.
 # see https://progress.opensuse.org/issues/66922
-0 0 * * * geekotest ([ "$(df --output=pcent /results/testresults | sed '1d;s/[^0-9]//g')" -ge 95 ] && find /results/testresults -type f -iname '*.ogv' -mtime +28 -delete)
+# and https://progress.opensuse.org/issues/76822
+*/15 * * * * geekotest ([ "$(df --output=pcent /results/testresults | sed '1d;s/[^0-9]//g')" -ge 88 ] && (! pgrep --full --list-full 'find /results/testresults' >/dev/null) && find /results/testresults -type f -iname '*.ogv' -mtime +28 -delete)
