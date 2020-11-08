@@ -19,7 +19,7 @@ UUID=6c8044d6-5497-4db6-9714-89b76268121e /srv xfs defaults,logbsize=256k,noatim
 # 3f003a69-c51e-4d79-8b83-906e7918bac4 -> vdc
 # rotating disk "cheap+slow"
 UUID=3f003a69-c51e-4d79-8b83-906e7918bac4 /assets xfs defaults,logbsize=256k,noatime,nodiratime 1 2
-/assets /var/lib/openqa/share none x-systemd.requires=/results,x-systemd.automount,bind 0 0
+/assets /var/lib/openqa/share none x-systemd.requires=/var/lib/openqa,x-systemd.automount,bind 0 0
 
 # 51d504aa-6f46-4b89-bcd9-b6cea7b8b755 -> vdd
 # ssd storage "expensive+fast"
@@ -29,7 +29,7 @@ UUID=51d504aa-6f46-4b89-bcd9-b6cea7b8b755 /results xfs defaults,logbsize=256k,no
 # cf441a62-3f8c-4b29-928b-0f0161e8240b -> vde
 # rotating disk "cheap+slow"
 UUID=cf441a62-3f8c-4b29-928b-0f0161e8240b /space-slow xfs defaults,logbsize=256k,noatime,nodiratime 1 2
-/space-slow/assets/factory/iso/fixed /assets/factory/iso/fixed none x-systemd.requires=/assets,x-systemd.automount,bind 0 0
-/space-slow/assets/factory/hdd/fixed /assets/factory/hdd/fixed none x-systemd.requires=/assets,x-systemd.automount,bind 0 0
+/space-slow/assets/factory/iso/fixed /var/lib/openqa/share/factory/iso/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind 0 0
+/space-slow/assets/factory/hdd/fixed /var/lib/openqa/share/factory/hdd/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind 0 0
 
 /srv/homes.img /home ext4 defaults 1 1
