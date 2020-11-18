@@ -352,6 +352,12 @@ kernel.softlockup_panic:
   sysctl.present:
     - value: 1
 
+{%- if grains.get('default_interface', None) %}
+net.ipv6.conf.{{ grains['default_interface'] }}.accept_ra:
+  sysctl.present:
+    - value: 2
+{%- endif %}
+
 /etc/sysctl.d/50-vm-bytes.conf:
   file.managed:
     - source:
