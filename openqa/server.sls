@@ -218,6 +218,19 @@ readonly_db_access_job_modules:
     - maintenance_db: openqa
 {%- endif %}
 
+# allow access to postgres database from outside so far this does not ensure
+# that the configuration becomes effective which needs a server restart
+/srv/PSQL10/data/postgresql.conf:
+  file.replace:
+    - pattern: "(listen_addresses = ')[^']*('.*$)"
+    - repl: '\1*\2'
+
+/srv/PSQL10/data/pg_hba.conf:
+  file.append:
+    - text: |
+        host    all             openqa          0.0.0.0/0               md5
+        host    all             openqa          ::/0                    md5
+
 /etc/vsftpd.conf:
   file.managed:
     - source:
