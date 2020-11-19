@@ -4,8 +4,9 @@ This contains salt states used to configure an openQA infrastructure, for exampl
 
 They should be generic enough to also be useful (with some modification) for others
 
-## Testing
-### Local test deployment
+## How to use
+
+### Initial setup of salt and repositories
 
 ```sh
 . /etc/os-release
@@ -20,7 +21,77 @@ pushd /srv
 git clone https://gitlab.suse.de/openqa/salt-states-openqa.git salt    # actual salt recipes
 git clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git pillar # credentials such as SSH keys
 popd
+```
 
+
+### Common salt commands to use
+
+Apply the complete configuration, so called "high state", to all nodes, while
+only outputting errors and what changed:
+
+```sh
+salt -l error --state-output=changes \* state.apply highstate
+```
+
+Run an individual command on a selected node, for example openqaworker42:
+
+```sh
+salt 'openqaworker42*' cmd.run 'uptime'
+```
+
+Run a same command on all worker nodes, i.e. nodes with the role "worker", in
+this example "systemctl --no-legend --failed" to show all failed systemd
+services:
+
+```sh
+salt -C 'G@roles:worker' cmd.run 'systemctl --no-legend --failed'
+```
+
+For the example of the openQA worker cache service systemd service failing on all worker nodes and you
+want to restart it once by stopping all worker instances, restart the
+according services and check that they all start up correctly:
+
+```sh
+salt -C 'G@roles:worker' cmd.run 'systemctl stop openqa-worker.target openqa-worker-cacheservice openqa-worker-cacheservice-minion && rm -rf /var/lib/openqa/cache/* && systemctl start openqa-worker.target openqa-worker-cacheservice openqa-worker-cacheservice-minion && until sudo systemctl status | grep -q "Jobs: 0 queue"; do sleep .1; done && systemctl --no-legend --failed'
+```
+
+To show the resulting target state and apply only that substate on nodes of a
+specific role, e.g. the substate "openqa.monitoring.grafana" to all nodes
+matching the role "monitor":
+
+```sh
+salt -C 'G@roles:monitor' state.show_sls,state.apply openqa.monitoring.influxdb,openqa.monitoring.influxdb
+```
+
+
+## Testing
+### Local test deployment
+
+In a virtual or physical machine one can enable the use of the repository or
+setup a test environment as explained above in the section
+"Initial setup of salt and repositories".
+
+As an alternative one can use a container and for example mount the local
+working copy of states and/or pillars into the container:
+
+```sh
+podman run --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
+```
+
+here assuming that the pillars repo can be found in a directory named
+"salt-pillars-openqa" in a directory next to the states repo.
+
+To test out all in a single call, e.g. that a file is generated correctly on a
+monitoring instance:
+
+```sh
+podman run --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core sh -c 'echo -e "noservices: True\nroles: monitor" >> /etc/salt/grains && salt-call -l debug --local state.apply openqa.monitoring.grafana && cat /etc/grafana/ldap.toml'
+```
+
+Further common salt commands to execute in a local salt environment for
+testing, debugging and investigation:
+
+```sh
 # apply all states
 salt-call --local state.apply
 
@@ -42,7 +113,7 @@ salt-call --local state.show_top
 
 Specific roles can be specified in salt grains, also for testing, e.g.:
 
-```
+```sh
 echo 'roles: worker' > /etc/salt/grains
 salt-call --local state.apply
 ```
