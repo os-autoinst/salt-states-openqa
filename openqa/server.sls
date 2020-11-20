@@ -193,7 +193,43 @@ telegraf:
   service.running:
     - watch:
       - file: /etc/telegraf/telegraf.conf
+
+readonly_db_access:
+  postgres_user.present:
+    - name: openqa
+    - password: openqa
+
+readonly_db_access_jobs:
+  postgres_privileges.present:
+    - name: openqa
+    - object_name: jobs
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
+
+readonly_db_access_job_modules:
+  postgres_privileges.present:
+    - name: openqa
+    - object_name: job_modules
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
 {%- endif %}
+
+# allow access to postgres database from outside so far this does not ensure
+# that the configuration becomes effective which needs a server restart
+/srv/PSQL10/data/postgresql.conf:
+  file.replace:
+    - pattern: "(listen_addresses = ')[^']*('.*$)"
+    - repl: '\1*\2'
+
+/srv/PSQL10/data/pg_hba.conf:
+  file.append:
+    - text: |
+        host    all             openqa          0.0.0.0/0               md5
+        host    all             openqa          ::/0                    md5
 
 /etc/vsftpd.conf:
   file.managed:
