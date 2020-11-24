@@ -10,6 +10,10 @@ include:
  - openqa.ntp
  - sudo
 
+/etc/hostname:
+  file.managed:
+    - contents: {{ grains['host'] }}
+
 # Packages that must come from the openQA repo
 worker-openqa.packages:
   pkg.installed:
