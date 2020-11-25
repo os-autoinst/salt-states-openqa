@@ -1,5 +1,6 @@
 base:
   '*':
+    - network
     - salt.minion
     - sshd
     - auto-update
