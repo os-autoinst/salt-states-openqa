@@ -216,7 +216,6 @@ readonly_db_access_job_modules:
     - privileges:
       - SELECT
     - maintenance_db: openqa
-{%- endif %}
 
 # allow access to postgres database from outside so far this does not ensure
 # that the configuration becomes effective which needs a server restart
@@ -230,6 +229,7 @@ readonly_db_access_job_modules:
     - text: |
         host    all             openqa          0.0.0.0/0               md5
         host    all             openqa          ::/0                    md5
+{%- endif %}
 
 /etc/vsftpd.conf:
   file.managed:
