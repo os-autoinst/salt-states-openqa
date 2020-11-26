@@ -1,5 +1,7 @@
 {% if grains['osarch'] == 'x86_64' %}
 {% set ttyconsolearg = "console=tty0 console=ttyS1,115200" %}
+{% elif grains['osarch'] == 'aarch64' %}
+{% set ttyconsolearg = "console=tty0 console=ttyAMA0,115200" %}
 {% else %}
 {% set ttyconsolearg = "" %}
 {% endif %}
