@@ -572,7 +572,7 @@
           {
             "evaluator": {
               "params": [
-                172800
+                345600
               ],
               "type": "gt"
             },
@@ -597,7 +597,7 @@
         "for": "3h",
         "frequency": "1h",
         "handler": 1,
-        "message": "Jobs not scheduled for 2 days (172800s).\n\nPossible reasons:\n\n* There are no online workers for selected scheduled jobs, misconfiguration on the side of tests likely",
+        "message": "Jobs not scheduled for 4 days (345600s).\n\nPossible reasons:\n\n* There are no online workers for selected scheduled jobs, misconfiguration on the side of tests likely\n\nSee https://progress.opensuse.org/issues/73174#note-2 for an explanation of the selection of the specific value",
         "name": "Job age (scheduled) (max) alert",
         "noDataState": "keep_state",
         "notifications": [
@@ -819,7 +819,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 172800
+          "value": 345600
         }
       ],
       "timeFrom": null,
