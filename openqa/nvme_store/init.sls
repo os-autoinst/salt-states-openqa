@@ -20,9 +20,9 @@ server.packages:
     - source:
       - salt://openqa/nvme_store/openqa_nvme_prepare.service
 
-/etc/systemd/system/openqa-worker@.service.d/override.conf:
+/etc/systemd/system/openqa-worker@.service.d/20-nvme-autoformat.conf:
   file.managed:
-    - name: /etc/systemd/system/openqa-worker@.service.d/override.conf
+    - name: /etc/systemd/system/openqa-worker@.service.d/20-nvme-autoformat.conf
     - mode: 644
     - source:
       - salt://openqa/nvme_store/openqa-worker@_override.conf

@@ -347,6 +347,14 @@ telegraf:
       - file: /etc/telegraf/telegraf.conf
 {%- endif %}
 
+/etc/systemd/system/openqa-worker@.service.d/30-openvswitch.conf:
+  file.managed:
+    - name: /etc/systemd/system/openqa-worker@.service.d/30-openvswitch.conf
+    - mode: 644
+    - source:
+      - salt://openqa/openqa-worker-openvswitch.conf
+    - makedirs: true
+
 # prevent I/O stuck for very long time by automatically crashing (and
 # rebooting)
 # see https://progress.opensuse.org/issues/41882#note-34
