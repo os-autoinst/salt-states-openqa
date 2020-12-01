@@ -30,6 +30,12 @@
       ],
       "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -61,7 +67,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -148,6 +153,12 @@
       ],
       "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de (p99, long tail, worst case excluding likely configuration errors)\n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -179,7 +190,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -261,7 +271,7 @@
           {
             "evaluator": {
               "params": [
-                72000
+                259200
               ],
               "type": "gt"
             },
@@ -286,7 +296,7 @@
         "for": "3h",
         "frequency": "5m",
         "handler": 1,
-        "message": "Check for overall decrease of \"time to start\".\n\nPossible reasons for regression:\n\n* Not enough ressources\n* Too many tests scheduled due to misconfiguration\n\nRelated progress issue: https://progress.opensuse.org/issues/65975",
+        "message": "Check for overall decrease of \"time to start\".\n\nPossible reasons for regression:\n\n* Not enough ressources\n* Too many tests scheduled due to misconfiguration\n\n2020-11-27: Alert limit set to 259200s = 3d, see https://progress.opensuse.org/issues/73174#note-2 about the decision\n\nRelated progress issue: https://progress.opensuse.org/issues/65975",
         "name": "Job age (scheduled) (median) alert",
         "noDataState": "keep_state",
         "notifications": [
@@ -301,6 +311,13 @@
       "dashes": false,
       "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -309,6 +326,7 @@
         "x": 0,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 5,
       "interval": "2m",
       "legend": {
@@ -327,10 +345,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -506,7 +522,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 72000
+          "value": 259200
         }
       ],
       "timeFrom": null,
@@ -556,7 +572,7 @@
           {
             "evaluator": {
               "params": [
-                172800
+                345600
               ],
               "type": "gt"
             },
@@ -581,7 +597,7 @@
         "for": "3h",
         "frequency": "1h",
         "handler": 1,
-        "message": "Jobs not scheduled for 2 days (172800s).\n\nPossible reasons:\n\n* There are no online workers for selected scheduled jobs, misconfiguration on the side of tests likely",
+        "message": "Jobs not scheduled for 4 days (345600s).\n\nPossible reasons:\n\n* There are no online workers for selected scheduled jobs, misconfiguration on the side of tests likely\n\nSee https://progress.opensuse.org/issues/73174#note-2 for an explanation of the selection of the specific value",
         "name": "Job age (scheduled) (max) alert",
         "noDataState": "keep_state",
         "notifications": [
@@ -596,6 +612,13 @@
       "dashes": false,
       "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nMaximum value over all arch+machine values\n\nhttps://progress.opensuse.org/issues/65975",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -604,6 +627,7 @@
         "x": 0,
         "y": 15
       },
+      "hiddenSeries": false,
       "id": 2,
       "interval": "2m",
       "legend": {
@@ -618,10 +642,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -797,7 +819,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 172800
+          "value": 345600
         }
       ],
       "timeFrom": null,
@@ -847,6 +869,13 @@
       "dashes": false,
       "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -855,6 +884,7 @@
         "x": 8,
         "y": 15
       },
+      "hiddenSeries": false,
       "id": 4,
       "interval": "2m",
       "legend": {
@@ -869,10 +899,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1114,6 +1142,13 @@
       "dashes": false,
       "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1122,6 +1157,7 @@
         "x": 0,
         "y": 23
       },
+      "hiddenSeries": false,
       "id": 6,
       "interval": "2m",
       "legend": {
@@ -1136,10 +1172,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1243,6 +1277,13 @@
       "dashes": false,
       "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1251,6 +1292,7 @@
         "x": 12,
         "y": 23
       },
+      "hiddenSeries": false,
       "id": 9,
       "interval": "2m",
       "legend": {
@@ -1265,10 +1307,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1372,6 +1412,13 @@
       "dashes": false,
       "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1380,6 +1427,7 @@
         "x": 0,
         "y": 31
       },
+      "hiddenSeries": false,
       "id": 8,
       "interval": "2m",
       "legend": {
@@ -1394,10 +1442,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1501,6 +1547,13 @@
       "dashes": false,
       "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1509,6 +1562,7 @@
         "x": 12,
         "y": 31
       },
+      "hiddenSeries": false,
       "id": 7,
       "interval": "2m",
       "legend": {
@@ -1523,10 +1577,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1625,7 +1677,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 20,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1652,5 +1704,5 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 27
+  "version": 28
 }
