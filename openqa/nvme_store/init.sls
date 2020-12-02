@@ -45,12 +45,14 @@ server.packages:
       - salt://openqa/nvme_store/var-lib-openqa.mount_override.conf
     - makedirs: true
 
+{%- if not grains.get('noservices', False) %}
 daemon-reload:
   module.wait:
     - name: service.systemctl_reload
     - watch:
       - file: /etc/systemd/system/var-lib-openqa.mount.d/override.conf
-      - file: /etc/systemd/system/openqa-worker@.service.d/override.conf
+      - file: /etc/systemd/system/openqa-worker@.service.d/20-nvme-autoformat.conf
       - file: /etc/systemd/system/openqa_nvme_format.service
       - file: /etc/systemd/system/openqa_nvme_prepare.service
+{% endif %}
 {% endif %}
