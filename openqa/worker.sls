@@ -355,6 +355,14 @@ telegraf:
       - salt://openqa/openqa-worker-openvswitch.conf
     - makedirs: true
 
+{%- if not grains.get('noservices', False) %}
+daemon-reload:
+  module.wait:
+    - name: service.systemctl_reload
+    - watch:
+      - file: /etc/systemd/system/openqa-worker@.service.d/30-openvswitch.conf
+{% endif %}
+
 # prevent I/O stuck for very long time by automatically crashing (and
 # rebooting)
 # see https://progress.opensuse.org/issues/41882#note-34
