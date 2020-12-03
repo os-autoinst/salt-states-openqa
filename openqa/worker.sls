@@ -356,7 +356,7 @@ telegraf:
     - makedirs: true
 
 {%- if not grains.get('noservices', False) %}
-daemon-reload:
+openvswitch override reload:
   module.wait:
     - name: service.systemctl_reload
     - watch:

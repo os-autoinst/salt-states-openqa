@@ -46,7 +46,7 @@ server.packages:
     - makedirs: true
 
 {%- if not grains.get('noservices', False) %}
-daemon-reload:
+nvme mount overrides reload:
   module.wait:
     - name: service.systemctl_reload
     - watch:

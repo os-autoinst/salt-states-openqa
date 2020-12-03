@@ -30,7 +30,7 @@ logrotate-openqa.timer:
     - require:
       - auto_update_timer
 
-daemon-reload:
+logrotate timer reload:
   module.wait:
     - name: service.systemctl_reload
     - watch:
