@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 5955,
   "graphTooltip": 1,
-  "iteration": 1607069924168,
+  "iteration": 1607081394262,
   "links": [],
   "panels": [
     {
@@ -986,7 +986,7 @@
         "frequency": "5m",
         "handler": 1,
         "message": "No data received for pings from worker to central host, likely host is down (or split network).\n\nSee https://progress.opensuse.org/issues/71098 for details",
-        "name": "host up alert",
+        "name": "{{ worker }}: host up alert",
         "noDataState": "no_data",
         "notifications": [
           {
@@ -1084,24 +1084,6 @@
               "key": "host",
               "operator": "=",
               "value": "{{ worker }}"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "!=",
-              "value": "openqaworker-arm-1"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "!=",
-              "value": "openqaworker-arm-2"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "!=",
-              "value": "openqaworker-arm-3"
             }
           ]
         }
@@ -3857,5 +3839,5 @@
   "timezone": "browser",
   "title": "Worker dashboard ({{ worker }})",
   "uid": "WD{{ worker }}",
-  "version": 12
+  "version": 15
 }
