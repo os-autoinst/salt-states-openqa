@@ -1084,24 +1084,6 @@
               "key": "host",
               "operator": "=",
               "value": "{{ worker }}"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "!=",
-              "value": "openqaworker-arm-1"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "!=",
-              "value": "openqaworker-arm-2"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "!=",
-              "value": "openqaworker-arm-3"
             }
           ]
         }
