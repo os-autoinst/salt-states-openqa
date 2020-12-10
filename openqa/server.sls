@@ -63,6 +63,8 @@ server.packages:
           project_status_url: https://api.suse.de/public/build/%%PROJECT/_result
         job_settings_ui:
           keys_to_render_as_links: YAML_SCHEDULE,YAML_TEST_DATA,AUTOYAST
+        hooks:
+          job_done_hook_incomplete: env host=openqa.suse.de /opt/os-autoinst-scripts/openqa-label-known-issues-hook
     - require:
       - pkg: server.packages
 
