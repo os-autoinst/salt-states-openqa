@@ -287,3 +287,12 @@ openqa_scripts_config:
     - name: receive.denyCurrentBranch
     - value: ignore
     - repo: /opt/openqa-scripts
+
+https://github.com/os-autoinst/scripts.git:
+  git.cloned:
+    - target: /opt/os-autoinst-scripts
+
+/etc/cron.d/os-autoinst-scripts-update-git:
+  file.managed:
+    - contents:
+      - '-*/3    * * * *  geekotest     git -C /opt/os-autoinst-scripts pull --quiet --rebase origin master'
