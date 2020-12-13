@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 5955,
   "graphTooltip": 1,
-  "iteration": 1607081394262,
+  "iteration": 1607850821289,
   "links": [],
   "panels": [
     {
@@ -982,7 +982,7 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "30m",
+        "for": "90m",
         "frequency": "5m",
         "handler": 1,
         "message": "No data received for pings from worker to central host, likely host is down (or split network).\n\nSee https://progress.opensuse.org/issues/71098 for details",
