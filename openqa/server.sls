@@ -291,9 +291,18 @@ openqa_scripts_config:
     - value: ignore
     - repo: /opt/openqa-scripts
 
-https://github.com/os-autoinst/scripts.git:
-  git.cloned:
-    - target: /opt/os-autoinst-scripts
+/opt/os-autoinst-scripts/:
+  file.directory:
+    - user: geekotest
+
+# workaround for git.cloned not being able to clone into existing directory
+# owned by correct user
+# https://github.com/saltstack/salt/issues/55926
+git-clone-os-autoinst-scripts:
+  cmd.run:
+    - name: git clone https://github.com/os-autoinst/scripts.git /opt/os-autoinst-scripts/
+    - creates: /opt/os-autoinst-scripts/.git/
+    - runas: geekotest
 
 /etc/cron.d/os-autoinst-scripts-update-git:
   file.managed:
