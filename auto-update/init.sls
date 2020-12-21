@@ -43,7 +43,8 @@ rebootmgr:
     - onchanges:
       - file: /etc/rebootmgr.conf
 
-rebootmgr.service:
-  service.running:
-    - enable: True
+# DISABLED due to https://progress.opensuse.org/issues/81058
+#rebootmgr.service:
+#  service.running:
+#    - enable: True
 {%- endif %}
