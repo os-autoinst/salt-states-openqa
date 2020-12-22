@@ -31,7 +31,6 @@ worker.packages:
       - icewm-lite # for localXvnc console
       - xorg-x11-Xvnc # for localXvnc console
       - xdotool # for ssh-x
-      - qemu-ovmf-x86_64 # for UEFI
       - ipmitool # for ipmi backend and generalhw
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
@@ -42,6 +41,7 @@ worker.packages:
       - iputils # ping for telegraf
       {% if grains['osarch'] == 'x86_64' %}
       - qemu-x86
+      - qemu-ovmf-x86_64 # for UEFI
       {% endif %}
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
