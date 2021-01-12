@@ -163,7 +163,7 @@ nfs-client:
 # start services based on numofworkers set in workerconf pillar
 {% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0)) %}
 {% set i = i+1 %}
-openqa-worker@{{ i }}:
+openqa-worker-auto-restart@{{ i }}:
   service.running:
     - enable: True
 {% if loop.first %}
@@ -175,7 +175,7 @@ openqa-worker@{{ i }}:
 
 openqa-worker.target:
   service.running:
-    - enable: True
+    - enable: False
     - require:
       - pkg: worker-openqa.packages
 
@@ -191,10 +191,10 @@ openqa-worker-cacheservice-minion:
     - require:
       - pkg: worker-openqa.packages
 
-# Stop and disable all openqa-worker@ service instances
+# Stop and disable all openqa-worker-auto-restart@ service instances
 stop_and_disable_all_workers:
   cmd.run:
-    - name: systemctl disable --now openqa-worker@\*
+    - name: systemctl disable --now openqa-worker-auto-restart@\*
     - onchanges:
       - file: /etc/openqa/workers.ini
 {%- endif %}
