@@ -2,7 +2,7 @@
 # Check: https://gitlab.suse.de/openqa/salt-states-openqa
 # if you need to do something here urgently, ask in #testing irc channel
 #
--*/1 * * * *   geekotest     env updateall=1 /usr/share/openqa/script/fetchneedles
+-*/1 * * * *   geekotest     env force=1 updateall=1 /usr/share/openqa/script/fetchneedles
 # okurz: 2017-08-17: https://progress.opensuse.org/issues/21038 [qam] test fails in bootloader_s390 - missing install image on ftp server, the same is done for SDK images
 */5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-12-{,SP?-}Server-DVD-s390x-GM-DVD1/ ; do ln -sf $i ; done)
 */5 * * * * geekotest (cd /var/lib/openqa/share/factory/repo/ && for i in fixed/SLE-12-SP?-SDK-POOL-{x86_64,aarch64,ppc64le,s390x}-BuildGM-Media1/ ; do ln -sf $i ; done)
