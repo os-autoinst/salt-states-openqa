@@ -66,6 +66,8 @@ server.packages:
         hooks:
           job_done_hook_failed: env host=openqa.suse.de exclude_group_regex='.*(Development|Public Cloud|Released|Others|Kernel|Virtualization|Maintenance).*' /opt/os-autoinst-scripts/openqa-label-known-issues-and-investigate-hook
           job_done_hook_incomplete: env host=openqa.suse.de /opt/os-autoinst-scripts/openqa-label-known-issues-hook
+        influxdb:
+          ignored_failed_minion_jobs: obs_rsync_run obs_rsync_update_builds_text
     - require:
       - pkg: server.packages
 
