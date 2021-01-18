@@ -196,6 +196,7 @@ telegraf_db_job_group_parents:
 
 telegraf:
   service.running:
+    - enable: True
     - watch:
       - file: /etc/telegraf/telegraf.conf
 
