@@ -347,12 +347,12 @@ telegraf:
       - file: /etc/telegraf/telegraf.conf
 {%- endif %}
 
-/etc/systemd/system/openqa-worker@.service.d/30-openvswitch.conf:
+/etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf:
   file.managed:
-    - name: /etc/systemd/system/openqa-worker@.service.d/30-openvswitch.conf
+    - name: /etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf
     - mode: 644
     - source:
-      - salt://openqa/openqa-worker-openvswitch.conf
+      - salt://openqa/os-autoinst-openvswitch-init-timeout.conf
     - makedirs: true
 
 {%- if not grains.get('noservices', False) %}
@@ -360,7 +360,7 @@ openvswitch override reload:
   module.wait:
     - name: service.systemctl_reload
     - watch:
-      - file: /etc/systemd/system/openqa-worker@.service.d/30-openvswitch.conf
+      - file: /etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf
 {% endif %}
 
 # prevent I/O stuck for very long time by automatically crashing (and
