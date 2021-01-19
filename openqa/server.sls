@@ -250,6 +250,7 @@ readonly_db_access_job_modules:
 {%- if not grains.get('noservices', False) %}
 vsftpd:
   service.running:
+    - enable: True
     - watch:
       - file: /etc/vsftpd.conf
 {%- endif %}
@@ -257,6 +258,7 @@ vsftpd:
 {%- if not grains.get('noservices', False) %}
 apache2:
   service.running:
+    - enable: True
     - watch:
       - file: /etc/apache2/vhosts.d/openqa.conf
       - file: /etc/apache2/ssl.key/{{grains['fqdn']}}.key
@@ -266,6 +268,7 @@ apache2:
 {%- if not grains.get('noservices', False) %}
 salt-master.service:
   service.running:
+    - enable: True
     - watch:
       - file: /etc/salt/master
 {%- endif %}

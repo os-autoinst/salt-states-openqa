@@ -5,6 +5,7 @@ cronie:
 {%- if not grains.get('noservices', False) %}
 nfs-server:
   service.running:
+    - enable: True
     - restart: True
     - watch:
       - file: /etc/exports
