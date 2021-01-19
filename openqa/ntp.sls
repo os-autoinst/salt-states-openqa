@@ -13,6 +13,7 @@ ntp:
 {%- if not grains.get('noservices', False) %}
 ntpd:
   service.running:
+    - enable: True
     - watch:
       - file: /etc/ntp.conf
 {%- endif %}

@@ -343,6 +343,7 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
 {%- if not grains.get('noservices', False) %}
 telegraf:
   service.running:
+    - enable: True
     - watch:
       - file: /etc/telegraf/telegraf.conf
 {%- endif %}

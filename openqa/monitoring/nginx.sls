@@ -3,6 +3,7 @@ nginx:
     - refresh: False
 {%- if not grains.get('noservices', False) %}
   service.running:
+    - enable: True
     - watch:
       - file: /etc/nginx/vhosts.d/02-grafana.conf
 {%- endif %}

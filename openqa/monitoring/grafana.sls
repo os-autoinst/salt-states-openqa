@@ -97,6 +97,7 @@ install_{{plugin}}:
     - creates: /var/lib/grafana/plugins/{{plugin}}
 {%- if not grains.get('noservices', False) %}
   service.running:
+    - enable: True
     - name: grafana-server.service
     - watch:
       - cmd: install_{{plugin}}
