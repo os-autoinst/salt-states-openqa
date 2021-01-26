@@ -32,7 +32,7 @@ server.packages:
           plugins: AMQP ObsRsync
           branding: openqa.suse.de
           scm: git
-          download_domains: suse.de nue.suse.com
+          download_domains: suse.de nue.suse.com opensuse.org
           recognized_referers: bugzilla.suse.com bugzilla.opensuse.org bugzilla.novell.com bugzilla.microfocus.com progress.opensuse.org github.com build.suse.de
           max_rss_limit: 250000
         amqp:
