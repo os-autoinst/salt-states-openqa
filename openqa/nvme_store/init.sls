@@ -20,12 +20,12 @@ server.packages:
     - source:
       - salt://openqa/nvme_store/openqa_nvme_prepare.service
 
-/etc/systemd/system/openqa-worker@.service.d/20-nvme-autoformat.conf:
+/etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf:
   file.managed:
-    - name: /etc/systemd/system/openqa-worker@.service.d/20-nvme-autoformat.conf
+    - name: /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf
     - mode: 644
     - source:
-      - salt://openqa/nvme_store/openqa-worker@_override.conf
+      - salt://openqa/nvme_store/openqa-worker-auto-restart@_override.conf
     - makedirs: true
 
 /var/lib/openqa:
@@ -51,7 +51,7 @@ nvme mount overrides reload:
     - name: service.systemctl_reload
     - watch:
       - file: /etc/systemd/system/var-lib-openqa.mount.d/override.conf
-      - file: /etc/systemd/system/openqa-worker@.service.d/20-nvme-autoformat.conf
+      - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf
       - file: /etc/systemd/system/openqa_nvme_format.service
       - file: /etc/systemd/system/openqa_nvme_prepare.service
 {% endif %}
