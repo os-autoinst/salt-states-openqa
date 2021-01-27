@@ -25,7 +25,7 @@ server.packages:
     - name: /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf
     - mode: 644
     - source:
-      - salt://openqa/nvme_store/openqa-worker-auto-restart@_override.conf
+      - salt://openqa/nvme_store/openqa-worker@_override.conf
     - makedirs: true
 
 /var/lib/openqa:
