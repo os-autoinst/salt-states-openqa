@@ -171,6 +171,10 @@ openqa-worker-auto-restart@{{ i }}:
       - pkg: worker-openqa.packages
       - stop_and_disable_all_workers
 {% endif %}
+
+openqa-soft-restart-worker@{{ i }}.path:
+  service.running:
+    - enable: True
 {% endfor %}
 
 openqa-worker.target:
