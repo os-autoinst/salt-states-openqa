@@ -19,6 +19,7 @@ base:
     - openqa.scripts
     - openqa.iscsi
     - openqa.openvswitch
+    - openqa.openvswitch_boo1181418
   'openqaworker3.suse.de':
     - openqa.hacustombridges
   'G@roles:worker and G@osarch:aarch64':
