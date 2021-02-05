@@ -169,8 +169,12 @@ openqa-worker-auto-restart@{{ i }}:
 {% if loop.first %}
     - require:
       - pkg: worker-openqa.packages
-      - stop_and_disable_all_workers
+      - stop_and_disable_all_not_configured_workers
 {% endif %}
+
+openqa-reload-worker-auto-restart@{{ i }}.path:
+  service.running:
+    - enable: True
 {% endfor %}
 
 openqa-worker.target:
@@ -191,10 +195,11 @@ openqa-worker-cacheservice-minion:
     - require:
       - pkg: worker-openqa.packages
 
-# Stop and disable all openqa-worker-auto-restart@ service instances
-stop_and_disable_all_workers:
+# Stop and disable all openqa-worker-auto-restart@ service instances which are exceeding the configured
+# number of worker slots
+stop_and_disable_all_not_configured_workers:
   cmd.run:
-    - name: systemctl disable --now openqa-worker-auto-restart@\*
+    - name: systemctl disable --now $(systemctl list-units --all 'openqa-worker-auto-restart@*.service' | sed -e '/.*openqa-worker-auto-restart@.*\.service.*/!d' -e 's|.*openqa-worker-auto-restart@\(.*\)\.service.*|\1|' | awk '{ if($0 > {{ worker_slot_count }}) print "openqa-worker-auto-restart@" $0 }' | tr '\n' ' ')
     - onchanges:
       - file: /etc/openqa/workers.ini
 {%- endif %}
