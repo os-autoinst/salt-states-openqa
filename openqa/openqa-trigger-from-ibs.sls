@@ -54,7 +54,7 @@ openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP2:Update:Products:MicroOS:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP1:Update:QR') }}
 {{ scriptgen('SUSE:SLE-15-SP2:Update:QR') }}
-{{ scriptgen('SUSE:SLE-15-SP3:Update:CR:ToTest:Images') }}
+{{ scriptgen('SUSE:SLE-15-SP3:Update:CR:ToTest') }}
 
 {% for i in ['A','B'] %}
 {{ scriptgen('SUSE:SLE-15-SP2:Update:Products:MicroOS:Staging:' + i) }}
