@@ -194,6 +194,15 @@ telegraf_db_job_group_parents:
       - SELECT
     - maintenance_db: openqa
 
+telegraf_db_workers:
+  postgres_privileges.present:
+    - name: telegraf
+    - object_name: workers
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
+
 telegraf:
   service.running:
     - enable: True
