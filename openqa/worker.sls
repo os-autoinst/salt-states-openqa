@@ -161,7 +161,8 @@ nfs-client:
 
 {%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
-{% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0)) %}
+{% set worker_slot_count = pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) %}
+{% for i in range(worker_slot_count) %}
 {% set i = i+1 %}
 openqa-worker-auto-restart@{{ i }}:
   service.running:
