@@ -25,6 +25,7 @@ worker-openqa.packages:
 worker.packages:
   pkg.installed:
     - refresh: False
+    - retry: True  # some packages can change rapidly in our repos needing a retry as zypper does not do that
     - pkgs:
       - kdump
       - x3270 # for s390x backend
