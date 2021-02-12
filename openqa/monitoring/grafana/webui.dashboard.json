@@ -3075,7 +3075,7 @@
           {
             "evaluator": {
               "params": [
-                1000
+                6000
               ],
               "type": "gt"
             },
@@ -3085,13 +3085,36 @@
             "query": {
               "params": [
                 "A",
-                "5m",
+                "15m",
                 "now"
               ]
             },
             "reducer": {
               "params": [],
-              "type": "avg"
+              "type": "min"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                -6000
+              ],
+              "type": "lt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "A",
+                "15m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "max"
             },
             "type": "query"
           }
@@ -3213,11 +3236,13 @@
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:452",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 1000
+          "value": 6000,
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -3239,6 +3264,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:101",
           "format": "ms",
           "label": null,
           "logBase": 1,
@@ -3247,6 +3273,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:102",
           "format": "short",
           "label": null,
           "logBase": 1,
