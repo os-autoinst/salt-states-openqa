@@ -47,12 +47,11 @@ services:
 salt -C 'G@roles:worker' cmd.run 'systemctl --no-legend --failed'
 ```
 
-For the example of the openQA worker cache service systemd service failing on all worker nodes and you
-want to restart it once by stopping all worker instances, restart the
-according services and check that they all start up correctly:
+Wipe and restart worker cache, restart all worker slots (e.g. useful when worker
+services fail on all worker nodes due to problems with the cache service):
 
 ```sh
-salt -C 'G@roles:worker' cmd.run 'systemctl stop openqa-worker.target openqa-worker-cacheservice openqa-worker-cacheservice-minion && rm -rf /var/lib/openqa/cache/* && systemctl start openqa-worker.target openqa-worker-cacheservice openqa-worker-cacheservice-minion && until sudo systemctl status | grep -q "Jobs: 0 queue"; do sleep .1; done && systemctl --no-legend --failed'
+salt -C 'G@roles:worker' cmd.run 'systemctl stop openqa-worker-cacheservice openqa-worker-cacheservice-minion && rm -rf /var/lib/openqa/cache/* && systemctl start openqa-worker-cacheservice openqa-worker-cacheservice-minion && systemctl restart openqa-worker-auto-restart@*.service && until sudo systemctl status | grep -q "Jobs: 0 queue"; do sleep .1; done && systemctl --no-legend --failed'
 ```
 
 To show the resulting target state and apply only that substate on nodes of a
