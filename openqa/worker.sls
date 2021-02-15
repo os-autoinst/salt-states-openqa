@@ -180,10 +180,7 @@ openqa-reload-worker-auto-restart@{{ i }}.path:
 {% endfor %}
 
 openqa-worker.target:
-  service.running:
-    - enable: False
-    - require:
-      - pkg: worker-openqa.packages
+  service.disabled
 
 openqa-worker-cacheservice:
   service.running:
