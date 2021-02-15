@@ -4,8 +4,10 @@ server.packages:
     - pkgs:
       - mdadm
 
-# apply for NVMes only
-{% if grains['SSDs']|map('regex_search', '(nvme)')|select|list|length > 0 %}
+# apply for NVMes only, in recent salt versions the key is renamed from
+# uppercase "SSDs" to "ssds", see
+# https://github.com/saltstack/salt/commit/1b21bcc02fbb0e19413a18281661da4b9dbc0501
+{% if grains.get('SSDs', grains.get('ssds'))|map('regex_search', '(nvme)')|select|list|length > 0 %}
 /etc/systemd/system/openqa_nvme_format.service:
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_format.service
