@@ -198,9 +198,7 @@ openqa-worker-cacheservice-minion:
 # number of worker slots
 stop_and_disable_all_not_configured_workers:
   cmd.run:
-    - name: systemctl disable --now $(systemctl list-units --all 'openqa-worker-auto-restart@*.service' | sed -e '/.*openqa-worker-auto-restart@.*\.service.*/!d' -e 's|.*openqa-worker-auto-restart@\(.*\)\.service.*|\1|' | awk '{ if($0 > {{ worker_slot_count }}) print "openqa-worker-auto-restart@" $0 }' | tr '\n' ' ')
-    - onchanges:
-      - file: /etc/openqa/workers.ini
+    - name: services=$(systemctl list-units --all 'openqa-worker-auto-restart@*.service' | sed -e '/.*openqa-worker-auto-restart@.*\.service.*/!d' -e 's|.*openqa-worker-auto-restart@\(.*\)\.service.*|\1|' | awk '{ if($0 > {{ worker_slot_count }}) print "openqa-worker-auto-restart@" $0 }' | tr '\n' ' '); [ -z "$services" ] || systemctl disable --now $services
 {%- endif %}
 
 # Configure firewalld: os-autoinst needs to upload logs to rather random ports and ovs needs configuration
