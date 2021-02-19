@@ -47,6 +47,13 @@ services:
 salt -C 'G@roles:worker' cmd.run 'systemctl --no-legend --failed'
 ```
 
+Applies the specific state `stop_…_workers` from `worker.sls` on the specific
+worker `openqaworker-arm-1.suse.de` with debug output enabled:
+
+```sh
+salt -l debug openqaworker-arm-1.suse.de state.sls_id stop_and_disable_all_not_configured_workers openqa.worker
+```
+
 Wipe and restart worker cache, restart all worker slots (e.g. useful when worker
 services fail on all worker nodes due to problems with the cache service):
 
