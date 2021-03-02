@@ -1048,7 +1048,7 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "1m",
+        "for": "10m",
         "frequency": "1m",
         "handler": 1,
         "message": "",
