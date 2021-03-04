@@ -69,6 +69,18 @@ matching the role "monitor":
 salt -C 'G@roles:monitor' state.show_sls,state.apply openqa.monitoring.influxdb,openqa.monitoring.influxdb
 ```
 
+Add a worker host and apply the state immediately:
+
+```sh
+salt-key -y -a openqaworker13.suse.de
+salt openqaworker13.suse.de state.apply
+```
+
+Remove a worker host:
+
+```sh
+salt-key -y -d openqaworker13.suse.de
+```
 
 ## Testing
 ### Local test deployment
