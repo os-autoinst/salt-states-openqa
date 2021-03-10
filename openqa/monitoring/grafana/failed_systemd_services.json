@@ -20,6 +20,12 @@
     {
       "columns": [],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 8,
@@ -28,7 +34,6 @@
         "y": 0
       },
       "id": 8,
-      "options": {},
       "pageSize": null,
       "showHeader": true,
       "sort": {
@@ -37,13 +42,17 @@
       },
       "styles": [
         {
+          "$$hashKey": "object:427",
           "alias": "Last update",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
         },
         {
+          "$$hashKey": "object:428",
           "alias": "Host",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -57,7 +66,9 @@
           "unit": "short"
         },
         {
+          "$$hashKey": "object:429",
           "alias": "# failed services",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -72,6 +83,42 @@
             "1",
             "2"
           ],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "$$hashKey": "object:668",
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "machine",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "$$hashKey": "object:864",
+          "alias": "Failing units",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "units",
+          "thresholds": [],
           "type": "number",
           "unit": "short"
         }
@@ -95,7 +142,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select last(\"failed\") from systemd_failed where $timeFilter and (\"failed\">0) and (\"machine\"='') group by host",
+          "query": "select units,last(failed) from systemd_failed where $timeFilter and (\"failed\">0) and (\"machine\"='') group by host",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -121,7 +168,7 @@
       "title": "Currently failing services",
       "transform": "table",
       "transparent": true,
-      "type": "table"
+      "type": "table-old"
     },
     {
       "alert": {
@@ -170,6 +217,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -178,6 +232,7 @@
         "x": 8,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 6,
       "interval": "1m",
       "legend": {
@@ -194,10 +249,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "6.4.3",
+      "pluginVersion": "7.4.2",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -256,7 +311,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 0
+          "value": 0,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -347,6 +403,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -355,6 +418,7 @@
         "x": 16,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "avg": false,
@@ -370,10 +434,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "6.4.3",
+      "pluginVersion": "7.4.2",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -431,7 +495,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 0
+          "value": 0,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -477,7 +542,7 @@
       }
     }
   ],
-  "schemaVersion": 20,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -491,5 +556,5 @@
   "timezone": "",
   "title": "Failed systemd services",
   "uid": "KToPYLEWz",
-  "version": 10
+  "version": 11
 }
