@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+echo 'Current mount points (printed for debugging purposes):'
+mount
+
+echo 'Present block devices (printed for debugging purposes):'
+lsblk
+
 # Create striped storage for openQA from all NVMe devices when / resides on
 # another device or from a potential third NVMe partition when there is only a
 # single NVMe device for the complete storage
