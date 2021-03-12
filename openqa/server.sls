@@ -12,7 +12,6 @@ server.packages:
       - apache2
       - perl-Mojo-RabbitMQ-Client
       - perl-IPC-System-Simple
-      - telegraf
       - vsftpd
       - samba
       - postfix
@@ -151,18 +150,7 @@ server.packages:
     - name: /etc/telegraf/telegraf.conf
     - template: jinja
     - source:
-      - salt://openqa/telegraf-webui.conf
-    - user: root
-    - group: root
-    - mode: 600
-    - require:
-      - pkg: server.packages
-
-/usr/lib/systemd/system/telegraf.service:
-  file.managed:
-    - name: /usr/lib/systemd/system/telegraf.service
-    - source:
-      - salt://openqa/telegraf.service
+      - salt://monitoring/telegraf/telegraf-webui.conf
     - user: root
     - group: root
     - mode: 600
@@ -208,12 +196,6 @@ telegraf_db_workers:
     - privileges:
       - SELECT
     - maintenance_db: openqa
-
-telegraf:
-  service.running:
-    - enable: True
-    - watch:
-      - file: /etc/telegraf/telegraf.conf
 
 readonly_db_access:
   postgres_user.present:

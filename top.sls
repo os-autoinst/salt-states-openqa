@@ -4,6 +4,7 @@ base:
     - salt.minion
     - sshd
     - auto-update
+    - monitoring.telegraf
   'G@roles:webui':
     - salt.master
     - etc.master
