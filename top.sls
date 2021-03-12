@@ -26,5 +26,5 @@ base:
   'G@roles:worker and G@osarch:aarch64':
     - haveged
   'G@roles:monitor':
-    - openqa.monitoring.grafana
-    - openqa.monitoring.influxdb
+    - monitoring.grafana
+    - monitoring.influxdb

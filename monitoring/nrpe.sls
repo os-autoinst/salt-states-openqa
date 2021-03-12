@@ -31,14 +31,14 @@ nrpe:
 
 /etc/nagios/check_zypper-ignores.txt:
   file.managed:
-    - source: salt://openqa/monitoring/infra/check_zypper-ignores.txt
+    - source: salt://monitoring/infra/check_zypper-ignores.txt
     - require:
       - pkg: worker-monitoring.packages
 
 /etc/nrpe.cfg:
   file.managed:
     - source:
-      - salt://openqa/monitoring/infra/nrpe.cfg
+      - salt://monitoring/infra/nrpe.cfg
     - template: jinja
     - user: root
     - group: root
@@ -49,7 +49,7 @@ nrpe:
 /etc/nrpe.d:
   file.recurse:
     - name: /etc/nrpe.d
-    - source: salt://openqa/monitoring/infra/nrpe.d
+    - source: salt://monitoring/infra/nrpe.d
     - user: root
     - group: root
     - makedirs: True
@@ -71,7 +71,7 @@ nrpe:
 /etc/xinetd.d/check_mk:
   file.managed:
     - source:
-      - salt://openqa/monitoring/infra/check_mk
+      - salt://monitoring/infra/check_mk
     - template: jinja
     - user: root
     - group: root
