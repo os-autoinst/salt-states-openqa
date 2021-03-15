@@ -32,8 +32,8 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
         mdadm --stop /dev/md/openqa || echo "Unable to stop RAID (mdadm return code: $?)"
     fi
 
-    mdadm_output=$(mdadm "${mdadm_args[@]}" 2>&1 | tee /dev/stderr)
-    [[ $mdadm_output =~ 'timeout waiting for /dev/md/openqa' ]] || break
+    mdadm "${mdadm_args[@]}" 2>&1 | tee /tmp/mdadm_output
+    grep --quiet 'timeout waiting for /dev/md/openqa' /tmp/mdadm_output || break
 done
 
 # Ensure device is correctly initialized but also spend a little time before
