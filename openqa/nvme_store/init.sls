@@ -47,6 +47,14 @@ server.packages:
       - salt://openqa/nvme_store/var-lib-openqa.mount_override.conf
     - makedirs: true
 
+/usr/local/bin/openqa-establish-nvme-setup:
+  file.managed:
+    - name: /usr/local/bin/openqa-establish-nvme-setup
+    - mode: 755
+    - source:
+      - salt://openqa/nvme_store/openqa-establish-nvme-setup.sh
+    - makedirs: true
+
 {%- if not grains.get('noservices', False) %}
 nvme mount overrides reload:
   module.wait:
