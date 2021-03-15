@@ -10,4 +10,4 @@ nginx:
 
 /etc/nginx/vhosts.d/02-grafana.conf:
   file.managed:
-    - source: salt://openqa/monitoring/grafana/02-grafana.conf
+    - source: salt://monitoring/grafana/02-grafana.conf

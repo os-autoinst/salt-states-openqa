@@ -62,11 +62,11 @@ salt -C 'G@roles:worker' cmd.run 'systemctl stop openqa-worker-cacheservice open
 ```
 
 To show the resulting target state and apply only that substate on nodes of a
-specific role, e.g. the substate "openqa.monitoring.grafana" to all nodes
+specific role, e.g. the substate "monitoring.grafana" to all nodes
 matching the role "monitor":
 
 ```sh
-salt -C 'G@roles:monitor' state.show_sls,state.apply openqa.monitoring.influxdb,openqa.monitoring.influxdb
+salt -C 'G@roles:monitor' state.show_sls,state.apply monitoring.influxdb,monitoring.influxdb
 ```
 
 Add a worker host and apply the state immediately:
@@ -103,7 +103,7 @@ To test out all in a single call, e.g. that a file is generated correctly on a
 monitoring instance:
 
 ```sh
-podman run --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core sh -c 'echo -e "noservices: True\nroles: monitor" >> /etc/salt/grains && salt-call -l debug --local state.apply openqa.monitoring.grafana && cat /etc/grafana/ldap.toml'
+podman run --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core sh -c 'echo -e "noservices: True\nroles: monitor" >> /etc/salt/grains && salt-call -l debug --local state.apply monitoring.grafana && cat /etc/grafana/ldap.toml'
 ```
 
 Further common salt commands to execute in a local salt environment for

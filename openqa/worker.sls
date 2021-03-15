@@ -38,8 +38,6 @@ worker.packages:
       - bridge-utils # for TAPSCRIPT and TAP support
       - firewalld # For TAP support and for other good reasons
       - qemu: '>=2.3'
-      - telegraf # to collect metrics
-      - iputils # ping for telegraf
       {% if grains['osarch'] == 'x86_64' %}
       - qemu-x86
       - qemu-ovmf-x86_64 # for UEFI
@@ -327,40 +325,12 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - name: /etc/telegraf/telegraf.conf
     - template: jinja
     - source:
-      - salt://openqa/telegraf-worker.conf
+      - salt://monitoring/telegraf/telegraf-worker.conf
     - user: root
     - group: root
     - mode: 600
     - require:
       - pkg: worker.packages
-
-/etc/telegraf/scripts/systemd_failed.sh:
-  file.managed:
-    - name: /etc/telegraf/scripts/systemd_failed.sh
-    - source:
-      - salt://openqa/telegraf/scripts/systemd_failed.sh
-    - user: root
-    - group: root
-    - mode: 700
-    - makedirs: True
-    - require:
-      - pkg: worker.packages
-
-/usr/lib/systemd/system/telegraf.service:
-  file.managed:
-    - name: /usr/lib/systemd/system/telegraf.service
-    - source:
-      - salt://openqa/telegraf.service
-    - require:
-      - pkg: worker.packages
-
-{%- if not grains.get('noservices', False) %}
-telegraf:
-  service.running:
-    - enable: True
-    - watch:
-      - file: /etc/telegraf/telegraf.conf
-{%- endif %}
 
 /etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf:
   file.managed:

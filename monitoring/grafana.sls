@@ -28,7 +28,7 @@ server-monitoring-software.repo:
     - mode: 770
 
 include:
- - openqa.monitoring.nginx
+ - monitoring.nginx
 
 reverse-proxy-group:
   group.present:
@@ -87,7 +87,7 @@ reverse-proxy-group:
 
 /etc/grafana/provisioning/dashboards/salt.yaml:
   file.managed:
-    - source: salt://openqa/monitoring/grafana/salt.yaml
+    - source: salt://monitoring/grafana/salt.yaml
 
 {% for plugin in grafana_plugins %}
 install_{{plugin}}:
@@ -121,7 +121,7 @@ dashboard-cleanup:
 {% for manual_dashboardname in manual_dashboardnames %}
 {{"/".join([dashboard_template_folder, manual_dashboardname])}}: #works even if variables already contain slashes
   file.managed:
-    - source: salt://openqa/monitoring/grafana/{{manual_dashboardname}}
+    - source: salt://monitoring/grafana/{{manual_dashboardname}}
     - template: jinja
 {% endfor %}
 
@@ -130,7 +130,7 @@ dashboard-cleanup:
 {% for nodename in nodenames -%}
 {{"/".join([dashboard_template_folder, "worker-" + nodename + ".json"])}}: #same as for manual dashboards too
   file.managed:
-    - source: salt://openqa/monitoring/grafana/worker.json.template
+    - source: salt://monitoring/grafana/worker.json.template
     - template: jinja
     - worker: {{nodename}}
 {% endfor %}
