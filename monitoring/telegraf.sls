@@ -18,8 +18,10 @@ telegraf.packages:
 telegraf:
   service.running:
     - enable: True
+    {%- if grains.get('roles', '') in ['webui', 'worker'] %}
     - watch:
       - file: /etc/telegraf/telegraf.conf
+    {%- endif %}
 {%- endif %}
 
 /etc/telegraf/scripts/systemd_failed.sh:
