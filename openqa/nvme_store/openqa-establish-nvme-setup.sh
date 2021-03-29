@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e
-set -o pipefail
+set -euo pipefail
 
 echo 'Current mount points (printed for debugging purposes):'
 mount
@@ -23,7 +22,7 @@ else
 fi
 
 # create RAID0, try again if mdadm ran into timeout (see poo#88191)
-attempts=${RAID_CREATION_ATTEMPTS:-4}
+attempts=${RAID_CREATION_ATTEMPTS:-10}
 busy_delay=${RAID_CREATION_BUSY_DELAY:-10}
 for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
     [[ $attempt -gt 1 ]] && echo "Trying RAID0 creation again after timeout (attempt $attempt of $attempts)"
