@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 echo 'Current mount points (printed for debugging purposes):'
 mount
@@ -22,7 +22,8 @@ else
 fi
 
 # create RAID0, try again if mdadm ran into timeout (see poo#88191)
-attempts=${RAID_CREATION_ATTEMPTS:-4}
+attempts=${RAID_CREATION_ATTEMPTS:-10}
+busy_delay=${RAID_CREATION_BUSY_DELAY:-10}
 for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
     [[ $attempt -gt 1 ]] && echo "Trying RAID0 creation again after timeout (attempt $attempt of $attempts)"
 
@@ -32,8 +33,19 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
         mdadm --stop /dev/md/openqa || echo "Unable to stop RAID (mdadm return code: $?)"
     fi
 
-    mdadm "${mdadm_args[@]}" 2>&1 | tee /tmp/mdadm_output
+    if ! mdadm "${mdadm_args[@]}" 2>&1 | tee /tmp/mdadm_output; then
+        if grep --quiet 'Device or resource busy' /tmp/mdadm_output; then
+            echo "Waiting $busy_delay seconds before trying again after failing due to busy device."
+            sleep "$busy_delay"
+            continue
+        else
+            echo 'Unable to create RAID, mdadm returned with non-zero code'
+            exit 1
+        fi
+    fi
     grep --quiet 'timeout waiting for /dev/md/openqa' /tmp/mdadm_output || break
+    echo "Waiting $busy_delay seconds before trying again after failing due to timeout."
+    sleep "$busy_delay"
 done
 
 # Ensure device is correctly initialized but also spend a little time before
