@@ -3477,8 +3477,8 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "message": "to remove all failed jobs on the machine \n\n```\n/usr/share/openqa/script/openqa-workercache eval 'my $jobs = app->minion->jobs({states => [\"failed\"]}); while (my $job = $jobs->next) { $job->remove }'\n```",
-        "name": "{{ worker }}: Minion Jobs alert",
+        "message": "Too many Minion jobs have failed on {{ worker }}.\n\nReview failed jobs on http://localhost:9530/minion/jobs?state=failed after tunneling the worker's Minion dashboard via `ssh -L 9530:localhost:9530 -N {{ worker }}`. Create a ticket if there's not already one. For the general log of the Minion job queue, checkout `journalctl -u openqa-worker-cacheservice.service -u openqa-worker-cacheservice-minion.service`. To remove all failed jobs on the machine:\n\n```\n/usr/share/openqa/script/openqa-workercache eval 'my $jobs = app->minion->jobs({states => [\"failed\"]}); while (my $job = $jobs->next) { $job->remove }'\n```",
+        "name": "{{ worker }}: Too many Minion job failures alert",
         "noDataState": "keep_state",
         "notifications": [
           {
