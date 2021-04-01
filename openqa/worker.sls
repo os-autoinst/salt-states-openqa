@@ -25,7 +25,8 @@ worker-openqa.packages:
 worker.packages:
   pkg.installed:
     - refresh: False
-    - retry: True  # some packages can change rapidly in our repos needing a retry as zypper does not do that
+    - retry:  # some packages can change rapidly in our repos needing a retry as zypper does not do that
+        attempts: 5
     - pkgs:
       - kdump
       - x3270 # for s390x backend
@@ -293,10 +294,21 @@ grub-conf:
       - set GRUB_CMDLINE_LINUX_DEFAULT '"{{ ttyconsolearg }} nospec kvm.nested=1 kvm_intel.nested=1 kvm_amd.nested=1 kvm-arm.nested=1 crashkernel=210M"'
       - set GRUB_SERIAL_COMMAND '"serial --unit=1 --speed=115200"'
 
+# workaround for https://bugzilla.opensuse.org/show_bug.cgi?id=1174166 in
+# openSUSE Leap 15.2
+{% if grains['osarch'] == 'ppc64le' %}
+/etc/grub.d/95_textmode:
+  file.absent
+{%- endif %}
+
 'grub2-mkconfig > /boot/grub2/grub.cfg':
   cmd.run:
     - onchanges:
       - augeas: grub-conf
+{% if grains['osarch'] == 'ppc64le' %}
+      # for https://bugzilla.opensuse.org/show_bug.cgi?id=1174166, see above
+      - file: /etc/grub.d/95_textmode
+{%- endif %}
     - onlyif: grub2-probe /boot
 
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability
