@@ -29,7 +29,7 @@ server.packages:
     - sections:
         global:
           plugins: AMQP ObsRsync
-          branding: openqa.suse.de
+          branding: {{ grains['id'] }}
           scm: git
           download_domains: suse.de nue.suse.com opensuse.org
           recognized_referers: bugzilla.suse.com bugzilla.opensuse.org bugzilla.novell.com bugzilla.microfocus.com progress.opensuse.org github.com build.suse.de
@@ -69,8 +69,8 @@ server.packages:
           # * Maintenance: See
           # https://gitlab.suse.de/openqa/salt-states-openqa/-/merge_requests/425
           # for details for the exclusion
-          job_done_hook_failed: env host=openqa.suse.de exclude_group_regex='.*(Development|Public Cloud|Released|Others|Kernel|Virtualization|Maintenance).*' /opt/os-autoinst-scripts/openqa-label-known-issues-and-investigate-hook
-          job_done_hook_incomplete: env host=openqa.suse.de /opt/os-autoinst-scripts/openqa-label-known-issues-hook
+          job_done_hook_failed: env host={{ grains['id'] }} exclude_group_regex='.*(Development|Public Cloud|Released|Others|Kernel|Virtualization|Maintenance).*' /opt/os-autoinst-scripts/openqa-label-known-issues-and-investigate-hook
+          job_done_hook_incomplete: env host={{ grains['id'] }} /opt/os-autoinst-scripts/openqa-label-known-issues-hook
         influxdb:
           ignored_failed_minion_jobs: obs_rsync_run obs_rsync_update_builds_text
     - require:
@@ -98,6 +98,7 @@ server.packages:
   file.managed:
     - source:
       - salt://apache2/vhosts.d/openqa.conf
+      - template: jinja
     - user: root
     - group: root
     - require:
@@ -115,7 +116,7 @@ server.packages:
 # ssh key files and config for needle pushing
 # https://progress.opensuse.org/issues/67804
 # Generated with
-# ``ssh-keygen -t ed25519 -N '' -C 'geekotest@openqa.suse.de, openqa-pusher needle pushing to gitlab' -f id_ed25519.gitlab`
+# ``ssh-keygen -t ed25519 -N '' -C 'geekotest@{{ grains['id'] }}, openqa-pusher needle pushing to gitlab' -f id_ed25519.gitlab`
 /var/lib/openqa/.ssh/id_ed25519.gitlab:
   file.managed:
     - mode: 600

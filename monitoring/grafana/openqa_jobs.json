@@ -166,7 +166,7 @@
             {
               "key": "url",
               "operator": "=",
-              "value": "https://openqa.suse.de"
+              "value": "https://{{ grains['id'] }}"
             }
           ]
         },
@@ -209,7 +209,7 @@
             {
               "key": "url",
               "operator": "=",
-              "value": "https://openqa.suse.de"
+              "value": "https://{{ grains['id'] }}"
             }
           ]
         },
@@ -252,7 +252,7 @@
             {
               "key": "url",
               "operator": "=",
-              "value": "https://openqa.suse.de"
+              "value": "https://{{ grains['id'] }}"
             }
           ]
         }
@@ -382,7 +382,7 @@
           "measurement": "openqa_jobs_by_group",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_group\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval), \"group\" fill(null)",
+          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_group\" WHERE (\"url\" = 'https://{{ grains['id'] }}') AND $timeFilter GROUP BY time($__interval), \"group\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -522,7 +522,7 @@
           "measurement": "openqa_jobs_by_arch",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_arch\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval), \"arch\" fill(null)",
+          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_arch\" WHERE (\"url\" = 'https://{{ grains['id'] }}') AND $timeFilter GROUP BY time($__interval), \"arch\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -676,7 +676,7 @@
             {
               "key": "url",
               "operator": "=",
-              "value": "https://openqa.suse.de"
+              "value": "https://{{ grains['id'] }}"
             }
           ]
         }
