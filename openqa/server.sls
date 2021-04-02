@@ -1,3 +1,5 @@
+{% from 'openqa/branding.sls' import branding %}
+
 include:
  - openqa.repos
  - openqa.journal
@@ -29,7 +31,7 @@ server.packages:
     - sections:
         global:
           plugins: AMQP ObsRsync
-          branding: {{ grains['id'] }}
+          branding: {{ branding }}
           scm: git
           download_domains: suse.de nue.suse.com opensuse.org
           recognized_referers: bugzilla.suse.com bugzilla.opensuse.org bugzilla.novell.com bugzilla.microfocus.com progress.opensuse.org github.com build.suse.de
