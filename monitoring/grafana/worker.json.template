@@ -3254,7 +3254,7 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "10m",
+        "for": "20m",
         "frequency": "1m",
         "handler": 1,
         "name": "{{ worker }}: NTP offset alert",
