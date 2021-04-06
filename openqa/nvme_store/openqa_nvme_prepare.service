@@ -1,6 +1,7 @@
 [Unit]
 Description=Prepare NVMe after mounting it
 After=var-lib-openqa.mount
+Requires=var-lib-openqa.mount
 Before=var-lib-openqa-share.mount
 DefaultDependencies=no
 

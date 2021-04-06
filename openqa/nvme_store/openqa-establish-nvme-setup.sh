@@ -11,16 +11,6 @@ lsblk
 # another device or from a potential third NVMe partition when there is only a
 # single NVMe device for the complete storage
 
-# make arguments for mdadm invocation
-mdadm_args=(--create /dev/md/openqa --level=0 --force)
-if lsblk --noheadings | grep -q "raid" || lsblk --noheadings | grep -v nvme | grep "/$"; then
-    echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme?n1
-    mdadm_args+=(--raid-devices="$(ls /dev/nvme?n1 | wc -l)" --run /dev/nvme?n1)
-else
-    echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme0n1p3
-    mdadm_args+=(--raid-devices=1 --run /dev/nvme0n1p3)
-fi
-
 # create RAID0, try again if mdadm ran into timeout (see poo#88191)
 attempts=${RAID_CREATION_ATTEMPTS:-10}
 busy_delay=${RAID_CREATION_BUSY_DELAY:-10}
@@ -31,6 +21,16 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
     if [[ -e /dev/md/openqa ]]; then
         echo 'Stopping current RAID "/dev/md/openqa"'
         mdadm --stop /dev/md/openqa || echo "Unable to stop RAID (mdadm return code: $?)"
+    fi
+
+    # make arguments for mdadm invocation
+    mdadm_args=(--create /dev/md/openqa --level=0 --force)
+    if lsblk --noheadings | grep -q "raid" || lsblk --noheadings | grep -v nvme | grep "/$"; then
+        echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme?n1
+        mdadm_args+=(--raid-devices="$(ls /dev/nvme?n1 | wc -l)" --run /dev/nvme?n1)
+    else
+        echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme0n1p3
+        mdadm_args+=(--raid-devices=1 --run /dev/nvme0n1p3)
     fi
 
     if ! mdadm "${mdadm_args[@]}" 2>&1 | tee /tmp/mdadm_output; then
