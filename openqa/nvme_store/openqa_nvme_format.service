@@ -7,6 +7,7 @@ DefaultDependencies=no
 [Service]
 Type=oneshot
 ExecStart=/usr/local/bin/openqa-establish-nvme-setup
+TimeoutSec=5m
 
 [Install]
 WantedBy=multi-user.target
