@@ -145,15 +145,15 @@ server.packages:
           IdentityFile ~/.ssh/id_ed25519.gitlab
           IdentitiesOnly yes
 
-/etc/telegraf/telegraf.conf:
+/etc/telegraf/telegraf.d/telegraf-webui.conf:
   file.managed:
-    - name: /etc/telegraf/telegraf.conf
     - template: jinja
     - source:
       - salt://monitoring/telegraf/telegraf-webui.conf
     - user: root
     - group: root
     - mode: 600
+    - makedirs: True
     - require:
       - pkg: server.packages
 

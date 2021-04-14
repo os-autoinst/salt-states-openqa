@@ -6,6 +6,17 @@ telegraf.packages:
       - telegraf # to collect metrics
       - iputils # ping for telegraf
 
+/etc/telegraf/telegraf.conf:
+  file.managed:
+    - template: jinja
+    - source:
+      - salt://monitoring/telegraf/telegraf-common.conf
+    - user: root
+    - group: root
+    - mode: 600
+    - require:
+      - pkg: telegraf.packages
+
 /usr/lib/systemd/system/telegraf.service:
   file.managed:
     - name: /usr/lib/systemd/system/telegraf.service
