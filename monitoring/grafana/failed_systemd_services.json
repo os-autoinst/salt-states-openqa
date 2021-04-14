@@ -198,7 +198,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "3m",
         "frequency": "10s",
         "handler": 1,
@@ -382,7 +382,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "15m",
         "frequency": "1m",
         "handler": 1,

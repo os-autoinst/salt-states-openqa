@@ -431,7 +431,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
@@ -623,7 +623,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
@@ -852,7 +852,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "15s",
         "handler": 1,
@@ -1428,7 +1428,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
@@ -1812,7 +1812,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
@@ -2456,7 +2456,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
@@ -2815,7 +2815,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
@@ -3096,7 +3096,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
@@ -8066,7 +8066,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
@@ -8855,7 +8855,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
@@ -9902,7 +9902,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,

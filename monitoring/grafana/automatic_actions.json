@@ -45,7 +45,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "6m",
         "frequency": "1m",
         "handler": 1,
@@ -219,7 +219,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "6m",
         "frequency": "1m",
         "handler": 1,
@@ -393,7 +393,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "6m",
         "frequency": "1m",
         "handler": 1,
@@ -567,7 +567,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "1h",
         "frequency": "15m",
         "handler": 1,
@@ -737,7 +737,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "1h",
         "frequency": "15m",
         "handler": 1,
@@ -907,7 +907,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "1h",
         "frequency": "15m",
         "handler": 1,
