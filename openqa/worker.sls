@@ -332,15 +332,15 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - require:
       - sudo
 
-/etc/telegraf/telegraf.conf:
+/etc/telegraf/telegraf.d/telegraf-worker.conf:
   file.managed:
-    - name: /etc/telegraf/telegraf.conf
     - template: jinja
     - source:
       - salt://monitoring/telegraf/telegraf-worker.conf
     - user: root
     - group: root
     - mode: 600
+    - makedirs: True
     - require:
       - pkg: worker.packages
 
