@@ -981,7 +981,7 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "90m",
         "frequency": "5m",
         "handler": 1,

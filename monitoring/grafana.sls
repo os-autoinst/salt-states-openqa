@@ -2,7 +2,7 @@
 
 {% set nodenames = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
 {% set node_dashboardnames = (nodenames | map('regex_replace', '^(.*)$', 'worker-\\1.json'))|list %} #we name our dashboards "worker-$nodename.json"
-{% set manual_dashboardnames = ['webui.dashboard.json', 'webui.services.json', 'failed_systemd_services.json', 'automatic_actions.json', 'job_age.json', 'openqa_jobs.json', 'status_overview.json'] %}
+{% set manual_dashboardnames = ['webui.dashboard.json', 'webui.services.json', 'failed_systemd_services.json', 'automatic_actions.json', 'job_age.json', 'openqa_jobs.json', 'status_overview.json', 'monitoring.json'] %}
 {% set grafana_plugins = ['grafana-image-renderer', 'blackmirror1-singlestat-math-panel'] %}
 {% set preserved_dashboards = node_dashboardnames + manual_dashboardnames %}
 
