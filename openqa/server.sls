@@ -92,6 +92,7 @@ server.packages:
 
 /etc/apache2/vhosts.d/openqa.conf:
   file.managed:
+    - template: jinja
     - source:
       - salt://apache2/vhosts.d/openqa.conf
     - user: root
