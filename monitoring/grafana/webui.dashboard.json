@@ -123,7 +123,7 @@
             {
               "key": "url",
               "operator": "=",
-              "value": "https://{{ grains['id'] }}"
+              "value": "https://openqa.suse.de"
             }
           ]
         },
@@ -166,7 +166,7 @@
             {
               "key": "url",
               "operator": "=",
-              "value": "https://{{ grains['id'] }}"
+              "value": "https://openqa.suse.de"
             }
           ]
         },
@@ -209,7 +209,7 @@
             {
               "key": "url",
               "operator": "=",
-              "value": "https://{{ grains['id'] }}"
+              "value": "https://openqa.suse.de"
             }
           ]
         }
@@ -335,7 +335,7 @@
           "measurement": "openqa_jobs_by_group",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_group\" WHERE (\"url\" = 'https://{{ grains['id'] }}') AND $timeFilter GROUP BY time($__interval), \"group\" fill(0)",
+          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_group\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval), \"group\" fill(0)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -733,7 +733,7 @@
               "condition": "AND",
               "key": "server",
               "operator": "=",
-              "value": "https://{{ grains['id'] }}/tests"
+              "value": "https://openqa.suse.de/tests"
             }
           ]
         }
@@ -2200,7 +2200,7 @@
         "for": "10m",
         "frequency": "1m",
         "handler": 1,
-        "message": "No Minion workers on {{ grains['id'] }} are online. There is one worker *expected* to be online, visible under https://{{ grains['id'] }}/minion/workers.\n\nIf this alert triggers, openQA is unable to perform background tasks. Check the status of `openqa-gru.service` on {{ grains['id'] }} to investigate. It may help to restart that service. For logs, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru`.",
+        "message": "No Minion workers on openqa.suse.de are online. There is one worker *expected* to be online, visible under https://openqa.suse.de/minion/workers.\n\nIf this alert triggers, openQA is unable to perform background tasks. Check the status of `openqa-gru.service` on openqa.suse.de to investigate. It may help to restart that service. For logs, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru`.",
         "name": "web UI: Minion workers alert",
         "noDataState": "keep_state",
         "notifications": [
@@ -2460,7 +2460,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "message": "Too many Minion jobs have failed on {{ grains['id'] }}\n\nReview the failed jobs on https://{{ grains['id'] }}/minion/jobs?state=failed and create a ticket if there's not already one and the failed jobs aren't just a symptom of a bigger problem (e.g. database outage). After investigation remove the failed jobs (possibly keeping one instance of a failure kind around). For the general log of the Minion job queue, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru` on {{ grains['id'] }}.",
+        "message": "Too many Minion jobs have failed on openqa.suse.de\n\nReview the failed jobs on https://openqa.suse.de/minion/jobs?state=failed and create a ticket if there's not already one and the failed jobs aren't just a symptom of a bigger problem (e.g. database outage). After investigation remove the failed jobs (possibly keeping one instance of a failure kind around). For the general log of the Minion job queue, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru` on openqa.suse.de.",
         "name": "web UI: Too many Minion job failures alert",
         "noDataState": "alerting",
         "notifications": [
@@ -2474,7 +2474,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
-      "description": "See Minion job details on https://{{ grains['id'] }}/minion/jobs",
+      "description": "See Minion job details on https://openqa.suse.de/minion/jobs",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -9906,7 +9906,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "message": "There is at least one broken worker for more than 15 minutes. Have a look at https://{{ grains['id'] }}/admin/workers to find out which one it is (click the help icon to view the concrete error message).",
+        "message": "There is at least one broken worker for more than 15 minutes. Have a look at https://openqa.suse.de/admin/workers to find out which one it is (click the help icon to view the concrete error message).",
         "name": "Broken workers alert",
         "noDataState": "no_data",
         "notifications": [
@@ -9920,7 +9920,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
-      "description": "Worker slots which are able to connect to the web UI but report that they're broken.\n\nThis corresponds to the workers shown as \"broken\" on the web UI which also contains the reason the worker is broken: https://{{ grains['id'] }}/admin/workers",
+      "description": "Worker slots which are able to connect to the web UI but report that they're broken.\n\nThis corresponds to the workers shown as \"broken\" on the web UI which also contains the reason the worker is broken: https://openqa.suse.de/admin/workers",
       "fieldConfig": {
         "defaults": {
           "custom": {}

@@ -1,7 +1,4 @@
-{% from 'openqa/branding.sls' import branding %}
-{% set branding_dir = '/usr/share/openqa/templates/webapi/branding/' + branding %}
-
-{{ branding_dir }}/links_footer_left.html.ep:
+/usr/share/openqa/templates/webapi/branding/openqa.suse.de/links_footer_left.html.ep:
     file.managed:
       - source: salt://openqa/links_footer_left.html
       - template: jinja
@@ -13,7 +10,7 @@
             url: http://s.qa.suse.de/test-status
             description: Daily openQA review
 
-{{ branding_dir }}/links_footer_right.html.ep:
+/usr/share/openqa/templates/webapi/branding/openqa.suse.de/links_footer_right.html.ep:
     file.managed:
       - source: salt://openqa/links_footer_right.html
       - template: jinja
@@ -22,7 +19,7 @@
             url: https://build.suse.de/staging_workflows/SUSE:SLE-15-SP3:GA
             description: SLE15 staging dashboard
 
-{{ branding_dir }}/docbox.html.ep:
+/usr/share/openqa/templates/webapi/branding/openqa.suse.de/docbox.html.ep:
     file.managed:
       - source: salt://openqa/links_docbox.html
       - template: jinja

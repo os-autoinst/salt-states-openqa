@@ -131,7 +131,7 @@
       "thresholds": "200,299",
       "timeFrom": null,
       "timeShift": null,
-      "title": "{{ grains['id'] }}",
+      "title": "openqa.suse.de",
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
@@ -152,7 +152,7 @@
       "datasource": null,
       "decimals": 2,
       "defaultColor": "rgb(117, 117, 117)",
-      "description": "Availability of {{ grains['id'] }} (compare to google SRE definition, target must not be 100%; purpose: How users/teams/departments can rely on the service; data source: HTTP response code accessing test results; presentation: availability ratio [0:1])\n\nA threshold of 0.99 (99%) corresponds to a downtime of 87h/y. For comparison:\n\n* 2×9s: `99%`: 5250min (87hrs or 3.64days)\n* 3×9s: `99.9%`: 525min (8.7hrs)\n* 4×9s: `99.99%`: 52.5min\n* 5×9s: `99.999%`: 5min <- rule of thumb: `5× 9s -> 5 mins` (per year)\n\nSee\nhttps://stats.openqa-monitor.qa.suse.de/d/WebuiDb/webui-summary for low level details\n\nhttps://progress.opensuse.org/issues/68233",
+      "description": "Availability of openqa.suse.de (compare to google SRE definition, target must not be 100%; purpose: How users/teams/departments can rely on the service; data source: HTTP response code accessing test results; presentation: availability ratio [0:1])\n\nA threshold of 0.99 (99%) corresponds to a downtime of 87h/y. For comparison:\n\n* 2×9s: `99%`: 5250min (87hrs or 3.64days)\n* 3×9s: `99.9%`: 525min (8.7hrs)\n* 4×9s: `99.99%`: 52.5min\n* 5×9s: `99.999%`: 5min <- rule of thumb: `5× 9s -> 5 mins` (per year)\n\nSee\nhttps://stats.openqa-monitor.qa.suse.de/d/WebuiDb/webui-summary for low level details\n\nhttps://progress.opensuse.org/issues/68233",
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -2783,9 +2783,9 @@
       {
         "allValue": null,
         "current": {
-          "text": "{{ grains['id'] }}",
+          "text": "openqa.suse.de",
           "value": [
-            "{{ grains['id'] }}"
+            "openqa.suse.de"
           ]
         },
         "datasource": "InfluxDB",
@@ -2828,8 +2828,8 @@
           },
           {
             "selected": true,
-            "text": "{{ grains['id'] }}",
-            "value": "{{ grains['id'] }}"
+            "text": "openqa.suse.de",
+            "value": "openqa.suse.de"
           },
           {
             "selected": false,
