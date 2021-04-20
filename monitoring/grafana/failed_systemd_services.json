@@ -315,7 +315,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Failed systemd services ({{ grains['id'] }})",
+      "title": "Failed systemd services (openqa.suse.de)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -387,7 +387,7 @@
         "frequency": "1m",
         "handler": 1,
         "message": "Check failed systemd services on hosts with `systemctl --failed`.\n\nHint: Go to parent dashboard https://stats.openqa-monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.",
-        "name": "Failed systemd services alert (except {{ grains['id'] }})",
+        "name": "Failed systemd services alert (except openqa.suse.de)",
         "noDataState": "no_data",
         "notifications": [
           {
@@ -502,7 +502,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Failed systemd services (except {{ grains['id'] }})",
+      "title": "Failed systemd services (except openqa.suse.de)",
       "tooltip": {
         "shared": true,
         "sort": 0,

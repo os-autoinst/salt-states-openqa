@@ -110,13 +110,13 @@ nfs-client:
 ## example pillar
 # workerconf:
 #   available_webuis:
-#     {{ grains['id'] }}:
-#       testpoolurl: rsnyc://{{ grains['id'] }}/tests
+#     openqa.suse.de:
+#       testpoolurl: rsnyc://openqa.suse.de/tests
 #
 #   openqaworker1:
 #     numofworkers: 16
 #     webuis:
-#       [{{ grains['id'] }}]
+#       [openqa.suse.de]
 #         key: BLAHBLAHBLAH
 #         secret: BLAHBLAHBLAH
 #     workers: # Config for each worker instance goes here

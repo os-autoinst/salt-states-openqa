@@ -1222,7 +1222,7 @@
               "condition": "AND",
               "key": "server",
               "operator": "=",
-              "value": "https://{{ grains['id'] }}/changelog"
+              "value": "https://openqa.suse.de/changelog"
             }
           ]
         }
