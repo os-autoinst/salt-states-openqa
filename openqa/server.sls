@@ -35,7 +35,7 @@ server.packages:
           recognized_referers: bugzilla.suse.com bugzilla.opensuse.org bugzilla.novell.com bugzilla.microfocus.com progress.opensuse.org github.com build.suse.de
           max_rss_limit: 250000
         amqp:
-          url: amqps://openqa:b45z45bz645tzrhwer@rabbit.suse.de:5671/
+          url: {{ pillar['server']['amqp_url'] }}
           topic_prefix: suse
         scm git:
           update_remote: 'origin'
