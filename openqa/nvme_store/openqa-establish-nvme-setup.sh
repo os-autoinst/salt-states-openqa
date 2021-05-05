@@ -24,7 +24,7 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
     fi
 
     # make arguments for mdadm invocation
-    mdadm_args=(--create /dev/md/openqa --level=0 --force)
+    mdadm_args=(--create /dev/md/openqa --level=0 --force --assume-clean)
     if lsblk --noheadings | grep -q "raid" || lsblk --noheadings | grep -v nvme | grep "/$"; then
         echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme?n1
         mdadm_args+=(--raid-devices="$(ls /dev/nvme?n1 | wc -l)" --run /dev/nvme?n1)
