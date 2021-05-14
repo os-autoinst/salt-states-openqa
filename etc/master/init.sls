@@ -25,3 +25,9 @@ nfs-server:
 /etc/exports:
   file.managed:
     - source: salt://etc/master/exports
+/etc/tmpfiles.d/fs-tmp.conf:
+  file.managed:
+    - source: salt://etc/master/tmpfiles.d/fs-tmp.conf
+/etc/tmpfiles.d/fs-var-tmp.conf:
+  file.managed:
+    - source: salt://etc/master/tmpfiles.d/fs-var-tmp.conf
