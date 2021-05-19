@@ -9,7 +9,7 @@
 include:
  - openqa.repos
  - openqa.journal
- - openqa.ntp
+ - openqa.chrony
  - sudo
 
 # Packages that must come from the openQA repo

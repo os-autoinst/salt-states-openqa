@@ -91,7 +91,6 @@ worker-monitoring.packages:
       - monitoring-plugins-swap
       - monitoring-plugins-sar-perf
       - monitoring-plugins-procs
-      - monitoring-plugins-ntp_time
       - monitoring-plugins-multipath
       - monitoring-plugins-mem
       - monitoring-plugins-load

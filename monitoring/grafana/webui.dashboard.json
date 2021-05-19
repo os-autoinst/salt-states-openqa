@@ -3183,7 +3183,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "ntpq",
+          "measurement": "chrony",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",

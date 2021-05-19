@@ -1,7 +1,7 @@
 include:
  - openqa.repos
  - openqa.journal
- - openqa.ntp
+ - openqa.chrony
  - logrotate
 
 server.packages:

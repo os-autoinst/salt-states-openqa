@@ -1,19 +1,16 @@
-ntp:
+chrony:
   pkg.installed:
     - refresh: False
 
-/etc/ntp.conf:
+/etc/chrony.d/suse.conf:
   file.managed:
     - source:
-      - salt://ntpd/ntp.conf
-    - user: root
-    - group: root
-    - mode: 600
+      - salt://chrony/suse.conf
 
 {%- if not grains.get('noservices', False) %}
-ntpd:
+chronyd:
   service.running:
     - enable: True
     - watch:
-      - file: /etc/ntp.conf
+      - file: /etc/chrony.d/suse.conf
 {%- endif %}
