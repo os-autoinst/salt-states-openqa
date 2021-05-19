@@ -2,6 +2,9 @@ chrony:
   pkg.installed:
     - refresh: False
 
+ntp:
+  pkg.purged
+
 /etc/chrony.d/suse.conf:
   file.managed:
     - source:
@@ -13,4 +16,7 @@ chronyd:
     - enable: True
     - watch:
       - file: /etc/chrony.d/suse.conf
+
+ntpd:
+  service.disabled
 {%- endif %}
