@@ -114,7 +114,7 @@ test-monitor:
     # some checks on the changed or generated files
     - ls /etc/nginx/vhosts.d/
     - grep -q 'monitor.qa.suse.de' /etc/nginx/vhosts.d/02-grafana.conf && echo "ok -- expected nginx config file for grafana exists"
-    - (telegraf --test ||:) | grep -q 'system,host=' && echo "ok -- telegraf outputs host information"
+    - (telegraf --test ||:) | grep -q 'system,host=' && echo "ok -- telegraf outputs host information" || telegraf --test
 
 
 include: 'deploy.yml'
