@@ -30,7 +30,7 @@ sudo systemctl enable xinetd
 4) Install monitoring plugins:
 
 ```
-sudo zypper in -y monitoring-plugins-zypper monitoring-plugins-users monitoring-plugins-swap monitoring-plugins-sar-perf monitoring-plugins-procs monitoring-plugins-ntp_time monitoring-plugins-multipath monitoring-plugins-mem monitoring-plugins-load monitoring-plugins-ipmi-sensor1 monitoring-plugins-disk monitoring-plugins-common monitoring-plugins-bonding
+sudo zypper in -y monitoring-plugins-zypper monitoring-plugins-users monitoring-plugins-swap monitoring-plugins-sar-perf monitoring-plugins-procs monitoring-plugins-multipath monitoring-plugins-mem monitoring-plugins-load monitoring-plugins-ipmi-sensor1 monitoring-plugins-disk monitoring-plugins-common monitoring-plugins-bonding
 ```
 
 5) nrpe configuration:
@@ -64,11 +64,6 @@ command[check_users]=/usr/lib/nagios/plugins/check_users -w 10 -c 20
 command[check_load]=/usr/lib/nagios/plugins/check_load -w 80,80,80 -c 100,100,100
 command[check_bonding]=/usr/lib/nagios/plugins/./check_bonding
 command[check_multipath]=/usr/lib/nagios/plugins/check_multipath
-```
-
-File: check_ntp.cfg
-```
-command[check_ntp]=/usr/lib/nagios/plugins/check_ntp_time -H ntp1
 ```
 
 File: check_partition_space.cfg

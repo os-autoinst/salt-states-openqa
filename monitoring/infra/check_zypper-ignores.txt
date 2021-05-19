@@ -12,7 +12,6 @@ whitelist: nagios-plugins-ipmi-sensor1
 whitelist: nagios-plugins-load
 whitelist: nagios-plugins-mem
 whitelist: nagios-plugins-multipath
-whitelist: nagios-plugins-ntp_time
 whitelist: nagios-plugins-procs
 whitelist: nagios-plugins-swap
 whitelist: nagios-plugins-users
@@ -29,7 +28,6 @@ whitelist:monitoring-plugins-ipmi-sensor1
 whitelist:monitoring-plugins-load
 whitelist:monitoring-plugins-mem
 whitelist:monitoring-plugins-multipath
-whitelist:monitoring-plugins-ntp_time
 whitelist:monitoring-plugins-procs
 whitelist:monitoring-plugins-swap
 whitelist:monitoring-plugins-users

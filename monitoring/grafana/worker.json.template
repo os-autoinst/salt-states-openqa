@@ -3336,10 +3336,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "ntpq",
+          "measurement": "chrony",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(abs(\"offset\")) FROM \"ntpq\" WHERE (\"host\" = '{{ worker }}') AND $timeFilter GROUP BY time($__interval), \"stratum\" fill(null)",
+          "query": "SELECT mean(abs(\"offset\")) FROM \"chrony\" WHERE (\"host\" = '{{ worker }}') AND $timeFilter GROUP BY time($__interval), \"stratum\" fill(null)",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
