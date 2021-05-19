@@ -3,6 +3,7 @@ base:
     - network
     - salt.minion
     - sshd
+    - chrony
     - auto-update
     - monitoring.telegraf
   'G@roles:webui':

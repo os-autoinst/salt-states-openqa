@@ -9,7 +9,6 @@
 include:
  - openqa.repos
  - openqa.journal
- - openqa.chrony
  - sudo
 
 # Packages that must come from the openQA repo
