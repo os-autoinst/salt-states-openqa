@@ -124,9 +124,9 @@ wicked ifup br1:
     - require:
       - pkg: worker-openqa.packages
 
-/etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf:
+/etc/systemd/system/os-autoinst-openvswitch.service.d/30-init-timeout.conf:
   file.managed:
-    - name: /etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf
+    - name: /etc/systemd/system/os-autoinst-openvswitch.service.d/30-init-timeout.conf
     - mode: 644
     - source:
       - salt://openqa/os-autoinst-openvswitch-init-timeout.conf
@@ -137,7 +137,7 @@ openvswitch override reload:
   module.wait:
     - name: service.systemctl_reload
     - watch:
-      - file: /etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf
+      - file: /etc/systemd/system/os-autoinst-openvswitch.service.d/30-init-timeout.conf
 
 # Enable os-autoinst-openvswitch helper or restart it if ifcfg-br1 and/or gre_tunnel_preup.sh has changed
 os-autoinst-openvswitch:
