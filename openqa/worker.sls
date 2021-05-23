@@ -332,22 +332,6 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - require:
       - pkg: worker.packages
 
-/etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf:
-  file.managed:
-    - name: /etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf
-    - mode: 644
-    - source:
-      - salt://openqa/os-autoinst-openvswitch-init-timeout.conf
-    - makedirs: true
-
-{%- if not grains.get('noservices', False) %}
-openvswitch override reload:
-  module.wait:
-    - name: service.systemctl_reload
-    - watch:
-      - file: /etc/systemd/system/os-autoinst-openvswitch.d/30-init-timeout.conf
-{% endif %}
-
 # prevent I/O stuck for very long time by automatically crashing (and
 # rebooting)
 # see https://progress.opensuse.org/issues/41882#note-34
