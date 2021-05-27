@@ -62,11 +62,15 @@ nfs-client:
 
 {%- if not grains.get('noservices', False) %}
 # Ensure NFS share is mounted and setup on boot
+# Additional options to prevent failed mount attempts after bootup. Remote
+# filesystem mounts wait for network-online.target which apparently is not
+# ensured by wicked to mean that the remote target is reachable
+# https://progress.opensuse.org/issues/92302
 /var/lib/openqa/share:
   mount.mounted:
     - device: {{ pillar['workerconf']['nfspath'] }}
     - fstype: nfs
-    - opts: ro
+    - opts: ro,noauto,nofail,retry=30,x-systemd.mount-timeout=30m,x-systemd.device-timeout=10m,x-systemd.automount
     - require:
       - pkg: worker-openqa.packages
 {%- endif %}
