@@ -72,6 +72,15 @@ server.packages:
     - require:
       - pkg: server.packages
 
+{%- if not grains.get('noservices', False) %}
+openqa-webui:
+  service.running:
+    - enable: True
+    - restart: True
+    - watch:
+      - file: /etc/openqa/openqa.ini
+{%- endif %}
+
 /etc/openqa/database.ini:
   ini.options_present:
     - sections:
