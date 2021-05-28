@@ -31,7 +31,7 @@
         - group
 
 {%- if not grains.get('noservices', False) %}
-{% for service in ('ovsdb-server.service', 'ovs-vswitchd.service') %}
+{% for service in ('ovsdb-server.service', 'ovs-vswitchd.service', 'os-autoinst-openvswitch.service') %}
 {{ service }}:
   service.running:
     - restart: True
