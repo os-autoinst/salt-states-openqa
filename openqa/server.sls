@@ -78,7 +78,7 @@ openqa-webui:
     - enable: True
     - restart: True
     - watch:
-      - file: /etc/openqa/openqa.ini
+      - ini: /etc/openqa/openqa.ini
 {%- endif %}
 
 /etc/openqa/database.ini:
