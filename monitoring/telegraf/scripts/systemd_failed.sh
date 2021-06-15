@@ -18,4 +18,6 @@ if [[ $I -gt 1 ]]; then
 	FAILED_UNITS_TAGS="${FAILED_UNITS_HUMAN_TAG},${TAGS_PER_UNIT}"
 fi
 
-echo systemd_failed,machine=$(hostname -f)${FAILED_UNITS_TAGS} failed=${FAILED_UNITS_COUNT}i
+hostname=$(hostname -f)
+[[ $hostname ]] || hostname=$(hostname)
+echo systemd_failed,machine="${hostname}${FAILED_UNITS_TAGS}" failed="${FAILED_UNITS_COUNT}i"
