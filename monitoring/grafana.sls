@@ -1,10 +1,13 @@
 {% set dashboard_template_folder = '/var/lib/grafana/dashboards/' %}
 
-{% set nodenames = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
-{% set node_dashboardnames = (nodenames | map('regex_replace', '^(.*)$', 'worker-\\1.json'))|list %} #we name our dashboards "worker-$nodename.json"
+
+{% set workernames = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
+{% set worker_dashboardnames = (workernames | map('regex_replace', '^(.*)$', 'worker-\\1.json'))|list %} #we name our dashboards "worker-$nodename.json"
 {% set manual_dashboardnames = ['webui.dashboard.json', 'webui.services.json', 'failed_systemd_services.json', 'automatic_actions.json', 'job_age.json', 'openqa_jobs.json', 'status_overview.json', 'monitoring.json'] %}
+{% set genericnames = salt['mine.get']('not G@roles:webui and not G@roles:worker and not G@roles:monitor', 'nodename', tgt_type='compound').values()|list %} #list names of all generic hosts
+{% set generic_dashboardnames = (genericnames | map('regex_replace', '^(.*)$', 'generic-\\1.json'))|list %} #we name our dashboards for generic hosts "generic-$nodename.json"
 {% set grafana_plugins = ['grafana-image-renderer', 'blackmirror1-singlestat-math-panel'] %}
-{% set preserved_dashboards = node_dashboardnames + manual_dashboardnames %}
+{% set preserved_dashboards = worker_dashboardnames + generic_dashboardnames + manual_dashboardnames %}
 
 {% from 'openqa/repo_config.sls' import repo %}
 server-monitoring-software.repo:
@@ -126,11 +129,20 @@ dashboard-cleanup:
 {% endfor %}
 
 #create dashboards for each worker contained in the mine
-#iterating over node_dashboardnames would be cleaner but we need the nodename itself for the template
-{% for nodename in nodenames -%}
-{{"/".join([dashboard_template_folder, "worker-" + nodename + ".json"])}}: #same as for manual dashboards too
+#iterating over worker_dashboardnames would be cleaner but we need the workername itself for the template
+{% for workername in workernames -%}
+{{"/".join([dashboard_template_folder, "worker-" + workername + ".json"])}}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/worker.json.template
     - template: jinja
-    - worker: {{nodename}}
+    - worker: {{workername}}
+{% endfor %}
+
+#create dashboards for each generic host contained in the mine
+{% for genericname in genericnames -%}
+{{"/".join([dashboard_template_folder, "generic-" + genericname + ".json"])}}: #same as for manual dashboards too
+  file.managed:
+    - source: salt://monitoring/grafana/generic.json.template
+    - template: jinja
+    - generic_host: {{genericname}}
 {% endfor %}
