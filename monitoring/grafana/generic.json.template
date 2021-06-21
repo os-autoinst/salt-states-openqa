@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 5955,
   "graphTooltip": 1,
-  "iteration": 1623836127848,
+  "iteration": 1624270671931,
   "links": [],
   "panels": [
     {
@@ -40,7 +40,7 @@
           {
             "evaluator": {
               "params": [
-                -3000000000
+                0.1
               ],
               "type": "lt"
             },
@@ -49,30 +49,7 @@
             },
             "query": {
               "params": [
-                "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                3000000000
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "B",
+                "Available percentage",
                 "5m",
                 "now"
               ]
@@ -101,6 +78,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "InfluxDB",
+      "description": "",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -144,7 +122,7 @@
       ],
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "7.5.7",
@@ -153,10 +131,16 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "/mem_total/",
+          "$$hashKey": "object:419",
+          "alias": "/total/",
           "color": "#BF1B00",
           "fill": 0,
           "linewidth": 2
+        },
+        {
+          "$$hashKey": "object:430",
+          "alias": "/percentage/",
+          "yaxis": 2
         }
       ],
       "spaceLength": 10,
@@ -186,9 +170,9 @@
           "measurement": "mem_inactive",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(total) as total, mean(used) as used, mean(cached) as cached, mean(buffered) as buffered  FROM \"mem\" WHERE host = '{{ generic_host }}' AND $timeFilter GROUP BY time($interval), host ORDER BY asc",
+          "query": "SELECT mean(total) as total, mean(used) as used, mean(cached) as cached, mean(buffered) as buffered, mean(available) as available FROM \"mem\" WHERE host = '{{ generic_host }}' AND $timeFilter GROUP BY time($interval), host ORDER BY asc",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "Absolute figures",
           "resultFormat": "time_series",
           "select": [
             [
@@ -207,7 +191,7 @@
           "tags": []
         },
         {
-          "alias": "$col",
+          "alias": "available (percentage)",
           "dsType": "influxdb",
           "function": "mean",
           "groupBy": [
@@ -229,9 +213,9 @@
           "measurement": "mem_inactive",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(available) as available  FROM \"mem\" WHERE host = '{{ generic_host }}' AND $timeFilter GROUP BY time($interval), host ORDER BY asc",
+          "query": "SELECT mean(available) / mean(total) as available_p  FROM \"mem\" WHERE host = '{{ generic_host }}' AND $timeFilter GROUP BY time($interval), host ORDER BY asc",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "Available percentage",
           "resultFormat": "time_series",
           "select": [
             [
@@ -253,10 +237,10 @@
       "thresholds": [
         {
           "colorMode": "critical",
-          "fill": true,
-          "line": true,
+          "fill": false,
+          "line": false,
           "op": "lt",
-          "value": -3000000000,
+          "value": 0.1,
           "visible": true
         }
       ],
@@ -279,14 +263,18 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:76",
           "format": "bytes",
+          "label": "Usage (absolute)",
           "logBase": 1,
           "max": null,
           "min": 0,
           "show": true
         },
         {
-          "format": "short",
+          "$$hashKey": "object:77",
+          "format": "percentunit",
+          "label": "Available (percentage)",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -3406,5 +3394,5 @@
   "timezone": "browser",
   "title": "Dashboard for {{ generic_host }}",
   "uid": "GD{{ generic_host }}",
-  "version": 24
+  "version": 2
 }
