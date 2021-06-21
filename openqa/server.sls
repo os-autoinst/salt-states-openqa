@@ -14,6 +14,7 @@ server.packages:
       - vsftpd
       - samba
       - postfix
+      - html-xml-utils  # for https://github.com/os-autoinst/scripts/blob/master/openqa-label-known-issues
       - ca-certificates-suse  # for https://gitlab.suse.de/openqa/scripts
 
 /etc/fstab:
