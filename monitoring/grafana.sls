@@ -140,9 +140,11 @@ dashboard-cleanup:
 
 #create dashboards for each generic host contained in the mine
 {% for genericname in genericnames -%}
+{% set interfaces = salt['mine.get']("nodename:" + genericname, 'network.interfaces', 'grain').keys()|list %}
 {{"/".join([dashboard_template_folder, "generic-" + genericname + ".json"])}}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/generic.json.template
     - template: jinja
     - generic_host: {{genericname}}
+    - host_interface: {{ interfaces[0] }}
 {% endfor %}
