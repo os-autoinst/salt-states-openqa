@@ -898,9 +898,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "url",
               "operator": "=",
-              "value": "{{ generic_host }}"
+              "value": "{{ host_interface }}"
             }
           ]
         }
@@ -1085,9 +1085,9 @@
           ],
           "tags": [
             {
-              "key": "host",
+              "key": "url",
               "operator": "=",
-              "value": "{{ generic_host }}"
+              "value": "{{ host_interface }}"
             }
           ]
         }
