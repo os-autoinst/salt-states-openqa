@@ -1,6 +1,8 @@
 cronie:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 
 {%- if not grains.get('noservices', False) %}
 nfs-server:

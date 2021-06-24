@@ -6,6 +6,8 @@ include:
 server.packages:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
     - pkgs:
       - openQA
       - apache2

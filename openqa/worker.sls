@@ -15,6 +15,8 @@ include:
 worker-openqa.packages:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
     - pkgs:
       - openQA-worker
       - xterm-console
@@ -59,6 +61,8 @@ worker.packages:
 nfs-client:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 
 {%- if not grains.get('noservices', False) %}
 # Ensure NFS share is mounted and setup on boot
@@ -285,6 +289,8 @@ python3-augeas:
     # python3 is now a capability provided by a minor version package
     - resolve_capabilities: True
     - refresh: False
+    - retry:
+        attempts: 5
 
 grub-conf:
   augeas.change:

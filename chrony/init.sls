@@ -1,6 +1,8 @@
 chrony:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 
 ntp:
   pkg.purged

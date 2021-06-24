@@ -1,6 +1,8 @@
 salt-minion:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 {%- if not grains.get('noservices', False) %}
   service.enabled:
     - name: salt-minion

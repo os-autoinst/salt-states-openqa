@@ -27,6 +27,8 @@ auto-update.timer:
 rebootmgr:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 
 # it should be possible to at least change the file for rebootmgr.conf in
 # environments with no service management but this failed so far in tests so

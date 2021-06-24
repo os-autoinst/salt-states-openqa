@@ -1,6 +1,8 @@
 salt-master:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 
 # see https://build.opensuse.org/package/view_file/openSUSE:Leap:15.1/salt/use-adler32-algorithm-to-compute-string-checksums.patch
 /etc/salt/master:
