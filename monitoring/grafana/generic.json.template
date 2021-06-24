@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 5955,
   "graphTooltip": 1,
-  "iteration": 1624270671931,
+  "iteration": 1624526580887,
   "links": [],
   "panels": [
     {
@@ -1136,7 +1136,7 @@
       }
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
@@ -3394,5 +3394,5 @@
   "timezone": "browser",
   "title": "Dashboard for {{ generic_host }}",
   "uid": "GD{{ generic_host }}",
-  "version": 2
+  "version": 3
 }
