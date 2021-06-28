@@ -21,6 +21,8 @@ telegraf-monitoring:
   file.append:
     - text:
       - keeppackages=1
+    - require:
+      - pkgrepo: telegraf-monitoring
 
 {%- endif %}
 
@@ -44,6 +46,8 @@ devel_openQA:
   file.append:
     - text:
       - keeppackages=1
+    - require:
+      - pkgrepo: devel_openQA
 
 {% if openqamodulesrepo is defined %}
 devel_openQA_Modules:
@@ -59,6 +63,8 @@ devel_openQA_Modules:
   file.append:
     - text:
       - keeppackages=1
+    - require:
+      - pkgrepo: devel_openQA_Modules
 {% endif %}
 
 # We keep proper priorities on our repositories so we can rely on sensible,
