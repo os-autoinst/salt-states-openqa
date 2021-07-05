@@ -4,6 +4,8 @@ include:
 openssh:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 
 /etc/ssh/sshd_config:
   file.managed:

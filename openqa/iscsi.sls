@@ -3,6 +3,8 @@
 qemu:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 
 # Coolo says we shouldn't do this - kernel should be packaged
 /usr/share/qemu/ipxe.lkrn:
@@ -14,6 +16,8 @@ qemu:
 tgt:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 
 # Create openqa-iscsi-disk file if it doesn't exist
 dd if=/dev/zero of=/opt/openqa-iscsi-disk seek=1M bs=20480 count=1:

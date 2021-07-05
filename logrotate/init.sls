@@ -1,6 +1,8 @@
 logrotate:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
 
 /etc/systemd/system/logrotate.service.d/override.conf:
   file.managed:

@@ -17,6 +17,8 @@ geekotest:
 openqa-trigger-from-ibs:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
     # python3 is now a capability provided by a minor version package
     - resolve_capabilities: True
     - pkgs:

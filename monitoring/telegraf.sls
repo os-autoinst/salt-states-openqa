@@ -1,7 +1,8 @@
 telegraf.packages:
   pkg.installed:
     - refresh: False
-    - retry: True  # some packages can change rapidly in our repos needing a retry as zypper does not do that
+    - retry:
+        attempts: 5
     - pkgs:
       - telegraf # to collect metrics
       - iputils # ping for telegraf

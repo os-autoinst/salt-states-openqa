@@ -82,6 +82,8 @@ nrpe:
 worker-monitoring.packages:
   pkg.installed:
     - refresh: False
+    - retry:
+        attempts: 5
     - pkgs:
       - xinetd
       - nrpe
