@@ -134,7 +134,8 @@ Grains (Python scripts found within `_grains` directory of this repository which
 about the underlying system) can be executed and shown locally:
 
 ```
-salt-call --local grains.items
+salt-call --local saltutil.sync_grains # use latest changes; should list changed Grains since last call
+salt-call --local grains.items         # show Grain data
 ```
 
 It is generally also possible to invoke grains directly via `python` but this way the execution environment might
