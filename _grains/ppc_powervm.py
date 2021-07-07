@@ -4,7 +4,7 @@ from subprocess import check_output
 
 
 def ppc_powervm():
-    return {'ppc_powervm': 'Hypervisor' in str(check_output('lscpu'))}
+    return {'ppc_powervm': 'Hypervisor' in str(check_output(args=['lscpu']))}
 
 
 if __name__ == '__main__':
