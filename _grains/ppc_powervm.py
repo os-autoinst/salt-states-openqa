@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 
-from subprocess import check_output
-
+import subprocess
 
 def ppc_powervm():
-    return {'ppc_powervm': 'Hypervisor' in str(check_output(args=['lscpu']))}
-
-
-if __name__ == '__main__':
-    grains = ppc_powervm()
+    return {'ppc_powervm': 'Hypervisor' in str(subprocess.check_output(args=['lscpu']))}
