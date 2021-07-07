@@ -129,6 +129,17 @@ salt-call --local state.show_sls openqa.worker
 salt-call --local state.show_top
 ```
 
+#### Grains
+Grains (Python scripts found within `_grains` directory of this repository which are used to retrieve information
+about the underlying system) can be executed and shown locally:
+
+```
+salt-call --local grains.items
+```
+
+It is generally also possible to invoke grains directly via `python` but this way the execution environment might
+not match the one from Salt and certain errors might not be reproducible.
+
 Specific roles can be specified in salt grains, also for testing, e.g.:
 
 ```sh
