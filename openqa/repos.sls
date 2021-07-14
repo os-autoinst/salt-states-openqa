@@ -13,6 +13,7 @@ telegraf-monitoring:
     - gpgautoimport: True
     - refresh: True
     - priority: 105
+    - retry: True
 
 # workaround for https://progress.opensuse.org/issues/58331
 # not using ini.options_present due to
@@ -41,6 +42,7 @@ devel_openQA:
     - refresh: True
     - priority: 95
     - keeppackages: True
+    - retry: True
 
 /etc/zypp/repos.d/devel_openQA.repo:
   file.append:
@@ -58,6 +60,7 @@ devel_openQA_Modules:
     - refresh: True
     - priority: 90
     - keeppackages: True
+    - retry: True
 
 /etc/zypp/repos.d/devel_openQA_Modules.repo:
   file.append:
