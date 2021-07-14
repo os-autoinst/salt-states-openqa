@@ -60,7 +60,7 @@ server.packages:
         misc_limits:
           untracked_assets_storage_duration: 7
           result_cleanup_max_free_percentage: 20
-          asset_cleanup_max_free_percentage: 20
+          asset_cleanup_max_free_percentage: 16
         obs_rsync:
           home: /opt/openqa-trigger-from-ibs
           project_status_url: https://api.suse.de/public/build/%%PROJECT/_result
