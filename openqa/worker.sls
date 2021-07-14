@@ -75,6 +75,13 @@ nfs-client:
     - device: {{ pillar['workerconf']['nfspath'] }}
     - fstype: nfs
     - opts: ro,noauto,nofail,retry=30,x-systemd.mount-timeout=30m,x-systemd.device-timeout=10m,x-systemd.automount
+    # according to https://docs.saltproject.io/en/latest/ref/states/all/salt.states.mount.html#salt.states.mount.mounted we need to specify "extra mount options/keys" that we need to specify to prevent constent remounting because these options would not show up in /proc/self/mountinfo
+    - extra_mount_invisible_options:
+      - noauto
+      - x-systemd.automount
+    - extra_mount_invisible_keys:
+      - x-systemd.mount-timeout
+      - x-systemd.device-timeout
     - require:
       - pkg: worker-openqa.packages
 {%- endif %}
