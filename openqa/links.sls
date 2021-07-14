@@ -4,11 +4,11 @@
       - template: jinja
         links_footer:
           1:
-            url: irc://irc.suse.de/testing
-            description: IRC channel
+            url: https://chat.suse.de/channel/testing
+            description: Internal chat channel
           2:
-            url: http://s.qa.suse.de/test-status
-            description: Daily openQA review
+            url: https://openqa.io.suse.de/openqa-review/
+            description: Daily openQA review reports
 
 /usr/share/openqa/templates/webapi/branding/openqa.suse.de/links_footer_right.html.ep:
     file.managed:
@@ -16,7 +16,7 @@
       - template: jinja
         links_footer:
           1:
-            url: https://build.suse.de/staging_workflows/SUSE:SLE-15-SP3:GA
+            url: https://build.suse.de/staging_workflows/SUSE:SLE-15-SP4:GA
             description: SLE15 staging dashboard
 
 /usr/share/openqa/templates/webapi/branding/openqa.suse.de/docbox.html.ep:
