@@ -18,6 +18,7 @@ server.packages:
       - postfix
       - html-xml-utils  # for https://github.com/os-autoinst/scripts/blob/master/openqa-label-known-issues
       - ca-certificates-suse  # for https://gitlab.suse.de/openqa/scripts
+      - logwarn # used by logwarn_openqa
 
 /etc/fstab:
   file.managed:
@@ -294,6 +295,10 @@ salt-master.service:
 https://gitlab.suse.de/openqa/scripts.git:
   git.cloned:
     - target: /opt/openqa-scripts
+
+https://github.com/os-autoinst/openqa-logwarn.git:
+  git.cloned:
+    - target: /opt/openqa-logwarn
 
 openqa_scripts_config:
   # allow deployment to checked out branch from
