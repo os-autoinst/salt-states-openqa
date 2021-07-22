@@ -6,6 +6,7 @@ telegraf.packages:
     - pkgs:
       - telegraf # to collect metrics
       - iputils # ping for telegraf
+      - logwarn # used by logwarn_openqa
 
 /etc/telegraf/telegraf.conf:
   file.managed:
