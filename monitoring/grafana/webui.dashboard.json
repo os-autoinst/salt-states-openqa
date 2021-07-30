@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1627485454981,
+  "iteration": 1627635505096,
   "links": [],
   "panels": [
     {
@@ -2184,7 +2184,7 @@
             },
             "query": {
               "params": [
-                "total_number_of_minion_workers",
+                "online_minion_workers",
                 "10m",
                 "now-1m"
               ]
@@ -2334,7 +2334,7 @@
           "policy": "default",
           "query": "SELECT mean(active)+mean(inactive) FROM \"openqa_minion_workers\" WHERE $timeFilter GROUP BY time($__interval) fill(previous)",
           "rawQuery": true,
-          "refId": "total_number_of_minion_workers",
+          "refId": "online_minion_workers",
           "resultFormat": "time_series",
           "select": [
             [
