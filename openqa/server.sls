@@ -321,3 +321,11 @@ git-clone-os-autoinst-scripts:
   file.managed:
     - contents:
       - '-*/3    * * * *  geekotest     git -C /opt/os-autoinst-scripts pull --quiet --rebase origin master'
+
+/etc/systemd/journald.conf.d/journal_size.conf:
+  file.managed:
+    - makedirs: True
+    - contents: |
+        [Journal]
+        SystemMaxUse=80G
+        SystemKeepFree=10%
