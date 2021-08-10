@@ -77,6 +77,16 @@ server.packages:
     - require:
       - pkg: server.packages
 
+/etc/systemd/system/openqa-webui.service.d/30-openqa-webui-hook-timeout.conf:
+  file.managed:
+    - name: /etc/systemd/system/openqa-webui.service.d/30-openqa-webui-hook-timeout.conf
+    - mode: 644
+    - source:
+      - salt://openqa/openqa-webui-hook-timeout.conf
+    - makedirs: true
+    - require:
+      - pkg: server.packages
+
 {%- if not grains.get('noservices', False) %}
 openqa-webui:
   service.running:
@@ -84,6 +94,7 @@ openqa-webui:
     - restart: True
     - watch:
       - ini: /etc/openqa/openqa.ini
+      - file: /etc/systemd/system/openqa-webui.service.d/30-openqa-webui-hook-timeout.conf
 {%- endif %}
 
 /etc/openqa/database.ini:
