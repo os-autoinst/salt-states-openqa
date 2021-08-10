@@ -77,9 +77,9 @@ server.packages:
     - require:
       - pkg: server.packages
 
-/etc/systemd/system/openqa-gru.service/30-openqa-hook-timeout.conf:
+/etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf:
   file.managed:
-    - name: /etc/systemd/system/openqa-gru.service/30-openqa-hook-timeout.conf
+    - name: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
     - mode: 644
     - source:
       - salt://openqa/openqa-hook-timeout.conf
