@@ -77,12 +77,12 @@ server.packages:
     - require:
       - pkg: server.packages
 
-/etc/systemd/system/openqa-webui.service.d/30-openqa-webui-hook-timeout.conf:
+/etc/systemd/system/openqa-gru.service/30-openqa-hook-timeout.conf:
   file.managed:
-    - name: /etc/systemd/system/openqa-webui.service.d/30-openqa-webui-hook-timeout.conf
+    - name: /etc/systemd/system/openqa-gru.service/30-openqa-hook-timeout.conf
     - mode: 644
     - source:
-      - salt://openqa/openqa-webui-hook-timeout.conf
+      - salt://openqa/openqa-hook-timeout.conf
     - makedirs: true
     - require:
       - pkg: server.packages
@@ -94,7 +94,13 @@ openqa-webui:
     - restart: True
     - watch:
       - ini: /etc/openqa/openqa.ini
-      - file: /etc/systemd/system/openqa-webui.service.d/30-openqa-webui-hook-timeout.conf
+
+openqa-gru:
+  service.running:
+    - enable: True
+    - restart: True
+    - watch:
+      - file: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
 {%- endif %}
 
 /etc/openqa/database.ini:
