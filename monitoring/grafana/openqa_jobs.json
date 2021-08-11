@@ -1053,7 +1053,7 @@
         "handler": 1,
         "message": "",
         "name": "Incomplete jobs (not restarted) of last 24h alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
