@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1628604747214,
+  "iteration": 1628671997693,
   "links": [],
   "panels": [
     {
@@ -40,7 +40,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -74,7 +73,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -264,7 +263,6 @@
       "decimals": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -301,7 +299,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -450,7 +448,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -487,7 +484,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -552,7 +549,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 200
+          "value": 200,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -642,7 +640,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -679,7 +676,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -744,7 +741,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 4
+          "value": 4,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -877,7 +875,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -917,7 +914,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1333,7 +1330,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 500
+          "value": 500,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -1447,7 +1445,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1485,7 +1482,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1635,7 +1632,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 200
+          "value": 200,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -1832,7 +1830,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1869,7 +1866,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2088,7 +2085,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 300
+          "value": 90,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -2217,7 +2215,6 @@
       "description": "A Minion worker is used by openQA to perform background tasks like cleanup and saving needles. There is one worker *expected* to be online, visible under https://openqa.suse.de/minion/workers. The service `openqa-gru.service` on openqa.suse.de is supposed to provide the Minion worker.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -2255,7 +2252,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2363,7 +2360,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 100
+          "value": 100,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -2478,7 +2476,6 @@
       "description": "See Minion job details on https://openqa.suse.de/minion/jobs",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -2515,7 +2512,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2708,7 +2705,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 2000
+          "value": 2000,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -2837,7 +2835,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -2880,7 +2877,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3116,7 +3113,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -3153,7 +3149,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3275,7 +3271,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -3311,7 +3306,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3476,7 +3471,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -3512,7 +3506,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3691,7 +3685,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -3731,7 +3724,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3897,7 +3890,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -3937,7 +3929,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -4188,7 +4180,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -4233,7 +4224,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -4421,7 +4412,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -4461,7 +4451,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -4627,7 +4617,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -4667,7 +4656,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -4918,7 +4907,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -4963,7 +4951,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -5151,7 +5139,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -5191,7 +5178,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -5357,7 +5344,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -5397,7 +5383,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -5626,7 +5612,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -5671,7 +5656,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -5865,7 +5850,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -5905,7 +5889,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -6071,7 +6055,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -6111,7 +6094,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -6362,7 +6345,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -6407,7 +6389,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -6595,7 +6577,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -6635,7 +6616,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -6801,7 +6782,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -6841,7 +6821,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -7093,7 +7073,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -7138,7 +7117,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -7324,7 +7303,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -7356,7 +7334,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -7464,7 +7442,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -7496,7 +7473,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -7639,7 +7616,6 @@
       "description": "Response time measured by the apache proxy for requests with exclusion of some known routes which are allowed to run for much longer.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -7671,7 +7647,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -7897,7 +7873,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -7929,7 +7904,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -8072,7 +8047,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -8111,7 +8085,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -8271,7 +8245,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -8305,7 +8278,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -8866,7 +8839,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -8902,7 +8874,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -9056,7 +9028,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -9092,7 +9063,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -9377,7 +9348,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -9414,7 +9384,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -9688,7 +9658,6 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -9722,7 +9691,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -9906,9 +9875,7 @@
       "datasource": null,
       "description": "Worker slots which are able to connect to the web UI but report that they're broken.\n\nThis corresponds to the workers shown as \"broken\" on the web UI which also contains the reason the worker is broken: https://openqa.suse.de/admin/workers",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -9937,7 +9904,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -10040,21 +10007,11 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "text": "openqa",
-          "value": "openqa"
-        },
+        "description": null,
         "error": null,
         "hide": 2,
         "label": "Only for reusing",
         "name": "host",
-        "options": [
-          {
-            "selected": true,
-            "text": "openqa",
-            "value": "openqa"
-          }
-        ],
         "query": "openqa",
         "skipUrlSync": false,
         "type": "constant"
@@ -10093,5 +10050,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 18
+  "version": 19
 }
