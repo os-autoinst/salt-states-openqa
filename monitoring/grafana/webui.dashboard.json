@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1627635505096,
+  "iteration": 1628604747214,
   "links": [],
   "panels": [
     {
@@ -5583,7 +5583,7 @@
           {
             "evaluator": {
               "params": [
-                20000
+                50000
               ],
               "type": "gt"
             },
@@ -5593,29 +5593,6 @@
             "query": {
               "params": [
                 "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                20000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "A",
                 "5m",
                 "now"
               ]
@@ -5701,6 +5678,7 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
+          "$$hashKey": "object:75",
           "alias": "/.*write$/",
           "transform": "negative-Y"
         }
@@ -5812,11 +5790,14 @@
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:252",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 100000
+          "value": 100000,
+          "visible": true,
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -5839,6 +5820,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:82",
           "format": "ms",
           "logBase": 1,
           "max": null,
@@ -5846,6 +5828,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:83",
           "format": "short",
           "logBase": 1,
           "max": null,
@@ -10110,5 +10093,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 17
+  "version": 18
 }
