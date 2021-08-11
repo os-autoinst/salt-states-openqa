@@ -2987,7 +2987,8 @@
           "fill": true,
           "line": true,
           "op": "lt",
-          "value": 2
+          "value": 2,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -3210,13 +3211,12 @@
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:452",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
           "value": 6000,
-          "yaxis": "left"
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -4346,7 +4346,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 10000
+          "value": 10000,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -5073,7 +5074,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 100000
+          "value": 100000,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -5775,14 +5777,12 @@
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:252",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
           "value": 100000,
-          "visible": true,
-          "yaxis": "left"
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -6299,29 +6299,6 @@
               "type": "avg"
             },
             "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                8000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
           }
         ],
         "executionErrorState": "keep_state",
@@ -6396,6 +6373,7 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
+          "$$hashKey": "object:232",
           "alias": "/.*write$/",
           "transform": "negative-Y"
         }
@@ -6507,11 +6485,14 @@
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:368",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 100000
+          "value": 100000,
+          "visible": true,
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -6534,6 +6515,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:239",
           "format": "ms",
           "logBase": 1,
           "max": null,
@@ -6541,6 +6523,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:240",
           "format": "short",
           "logBase": 1,
           "max": null,
@@ -7239,7 +7222,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 100000
+          "value": 100000,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -7822,7 +7806,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 500000
+          "value": 500000,
+          "visible": true
         }
       ],
       "timeFrom": null,
