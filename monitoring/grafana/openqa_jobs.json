@@ -87,7 +87,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -100,6 +99,7 @@
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 9,
       "interval": "40s",
       "legend": {
@@ -116,8 +116,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -263,7 +266,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 3000
+          "value": 3000,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -315,7 +319,6 @@
       "decimals": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -328,6 +331,7 @@
         "x": 12,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 11,
       "interval": "30s",
       "legend": {
@@ -347,8 +351,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -458,7 +465,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -471,6 +477,7 @@
         "x": 0,
         "y": 9
       },
+      "hiddenSeries": false,
       "id": 12,
       "interval": "30s",
       "legend": {
@@ -487,8 +494,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -592,7 +602,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -605,6 +614,7 @@
         "x": 12,
         "y": 9
       },
+      "hiddenSeries": false,
       "id": 10,
       "interval": "30s",
       "legend": {
@@ -621,8 +631,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -731,7 +744,6 @@
       "description": "Automatic labelling of incompletes, fails on unknown, new issues: https://gitlab.suse.de/openqa/auto-review/pipelines",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -760,8 +772,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -896,7 +911,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -909,6 +923,7 @@
         "x": 12,
         "y": 18
       },
+      "hiddenSeries": false,
       "id": 16,
       "interval": "",
       "legend": {
@@ -923,8 +938,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -975,7 +993,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 200
+          "value": 200,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -1068,7 +1087,6 @@
       "description": "Automatic labelling of incompletes, fails on unknown, new issues: https://gitlab.suse.de/openqa/auto-review/pipelines",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1081,6 +1099,7 @@
         "x": 0,
         "y": 26
       },
+      "hiddenSeries": false,
       "id": 17,
       "interval": "",
       "legend": {
@@ -1096,8 +1115,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1150,7 +1172,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 300
+          "value": 300,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -1202,7 +1225,6 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1241,8 +1263,11 @@
         }
       ],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1388,5 +1413,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 30
+  "version": 32
 }
