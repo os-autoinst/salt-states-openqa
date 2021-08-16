@@ -40,7 +40,7 @@
             },
             "reducer": {
               "params": [],
-              "type": "count"
+              "type": "last"
             },
             "type": "query"
           },
@@ -63,7 +63,7 @@
             },
             "reducer": {
               "params": [],
-              "type": "count"
+              "type": "last"
             },
             "type": "query"
           }
