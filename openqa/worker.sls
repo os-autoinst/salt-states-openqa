@@ -173,6 +173,15 @@ nfs-client:
     - require:
       - pkg: worker-openqa.packages
 
+/etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf:
+  file.managed:
+    - mode: 644
+    - source:
+      - salt://openqa/openqa-max-inactive-caching-downloads.conf
+    - makedirs: true
+    - require:
+      - pkg: server.packages
+
 {%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
 {% set worker_slot_count = pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) %}
@@ -181,6 +190,8 @@ nfs-client:
 openqa-worker-auto-restart@{{ i }}:
   service.running:
     - enable: True
+    - watch:
+      - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf
 {% if loop.first %}
     - require:
       - pkg: worker-openqa.packages
