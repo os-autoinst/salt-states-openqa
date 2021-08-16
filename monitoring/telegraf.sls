@@ -18,9 +18,8 @@ telegraf.packages:
     - require:
       - pkg: telegraf.packages
 
-/usr/lib/systemd/system/telegraf.service:
+/etc/systemd/system/telegraf.service:
   file.managed:
-    - name: /usr/lib/systemd/system/telegraf.service
     - source:
       - salt://monitoring/telegraf/telegraf.service
     - require:
