@@ -436,6 +436,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:75",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -444,6 +445,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:76",
           "format": "short",
           "label": null,
           "logBase": 1,
