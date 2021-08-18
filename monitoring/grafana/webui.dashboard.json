@@ -33,375 +33,6 @@
       "type": "row"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 1
-      },
-      "hiddenSeries": false,
-      "id": 29,
-      "interval": "40s",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.7",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "Running",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "openqa_jobs",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "running"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=",
-              "value": "https://openqa.suse.de"
-            }
-          ]
-        },
-        {
-          "alias": "Scheduled",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "openqa_jobs",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scheduled"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=",
-              "value": "https://openqa.suse.de"
-            }
-          ]
-        },
-        {
-          "alias": "Blocked",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "openqa_jobs",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "blocked"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=",
-              "value": "https://openqa.suse.de"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "State",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "decimals": null,
-      "fieldConfig": {
-        "defaults": {
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 1
-      },
-      "hiddenSeries": false,
-      "id": 31,
-      "interval": "1m",
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.7",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$tag_group",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "group"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "openqa_jobs_by_group",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_group\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval), \"group\" fill(0)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "running"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=",
-              "value": "https://openqa.opensuse.org"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Groups",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
       "alert": {
         "alertRuleTags": {},
         "conditions": [
@@ -458,7 +89,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 10
+        "y": 1
       },
       "hiddenSeries": false,
       "id": 76,
@@ -650,7 +281,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 10
+        "y": 1
       },
       "hiddenSeries": false,
       "id": 78,
@@ -792,7 +423,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 9
       },
       "id": 27,
       "panels": [],
@@ -882,10 +513,10 @@
       "fill": 10,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
-        "y": 19
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 23,
@@ -1455,7 +1086,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 19
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 25,
@@ -1683,7 +1314,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 18
       },
       "id": 72,
       "panels": [],
@@ -1840,7 +1471,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 19
       },
       "hiddenSeries": false,
       "id": 74,
@@ -2136,7 +1767,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 27
       },
       "id": 21,
       "panels": [],
@@ -2203,7 +1834,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 37
+        "y": 28
       },
       "hiddenSeries": false,
       "id": 17,
@@ -2527,7 +2158,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 37
+        "y": 28
       },
       "hiddenSeries": false,
       "id": 19,
@@ -2797,7 +2428,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 45
+        "y": 36
       },
       "id": 70,
       "panels": [],
@@ -2887,7 +2518,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 37
       },
       "height": "400",
       "hiddenSeries": false,
@@ -3078,7 +2709,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 56
+        "y": 47
       },
       "id": 54,
       "panels": [],
@@ -3165,7 +2796,7 @@
         "h": 6,
         "w": 7,
         "x": 0,
-        "y": 57
+        "y": 48
       },
       "hiddenSeries": false,
       "id": 86,
@@ -3323,7 +2954,7 @@
         "h": 6,
         "w": 9,
         "x": 7,
-        "y": 57
+        "y": 48
       },
       "hiddenSeries": false,
       "id": 55,
@@ -3523,7 +3154,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 57
+        "y": 48
       },
       "hiddenSeries": false,
       "id": 50,
@@ -3709,7 +3340,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 63
+        "y": 54
       },
       "id": 60,
       "panels": [],
@@ -3737,7 +3368,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 64
+        "y": 55
       },
       "hiddenSeries": false,
       "id": 56,
@@ -3942,7 +3573,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 64
+        "y": 55
       },
       "hiddenSeries": false,
       "id": 36,
@@ -4232,7 +3863,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 64
+        "y": 55
       },
       "hiddenSeries": false,
       "id": 46,
@@ -4437,7 +4068,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 71
+        "y": 62
       },
       "id": 92,
       "panels": [],
@@ -4465,7 +4096,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 72
+        "y": 63
       },
       "hiddenSeries": false,
       "id": 90,
@@ -4670,7 +4301,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 72
+        "y": 63
       },
       "hiddenSeries": false,
       "id": 93,
@@ -4960,7 +4591,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 72
+        "y": 63
       },
       "hiddenSeries": false,
       "id": 94,
@@ -5165,7 +4796,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 79
+        "y": 70
       },
       "id": 64,
       "panels": [],
@@ -5193,7 +4824,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 80
+        "y": 71
       },
       "hiddenSeries": false,
       "id": 44,
@@ -5398,7 +5029,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 80
+        "y": 71
       },
       "hiddenSeries": false,
       "id": 58,
@@ -5666,7 +5297,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 80
+        "y": 71
       },
       "hiddenSeries": false,
       "id": 47,
@@ -5874,7 +5505,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 87
+        "y": 78
       },
       "id": 66,
       "panels": [],
@@ -5902,7 +5533,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 88
+        "y": 79
       },
       "hiddenSeries": false,
       "id": 45,
@@ -6107,7 +5738,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 88
+        "y": 79
       },
       "hiddenSeries": false,
       "id": 37,
@@ -6374,7 +6005,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 88
+        "y": 79
       },
       "hiddenSeries": false,
       "id": 48,
@@ -6582,7 +6213,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 95
+        "y": 86
       },
       "id": 62,
       "panels": [],
@@ -6610,7 +6241,7 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 96
+        "y": 87
       },
       "hiddenSeries": false,
       "id": 43,
@@ -6815,7 +6446,7 @@
         "h": 7,
         "w": 8,
         "x": 8,
-        "y": 96
+        "y": 87
       },
       "hiddenSeries": false,
       "id": 38,
@@ -7083,7 +6714,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 96
+        "y": 87
       },
       "hiddenSeries": false,
       "id": 57,
@@ -7293,7 +6924,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 103
+        "y": 94
       },
       "id": 10,
       "panels": [],
@@ -7318,7 +6949,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 104
+        "y": 95
       },
       "hiddenSeries": false,
       "id": 80,
@@ -7457,7 +7088,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 104
+        "y": 95
       },
       "hiddenSeries": false,
       "id": 82,
@@ -7631,7 +7262,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 104
+        "y": 95
       },
       "hiddenSeries": false,
       "id": 84,
@@ -7889,7 +7520,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 112
+        "y": 103
       },
       "hiddenSeries": false,
       "id": 88,
@@ -8064,7 +7695,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 112
+        "y": 103
       },
       "hiddenSeries": false,
       "id": 15,
@@ -8263,7 +7894,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 112
+        "y": 103
       },
       "hiddenSeries": false,
       "id": 14,
@@ -8784,7 +8415,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 118
+        "y": 109
       },
       "id": 8,
       "panels": [],
@@ -8857,7 +8488,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 119
+        "y": 110
       },
       "hiddenSeries": false,
       "id": 2,
@@ -9047,7 +8678,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 126
+        "y": 117
       },
       "hiddenSeries": false,
       "id": 89,
@@ -9367,7 +8998,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 133
+        "y": 124
       },
       "hiddenSeries": false,
       "id": 4,
@@ -9677,7 +9308,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 133
+        "y": 124
       },
       "hiddenSeries": false,
       "id": 6,
@@ -9892,7 +9523,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 140
+        "y": 131
       },
       "hiddenSeries": false,
       "id": 96,
