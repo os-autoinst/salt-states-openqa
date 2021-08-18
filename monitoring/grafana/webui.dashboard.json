@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1628671997693,
+  "iteration": 1629125988208,
   "links": [],
   "panels": [
     {
@@ -882,7 +882,7 @@
       "fill": 10,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 12,
         "x": 0,
         "y": 19
@@ -6485,14 +6485,12 @@
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:368",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
           "value": 100000,
-          "visible": true,
-          "yaxis": "left"
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -8174,7 +8172,8 @@
           "fill": true,
           "line": true,
           "op": "lt",
-          "value": 10
+          "value": 10,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -8957,7 +8956,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 90
+          "value": 90,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -9932,13 +9932,12 @@
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:355",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
           "value": 1,
-          "yaxis": "left"
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -10035,5 +10034,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 19
+  "version": 20
 }
