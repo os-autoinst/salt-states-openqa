@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1629125988208,
+  "iteration": 1629299260262,
   "links": [],
   "panels": [
     {
@@ -2150,23 +2150,23 @@
           {
             "evaluator": {
               "params": [
-                100
+                1
               ],
-              "type": "gt"
+              "type": "lt"
             },
             "operator": {
-              "type": "and"
+              "type": "or"
             },
             "query": {
               "params": [
-                "active_minion_workers",
+                "inactive_minion_workers",
                 "10m",
                 "now-1m"
               ]
             },
             "reducer": {
               "params": [],
-              "type": "max"
+              "type": "avg"
             },
             "type": "query"
           },
@@ -2178,13 +2178,13 @@
               "type": "lt"
             },
             "operator": {
-              "type": "or"
+              "type": "and"
             },
             "query": {
               "params": [
-                "online_minion_workers",
+                "active_minion_workers",
                 "10m",
-                "now-1m"
+                "now"
               ]
             },
             "reducer": {
@@ -2220,7 +2220,7 @@
         "overrides": []
       },
       "fill": 1,
-      "fillGradient": 0,
+      "fillGradient": 4,
       "gridPos": {
         "h": 8,
         "w": 12,
@@ -2249,23 +2249,74 @@
       ],
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "7.5.7",
-      "pointradius": 2,
+      "pointradius": 1,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "Sum",
-          "linewidth": 0
+          "$$hashKey": "object:838",
+          "alias": "Active Minion workers",
+          "color": "#3274D9"
+        },
+        {
+          "$$hashKey": "object:864",
+          "alias": "Inactive Minion workers",
+          "color": "rgb(161, 161, 161)"
         }
       ],
       "spaceLength": 10,
-      "stack": false,
+      "stack": true,
       "steppedLine": false,
       "targets": [
+        {
+          "alias": "Inactive Minion workers",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "limit": "",
+          "measurement": "openqa_minion_workers",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "inactive_minion_workers",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "inactive"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "openqa"
+            }
+          ]
+        },
         {
           "alias": "Active Minion workers",
           "groupBy": [
@@ -2309,59 +2360,18 @@
               "value": "openqa"
             }
           ]
-        },
-        {
-          "alias": "Total number of Minion workers",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "openqa_minion_workers",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(active)+mean(inactive) FROM \"openqa_minion_workers\" WHERE $timeFilter GROUP BY time($__interval) fill(previous)",
-          "rawQuery": true,
-          "refId": "online_minion_workers",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "active"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "inactive"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
         }
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:1621",
           "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 100,
-          "visible": true
+          "fill": false,
+          "line": false,
+          "op": "lt",
+          "value": 1,
+          "visible": true,
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -2383,6 +2393,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:82",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2391,6 +2402,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:83",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -10034,5 +10046,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 20
+  "version": 21
 }
