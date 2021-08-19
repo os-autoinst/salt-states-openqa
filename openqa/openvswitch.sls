@@ -108,6 +108,7 @@ wicked ifup br1:
       - bridge="$2"
       - '# enable STP for the multihost bridges'
       - ovs-vsctl set bridge $bridge stp_enable=true
+      - for gre_port in $(ovs-vsctl list-ifaces $bridge | grep gre) ; do ovs-vsctl --if-exists del-port $bridge $gre_port ; done
      {% for remote in otherworkers %}
       - ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ pillar['workerconf'][remote]['bridge_ip'] }}
      {% endfor %}
