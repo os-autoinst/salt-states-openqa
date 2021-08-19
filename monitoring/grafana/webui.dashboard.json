@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1629299260262,
+  "iteration": 1629362589458,
   "links": [],
   "panels": [
     {
@@ -2150,41 +2150,19 @@
           {
             "evaluator": {
               "params": [
-                1
+                1,
+                2
               ],
-              "type": "lt"
+              "type": "outside_range"
             },
             "operator": {
               "type": "or"
             },
             "query": {
               "params": [
-                "inactive_minion_workers",
+                "online_workers",
                 "10m",
                 "now-1m"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                1
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "active_minion_workers",
-                "10m",
-                "now"
               ]
             },
             "reducer": {
@@ -2337,6 +2315,8 @@
           "measurement": "openqa_minion_workers",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"active\") FROM \"openqa_minion_workers\" WHERE (\"host\" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(previous)",
+          "rawQuery": false,
           "refId": "active_minion_workers",
           "resultFormat": "time_series",
           "select": [
@@ -2360,16 +2340,65 @@
               "value": "openqa"
             }
           ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT max(active) + max(inactive) FROM \"openqa_minion_workers\" WHERE (\"host\" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(previous)",
+          "rawQuery": true,
+          "refId": "online_workers",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:1621",
+          "$$hashKey": "object:987",
           "colorMode": "critical",
           "fill": false,
           "line": false,
           "op": "lt",
           "value": 1,
+          "visible": true,
+          "yaxis": "left"
+        },
+        {
+          "$$hashKey": "object:988",
+          "colorMode": "critical",
+          "fill": false,
+          "line": false,
+          "op": "gt",
+          "value": 2,
           "visible": true,
           "yaxis": "left"
         }
@@ -10046,5 +10075,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 21
+  "version": 22
 }
