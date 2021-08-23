@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1629362589458,
+  "iteration": 1629732638539,
   "links": [],
   "panels": [
     {
@@ -7048,29 +7048,6 @@
               "type": "avg"
             },
             "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                20000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
           }
         ],
         "executionErrorState": "keep_state",
@@ -7146,6 +7123,7 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
+          "$$hashKey": "object:75",
           "alias": "/.*write$/",
           "transform": "negative-Y"
         }
@@ -7257,12 +7235,14 @@
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:182",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
           "value": 100000,
-          "visible": true
+          "visible": true,
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -7285,6 +7265,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:82",
           "format": "ms",
           "logBase": 1,
           "max": null,
@@ -7292,6 +7273,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:83",
           "format": "short",
           "logBase": 1,
           "max": null,
@@ -10075,5 +10057,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 22
+  "version": 23
 }
