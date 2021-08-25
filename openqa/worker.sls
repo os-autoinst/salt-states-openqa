@@ -21,6 +21,8 @@ worker-openqa.packages:
       - openQA-worker
       - xterm-console
       - os-autoinst-openvswitch
+      # force the installation of the full gzip so that vagrant-libvirt can be installed
+      - gzip
 
 # Packages that can come from anywhere
 worker.packages:
@@ -43,6 +45,7 @@ worker.packages:
       {% if grains['osarch'] == 'x86_64' %}
       - qemu-x86
       - qemu-ovmf-x86_64 # for UEFI
+      - virtualbox
       {% endif %}
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
@@ -52,6 +55,10 @@ worker.packages:
       {% if grains['osarch'] == 'aarch64' %}
       - qemu-arm
       - qemu-uefi-aarch64 # Replaces ovmf from linaro
+      {% endif %}
+      {% if grains['osarch'] == 'aarch64' or grains['osarch'] == 'x86_64' %}
+      - vagrant
+      - vagrant-libvirt
       {% endif %}
       - os-autoinst-distri-opensuse-deps
       - ca-certificates-suse # secure connection with public-cloud-helper
