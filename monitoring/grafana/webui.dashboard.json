@@ -9495,7 +9495,7 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "5m",
+        "for": "15m",
         "frequency": "1m",
         "handler": 1,
         "message": "There is at least one broken worker for more than 15 minutes. Have a look at https://openqa.suse.de/admin/workers to find out which one it is (click the help icon to view the concrete error message).",
