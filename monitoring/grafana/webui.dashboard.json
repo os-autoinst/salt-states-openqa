@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1629732638539,
+  "iteration": 1630065404758,
   "links": [],
   "panels": [
     {
@@ -6660,7 +6660,7 @@
           {
             "evaluator": {
               "params": [
-                20000
+                50000
               ],
               "type": "gt"
             },
@@ -6685,7 +6685,7 @@
         "for": "6m",
         "frequency": "1m",
         "handler": 1,
-        "message": "Threshold set to 20s for cheap+slow storage (rotating disk).",
+        "message": "Threshold is set to 50 s and 100 s for reads and writes respectively on cheap+slow storage (rotating disk).",
         "name": "Disk I/O time for /dev/vde (/space-slow) alert",
         "noDataState": "keep_state",
         "notifications": [
@@ -6866,7 +6866,7 @@
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:182",
+          "$$hashKey": "object:229",
           "colorMode": "critical",
           "fill": true,
           "line": true,
@@ -9688,5 +9688,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 23
+  "version": 26
 }
