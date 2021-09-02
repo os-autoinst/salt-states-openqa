@@ -16,7 +16,7 @@ worker-openqa.packages:
   pkg.installed:
     - refresh: False
     - retry:
-        attempts: 5
+        attempts: 10
     - pkgs:
       - openQA-worker
       - xterm-console
