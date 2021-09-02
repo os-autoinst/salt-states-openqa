@@ -239,7 +239,9 @@ firewalld:
     - enable: True
     - watch_any:
       - file: /etc/firewalld/firewalld.conf
+{% if grains.get('host') in pillar.get('workerconf').keys() %}
       - file: /etc/firewalld/zones/trusted.xml
+{% endif %}
     - require:
       - pkg: worker.packages
 {%- endif %}
@@ -251,6 +253,7 @@ firewalld_config:
     - append_if_not_found: True
     - require:
       - pkg: worker.packages
+{% if grains.get('host') in pillar.get('workerconf').keys() %}
 firewalld_zones:
   file.managed:
     - template: jinja
@@ -259,6 +262,7 @@ firewalld_zones:
         - source: salt://etc/firewalld/zones/trusted.xml
     - require:
       - pkg: worker.packages
+{% endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
 /dev/raw1394:
