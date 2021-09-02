@@ -1036,7 +1036,7 @@
           {
             "evaluator": {
               "params": [
-                40
+                50
               ],
               "type": "gt"
             },
@@ -1058,7 +1058,7 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "5m",
+        "for": "10m",
         "frequency": "1m",
         "handler": 1,
         "name": "CPU Load alert",
@@ -9688,5 +9688,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 26
+  "version": 27
 }
