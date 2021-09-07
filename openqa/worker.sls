@@ -187,7 +187,7 @@ nfs-client:
       - salt://openqa/openqa-max-inactive-caching-downloads.conf
     - makedirs: true
     - require:
-      - pkg: server.packages
+      - pkg: worker-openqa.packages
 
 {%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
