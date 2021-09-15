@@ -89,6 +89,29 @@
               "type": "last"
             },
             "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                10000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "scheduled+blocked",
+                "12h",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
           }
         ],
         "executionErrorState": "keep_state",
