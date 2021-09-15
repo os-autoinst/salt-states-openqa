@@ -24,7 +24,7 @@
           {
             "evaluator": {
               "params": [
-                3000
+                8000
               ],
               "type": "gt"
             },
@@ -33,7 +33,7 @@
             },
             "query": {
               "params": [
-                "B",
+                "running",
                 "1m",
                 "now"
               ]
@@ -47,7 +47,7 @@
           {
             "evaluator": {
               "params": [
-                3000
+                12000
               ],
               "type": "gt"
             },
@@ -56,7 +56,30 @@
             },
             "query": {
               "params": [
-                "C",
+                "blocked",
+                "1m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                14000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "scheduled+blocked",
                 "1m",
                 "now"
               ]
@@ -72,6 +95,7 @@
         "for": "1m",
         "frequency": "10s",
         "handler": 1,
+        "message": "If thresholds are exceeded investigate the following:\n* Are our workers actually working on a reasonable amount of jobs (e.g. running is not near-zero while there are many scheduled jobs)\n* What component/user/system triggers jobs, see https://openqa.suse.de/admin/productlog\n* Find out if there any obvious problems visible on https://openqa.suse.de/tests\n* Calculate the ratio of cloned scheduled jobs to find out if there is a high number of unexpected clones (by users or systems or due to crashing workers, etc.), e.g. using the following SQL query:\n\n```\nselect round ((select count(j1.id) from jobs as j1 where state = 'scheduled' and (select j2.id from jobs as j2 where j1.id = j2.clone_id limit 1) is not null) * 100. / (select count(id) from jobs where state = 'scheduled'), 2) as \"percentage of clones in all scheduled jobs\";\n percentage of clones in all scheduled jobs \n--------------------------------------------\n                                      10.11\n(1 row)\n```\n\n* Find out if most jobs come from particular products, flavors, build, e.g. using something like the following SQL query example for build matching \"livepatch\" or \"kgraft\" in a certain timespan (keep in mind that the database timestamps are in UTC):\n\n```\nselect count(id) from jobs where t_created >= '2021-09-14 17:00' and t_created <= '2021-09-14 18:00' and (build like '%livepatch%' or build like '%kgraft%');\n```\n\nAlso see https://progress.opensuse.org/issues/98667 for details.",
         "name": "Queue: State (SUSE) alert",
         "noDataState": "keep_state",
         "notifications": [
@@ -85,6 +109,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "description": "All running, scheduled and blocked openQA jobs. Alert thresholds are defined per individual as well as cumulative values hence the lower displayed threshold bar can be exceeded by the sum of values.",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -124,7 +149,13 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:1262",
+          "alias": "Scheduled+Blocked",
+          "hiddenSeries": true
+        }
+      ],
       "spaceLength": 10,
       "stack": true,
       "steppedLine": false,
@@ -149,7 +180,7 @@
           "measurement": "openqa_jobs",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "running",
           "resultFormat": "time_series",
           "select": [
             [
@@ -192,7 +223,7 @@
           "measurement": "openqa_jobs",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "B",
+          "refId": "scheduled",
           "resultFormat": "time_series",
           "select": [
             [
@@ -235,7 +266,9 @@
           "measurement": "openqa_jobs",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "C",
+          "query": "SELECT mean(\"blocked\") FROM \"openqa_jobs\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "blocked",
           "resultFormat": "time_series",
           "select": [
             [
@@ -258,6 +291,48 @@
               "value": "https://openqa.suse.de"
             }
           ]
+        },
+        {
+          "alias": "Scheduled+Blocked",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "openqa_jobs",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"scheduled\")+mean(\"blocked\") FROM \"openqa_jobs\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "scheduled+blocked",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "scheduled"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "url",
+              "operator": "=",
+              "value": "https://openqa.suse.de"
+            }
+          ]
         }
       ],
       "thresholds": [
@@ -266,7 +341,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 3000,
+          "value": 8000,
           "visible": true
         }
       ],
@@ -289,6 +364,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:54",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -297,6 +373,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:55",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1415,5 +1492,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 32
+  "version": 34
 }
