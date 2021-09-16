@@ -4,6 +4,8 @@
   <description>All network connections are accepted.</description>
   <interface name="br1"/>
   <interface name="ovs-system"/>
+{%- if 'bridge_port' in pillar['workerconf'][grains['host']].keys()%}
   <interface name="{{ pillar['workerconf'][grains['host']]['bridge_port'] }}"/>
+{%- endif %}
   <masquerade/>
 </zone>
