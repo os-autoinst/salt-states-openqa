@@ -32,6 +32,7 @@ telegraf:
     {%- if grains.get('roles', '') in ['webui', 'worker'] %}
     - watch:
       - file: /etc/telegraf/telegraf.conf
+      - file: /etc/telegraf/telegraf.d/*
     {%- endif %}
 {%- endif %}
 
