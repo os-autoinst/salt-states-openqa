@@ -2962,9 +2962,19 @@
             "selected": false,
             "text": "openqaworker-arm-3.suse.de",
             "value": "openqaworker-arm-3.suse.de"
+          },
+          {
+            "selected": false,
+            "text": "openqaworker-arm-4.qa.suse.de",
+            "value": "openqaworker-arm-4.qa.suse.de"
+          },
+          {
+            "selected": false,
+            "text": "openqaworker-arm-5.qa.suse.de",
+            "value": "openqaworker-arm-5.qa.suse.de"
           }
         ],
-        "query": "openqaworker-arm-1.suse.de, openqaworker-arm-2.suse.de, openqaworker-arm-3.suse.de",
+        "query": "openqaworker-arm-1.suse.de, openqaworker-arm-2.suse.de, openqaworker-arm-3.suse.de,openqaworker-arm-4.qa.suse.de,openqaworker-arm-5.qa.suse.de",
         "skipUrlSync": false,
         "type": "custom"
       },
@@ -3117,5 +3127,5 @@
   "timezone": "",
   "title": "OSD status overview",
   "uid": "4KkGdvvZk",
-  "version": 23
+  "version": 27
 }
