@@ -217,6 +217,15 @@ telegraf_db_job_group_parents:
       - SELECT
     - maintenance_db: openqa
 
+telegraf_db_job_dependencies:
+  postgres_privileges.present:
+    - name: telegraf
+    - object_name: job_dependencies
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
+
 telegraf_db_workers:
   postgres_privileges.present:
     - name: telegraf
@@ -244,6 +253,15 @@ readonly_db_access_job_modules:
   postgres_privileges.present:
     - name: openqa
     - object_name: job_modules
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
+
+readonly_db_access_job_dependencies:
+  postgres_privileges.present:
+    - name: openqa
+    - object_name: job_dependencies
     - object_type: table
     - privileges:
       - SELECT
