@@ -1334,7 +1334,7 @@
             },
             "query": {
               "params": [
-                "ratio_failed",
+                "ratio_failed_p",
                 "2m",
                 "now"
               ]
@@ -1381,6 +1381,7 @@
       },
       "hiddenSeries": false,
       "id": 21,
+      "interval": "2m",
       "legend": {
         "avg": false,
         "current": false,
@@ -1411,7 +1412,7 @@
           "groupBy": [
             {
               "params": [
-                "2m"
+                "$__interval"
               ],
               "type": "time"
             },
@@ -1425,13 +1426,13 @@
           "measurement": "postgresql",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "ratio_failed",
+          "refId": "ratio_failed_p",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "ratio_failed"
+                  "ratio_failed_p"
                 ],
                 "type": "field"
               },
@@ -1694,5 +1695,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 35
+  "version": 36
 }
