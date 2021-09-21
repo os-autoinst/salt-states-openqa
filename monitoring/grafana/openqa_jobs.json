@@ -1334,7 +1334,7 @@
             },
             "query": {
               "params": [
-                "ratio_failed",
+                "ratio_failed_p",
                 "2m",
                 "now"
               ]
@@ -1425,13 +1425,13 @@
           "measurement": "postgresql",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "ratio_failed",
+          "refId": "ratio_failed_p",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "ratio_failed"
+                  "ratio_failed_p"
                 ],
                 "type": "field"
               },
