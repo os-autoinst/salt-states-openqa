@@ -1381,6 +1381,7 @@
       },
       "hiddenSeries": false,
       "id": 21,
+      "interval": "2m",
       "legend": {
         "avg": false,
         "current": false,
@@ -1411,7 +1412,7 @@
           "groupBy": [
             {
               "params": [
-                "2m"
+                "$__interval"
               ],
               "type": "time"
             },
@@ -1694,5 +1695,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 35
+  "version": 36
 }
