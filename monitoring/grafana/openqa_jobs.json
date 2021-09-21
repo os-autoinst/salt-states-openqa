@@ -1561,7 +1561,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#aaaaaa",
+                  "fixedColor": "#8bdfff",
                   "mode": "fixed"
                 }
               }
@@ -1606,7 +1606,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#cdffb9",
+                  "fixedColor": "#59df24",
                   "mode": "fixed"
                 }
               }
