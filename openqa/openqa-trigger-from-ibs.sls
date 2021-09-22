@@ -57,14 +57,6 @@ openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP3:Update:Products:MicroOS51') }}
 {{ scriptgen('SUSE:SLE-15-SP2:Update:QR') }}
 {{ scriptgen('SUSE:SLE-15-SP3:Update:QR') }}
-# Container image updates
-{{ scriptgen('SUSE:SLE-12-SP3:Docker:Update:CR') }}
-{{ scriptgen('SUSE:SLE-12-SP4:Docker:Update:CR') }}
-{{ scriptgen('SUSE:SLE-12-SP5:Docker:Update:CR') }}
-{{ scriptgen('SUSE:SLE-15:Update:CR') }}
-{{ scriptgen('SUSE:SLE-15-SP1:Update:CR') }}
-{{ scriptgen('SUSE:SLE-15-SP2:Update:CR') }}
-{{ scriptgen('SUSE:SLE-15-SP3:Update:CR') }}
 
 {% for i in ['A','B'] %}
 {{ scriptgen('SUSE:SLE-15-SP3:Update:Products:MicroOS51:Staging:' + i) }}
