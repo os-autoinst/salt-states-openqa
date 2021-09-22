@@ -47,6 +47,8 @@ server.packages:
           do_push: 'yes'
         openid:
           httpsonly: 1
+        cleanup:
+          concurrent: 1
         audit/storage_duration:
           startup: 180
           jobgroup: 712
