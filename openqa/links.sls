@@ -4,7 +4,7 @@
       - template: jinja
         links_footer:
           1:
-            url: https://chat.suse.de/channel/testing
+            url: https://suse.slack.com/archives/C02CANHLANP
             description: Internal chat channel
           2:
             url: https://openqa.io.suse.de/openqa-review/
