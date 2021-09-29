@@ -2021,7 +2021,7 @@
       },
       "hiddenSeries": false,
       "id": 25,
-      "interval": "2m",
+      "interval": "24h",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -2175,7 +2175,7 @@
       },
       "hiddenSeries": false,
       "id": 26,
-      "interval": "2m",
+      "interval": "24h",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -2495,5 +2495,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 38
+  "version": 39
 }
