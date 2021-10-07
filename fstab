@@ -14,7 +14,7 @@ tmpfs   /run              tmpfs   noauto          0 0
 
 # 6c8044d6-5497-4db6-9714-89b76268121e -> vdb
 UUID=6c8044d6-5497-4db6-9714-89b76268121e /srv xfs defaults,logbsize=256k,noatime,nodiratime 1 2
-/srv/PSQL10 /var/lib/pgsql none bind 0 0
+/srv/PSQL /var/lib/pgsql none bind 0 0
 
 # 3f003a69-c51e-4d79-8b83-906e7918bac4 -> vdc
 # rotating disk "cheap+slow"
