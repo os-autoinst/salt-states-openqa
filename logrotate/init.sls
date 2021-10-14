@@ -25,6 +25,11 @@ logrotate:
       - salt://logrotate/logrotate-openqa.timer
     - makedirs: true
 
+/etc/logrotate.d/openqa-apache:
+  file.managed:
+    - source:
+      - salt://logrotate/openqa-apache
+
 {%- if not grains.get('noservices', False) %}
 logrotate-openqa.timer:
   service.running:
