@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1634133886052,
+  "iteration": 1634218301500,
   "links": [],
   "panels": [
     {
@@ -6157,12 +6157,14 @@
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:134",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 100000,
-          "visible": true
+          "value": 10000,
+          "visible": true,
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
