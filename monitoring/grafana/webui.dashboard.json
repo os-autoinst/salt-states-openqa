@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1634218301500,
+  "iteration": 1634639966164,
   "links": [],
   "panels": [
     {
@@ -5929,7 +5929,7 @@
           {
             "evaluator": {
               "params": [
-                10000
+                20000
               ],
               "type": "gt"
             },
@@ -6157,12 +6157,12 @@
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:134",
+          "$$hashKey": "object:160",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 10000,
+          "value": 20000,
           "visible": true,
           "yaxis": "left"
         }
@@ -9690,5 +9690,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 29
+  "version": 31
 }
