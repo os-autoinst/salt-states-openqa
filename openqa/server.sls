@@ -269,6 +269,15 @@ readonly_db_access_job_dependencies:
       - SELECT
     - maintenance_db: openqa
 
+readonly_db_access_audit_events:
+  postgres_privileges.present:
+    - name: openqa
+    - object_name: audit_events
+    - object_type: table
+    - privileges:
+      - SELECT
+    - maintenance_db: openqa
+
 # allow access to postgres database from outside so far this does not ensure
 # that the configuration becomes effective which needs a server restart
 /srv/PSQL/data/postgresql.conf:
