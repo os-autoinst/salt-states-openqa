@@ -18,13 +18,13 @@ salt-minion:
 
 # speed up salt a lot, see https://github.com/saltstack/salt/issues/48773#issuecomment-443599880
 speedup_minion:
-  file.append:
+  file.serialize:
     - name: /etc/salt/minion
-    - text: |
+    - serializer: yaml
+    - merge_if_exists: True
+    - dataset:
         disable_grains:
           - esxi
-        
         disable_modules:
           - vsphere
-        
         grains_cache: True
