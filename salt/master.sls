@@ -15,9 +15,11 @@ salt-master:
 # https://progress.opensuse.org/issues/58956
 # and ext_pillar
 master_config:
-  file.append:
+  file.serialize:
     - name: /etc/salt/master
-    - text: |
+    - serializer: yaml
+    - merge_if_exists: True
+    - dataset:
         timeout: 90
         ext_pillar:
           - file_tree:
