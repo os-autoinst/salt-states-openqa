@@ -42,8 +42,6 @@ server.packages:
           download_domains: suse.de nue.suse.com opensuse.org
           recognized_referers: bugzilla.suse.com bugzilla.opensuse.org bugzilla.novell.com bugzilla.microfocus.com progress.opensuse.org github.com build.suse.de
           max_rss_limit: 250000
-        logging:
-          file: /var/log/openqa
         amqp:
           url: {{ pillar['server']['amqp_url'] }}
           topic_prefix: suse
