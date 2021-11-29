@@ -146,8 +146,7 @@ nfs-client:
 ##
 /etc/openqa/workers.ini:
   file.managed:
-    - source:
-      - salt://openqa/workers.ini
+    - source: salt://openqa/workers.ini
     - template: jinja
     - user: root
     - group: root
@@ -183,8 +182,7 @@ nfs-client:
 /etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf:
   file.managed:
     - mode: 644
-    - source:
-      - salt://openqa/openqa-max-inactive-caching-downloads.conf
+    - source: salt://openqa/openqa-max-inactive-caching-downloads.conf
     - makedirs: true
     - require:
       - pkg: worker-openqa.packages
@@ -362,8 +360,7 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
 /etc/telegraf/telegraf.d/telegraf-worker.conf:
   file.managed:
     - template: jinja
-    - source:
-      - salt://monitoring/telegraf/telegraf-worker.conf
+    - source: salt://monitoring/telegraf/telegraf-worker.conf
     - user: root
     - group: root
     - mode: 600
@@ -386,8 +383,7 @@ net.ipv6.conf.{{ grains['default_interface'] }}.accept_ra:
 
 /etc/sysctl.d/50-vm-bytes.conf:
   file.managed:
-    - source:
-      - salt://etc/worker/50-vm-bytes.conf
+    - source: salt://etc/worker/50-vm-bytes.conf
 
 'sysctl -p /etc/sysctl.d/50-vm-bytes.conf':
   cmd.run:

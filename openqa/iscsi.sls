@@ -9,8 +9,7 @@ qemu:
 # Coolo says we shouldn't do this - kernel should be packaged
 /usr/share/qemu/ipxe.lkrn:
   file.managed:
-    - source:
-      - salt://openqa/ipxe.lkrn
+    - source: salt://openqa/ipxe.lkrn
 
 # Install iscsi target package
 tgt:

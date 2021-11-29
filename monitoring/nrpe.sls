@@ -37,8 +37,7 @@ nrpe:
 
 /etc/nrpe.cfg:
   file.managed:
-    - source:
-      - salt://monitoring/infra/nrpe.cfg
+    - source: salt://monitoring/infra/nrpe.cfg
     - template: jinja
     - user: root
     - group: root
@@ -70,8 +69,7 @@ nrpe:
 
 /etc/xinetd.d/check_mk:
   file.managed:
-    - source:
-      - salt://monitoring/infra/check_mk
+    - source: salt://monitoring/infra/check_mk
     - template: jinja
     - user: root
     - group: root

@@ -18,11 +18,11 @@ server.packages:
       - postfix
       - html-xml-utils  # for https://github.com/os-autoinst/scripts/blob/master/openqa-label-known-issues
       - ca-certificates-suse  # for https://gitlab.suse.de/openqa/scripts
+      - dehydrated-apache2  # SSL, See https://ca.suse.de/step-ca/
 
 /etc/fstab:
   file.managed:
-    - source:
-      - salt://fstab
+    - source: salt://fstab
     - user: root
     - group: root
 
@@ -84,8 +84,7 @@ server.packages:
   file.managed:
     - name: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
     - mode: 644
-    - source:
-      - salt://openqa/openqa-hook-timeout.conf
+    - source: salt://openqa/openqa-hook-timeout.conf
     - makedirs: true
     - require:
       - pkg: server.packages
@@ -117,8 +116,7 @@ openqa-gru:
 
 /etc/apache2/conf.d/server-status.conf:
   file.managed:
-    - source:
-      - salt://apache2/conf.d/server-status.conf
+    - source: salt://apache2/conf.d/server-status.conf
     - user: root
     - group: root
     - require:
@@ -127,8 +125,7 @@ openqa-gru:
 /etc/apache2/vhosts.d/openqa.conf:
   file.managed:
     - template: jinja
-    - source:
-      - salt://apache2/vhosts.d/openqa.conf
+    - source: salt://apache2/vhosts.d/openqa.conf
     - user: root
     - group: root
     - require:
@@ -142,6 +139,15 @@ openqa-gru:
   file.managed:
     - contents_pillar: {{grains['fqdn']}}.{{i}}
 {% endfor %}
+
+/etc/apache2/vhosts.d/openqa-ssl.conf:
+  file.keyvalue:
+    - key_values:
+        SSLCertificateFile: /etc/dehydrated/certs/{{ grains['fqdn'] }}/cert.pem
+        SSLCertificateKeyFile: /etc/dehydrated/certs/{{ grains['fqdn'] }}/privkey.pem
+        SSLCertificateChainFile: /etc/dehydrated/certs/{{ grains['fqdn'] }}/fullchain.pem
+    - separator: ' '
+    - uncomment: '#'
 
 # ssh key files and config for needle pushing
 # https://progress.opensuse.org/issues/67804
@@ -179,8 +185,7 @@ openqa-gru:
 /etc/telegraf/telegraf.d/telegraf-webui.conf:
   file.managed:
     - template: jinja
-    - source:
-      - salt://monitoring/telegraf/telegraf-webui.conf
+    - source: salt://monitoring/telegraf/telegraf-webui.conf
     - user: root
     - group: root
     - mode: 600
@@ -294,8 +299,7 @@ readonly_db_access_audit_events:
 
 /etc/vsftpd.conf:
   file.managed:
-    - source:
-      - salt://vsftpd/vsftpd.conf
+    - source: salt://vsftpd/vsftpd.conf
     - user: root
     - group: root
     - mode: 600
@@ -330,15 +334,13 @@ salt-master.service:
 
 /etc/sysconfig/mail:
   file.managed:
-    - source:
-      - salt://postfix/sysconfig/mail
+    - source: salt://postfix/sysconfig/mail
     - require:
       - pkg: server.packages
 
 /etc/sysconfig/postfix:
   file.managed:
-    - source:
-      - salt://postfix/sysconfig/postfix
+    - source: salt://postfix/sysconfig/postfix
 
 https://gitlab.suse.de/openqa/scripts.git:
   git.cloned:
@@ -379,3 +381,48 @@ git-clone-os-autoinst-scripts:
         SystemKeepFree=10%
         SystemMaxFileSize=1G
         SystemMaxFiles=200
+
+
+# dehydrated SSL management, needs dehydrated package which supplies
+# dehydrated-postrun-hooks. At time of writing 2021-11-29 neither
+# openSUSE Leap 15.2 nor openSUSE Leap 15.3 include that
+
+/etc/dehydrated/config.d/{{ pillar['server']['ca_dehydrated_config'] }}:
+  file.managed:
+    - source: salt://etc/master/dehydrated/config.d/{{ pillar['server']['ca_dehydrated_config'] }}
+/etc/dehydrated/domains.txt:
+  file.managed:
+    - contents: {{ pillar['server']['ca_hosts'] | join("\n") }}
+/etc/dehydrated/postrun-hooks.d/reload-apache2.sh:
+  file.managed:
+    - mode: 755
+    - contents: |
+        #!/bin/sh
+        systemctl reload apache2
+
+/etc/systemd/system/dehydrated-postrun-hooks.service:
+  file.managed:
+    - source: salt://openqa/dehydrated-postrun-hooks.service
+
+'dehydrated --register --accept-terms':
+  cmd.run:
+    - runas: dehydrated
+    - unless: test -n "$(ls -A /etc/dehydrated/accounts/*/)"
+
+{%- if not grains.get('noservices', False) %}
+dehydrated-postrun-hooks:
+  service.enabled
+
+dehydrated.timer:
+  service.running:
+    - enable: True
+
+# using cmd.run as the service is supposed to exit quickly so we can not use service.running
+'systemctl start dehydrated':
+  cmd.run:
+    - onchanges:
+      - file: /etc/dehydrated/config.d/{{ pillar['server']['ca_dehydrated_config'] }}
+      - file: /etc/dehydrated/domains.txt
+    - require:
+       - /etc/apache2/vhosts.d/openqa.conf
+{%- endif %}

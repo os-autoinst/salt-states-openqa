@@ -10,8 +10,7 @@ telegraf.packages:
 /etc/telegraf/telegraf.conf:
   file.managed:
     - template: jinja
-    - source:
-      - salt://monitoring/telegraf/telegraf-common.conf
+    - source: salt://monitoring/telegraf/telegraf-common.conf
     - user: root
     - group: root
     - mode: 600
@@ -20,8 +19,7 @@ telegraf.packages:
 
 /etc/systemd/system/telegraf.service:
   file.managed:
-    - source:
-      - salt://monitoring/telegraf/telegraf.service
+    - source: salt://monitoring/telegraf/telegraf.service
     - require:
       - pkg: telegraf.packages
 
@@ -39,8 +37,7 @@ telegraf:
 /etc/telegraf/scripts/systemd_failed.sh:
   file.managed:
     - name: /etc/telegraf/scripts/systemd_failed.sh
-    - source:
-      - salt://monitoring/telegraf/scripts/systemd_failed.sh
+    - source: salt://monitoring/telegraf/scripts/systemd_failed.sh
     - user: root
     - group: root
     - mode: 700
