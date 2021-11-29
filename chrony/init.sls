@@ -9,8 +9,7 @@ ntp:
 
 /etc/chrony.d/suse.conf:
   file.managed:
-    - source:
-      - salt://chrony/suse.conf
+    - source: salt://chrony/suse.conf
 
 {%- if not grains.get('noservices', False) %}
 chronyd:

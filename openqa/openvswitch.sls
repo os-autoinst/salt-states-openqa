@@ -131,8 +131,7 @@ wicked ifup br1:
   file.managed:
     - name: /etc/systemd/system/os-autoinst-openvswitch.service.d/30-init-timeout.conf
     - mode: 644
-    - source:
-      - salt://openqa/os-autoinst-openvswitch-init-timeout.conf
+    - source: salt://openqa/os-autoinst-openvswitch-init-timeout.conf
     - makedirs: true
 
 {%- if not grains.get('noservices', False) %}

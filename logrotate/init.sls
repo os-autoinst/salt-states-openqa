@@ -6,8 +6,7 @@ logrotate:
 
 /etc/systemd/system/logrotate.service.d/override.conf:
   file.managed:
-    - source:
-      - salt://logrotate/override.conf
+    - source: salt://logrotate/override.conf
     - makedirs: True
 
 /etc/systemd/system/logrotate.timer.d/override.conf:
@@ -15,14 +14,12 @@ logrotate:
 
 /etc/systemd/system/logrotate-openqa.service:
   file.managed:
-    - source:
-      - salt://logrotate/logrotate-openqa.service
+    - source: salt://logrotate/logrotate-openqa.service
     - makedirs: true
 
 /etc/systemd/system/logrotate-openqa.timer:
   file.managed:
-    - source:
-      - salt://logrotate/logrotate-openqa.timer
+    - source: salt://logrotate/logrotate-openqa.timer
     - makedirs: true
 
 {%- if not grains.get('noservices', False) %}

@@ -21,8 +21,7 @@ server.packages:
 
 /etc/fstab:
   file.managed:
-    - source:
-      - salt://fstab
+    - source: salt://fstab
     - user: root
     - group: root
 
@@ -84,8 +83,7 @@ server.packages:
   file.managed:
     - name: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
     - mode: 644
-    - source:
-      - salt://openqa/openqa-hook-timeout.conf
+    - source: salt://openqa/openqa-hook-timeout.conf
     - makedirs: true
     - require:
       - pkg: server.packages
@@ -117,8 +115,7 @@ openqa-gru:
 
 /etc/apache2/conf.d/server-status.conf:
   file.managed:
-    - source:
-      - salt://apache2/conf.d/server-status.conf
+    - source: salt://apache2/conf.d/server-status.conf
     - user: root
     - group: root
     - require:
@@ -127,8 +124,7 @@ openqa-gru:
 /etc/apache2/vhosts.d/openqa.conf:
   file.managed:
     - template: jinja
-    - source:
-      - salt://apache2/vhosts.d/openqa.conf
+    - source: salt://apache2/vhosts.d/openqa.conf
     - user: root
     - group: root
     - require:
@@ -179,8 +175,7 @@ openqa-gru:
 /etc/telegraf/telegraf.d/telegraf-webui.conf:
   file.managed:
     - template: jinja
-    - source:
-      - salt://monitoring/telegraf/telegraf-webui.conf
+    - source: salt://monitoring/telegraf/telegraf-webui.conf
     - user: root
     - group: root
     - mode: 600
@@ -294,8 +289,7 @@ readonly_db_access_audit_events:
 
 /etc/vsftpd.conf:
   file.managed:
-    - source:
-      - salt://vsftpd/vsftpd.conf
+    - source: salt://vsftpd/vsftpd.conf
     - user: root
     - group: root
     - mode: 600
@@ -330,15 +324,13 @@ salt-master.service:
 
 /etc/sysconfig/mail:
   file.managed:
-    - source:
-      - salt://postfix/sysconfig/mail
+    - source: salt://postfix/sysconfig/mail
     - require:
       - pkg: server.packages
 
 /etc/sysconfig/postfix:
   file.managed:
-    - source:
-      - salt://postfix/sysconfig/postfix
+    - source: salt://postfix/sysconfig/postfix
 
 https://gitlab.suse.de/openqa/scripts.git:
   git.cloned:
