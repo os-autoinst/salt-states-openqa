@@ -12,6 +12,7 @@ base:
     - openqa.server
     - openqa.links
     - openqa.openqa-trigger-from-ibs
+    - certificates.dehydrated
   'G@roles:worker':
     - openqa.repos
     - openqa.worker
