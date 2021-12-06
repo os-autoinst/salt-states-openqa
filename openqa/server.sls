@@ -131,6 +131,11 @@ openqa-gru:
     - require:
       - pkg: server.packages
 
+webserver_grain:
+  grains.present:
+    - name: webserver
+    - value: apache2
+
 # ext_pillar is not available with master-less mode so using "noservices"
 # check as workaround to disable the following in our test environment
 {%- if not grains.get('noservices', False) %}
