@@ -29,3 +29,4 @@ base:
   'G@roles:monitor':
     - monitoring.grafana
     - monitoring.influxdb
+    - certificates.dehydrated
