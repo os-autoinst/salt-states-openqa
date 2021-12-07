@@ -153,34 +153,26 @@ openqa-gru:
 # https://progress.opensuse.org/issues/67804
 # Generated with
 # ``ssh-keygen -t ed25519 -N '' -C 'geekotest@openqa.suse.de, openqa-pusher needle pushing to gitlab' -f id_ed25519.gitlab`
-/var/lib/openqa/.ssh/id_ed25519.gitlab:
-  file.managed:
-    - mode: 600
-    - user: geekotest
-    - group: nogroup
-    - makedirs: True
-    - contents_pillar: id_ed25519.gitlab
-
-/var/lib/openqa/.ssh/id_ed25519.gitlab.pub:
+openqa_user_ssh:
   file.managed:
     - mode: 644
     - user: geekotest
     - group: nogroup
     - makedirs: True
-    - contents_pillar: id_ed25519.gitlab.pub
+    - names:
+      - /var/lib/openqa/.ssh/id_ed25519.gitlab:
+        - mode: 600
+        - contents_pillar: id_ed25519.gitlab
+      - /var/lib/openqa/.ssh/id_ed25519.gitlab.pub:
+        - contents_pillar: id_ed25519.gitlab.pub
+      - /var/lib/openqa/.ssh/config:
+        - contents: |
+            Host gitlab.suse.de
+              User gitlab
+              IdentityFile ~/.ssh/id_ed25519.gitlab
+              IdentitiesOnly yes
+
 {%- endif %}
-
-/var/lib/openqa/.ssh/config:
-  file.managed:
-    - mode: 644
-    - user: geekotest
-    - group: nogroup
-    - makedirs: True
-    - contents: |
-        Host gitlab.suse.de
-          User gitlab
-          IdentityFile ~/.ssh/id_ed25519.gitlab
-          IdentitiesOnly yes
 
 /etc/telegraf/telegraf.d/telegraf-webui.conf:
   file.managed:
