@@ -30,3 +30,5 @@ base:
     - monitoring.grafana
     - monitoring.influxdb
     - certificates.dehydrated
+  'G@roles:storage':
+    - backup.rsnapshot
