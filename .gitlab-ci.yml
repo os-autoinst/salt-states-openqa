@@ -83,6 +83,7 @@ test-webui:
   <<: *test_setup
   script:
     - "echo 'roles: webui' >> /etc/salt/grains"
+    - "echo 'webserver: apache2' >> /etc/salt/grains"
     - (
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
@@ -107,6 +108,7 @@ test-monitor:
   <<: *test_setup
   script:
     - "echo 'roles: monitor' >> /etc/salt/grains"
+    - "echo 'webserver: nginx' >> /etc/salt/grains"
     - (
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
