@@ -47,6 +47,7 @@ worker.packages:
       - qemu-ovmf-x86_64 # for UEFI
       - virtualbox
       {% endif %}
+      - os-autoinst-swtpm
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
       - qemu-ipxe
