@@ -1744,7 +1744,7 @@
           {
             "evaluator": {
               "params": [
-                5
+                60
               ],
               "type": "gt"
             },
@@ -1939,12 +1939,14 @@
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:324",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 5,
-          "visible": true
+          "value": 60,
+          "visible": true,
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -2633,5 +2635,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 41
+  "version": 42
 }
