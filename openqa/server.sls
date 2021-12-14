@@ -25,6 +25,13 @@ server.packages:
     - user: root
     - group: root
 
+{%- if not grains.get('noservices', False) %}
+'mount -a':
+  cmd.run:
+    - onchanges:
+      - file: /etc/fstab
+{%- endif %}
+
 /etc/openqa/openqa.ini:
   ini.options_present:
     - sections:
@@ -46,6 +53,8 @@ server.packages:
           do_push: 'yes'
         openid:
           httpsonly: 1
+        archiving:
+          archive_preserved_important_jobs: 1
         cleanup:
           concurrent: 1
         audit/storage_duration:
@@ -177,6 +186,35 @@ openqa_user_ssh:
               IdentityFile ~/.ssh/id_ed25519.gitlab
               IdentitiesOnly yes
 
+{%- endif %}
+
+# this relies on presence of devices and mounted partitions which are only
+# available in a real system and also when we have "services" so we must
+# exclude it when we are without
+{%- if not grains.get('noservices', False) %}
+/space-slow/archive:
+  file.directory:
+    - user: geekotest
+    - require:
+      - file: /etc/fstab
+
+/var/lib/openqa/archive:
+  mount.mounted:
+    - device: /space-slow/archive
+    - fstype: none
+    - opts: bind,x-systemd.automount,x-systemd.requires=/var/lib/openqa
+    - extra_mount_invisible_options:
+      - x-systemd.automount
+    - extra_mount_invisible_keys:
+      - x-systemd.requires
+    - require:
+      - file: /space-slow/archive
+
+/var/lib/openqa/archive/testresults:
+  file.directory:
+    - user: geekotest
+    - require:
+      - file: /var/lib/openqa/archive
 {%- endif %}
 
 /etc/telegraf/telegraf.d/telegraf-webui.conf:
