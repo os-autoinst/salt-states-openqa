@@ -3,7 +3,7 @@ all: test
 
 .PHONY: prepare
 prepare:
-	command -v gitlab-ci-linter >/dev/null || (sudo wget -q https://dl.bintray.com/orobardet/gitlab-ci-linter/v2.0.0/gitlab-ci-linter.linux-amd64 -O /usr/local/bin/gitlab-ci-linter && \
+	command -v gitlab-ci-linter >/dev/null || (sudo wget -q https://dl.bintray.com/orobardet/gitlab-ci-linter/v2.2.0/gitlab-ci-linter.linux-amd64 -O /usr/local/bin/gitlab-ci-linter && \
 		sudo chmod +x /usr/local/bin/gitlab-ci-linter)
 
 .PHONY: test
