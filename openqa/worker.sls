@@ -45,7 +45,6 @@ worker.packages:
       {% if grains['osarch'] == 'x86_64' %}
       - qemu-x86
       - qemu-ovmf-x86_64 # for UEFI
-      - virtualbox
       {% endif %}
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
