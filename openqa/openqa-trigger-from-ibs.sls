@@ -54,11 +54,10 @@ openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP2:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP3:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:WSL') }}
-{{ scriptgen('SUSE:SLE-15-SP2:Update:Products:MicroOS:TEST') }}
-{{ scriptgen('SUSE:SLE-15-SP3:Update:Products:MicroOS51') }}
+{{ scriptgen('SUSE:SLE-15-SP3:Update:Products:MicroOS52') }}
 {{ scriptgen('SUSE:SLE-15-SP2:Update:QR') }}
 {{ scriptgen('SUSE:SLE-15-SP3:Update:QR') }}
 
 {% for i in ['A','B'] %}
-{{ scriptgen('SUSE:SLE-15-SP3:Update:Products:MicroOS51:Staging:' + i) }}
+{{ scriptgen('SUSE:SLE-15-SP3:Update:Products:MicroOS52:Staging:' + i) }}
 {% endfor %}
