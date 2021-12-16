@@ -1769,7 +1769,7 @@
         "for": "6m",
         "frequency": "2m",
         "handler": 1,
-        "message": "See https://progress.opensuse.org/issues/96191 for details",
+        "message": "Investigation hints:\n* Investigate what caused the ratio to change that significantly\n* Check https://openqa.suse.de/tests?resultfilter=Failed and look for a correlation\n* Follow https://progress.opensuse.org/projects/openqatests/wiki/Wiki#Statistical-investigation\n\nSee https://progress.opensuse.org/issues/96191 for details",
         "name": "Ratio of multi-machine tests by result alert",
         "noDataState": "keep_state",
         "notifications": [
@@ -1939,7 +1939,7 @@
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:324",
+          "$$hashKey": "object:262",
           "colorMode": "critical",
           "fill": true,
           "line": true,
@@ -2635,5 +2635,5 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 42
+  "version": 43
 }
