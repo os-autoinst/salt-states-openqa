@@ -1,6 +1,6 @@
 ---
 # yamllint disable rule:line-length
-image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
+image: registry.opensuse.org/home/okurz/container/ca/containers/tumbleweed:salt-minion-git-core
 
 stages:
   - test-static
@@ -28,8 +28,6 @@ variables:
   before_script:
     - ln -s $(pwd -P)/ /srv/salt
     - . /etc/os-release
-    - zypper -n ar -f http://download.suse.de/ibs/SUSE:/CA/${PRETTY_NAME// /_}/SUSE:CA.repo
-    - zypper -n in ca-certificates-suse
     - git clone --depth 3 https://gitlab.suse.de/openqa/salt-pillars-openqa /srv/pillar
     # workaround ASCII encoding errors
     # see https://github.com/saltstack/salt/issues/48522#issuecomment-404226425
