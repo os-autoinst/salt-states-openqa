@@ -214,7 +214,7 @@ openqa_user_ssh:
   file.directory:
     - user: geekotest
     - require:
-      - file: /var/lib/openqa/archive
+      - mount: /var/lib/openqa/archive
 {%- endif %}
 
 /etc/telegraf/telegraf.d/telegraf-webui.conf:
