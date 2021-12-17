@@ -281,7 +281,11 @@ smt_off:
     - contents:
       - 'kvm_hv'
 
+{%- if grains.osrelease < '15.3' %}
 /lib/udev/rules.d/80-kvm.rules:
+{%- else %}
+/usr/lib/udev/rules.d/80-kvm.rules:
+{%- endif %}
   file.managed:
     - contents:
       - 'KERNEL=="kvm", MODE="0666", GROUP="kvm"'
