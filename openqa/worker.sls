@@ -46,6 +46,7 @@ worker.packages:
       - qemu-x86
       - qemu-ovmf-x86_64 # for UEFI
       {% endif %}
+      - os-autoinst-swtpm
       {% if grains['osarch'] == 'ppc64le' %}
       - qemu-ppc
       - qemu-ipxe
