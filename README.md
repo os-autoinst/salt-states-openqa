@@ -19,11 +19,18 @@ echo "file_client: local" >> /etc/salt/minion
 systemctl enable --now salt-minion
 
 # checkout repositories
-pushd /srv
-git clone https://gitlab.suse.de/openqa/salt-states-openqa.git salt    # actual salt recipes
-git clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git pillar # credentials such as SSH keys
-popd
+git -C /srv clone https://gitlab.suse.de/openqa/salt-states-openqa.git salt    # actual salt recipes
+git -C /srv clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git pillar # credentials such as SSH keys
 ```
+
+To connect to the master, e.g. openqa.suse.de:
+
+```
+grep -q '\<salt\>' /etc/hosts || echo -e "10.160.0.207\tsalt\tsalt.openqa.suse.de" >> /etc/hosts
+```
+
+and accept the key on the master with `salt-key -y -a $host` with `$host`
+being the name of the host as announced by the salt-minion.
 
 
 ### Common salt commands to use
