@@ -1,8 +1,10 @@
 # openQA salt states
 
-This contains salt states used to configure an openQA infrastructure, for example as used for openqa.suse.de and openqa.opensuse.org
+This contains salt states used to configure an openQA infrastructure, for
+example as used for openqa.suse.de .
 
-They should be generic enough to also be useful (with some modification) for others
+They should be generic enough to also be useful (with some modification) for
+others.
 
 ## How to use
 
