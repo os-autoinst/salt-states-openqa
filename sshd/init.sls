@@ -26,6 +26,12 @@ AAAAC3NzaC1lZDI1NTE5AAAAINy2519eyXRQF1qexQhEEjuAtMrgpnndeTbQBm4VSzR8:
     - enc: ssh-ed25519
     - comment: root@backup-vm
 
+AAAAC3NzaC1lZDI1NTE5AAAAIODlqAE/HJh5EvjIioaHbfUY0JC6Rk5MK0FVM1hKBRmx:
+  ssh_auth.present:
+    - user: root
+    - enc: ssh-ed25519
+    - comment: root@storage.qa.suse.de, backup OSD
+
 {% for username, details in pillar.get('users', {}).items() %}
 {{ username }}:
 
