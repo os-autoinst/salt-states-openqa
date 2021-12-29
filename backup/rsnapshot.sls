@@ -4,6 +4,7 @@ rsnapshot.pkgs:
     - retry:
         attempts: 5
     - pkgs:
+      - filesystem
       - rsnapshot
 
 /etc/rsnapshot.conf:
