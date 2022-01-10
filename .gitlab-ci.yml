@@ -68,6 +68,13 @@ test-monitor-mock:
     - "echo 'roles: monitor' >> /etc/salt/grains"
     - $salt_call mock=True
 
+test-storage-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: storage' >> /etc/salt/grains"
+    - $salt_call mock=True
+
 test-general-test:
   <<: *test_setup
   script: $salt_call test=True
@@ -116,5 +123,13 @@ test-monitor:
     - grep -q 'monitor.qa.suse.de' /etc/nginx/vhosts.d/02-grafana.conf && echo "ok -- expected nginx config file for grafana exists"
     - (telegraf --test --input-filter system ||:) | grep -q 'system,host=' && echo "ok -- telegraf outputs host information" || telegraf --test
 
+test-storage:
+  <<: *test_setup
+  script:
+    - "echo 'roles: storage' >> /etc/salt/grains"
+    - (
+    - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
+    - $salt_call
+    - )
 
 include: 'deploy.yml'
