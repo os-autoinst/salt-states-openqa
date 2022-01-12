@@ -1,0 +1,13 @@
+/var/log/apache2/openqa.access_log {
+    compress
+    hourly
+    maxage 30
+    rotate 20
+    size=+300000k
+    notifempty
+    missingok
+    copytruncate
+    compresscmd /usr/bin/xz
+    uncompresscmd /usr/bin/xzdec
+}
+
