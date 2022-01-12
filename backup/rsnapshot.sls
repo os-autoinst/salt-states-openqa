@@ -25,8 +25,16 @@ rsnapshot.pkgs:
 # `ssh-keygen -t ed25519 -N '' -C 'root@storage.qa.suse.de, backup OSD' -f id_ed25519.backup_osd`
 /root/.ssh/id_ed25519.backup_osd:
   file.managed:
-    - mode: 644
+    - mode: 600
     - user: root
     - group: root
     - contents_pillar: id_ed25519.backup_osd
+
+/root/.ssh/config:
+  file.managed:
+    - contents: |
+        Host openqa.suse.de osd
+          HostName openqa.suse.de
+          IdentityFile /root/.ssh/id_ed25519.backup_osd
+
 {%- endif %}
