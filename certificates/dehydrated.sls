@@ -13,6 +13,15 @@ dehydrated.packages:
     - require:
       - webserver_grain
 
+/etc/telegraf/telegraf.d/certificates.conf:
+  file.managed:
+    - template: jinja
+    - source: salt://monitoring/telegraf/certificates.conf
+    - user: root
+    - group: root
+    - mode: 600
+    - makedirs: True
+
 /etc/dehydrated/config.d/{{ pillar['dehydrated']['config_script'] }}:
   file.managed:
     - source: salt://etc/master/dehydrated/config.d/{{ pillar['dehydrated']['config_script'] }}
