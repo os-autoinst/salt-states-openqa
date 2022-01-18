@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1638186870892,
+  "iteration": 1642168233001,
   "links": [],
   "panels": [
     {
@@ -5060,6 +5060,7 @@
       "repeatedByRow": true,
       "seriesOverrides": [
         {
+          "$$hashKey": "object:156",
           "alias": "/.*write$/",
           "transform": "negative-Y"
         }
@@ -5216,29 +5217,6 @@
           {
             "evaluator": {
               "params": [
-                100000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
                 50000
               ],
               "type": "gt"
@@ -5261,7 +5239,7 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "6m",
+        "for": "10m",
         "frequency": "1m",
         "handler": 1,
         "message": "Threshold set to 20s for cheap+slow storage (rotating disk).",
@@ -5449,7 +5427,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 100000,
+          "value": 50000,
           "visible": true
         }
       ],
@@ -9877,5 +9855,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 32
+  "version": 35
 }
