@@ -435,7 +435,7 @@
         "align": false,
         "alignLevel": null
       }
-    }
+    }{% if not loop.last %},{% endif %}
 {% endfor %}
   ],
   "schemaVersion": 27,
