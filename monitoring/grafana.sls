@@ -3,7 +3,7 @@
 
 {% set workernames = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
 {% set worker_dashboardnames = (workernames | map('regex_replace', '^(.*)$', 'worker-\\1.json'))|list %} #we name our dashboards "worker-$nodename.json"
-{% set templated_dashboardnames = ['webui.services.json'] %}
+{% set templated_dashboardnames = ['webui.services.json', 'certificates.json'] %}
 {% set manual_dashboardnames = ['webui.dashboard.json', 'failed_systemd_services.json', 'automatic_actions.json', 'job_age.json', 'openqa_jobs.json', 'status_overview.json', 'monitoring.json'] %}
 {% set genericnames = salt['mine.get']('not G@roles:webui and not G@roles:worker and not G@roles:monitor', 'nodename', tgt_type='compound').values()|list %} #list names of all generic hosts
 {% set generic_dashboardnames = (genericnames | map('regex_replace', '^(.*)$', 'generic-\\1.json'))|list %} #we name our dashboards for generic hosts "generic-$nodename.json"
