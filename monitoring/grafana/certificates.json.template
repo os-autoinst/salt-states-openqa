@@ -21,15 +21,15 @@
   "panels": [
 {% for host in pillar['dehydrated']['hosts.txt'] %}
     {
-      "collapsed": false,
+      "collapsed": true,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": {{loop.index}}
       },
-      "id": 5,
+      "id": {{loop.index*3+0}},
       "panels": [],
       "title": "Certificates on {{host}}",
       "type": "row"
@@ -95,7 +95,7 @@
         "y": 1
       },
       "hiddenSeries": false,
-      "id": 2,
+      "id": {{loop.index*3+1}},
       "interval": "1h",
       "legend": {
         "avg": false,
@@ -295,7 +295,7 @@
         "y": 12
       },
       "hiddenSeries": false,
-      "id": 3,
+      "id": {{loop.index*3+2}},
       "interval": "1h",
       "legend": {
         "alignAsTable": true,
@@ -435,7 +435,7 @@
         "align": false,
         "alignLevel": null
       }
-    }
+    }{% if not loop.last %},{% endif %}
 {% endfor %}
   ],
   "schemaVersion": 27,
