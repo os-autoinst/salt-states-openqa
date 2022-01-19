@@ -411,6 +411,6 @@ git-clone-os-autoinst-scripts:
     - contents: |
         [Journal]
         SystemMaxUse=80G
-        SystemKeepFree=10%
+        SystemKeepFree=20%
         SystemMaxFileSize=1G
         SystemMaxFiles=200
