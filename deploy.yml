@@ -20,10 +20,11 @@ deploy:
        set -x; cd /srv &&
        for i in salt pillar; do
          [ "\$i" = "salt" ] && repo="states" || repo="pillars";
+         token=${repo^^}_CLONE_TOKEN
          mkdir -p \$i &&
          chown root:salt \$i &&
          (cd \$i &&
-           git status || git clone --depth 3 https://gitlab.suse.de/openqa/salt-\$repo-openqa.git . &&
+           git status || git clone --depth 3 https://osd_deployment_ci:${!token}@gitlab.suse.de/openqa/salt-\$repo-openqa.git . &&
            git fetch origin &&
            git reset --hard origin/master &&
            git checkout -f master &&
