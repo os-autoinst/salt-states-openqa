@@ -28,7 +28,7 @@ variables:
   before_script:
     - ln -s $(pwd -P)/ /srv/salt
     - . /etc/os-release
-    - git clone --depth 3 https://gitlab.suse.de/openqa/salt-pillars-openqa /srv/pillar
+    - git clone --depth 3 https://osd_deployment_ci:${PILLARS_CLONE_TOKEN}@gitlab.suse.de/openqa/salt-pillars-openqa /srv/pillar
     # workaround ASCII encoding errors
     # see https://github.com/saltstack/salt/issues/48522#issuecomment-404226425
     - export LANG=en_US.UTF-8
