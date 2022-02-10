@@ -20,7 +20,7 @@ deploy:
        set -x; cd /srv &&
        for i in salt pillar; do
          [ "\$i" = "salt" ] && repo="states" || repo="pillars";
-         token=${repo^^}_CLONE_TOKEN
+         token=${repo^^}_CLONE_TOKEN;
          mkdir -p \$i &&
          chown root:salt \$i &&
          (cd \$i &&
