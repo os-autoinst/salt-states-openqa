@@ -39,7 +39,7 @@ Apply the complete configuration, so called "high state", to all nodes, while
 only outputting errors and what changed:
 
 ```sh
-salt -l error --state-output=changes \* state.apply highstate
+salt -l error --state-output=changes \* state.apply
 ```
 
 Run an individual command on a selected node, for example openqaworker42:
