@@ -195,6 +195,10 @@ nfs-client:
 openqa-worker-auto-restart@{{ i }}:
   service.running:
     - enable: True
+    - unless:
+      - fun: service.masked
+        args:
+	  - openqa-worker-auto-restart@{{ i }}
     - watch:
       - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf
 {% if loop.first %}
