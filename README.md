@@ -173,6 +173,45 @@ locally and override:
 sudo gitlab-runner exec docker --env "SSH_PRIVATE_KEY=$SSH_PRIVATE_KEY" --env "TARGET=my.machine" --env "…" deploy
 ```
 
+## Remarks about the systemd-units used to start workers
+The salt states achieve a setup which allows stopping/restarting workers without
+interrupting currently running jobs following the corresponding [upstream
+documentation](https://open.qa/docs/#_stoppingrestarting_workers_without_interrupting_currently_running_jobs).
+
+So `openqa-worker@.service` services and `openqa-worker.target` are
+disabled/stopped in this setup. The units `openqa-worker-auto-restart@.service`,
+`openqa-reload-worker-auto-restart@.service` and
+`openqa-reload-worker-auto-restart@.path` are used instead. Keep that in mind
+when manually starting/stopping/masking units. It makes most sense to
+mask/unmask all three units types only in accordance.
+
+Note that for taking out particular worker slots, masking services is generally
+needed (and disabling/stopping the services not sufficient) because otherwise
+salt will automatically enable/start the services again.
+
+### Examples
+Take out particular worker slots:
+```
+systemctl mask --now openqa-worker-auto-restart@{20,21}.service openqa-reload-worker-auto-restart@{20,21}.{service,path}
+```
+
+Take out particular worker slots without interrupting ongoing jobs:
+```
+systemctl mask --now openqa-reload-worker-auto-restart@{20,21}.{service,path}
+systemctl mask openqa-worker-auto-restart@{20,21}.service
+systemctl kill --kill-who=main --signal HUP openqa-worker-auto-restart@{20,21}.service
+```
+
+Find currently masked units:
+```
+systemctl list-unit-files --state=masked
+```
+
+Bring back particular worker slots:
+```
+systemctl unmask openqa-worker-auto-restart@{20,21}.service openqa-reload-worker-auto-restart@{20,21}.{service,path}
+systemctl start openqa-worker-auto-restart@{20,21}.service openqa-reload-worker-auto-restart@{20,21}.path
+```
 
 ## Communication
 
