@@ -210,6 +210,14 @@ openqa-worker-auto-restart@{{ i }}:
 openqa-reload-worker-auto-restart@{{ i }}.path:
   service.running:
     - enable: True
+    - unless:
+      - fun: service.masked
+        args:
+          - openqa-worker-auto-restart@{{ i }}
+    - unless:
+      - fun: service.masked
+        args:
+          - openqa-reload-worker-auto-restart@{{ i }}
 {% endfor %}
 
 openqa-worker.target:
