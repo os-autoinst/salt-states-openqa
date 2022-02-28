@@ -6,12 +6,10 @@ geekotest:
 {% set plugindir = '/opt/openqa-trigger-from-ibs-plugin/' %}
 {{ dir }}:
   file.directory:
-    - name: {{ dir }}
     - user: geekotest
 
 {{ plugindir }}:
   file.directory:
-    - name: {{ plugindir }}
     - user: geekotest
 
 openqa-trigger-from-ibs:
@@ -31,9 +29,8 @@ openqa-trigger-from-ibs:
     - target: {{ dir }}
     - user: geekotest
 
-openqa-trigger-from-ibs-plugin:
+https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
   git.latest:
-    - name: https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin
     - target: {{ plugindir }}
     - user: geekotest
 
