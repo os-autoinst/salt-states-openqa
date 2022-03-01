@@ -173,6 +173,13 @@ locally and override:
 sudo gitlab-runner exec docker --env "SSH_PRIVATE_KEY=$SSH_PRIVATE_KEY" --env "TARGET=my.machine" --env "…" deploy
 ```
 
+### CI tests
+
+Changes provided in merge requests are tested with gitlab CI tests. For this
+it is necessary to copy the CI variables from
+https://gitlab.suse.de/openqa/salt-states-openqa/-/settings/ci_cd
+to your own gitlab fork in the corresponding settings.
+
 ## Remarks about the systemd-units used to start workers
 The salt states achieve a setup which allows stopping/restarting workers without
 interrupting currently running jobs following the corresponding [upstream
