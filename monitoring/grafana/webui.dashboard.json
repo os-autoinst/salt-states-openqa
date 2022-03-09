@@ -7306,7 +7306,7 @@
           "measurement": "apache_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"response_time_us\") FROM \"my_log\" WHERE (\"host\" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT min(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
           "refId": "min_apache_response",
           "resultFormat": "time_series",
@@ -7358,7 +7358,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT max(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "max_apache_response",
           "resultFormat": "time_series",
           "select": [
@@ -7405,17 +7405,18 @@
               "type": "fill"
             }
           ],
+          "measurement": "apache_log",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "mean_apache_response",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "value"
+                  "response_time_us"
                 ],
                 "type": "field"
               },
@@ -7425,7 +7426,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "openqa"
+            },
+            {
+              "condition": "AND",
+              "key": "request",
+              "operator": "!~",
+              "value": "/\\/api\\/v1\\/ws/"
+            }
+          ]
         }
       ],
       "thresholds": [
