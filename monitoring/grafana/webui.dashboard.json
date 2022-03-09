@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1642168233001,
+  "iteration": 1646820946429,
   "links": [],
   "panels": [
     {
@@ -7191,20 +7191,20 @@
             },
             "query": {
               "params": [
-                "A",
-                "5m",
+                "min_apache_response",
+                "30m",
                 "now"
               ]
             },
             "reducer": {
               "params": [],
-              "type": "avg"
+              "type": "median"
             },
             "type": "query"
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "5m",
+        "for": "30m",
         "frequency": "1m",
         "handler": 1,
         "message": "The apache response time exceeded the alert threshold.\n\n* Check the load of the web UI host\n* Consider restarting the openQA web UI service and/or apache\n\nAlso see https://progress.opensuse.org/issues/73633",
@@ -7261,20 +7261,24 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:271",
           "alias": "Avg",
           "fillBelowTo": "Min",
           "lines": false
         },
         {
+          "$$hashKey": "object:272",
           "alias": "Min",
           "lines": false
         },
         {
+          "$$hashKey": "object:273",
           "alias": "Max",
           "fillBelowTo": "Avg",
           "lines": false
         },
         {
+          "$$hashKey": "object:274",
           "alias": "Avg",
           "lines": false
         }
@@ -7304,7 +7308,7 @@
           "policy": "default",
           "query": "SELECT mean(\"response_time_us\") FROM \"my_log\" WHERE (\"host\" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
-          "refId": "A",
+          "refId": "min_apache_response",
           "resultFormat": "time_series",
           "select": [
             [
@@ -7355,7 +7359,7 @@
           "policy": "default",
           "query": "SELECT max(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "max_apache_response",
           "resultFormat": "time_series",
           "select": [
             [
@@ -7405,7 +7409,7 @@
           "policy": "default",
           "query": "SELECT mean(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
-          "refId": "C",
+          "refId": "mean_apache_response",
           "resultFormat": "time_series",
           "select": [
             [
@@ -7426,12 +7430,14 @@
       ],
       "thresholds": [
         {
+          "$$hashKey": "object:536",
           "colorMode": "critical",
           "fill": true,
           "line": true,
           "op": "gt",
           "value": 500000,
-          "visible": true
+          "visible": true,
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -7453,6 +7459,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:303",
           "format": "µs",
           "label": null,
           "logBase": 10,
@@ -7461,6 +7468,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:304",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -9855,5 +9863,5 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 36
+  "version": 37
 }
