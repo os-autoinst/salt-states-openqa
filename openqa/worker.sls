@@ -384,12 +384,14 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - require:
       - pkg: worker.packages
 
+{%- if not grains.get('noservices', False) %}
 # prevent I/O stuck for very long time by automatically crashing (and
 # rebooting)
 # see https://progress.opensuse.org/issues/41882#note-34
 kernel.softlockup_panic:
   sysctl.present:
     - value: 1
+{%- endif %}
 
 {%- if grains.get('default_interface', None) %}
 net.ipv6.conf.{{ grains['default_interface'] }}.accept_ra:
