@@ -38,6 +38,10 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
             echo "Waiting $busy_delay seconds before trying again after failing due to busy device."
             sleep "$busy_delay"
             continue
+        elif grep --quiet 'unexpected failure opening' /tmp/mdadm_output; then
+            echo "Unexpected error opening device, waiting $busy_delay before trying again (as retrying usually helps)."
+            sleep "$busy_delay"
+            continue
         else
             echo 'Unable to create RAID, mdadm returned with non-zero code'
             exit 1
