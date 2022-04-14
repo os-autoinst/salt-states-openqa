@@ -902,6 +902,12 @@
               "key": "host",
               "operator": "=",
               "value": "{{ worker }}"
+            },
+            {
+              "condition": "AND",
+              "key": "url",
+              "operator": "=",
+              "value": "openqa.suse.de"
             }
           ]
         }
