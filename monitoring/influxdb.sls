@@ -1,8 +1,7 @@
-{% from 'openqa/repo_config.sls' import repo %}
 databases.repo:
   pkgrepo.managed:
     - humanname: Databases
-    - baseurl: http://download.opensuse.org/repositories/server:/database/{{ repo }}
+    - baseurl: http://download.opensuse.org/repositories/server:/database/$releasever
     - enabled: True
     - gpgautoimport: True
     - priority: 105
