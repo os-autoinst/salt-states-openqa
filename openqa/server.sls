@@ -414,3 +414,12 @@ git-clone-os-autoinst-scripts:
         SystemKeepFree=20%
         SystemMaxFileSize=1G
         SystemMaxFiles=200
+
+/etc/systemd/system/systemd-journal-flush.service.d/startup-timeout.conf:
+  file.managed:
+    - mode: 644
+    - makedirs: true
+    - contents: |
+        [Service]
+        TimeoutStartSec=300
+
