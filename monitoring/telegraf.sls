@@ -34,10 +34,9 @@ telegraf:
     {%- endif %}
 {%- endif %}
 
-/etc/telegraf/scripts/systemd_failed.sh:
+/etc/telegraf/scripts/systemd_list_service_by_state_for_telegraf.sh:
   file.managed:
-    - name: /etc/telegraf/scripts/systemd_failed.sh
-    - source: salt://monitoring/telegraf/scripts/systemd_failed.sh
+    - source: salt://monitoring/telegraf/scripts/systemd_list_service_by_state_for_telegraf.sh
     - user: root
     - group: root
     - mode: 700
