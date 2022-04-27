@@ -20,6 +20,7 @@ worker-openqa.packages:
     - pkgs:
       - openQA-worker
       - xterm-console
+      - samba  # required by jobs using the setting QEMU_ENABLE_SMBD=1
       - os-autoinst-openvswitch
       # force the installation of the full gzip so that vagrant-libvirt can be installed
       - gzip
