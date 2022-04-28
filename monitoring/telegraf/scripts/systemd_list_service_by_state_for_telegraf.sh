@@ -15,7 +15,7 @@ EOF
 
 set -eo pipefail
 
-opts=$(getopt -o h,s: --long help,state -n "$0" -- "$@") || usage 1
+opts=$(getopt -o h,s: --long help,state: -n "$0" -- "$@") || usage 1
 eval set -- "$opts"
 while true; do
   case "$1" in
@@ -26,7 +26,7 @@ while true; do
 done
 
 UNITS=$(systemctl --no-legend --state="$state" --plain)
-UNITS_COUNT=$(echo "$UNITS" | grep -v "^$" | wc -l)
+UNITS_COUNT=$(echo "$UNITS" | grep -v "^$" | wc -l ||:)
 UNITS_NAMES=$(echo -n "$UNITS" | cut -d" " -f 1 | xargs -I{} basename {} .service)
 TAGS_PER_UNIT=""
 
