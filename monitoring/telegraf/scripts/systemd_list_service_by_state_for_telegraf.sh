@@ -15,7 +15,7 @@ EOF
 
 set -eo pipefail
 
-opts=$(getopt -o h,s: --long help,state -n "$0" -- "$@") || usage 1
+opts=$(getopt -o h,s: --long help,state: -n "$0" -- "$@") || usage 1
 eval set -- "$opts"
 while true; do
   case "$1" in
