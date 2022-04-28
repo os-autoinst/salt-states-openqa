@@ -26,7 +26,7 @@ while true; do
 done
 
 UNITS=$(systemctl --no-legend --state="$state" --plain)
-UNITS_COUNT=$(echo "$UNITS" | grep -v "^$" | wc -l)
+UNITS_COUNT=$(echo "$UNITS" | grep -v "^$" | wc -l ||:)
 UNITS_NAMES=$(echo -n "$UNITS" | cut -d" " -f 1 | xargs -I{} basename {} .service)
 TAGS_PER_UNIT=""
 
