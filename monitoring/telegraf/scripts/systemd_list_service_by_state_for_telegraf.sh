@@ -7,7 +7,7 @@ Usage:
 
 Options:
  -h, -?, --help     display this help
- -s, --state STATE  Show units of state STATE, default "failed"
+ -s, --state STATE  Show units of state STATE
 
 EOF
     exit "$1"
@@ -24,6 +24,11 @@ while true; do
     * ) break ;;
   esac
 done
+
+if [[ -z $state ]]; then
+    echo "Need state parameter, e.g. 'failed' or 'masked'" >&2
+    exit 2
+fi
 
 UNITS=$(systemctl --no-legend --state="$state" --plain)
 UNITS_COUNT=$(echo "$UNITS" | grep -v "^$" | wc -l ||:)
