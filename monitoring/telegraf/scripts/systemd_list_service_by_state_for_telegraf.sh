@@ -37,16 +37,16 @@ TAGS_PER_UNIT=""
 
 I=1
 for UNIT in $UNITS_NAMES; do
-	if [[ $I -gt 1 ]]; then
-		TAGS_PER_UNIT="$TAGS_PER_UNIT,"
-	fi
-	TAGS_PER_UNIT="${TAGS_PER_UNIT}unit_$I=$UNIT"
-	I=$(($I+1))
+    if [[ $I -gt 1 ]]; then
+        TAGS_PER_UNIT="$TAGS_PER_UNIT,"
+    fi
+    TAGS_PER_UNIT="${TAGS_PER_UNIT}unit_$I=$UNIT"
+    I=$(($I+1))
 done
 if [[ $I -gt 1 ]]; then
-	UNITS_LIST=$(echo $UNITS_NAMES | sed 's/\ /\\,\\ /g')
-	UNITS_HUMAN_TAG=",units=${UNITS_LIST}"
-	UNITS_TAGS="${UNITS_HUMAN_TAG},${TAGS_PER_UNIT}"
+    UNITS_LIST=$(echo $UNITS_NAMES | sed 's/\ /\\,\\ /g')
+    UNITS_HUMAN_TAG=",units=${UNITS_LIST}"
+    UNITS_TAGS="${UNITS_HUMAN_TAG},${TAGS_PER_UNIT}"
 fi
 
 hostname=$(hostname -f)
