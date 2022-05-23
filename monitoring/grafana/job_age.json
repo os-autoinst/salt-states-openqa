@@ -8,41 +8,60 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#37872D",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#37872D",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 7200
+              },
+              {
+                "color": "#d44a3a",
+                "value": 14400
+              }
+            ]
+          },
+          "unit": "dtdurations"
         },
         "overrides": []
-      },
-      "format": "dtdurations",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 8,
@@ -53,40 +72,22 @@
       "id": 11,
       "interval": "2m",
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
       },
-      "tableColumn": "",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "groupBy": [
@@ -125,47 +126,47 @@
           "tags": []
         }
       ],
-      "thresholds": "7200,14400",
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Job age (scheduled) (median value of best case machine classes)",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "min"
+      "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": false,
-      "colors": [
-        "#37872D",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de (p99, long tail, worst case excluding likely configuration errors)\n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#37872D",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 28800
+              },
+              {
+                "color": "#d44a3a",
+                "value": 86400
+              }
+            ]
+          },
+          "unit": "dtdurations"
         },
         "overrides": []
-      },
-      "format": "dtdurations",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 8,
@@ -176,40 +177,22 @@
       "id": 12,
       "interval": "2m",
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
       },
-      "tableColumn": "",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "alias": "job_age_p99_mean",
@@ -249,20 +232,8 @@
           "tags": []
         }
       ],
-      "thresholds": "28800,86400",
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Job age (scheduled) (p99, long tail, min value of worst case machine classes)",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "min"
+      "type": "stat"
     },
     {
       "alert": {
@@ -309,11 +280,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -345,8 +314,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -525,9 +497,7 @@
           "value": 259200
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Job age (scheduled) (median)",
       "tooltip": {
         "shared": true,
@@ -536,9 +506,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -547,22 +515,17 @@
           "format": "dthms",
           "label": "age",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "dthms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -610,11 +573,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nMaximum value over all arch+machine values\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -642,8 +603,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -822,9 +786,7 @@
           "value": 345600
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Job age (scheduled) (max)",
       "tooltip": {
         "shared": true,
@@ -833,9 +795,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -844,22 +804,17 @@
           "format": "dthms",
           "label": "age",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "dthms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -867,11 +822,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -899,8 +852,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1095,9 +1051,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Job age (scheduled) by machine class",
       "tooltip": {
         "shared": true,
@@ -1106,9 +1060,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1117,22 +1069,17 @@
           "format": "dthms",
           "label": "age",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "dthms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1140,11 +1087,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1172,8 +1117,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1230,9 +1178,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Job age p50 (scheduled) by machine class",
       "tooltip": {
         "shared": true,
@@ -1241,9 +1187,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1252,22 +1196,17 @@
           "format": "dthms",
           "label": "age",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "dthms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1275,11 +1214,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1307,8 +1244,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1365,9 +1305,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Job age p90 (scheduled) by machine class",
       "tooltip": {
         "shared": true,
@@ -1376,9 +1314,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1387,22 +1323,17 @@
           "format": "dthms",
           "label": "age",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "dthms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1410,11 +1341,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1442,8 +1371,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1500,9 +1432,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Job age p99 (scheduled) by machine class",
       "tooltip": {
         "shared": true,
@@ -1511,9 +1441,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1522,22 +1450,17 @@
           "format": "dthms",
           "label": "age",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "dthms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1545,11 +1468,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1577,8 +1498,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.5",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1635,9 +1559,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Job age p100 (scheduled) by machine class",
       "tooltip": {
         "shared": true,
@@ -1646,9 +1568,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1657,27 +1577,22 @@
           "format": "dthms",
           "label": "age",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "dthms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": false,
-  "schemaVersion": 26,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1704,5 +1619,6 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 28
+  "version": 31,
+  "weekStart": ""
 }

@@ -8,20 +8,27 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "InfluxDB dashboards for telegraf metrics",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 5955,
   "graphTooltip": 1,
-  "iteration": 1624962328787,
+  "iteration": 1653300730507,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -77,7 +84,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "",
       "editable": true,
       "error": false,
@@ -125,7 +135,7 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -244,9 +254,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Memory usage",
       "tooltip": {
         "shared": true,
@@ -255,9 +263,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -267,7 +273,6 @@
           "format": "bytes",
           "label": "Usage (absolute)",
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
@@ -276,14 +281,11 @@
           "format": "percentunit",
           "label": "Available (percentage)",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -291,7 +293,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -340,7 +345,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -452,9 +457,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "CPU Usage",
       "tooltip": {
         "shared": true,
@@ -463,9 +466,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -480,14 +481,11 @@
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -495,7 +493,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -523,8 +524,6 @@
         "max": true,
         "min": true,
         "show": false,
-        "sort": null,
-        "sortDesc": null,
         "total": false,
         "values": true
       },
@@ -536,7 +535,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -590,9 +589,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "CPU Load",
       "tooltip": {
         "shared": true,
@@ -601,9 +598,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -611,21 +606,17 @@
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -633,7 +624,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -677,7 +671,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -732,9 +726,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Processes",
       "tooltip": {
         "shared": true,
@@ -743,9 +735,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -753,21 +743,16 @@
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -814,7 +799,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -853,7 +837,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -915,9 +899,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Ping time",
       "tooltip": {
         "shared": true,
@@ -926,9 +908,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -936,25 +916,18 @@
         {
           "$$hashKey": "object:164",
           "format": "ms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:165",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1000,7 +973,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "description": "Detect the absence of ping data for ping from worker to central instance as indication for host being down.\n\nHosts with known stability problems are excluded from this check and handled explicitly elsewhere, e.g. see \"automatic actions\" dashboard.\n\nhttps://progress.opensuse.org/issues/71098",
       "fieldConfig": {
         "defaults": {
@@ -1040,7 +1012,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1093,9 +1065,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Host up",
       "tooltip": {
         "shared": true,
@@ -1104,9 +1074,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1114,30 +1082,22 @@
         {
           "$$hashKey": "object:200",
           "format": "ms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:201",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1154,7 +1114,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1198,7 +1161,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1314,9 +1277,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Disk I/O requests",
       "tooltip": {
         "shared": true,
@@ -1325,9 +1286,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1336,22 +1295,17 @@
           "$$hashKey": "object:414",
           "format": "iops",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:415",
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1421,7 +1375,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1467,7 +1424,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1545,9 +1502,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "All partitions usage (%)",
       "tooltip": {
         "shared": true,
@@ -1556,9 +1511,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1566,21 +1519,17 @@
         {
           "format": "percent",
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "format": "percent",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1588,7 +1537,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1631,7 +1583,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1747,9 +1699,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Disk I/O bytes",
       "tooltip": {
         "shared": true,
@@ -1758,9 +1708,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1768,21 +1716,16 @@
         {
           "format": "bytes",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1852,7 +1795,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1900,7 +1846,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2006,9 +1952,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Disk I/O time",
       "tooltip": {
         "shared": true,
@@ -2017,9 +1961,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2027,43 +1969,27 @@
         {
           "format": "ms",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
-    },
-    {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 53
-      },
-      "id": 65059,
-      "panels": [],
-      "title": "Network",
-      "type": "row"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2079,15 +2005,16 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 54
+        "y": 53
       },
       "hiddenSeries": false,
-      "id": 42026,
+      "id": 28572,
       "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
         "current": true,
+        "hideEmpty": true,
         "hideZero": true,
         "max": true,
         "min": true,
@@ -2104,7 +2031,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2220,10 +2147,8 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Network Usage",
+      "title": "Network Packets",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -2232,39 +2157,49 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
-          "format": "bps",
+          "format": "pps",
+          "label": "",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 61
+      },
+      "id": 65059,
+      "panels": [],
+      "title": "Network",
+      "type": "row"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2280,16 +2215,15 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 62
       },
       "hiddenSeries": false,
-      "id": 28572,
+      "id": 42026,
       "interval": "1m",
       "legend": {
         "alignAsTable": true,
         "avg": true,
         "current": true,
-        "hideEmpty": true,
         "hideZero": true,
         "max": true,
         "min": true,
@@ -2306,7 +2240,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2422,10 +2356,8 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "Network Packets",
+      "title": "Network Usage",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -2434,32 +2366,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
-          "format": "pps",
-          "label": "",
+          "format": "bps",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2467,7 +2391,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2483,7 +2410,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 54
+        "y": 70
       },
       "hiddenSeries": false,
       "id": 65094,
@@ -2509,7 +2436,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2684,9 +2611,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "TCP handshake issues",
       "tooltip": {
         "msResolution": false,
@@ -2696,9 +2621,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2707,21 +2630,16 @@
           "format": "short",
           "label": "",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2729,7 +2647,10 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2745,7 +2666,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 61
+        "y": 77
       },
       "hiddenSeries": false,
       "id": 58901,
@@ -2771,7 +2692,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2882,9 +2803,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Packets Drop",
       "tooltip": {
         "msResolution": false,
@@ -2894,9 +2813,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2905,21 +2822,17 @@
           "format": "short",
           "label": "Packets drop",
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2927,7 +2840,10 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2943,7 +2859,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 61
+        "y": 77
       },
       "hiddenSeries": false,
       "id": 50643,
@@ -2969,7 +2885,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3080,9 +2996,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Packets Error",
       "tooltip": {
         "msResolution": false,
@@ -3092,9 +3006,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -3103,21 +3015,17 @@
           "format": "short",
           "label": "Packets drop",
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "format": "short",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -3165,7 +3073,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -3204,7 +3111,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3283,9 +3190,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "NTP offset",
       "tooltip": {
         "shared": true,
@@ -3294,38 +3199,29 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "ms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 27,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -3338,8 +3234,6 @@
           "value": "InfluxDB"
         },
         "datasource": "InfluxDB",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "",
@@ -3353,8 +3247,6 @@
         "type": "datasource"
       },
       {
-        "description": null,
-        "error": null,
         "hide": 2,
         "label": "Server",
         "name": "server",
@@ -3393,5 +3285,6 @@
   "timezone": "browser",
   "title": "Dashboard for {{ generic_host }}",
   "uid": "GD{{ generic_host }}",
-  "version": 5
+  "version": 6,
+  "weekStart": ""
 }

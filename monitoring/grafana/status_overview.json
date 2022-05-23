@@ -8,19 +8,24 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1638300612905,
+  "iteration": 1653300780403,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "cacheTimeout": null,
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -28,28 +33,34 @@
           },
           "mappings": [
             {
-              "$$hashKey": "object:571",
-              "from": "200",
-              "id": 0,
-              "text": "ONLINE",
-              "to": "299",
-              "type": 2
+              "options": {
+                "from": 200,
+                "result": {
+                  "text": "ONLINE"
+                },
+                "to": 299
+              },
+              "type": "range"
             },
             {
-              "$$hashKey": "object:572",
-              "from": "0",
-              "id": 1,
-              "text": "OFFLINE",
-              "to": "199",
-              "type": 2
+              "options": {
+                "from": 0,
+                "result": {
+                  "text": "OFFLINE"
+                },
+                "to": 199
+              },
+              "type": "range"
             },
             {
-              "$$hashKey": "object:573",
-              "from": "300",
-              "id": 2,
-              "text": "OFFLINE",
-              "to": "999",
-              "type": 2
+              "options": {
+                "from": 300,
+                "result": {
+                  "text": "OFFLINE"
+                },
+                "to": 999
+              },
+              "type": "range"
             }
           ],
           "thresholds": {
@@ -80,7 +91,6 @@
         "y": 0
       },
       "id": 2,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -98,7 +108,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.11",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "groupBy": [
@@ -137,25 +147,17 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "openqa.suse.de",
       "transparent": true,
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
       "circleBackground": true,
       "colorBackground": true,
       "colorValue": false,
-      "datasource": null,
       "decimals": 2,
       "defaultColor": "rgb(117, 117, 117)",
       "description": "Availability of openqa.suse.de (compare to google SRE definition, target must not be 100%; purpose: How users/teams/departments can rely on the service; data source: HTTP response code accessing test results; presentation: availability ratio [0:1])\n\nA threshold of 0.99 (99%) corresponds to a downtime of 87h/y. For comparison:\n\n* 2×9s: `99%`: 5250min (87hrs or 3.64days)\n* 3×9s: `99.9%`: 525min (8.7hrs)\n* 4×9s: `99.99%`: 52.5min\n* 5×9s: `99.999%`: 5min <- rule of thumb: `5× 9s -> 5 mins` (per year)\n\nSee\nhttps://stats.openqa-monitor.qa.suse.de/d/WebuiDb/webui-summary for low level details\n\nhttps://progress.opensuse.org/issues/68233",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -171,7 +173,6 @@
         "y": 0
       },
       "id": 61,
-      "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
@@ -189,7 +190,6 @@
       "math": "response_openqa_200/response_openqa",
       "maxDataPoints": 100,
       "nullPointMode": "connected",
-      "nullText": null,
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -325,8 +325,6 @@
           "value": 0.99
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Availability of openQA webUI",
       "tooltip": {
         "show": true
@@ -346,7 +344,6 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -359,8 +356,6 @@
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -368,28 +363,18 @@
           },
           "mappings": [
             {
-              "$$hashKey": "object:669",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:670",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:671",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
+              "options": {
+                "0": {
+                  "text": "ONLINE"
+                },
+                "1": {
+                  "text": "OFFLINE"
+                },
+                "": {
+                  "text": "GONE"
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -415,600 +400,11 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 6,
         "x": 0,
-        "y": 5
-      },
-      "id": 63,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 46,
-      "scopedVars": {
-        "workers_x86_64": {
-          "selected": false,
-          "text": "openqaworker2.suse.de",
-          "value": "openqaworker2.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_x86_64$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_x86_64",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:669",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:670",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:671",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 4,
-        "y": 5
-      },
-      "id": 62,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 46,
-      "scopedVars": {
-        "workers_x86_64": {
-          "selected": false,
-          "text": "openqaworker3.suse.de",
-          "value": "openqaworker3.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_x86_64$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_x86_64",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:669",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:670",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:671",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 8,
-        "y": 5
-      },
-      "id": 65,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 46,
-      "scopedVars": {
-        "workers_x86_64": {
-          "selected": false,
-          "text": "openqaworker5.suse.de",
-          "value": "openqaworker5.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_x86_64$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_x86_64",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:669",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:670",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:671",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 12,
-        "y": 5
-      },
-      "id": 64,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 46,
-      "scopedVars": {
-        "workers_x86_64": {
-          "selected": false,
-          "text": "openqaworker6.suse.de",
-          "value": "openqaworker6.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_x86_64$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_x86_64",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:669",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:670",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:671",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 16,
         "y": 5
       },
       "id": 46,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1026,16 +422,9 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.11",
+      "pluginVersion": "8.3.5",
       "repeat": "workers_x86_64",
       "repeatDirection": "h",
-      "scopedVars": {
-        "workers_x86_64": {
-          "selected": false,
-          "text": "openqaworker8.suse.de",
-          "value": "openqaworker8.suse.de"
-        }
-      },
       "targets": [
         {
           "groupBy": [
@@ -1086,456 +475,12 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_x86_64",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:669",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:670",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:671",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 0,
-        "y": 8
-      },
-      "id": 66,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 46,
-      "scopedVars": {
-        "workers_x86_64": {
-          "selected": false,
-          "text": "openqaworker9.suse.de",
-          "value": "openqaworker9.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_x86_64$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_x86_64",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:669",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:670",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:671",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 4,
-        "y": 8
-      },
-      "id": 68,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 46,
-      "scopedVars": {
-        "workers_x86_64": {
-          "selected": false,
-          "text": "openqaworker10.suse.de",
-          "value": "openqaworker10.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_x86_64$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_x86_64",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:669",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:670",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:671",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 8,
-        "y": 8
-      },
-      "id": 67,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 46,
-      "scopedVars": {
-        "workers_x86_64": {
-          "selected": false,
-          "text": "openqaworker13.suse.de",
-          "value": "openqaworker13.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_x86_64$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "$workers_x86_64",
       "transparent": true,
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1548,8 +493,6 @@
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1557,28 +500,18 @@
           },
           "mappings": [
             {
-              "$$hashKey": "object:767",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:768",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:769",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
+              "options": {
+                "0": {
+                  "text": "ONLINE"
+                },
+                "1": {
+                  "text": "OFFLINE"
+                },
+                "": {
+                  "text": "GONE"
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -1604,600 +537,11 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 6,
         "x": 0,
         "y": 12
       },
-      "id": 71,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 31,
-      "scopedVars": {
-        "workers_ppc64le": {
-          "selected": false,
-          "text": "grenache-1.qa.suse.de",
-          "value": "grenache-1.qa.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_ppc64le$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_ppc64le",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:767",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:768",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:769",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 4,
-        "y": 12
-      },
-      "id": 70,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 31,
-      "scopedVars": {
-        "workers_ppc64le": {
-          "selected": false,
-          "text": "malbec.arch.suse.de",
-          "value": "malbec.arch.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_ppc64le$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_ppc64le",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:767",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:768",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:769",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 8,
-        "y": 12
-      },
-      "id": 69,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 31,
-      "scopedVars": {
-        "workers_ppc64le": {
-          "selected": false,
-          "text": "powerqaworker-qam-1.qa.suse.de",
-          "value": "powerqaworker-qam-1.qa.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_ppc64le$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_ppc64le",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:767",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:768",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:769",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 12,
-        "y": 12
-      },
-      "id": 72,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 31,
-      "scopedVars": {
-        "workers_ppc64le": {
-          "selected": false,
-          "text": "QA-Power8-4-kvm.qa.suse.de",
-          "value": "QA-Power8-4-kvm.qa.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_ppc64le$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_ppc64le",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:767",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:768",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:769",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 16,
-        "y": 12
-      },
       "id": 31,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2215,16 +559,9 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.11",
+      "pluginVersion": "8.3.5",
       "repeat": "workers_ppc64le",
       "repeatDirection": "h",
-      "scopedVars": {
-        "workers_ppc64le": {
-          "selected": false,
-          "text": "QA-Power8-5-kvm.qa.suse.de",
-          "value": "QA-Power8-5-kvm.qa.suse.de"
-        }
-      },
       "targets": [
         {
           "groupBy": [
@@ -2275,20 +612,17 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "$workers_ppc64le",
       "transparent": true,
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 18
       },
       "id": 24,
       "panels": [],
@@ -2296,8 +630,6 @@
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2305,28 +637,18 @@
           },
           "mappings": [
             {
-              "$$hashKey": "object:865",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:866",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:867",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
+              "options": {
+                "0": {
+                  "text": "ONLINE"
+                },
+                "1": {
+                  "text": "OFFLINE"
+                },
+                "": {
+                  "text": "GONE"
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -2352,12 +674,11 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 6,
         "x": 0,
-        "y": 16
+        "y": 19
       },
       "id": 6,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2375,16 +696,9 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.11",
+      "pluginVersion": "8.3.5",
       "repeat": "workers_arm",
       "repeatDirection": "h",
-      "scopedVars": {
-        "workers_arm": {
-          "selected": false,
-          "text": "openqaworker-arm-1.suse.de",
-          "value": "openqaworker-arm-1.suse.de"
-        }
-      },
       "targets": [
         {
           "groupBy": [
@@ -2435,759 +749,49 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_arm",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:865",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:866",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:867",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 4,
-        "y": 16
-      },
-      "id": 73,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 6,
-      "scopedVars": {
-        "workers_arm": {
-          "selected": false,
-          "text": "openqaworker-arm-2.suse.de",
-          "value": "openqaworker-arm-2.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_arm$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_arm",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:865",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:866",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:867",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 8,
-        "y": 16
-      },
-      "id": 74,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 6,
-      "scopedVars": {
-        "workers_arm": {
-          "selected": false,
-          "text": "openqaworker-arm-3.suse.de",
-          "value": "openqaworker-arm-3.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_arm$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_arm",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:865",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:866",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:867",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 12,
-        "y": 16
-      },
-      "id": 75,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 6,
-      "scopedVars": {
-        "workers_arm": {
-          "selected": false,
-          "text": "openqaworker-arm-4.qa.suse.de",
-          "value": "openqaworker-arm-4.qa.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_arm$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$workers_arm",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "$$hashKey": "object:865",
-              "id": 0,
-              "op": "=",
-              "text": "OFFLINE",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "$$hashKey": "object:866",
-              "id": 1,
-              "op": "=",
-              "text": "ONLINE",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "$$hashKey": "object:867",
-              "id": 2,
-              "op": "=",
-              "text": "GONE",
-              "type": 1,
-              "value": ""
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 16,
-        "y": 16
-      },
-      "id": 76,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.11",
-      "repeatDirection": "h",
-      "repeatIteration": 1638300612905,
-      "repeatPanelId": 6,
-      "scopedVars": {
-        "workers_arm": {
-          "selected": false,
-          "text": "openqaworker-arm-5.qa.suse.de",
-          "value": "openqaworker-arm-5.qa.suse.de"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_arm$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "$workers_arm",
       "transparent": true,
       "type": "stat"
     }
   ],
   "refresh": false,
-  "schemaVersion": 27,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
-          "text": "openqa.suse.de",
+          "selected": true,
+          "text": [
+            "openqa.suse.de"
+          ],
           "value": [
             "openqa.suse.de"
           ]
         },
-        "datasource": "InfluxDB",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "000000001"
+        },
         "definition": "SHOW TAG VALUES FROM \"ping\" WITH KEY = \"url\"",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "Workers",
         "multi": true,
         "name": "workers_all",
-        "options": [
-          {
-            "selected": false,
-            "text": "QA-Power8-4-kvm.qa.suse.de",
-            "value": "QA-Power8-4-kvm.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "QA-Power8-5-kvm.qa.suse.de",
-            "value": "QA-Power8-5-kvm.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "e212.suse.de",
-            "value": "e212.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "grenache-1.qa.suse.de",
-            "value": "grenache-1.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "malbec.arch.suse.de",
-            "value": "malbec.arch.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqa-monitor.qa.suse.de",
-            "value": "openqa-monitor.qa.suse.de"
-          },
-          {
-            "selected": true,
-            "text": "openqa.suse.de",
-            "value": "openqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaw1.qa.suse.de",
-            "value": "openqaw1.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaw2.qa.suse.de",
-            "value": "openqaw2.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker-arm-1.suse.de",
-            "value": "openqaworker-arm-1.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker-arm-2.suse.de",
-            "value": "openqaworker-arm-2.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker-arm-3.suse.de",
-            "value": "openqaworker-arm-3.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker10.suse.de",
-            "value": "openqaworker10.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker11.suse.de",
-            "value": "openqaworker11.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker13.suse.de",
-            "value": "openqaworker13.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker2.suse.de",
-            "value": "openqaworker2.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker3.suse.de",
-            "value": "openqaworker3.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker5.suse.de",
-            "value": "openqaworker5.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker6.suse.de",
-            "value": "openqaworker6.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker7.suse.de",
-            "value": "openqaworker7.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker8.suse.de",
-            "value": "openqaworker8.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker9.suse.de",
-            "value": "openqaworker9.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "s390p7.suse.de",
-            "value": "s390p7.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "s390p8.suse.de",
-            "value": "s390p8.suse.de"
-          }
-        ],
+        "options": [],
         "query": "SHOW TAG VALUES FROM \"ping\" WITH KEY = \"url\"",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "/.*\\.suse\\.de$/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "tags": [],
@@ -3198,11 +802,8 @@
             "$__all"
           ]
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "workers_arm",
         "options": [
@@ -3243,7 +844,6 @@
         "type": "custom"
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "tags": [],
@@ -3254,11 +854,8 @@
             "$__all"
           ]
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "workers_ppc64le",
         "options": [
@@ -3299,7 +896,6 @@
         "type": "custom"
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "tags": [],
@@ -3310,11 +906,8 @@
             "$__all"
           ]
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "workers_x86_64",
         "options": [
@@ -3403,5 +996,6 @@
   "timezone": "",
   "title": "OSD status overview",
   "uid": "4KkGdvvZk",
-  "version": 28
+  "version": 29,
+  "weekStart": ""
 }
