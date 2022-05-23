@@ -64,6 +64,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
+        "message": "The machine ${tag_url} was not pingable for several minutes.\n\nSuggested actions:\n* Check if *you* can ping the machine (network connection within the infrastructure might be disrupted)\n* Login over ssh if possible, otherwise use a management interface, e.g. IPMI (machine could be stuck in boot process)",
         "name": "Average Ping time (ms) alert",
         "noDataState": "no_data",
         "notifications": [
