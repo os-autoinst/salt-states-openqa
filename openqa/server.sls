@@ -375,7 +375,7 @@ salt-master.service:
   file.managed:
     - source: salt://postfix/sysconfig/postfix
 
-https://gitlab.suse.de/openqa/scripts.git:
+https://github.com/os-autoinst/sync-and-trigger.git:
   git.cloned:
     - target: /opt/openqa-scripts
 

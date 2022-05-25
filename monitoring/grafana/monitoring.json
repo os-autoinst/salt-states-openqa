@@ -8,16 +8,22 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "Panels/alerts for the monitoring itself",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 60,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "alert": {
@@ -64,14 +70,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
       "description": "This panel contains no data. Its only purpose is the InfluxDB alert.\n\nThis alert is only supposed to catch \"execution errors\" like `tsdb.HandleRequest() error Get \"http://localhost:8086/query?…: dial tcp [::1]:8086: connect: connection refused`. Hence there's just a query which is never supposed to return any data which is treated as \"ok\" and only execution errors trigger the alert.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -98,7 +97,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -137,9 +136,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Panel for InfluxDB alert",
       "tooltip": {
         "shared": true,
@@ -148,9 +145,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -158,29 +153,22 @@
         {
           "$$hashKey": "object:428",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:429",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
-  "schemaVersion": 27,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -194,5 +182,6 @@
   "timezone": "",
   "title": "Monitoring",
   "uid": "EML0bpuGk",
-  "version": 3
+  "version": 5,
+  "weekStart": ""
 }

@@ -8,14 +8,21 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
+  "liveNow": false,
   "panels": [
 {% for service in ['sshd','openqa-gru','openqa-webui','openqa-livehandler','openqa-scheduler','openqa-websockets','smb','vsftpd','telegraf','salt-master','salt-minion','rsyncd','postgresql','postfix','cron','apache2'] %}
     {
@@ -60,7 +67,6 @@
       },
       "aliasColors": {},
       "bars": false,
-      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
       "fill": 1,
@@ -81,10 +87,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "6.3.3",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -154,9 +160,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -164,24 +168,17 @@
         {
           "decimals": 0,
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
 {% if not loop.last %}
@@ -190,7 +187,7 @@
 {% endfor %}
   ],
   "refresh": "30s",
-  "schemaVersion": 19,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -217,5 +214,6 @@
   "timezone": "",
   "title": "Webui Systemd Services",
   "uid": "webuiSyS",
-  "version": 2
+  "version": 6,
+  "weekStart": ""
 }
