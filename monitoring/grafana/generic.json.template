@@ -1754,29 +1754,6 @@
               "type": "avg"
             },
             "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                1500
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "C",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
           }
         ],
         "executionErrorState": "keep_state",
