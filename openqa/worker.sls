@@ -221,6 +221,11 @@ openqa-reload-worker-auto-restart@{{ i }}.path:
           - openqa-reload-worker-auto-restart@{{ i }}
 {% endfor %}
 
+# switch from openqa-worker-plain@ to openqa-worker-auto-restart@
+/etc/systemd/system/openqa-worker@.service:
+  file.symlink:
+    - target: /usr/lib/systemd/system/openqa-worker-auto-restart@.service
+
 openqa-worker.target:
   service.disabled
 
