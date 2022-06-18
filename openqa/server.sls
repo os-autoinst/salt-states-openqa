@@ -37,10 +37,10 @@ server.packages:
     - sections:
         global:
           plugins: AMQP ObsRsync
-          branding: openqa.suse.de
+          branding: {{ pillar['server']['branding'] }}
           scm: git
-          download_domains: suse.de nue.suse.com opensuse.org
-          recognized_referers: bugzilla.suse.com bugzilla.opensuse.org bugzilla.novell.com bugzilla.microfocus.com progress.opensuse.org github.com build.suse.de
+          download_domains: {{ pillar['server']['download_domains'] }}
+          recognized_referers: {{ pillar['server']['recognized_referers'] }}
           max_rss_limit: 250000
         amqp:
           url: {{ pillar['server']['amqp_url'] }}
