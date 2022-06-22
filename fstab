@@ -13,6 +13,7 @@ tmpfs   /run              tmpfs   noauto          0 0
 /dev/vda2 swap swap defaults 0 0
 
 # 6c8044d6-5497-4db6-9714-89b76268121e -> vdb
+# ssd storage "expensive+fast"
 UUID=6c8044d6-5497-4db6-9714-89b76268121e /srv xfs defaults,logbsize=256k,noatime,nodiratime 1 2
 /srv/PSQL /var/lib/pgsql none bind 0 0
 
