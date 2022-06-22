@@ -320,13 +320,13 @@ readonly_db_access_audit_events:
 # that the configuration becomes effective which needs a server restart
 postgresql-listen_address:
   file.replace:
-    - name: /srv/PSQL/data/postgresql.conf:
+    - name: /srv/PSQL/data/postgresql.conf
     - pattern: "(listen_addresses = ')[^']*('.*$)"
     - repl: '\1*\2'
 
 postgresql-work_mem:
   file.replace:
-    - name: /srv/PSQL/data/postgresql.conf:
+    - name: /srv/PSQL/data/postgresql.conf
     - pattern: "(work_mem = )[^B]*(.*$)"
     - repl: '\164M\2'
 
