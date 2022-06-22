@@ -318,10 +318,17 @@ readonly_db_access_audit_events:
 
 # allow access to postgres database from outside so far this does not ensure
 # that the configuration becomes effective which needs a server restart
-/srv/PSQL/data/postgresql.conf:
+postgresql-listen_address:
   file.replace:
+    - name: /srv/PSQL/data/postgresql.conf:
     - pattern: "(listen_addresses = ')[^']*('.*$)"
     - repl: '\1*\2'
+
+postgresql-work_mem:
+  file.replace:
+    - name: /srv/PSQL/data/postgresql.conf:
+    - pattern: "(work_mem = )[^B]*(.*$)"
+    - repl: '\164M\2'
 
 /srv/PSQL/data/pg_hba.conf:
   file.append:
