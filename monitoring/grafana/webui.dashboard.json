@@ -21,7 +21,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "iteration": 1653297495420,
+  "iteration": 1655995975622,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1741,10 +1741,9 @@
           {
             "evaluator": {
               "params": [
-                1,
-                2
+                1
               ],
-              "type": "outside_range"
+              "type": "lt"
             },
             "operator": {
               "type": "or"
@@ -1978,14 +1977,6 @@
           "line": false,
           "op": "lt",
           "value": 1,
-          "visible": true
-        },
-        {
-          "colorMode": "critical",
-          "fill": false,
-          "line": false,
-          "op": "gt",
-          "value": 2,
           "visible": true
         }
       ],
@@ -6157,6 +6148,6 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 38,
+  "version": 39,
   "weekStart": ""
 }
