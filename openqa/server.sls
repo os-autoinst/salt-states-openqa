@@ -335,6 +335,14 @@ postgresql-work_mem:
     - text: |
         host    all             openqa          0.0.0.0/0               md5
         host    all             openqa          ::/0                    md5
+
+postgresql.service:
+  service.running:
+    - enable: True
+    - restart: True
+    - watch:
+      - file: /srv/PSQL/data/postgresql.conf
+      - file: /srv/PSQL/data/pg_hba.conf
 {%- endif %}
 
 /etc/vsftpd.conf:
