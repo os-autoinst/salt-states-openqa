@@ -327,14 +327,22 @@ postgresql-listen_address:
 postgresql-work_mem:
   file.replace:
     - name: /srv/PSQL/data/postgresql.conf
-    - pattern: "(work_mem = )[^B]*(.*$)"
-    - repl: '\164M\2'
+    - pattern: "^#?(work_mem =)[^B]*(.*$)"
+    - repl: '\1 64M\2'
 
 /srv/PSQL/data/pg_hba.conf:
   file.append:
     - text: |
         host    all             openqa          0.0.0.0/0               md5
         host    all             openqa          ::/0                    md5
+
+postgresql.service:
+  service.running:
+    - enable: True
+    - restart: True
+    - watch:
+      - file: /srv/PSQL/data/postgresql.conf
+      - file: /srv/PSQL/data/pg_hba.conf
 {%- endif %}
 
 /etc/vsftpd.conf:
