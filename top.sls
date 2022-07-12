@@ -6,6 +6,7 @@ base:
     - chrony
     - auto-update
     - monitoring.telegraf
+    - udev.disk_descriptions
   'G@roles:webui':
     - salt.master
     - etc.master

@@ -1,0 +1,3 @@
+{% for devname,description in pillar['disk_descriptions'].get(grains['fqdn'], {}).items() %}
+SUBSYSTEM=="block", ENV{DEVNAME}=="{{devname}}", ENV{DESCRIPTION}+="{{description}}"
+{%- endfor %}
