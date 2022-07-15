@@ -21,7 +21,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "iteration": 1657611628948,
+  "iteration": 1657897314497,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -32,128 +32,6 @@
         "w": 24,
         "x": 0,
         "y": 0
-      },
-      "id": 100,
-      "panels": [],
-      "repeat": "host_disks",
-      "title": "IO of $host_disks",
-      "type": "row"
-    },
-    {
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "index": 0,
-                  "text": "No description present"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 24,
-        "x": 0,
-        "y": 1
-      },
-      "id": 107,
-      "options": {
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/^diskio$/",
-          "values": false
-        },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "8.3.5",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "diskio",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"DESCRIPTION\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /^$host_disks$/",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "title": "Disk description",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 24
       },
       "id": 33,
       "panels": [],
@@ -217,7 +95,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 25
+        "y": 1
       },
       "hiddenSeries": false,
       "id": 76,
@@ -405,7 +283,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 25
+        "y": 1
       },
       "hiddenSeries": false,
       "id": 78,
@@ -535,7 +413,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 9
       },
       "id": 27,
       "panels": [],
@@ -631,7 +509,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 34
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 23,
@@ -1192,7 +1070,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 34
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 25,
@@ -1408,7 +1286,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 18
       },
       "id": 72,
       "panels": [],
@@ -1564,7 +1442,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 19
       },
       "hiddenSeries": false,
       "id": 74,
@@ -1849,7 +1727,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 51
+        "y": 27
       },
       "id": 21,
       "panels": [],
@@ -1914,7 +1792,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 52
+        "y": 28
       },
       "hiddenSeries": false,
       "id": 17,
@@ -2214,7 +2092,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 52
+        "y": 28
       },
       "hiddenSeries": false,
       "id": 19,
@@ -2472,7 +2350,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 60
+        "y": 36
       },
       "id": 70,
       "panels": [],
@@ -2565,7 +2443,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 61
+        "y": 37
       },
       "height": "400",
       "hiddenSeries": false,
@@ -2747,7 +2625,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 71
+        "y": 47
       },
       "id": 54,
       "panels": [],
@@ -2833,7 +2711,7 @@
         "h": 6,
         "w": 7,
         "x": 0,
-        "y": 72
+        "y": 48
       },
       "hiddenSeries": false,
       "id": 86,
@@ -2983,7 +2861,7 @@
         "h": 6,
         "w": 9,
         "x": 7,
-        "y": 72
+        "y": 48
       },
       "hiddenSeries": false,
       "id": 55,
@@ -3177,7 +3055,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 72
+        "y": 48
       },
       "hiddenSeries": false,
       "id": 50,
@@ -3348,17 +3226,772 @@
       }
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 78
+        "y": 54
       },
-      "id": 60,
+      "id": 100,
       "panels": [],
-      "title": "IO of vda (/ , fast storage)",
+      "repeat": "host_disks",
+      "title": "IO of $host_disks",
       "type": "row"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "index": 0,
+                  "text": "No description present"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 55
+      },
+      "id": 107,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^diskio$/",
+          "values": false
+        },
+        "text": {
+          "valueSize": 50
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "8.3.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "diskio",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"DESCRIPTION\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /^$host_disks$/",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Disk description",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "iops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 58
+      },
+      "id": 119,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_name: $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$tag_name: $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(writes),1s) as \"write\" FROM \"diskio\" WHERE   (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Disk I/O requests for $host_disks",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 58
+      },
+      "id": 136,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_name: $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(read_bytes),1s) as \"read\" FROM \"diskio\" WHERE (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/)  AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$tag_name: $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(write_bytes),1s) as \"write\" FROM \"diskio\" WHERE (\"host\" = 'openqa' and \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Disk I/O bytes for $host_disks",
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                10000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                1000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "6m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Disk I/O time for /dev/vda (/) alert",
+        "noDataState": "keep_state",
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 10000
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 58
+      },
+      "id": 158,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_name: $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(read_time),1s) as \"read\" FROM \"diskio\" WHERE  (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/)  AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$tag_name: $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(write_time),1s) as \"write\" FROM \"diskio\" WHERE  (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Disk I/O time for $host_disks",
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -3366,59 +3999,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 79
-      },
-      "id": 92,
-      "panels": [],
-      "title": "IO of vdb (/srv , fast storage)",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 80
-      },
-      "id": 64,
-      "panels": [],
-      "title": "IO of vdc (/assets , cheap+slow storage)",
-      "type": "row"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 81
-      },
-      "id": 66,
-      "panels": [],
-      "title": "IO of vdd (/results, fast storage)",
-      "type": "row"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 82
-      },
-      "id": 62,
-      "panels": [],
-      "title": "IO of vde (/space-slow)",
-      "type": "row"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 83
+        "y": 120
       },
       "id": 10,
       "panels": [],
@@ -3442,7 +4023,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 84
+        "y": 121
       },
       "hiddenSeries": false,
       "id": 80,
@@ -3569,7 +4150,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 84
+        "y": 121
       },
       "hiddenSeries": false,
       "id": 82,
@@ -3731,7 +4312,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 84
+        "y": 121
       },
       "hiddenSeries": false,
       "id": 84,
@@ -3996,7 +4577,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 92
+        "y": 129
       },
       "hiddenSeries": false,
       "id": 88,
@@ -4163,7 +4744,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 92
+        "y": 129
       },
       "hiddenSeries": false,
       "id": 15,
@@ -4354,7 +4935,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 92
+        "y": 129
       },
       "hiddenSeries": false,
       "id": 14,
@@ -4863,7 +5444,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 98
+        "y": 135
       },
       "id": 8,
       "panels": [],
@@ -4939,7 +5520,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 99
+        "y": 136
       },
       "hiddenSeries": false,
       "id": 2,
@@ -5121,7 +5702,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 106
+        "y": 143
       },
       "hiddenSeries": false,
       "id": 89,
@@ -5433,7 +6014,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 113
+        "y": 150
       },
       "hiddenSeries": false,
       "id": 4,
@@ -5736,7 +6317,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 113
+        "y": 150
       },
       "hiddenSeries": false,
       "id": 6,
@@ -5936,7 +6517,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 120
+        "y": 157
       },
       "hiddenSeries": false,
       "id": 96,
@@ -6092,7 +6673,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 127
+        "y": 164
       },
       "hiddenSeries": false,
       "id": 98,
@@ -6291,6 +6872,6 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 40,
+  "version": 42,
   "weekStart": ""
 }
