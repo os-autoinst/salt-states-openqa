@@ -21,12 +21,12 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "iteration": 1657553480442,
+  "iteration": 1657611628948,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -36,8 +36,116 @@
       "id": 100,
       "panels": [],
       "repeat": "host_disks",
-      "title": "IO for $host_disks",
+      "title": "IO of $host_disks",
       "type": "row"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "index": 0,
+                  "text": "No description present"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 107,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^diskio$/",
+          "values": false
+        },
+        "text": {
+          "valueSize": 50
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "8.3.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "diskio",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"DESCRIPTION\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /^$host_disks$/",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Disk description",
+      "transparent": true,
+      "type": "stat"
     },
     {
       "collapsed": false,
@@ -45,7 +153,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 24
       },
       "id": 33,
       "panels": [],
@@ -109,7 +217,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 7
+        "y": 25
       },
       "hiddenSeries": false,
       "id": 76,
@@ -297,7 +405,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 7
+        "y": 25
       },
       "hiddenSeries": false,
       "id": 78,
@@ -427,7 +535,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 33
       },
       "id": 27,
       "panels": [],
@@ -523,7 +631,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 23,
@@ -1084,7 +1192,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 16
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 25,
@@ -1300,7 +1408,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 42
       },
       "id": 72,
       "panels": [],
@@ -1456,7 +1564,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 43
       },
       "hiddenSeries": false,
       "id": 74,
@@ -1741,7 +1849,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 51
       },
       "id": 21,
       "panels": [],
@@ -1806,7 +1914,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 34
+        "y": 52
       },
       "hiddenSeries": false,
       "id": 17,
@@ -2106,7 +2214,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 34
+        "y": 52
       },
       "hiddenSeries": false,
       "id": 19,
@@ -2364,7 +2472,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 60
       },
       "id": 70,
       "panels": [],
@@ -2457,7 +2565,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 61
       },
       "height": "400",
       "hiddenSeries": false,
@@ -2639,7 +2747,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 53
+        "y": 71
       },
       "id": 54,
       "panels": [],
@@ -2725,7 +2833,7 @@
         "h": 6,
         "w": 7,
         "x": 0,
-        "y": 54
+        "y": 72
       },
       "hiddenSeries": false,
       "id": 86,
@@ -2875,7 +2983,7 @@
         "h": 6,
         "w": 9,
         "x": 7,
-        "y": 54
+        "y": 72
       },
       "hiddenSeries": false,
       "id": 55,
@@ -3069,7 +3177,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 54
+        "y": 72
       },
       "hiddenSeries": false,
       "id": 50,
@@ -3240,12 +3348,12 @@
       }
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 60
+        "y": 78
       },
       "id": 60,
       "panels": [],
@@ -3258,7 +3366,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 61
+        "y": 79
       },
       "id": 92,
       "panels": [],
@@ -3266,12 +3374,12 @@
       "type": "row"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 62
+        "y": 80
       },
       "id": 64,
       "panels": [],
@@ -3284,7 +3392,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 63
+        "y": 81
       },
       "id": 66,
       "panels": [],
@@ -3297,7 +3405,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 64
+        "y": 82
       },
       "id": 62,
       "panels": [],
@@ -3310,7 +3418,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 65
+        "y": 83
       },
       "id": 10,
       "panels": [],
@@ -3334,7 +3442,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 66
+        "y": 84
       },
       "hiddenSeries": false,
       "id": 80,
@@ -3461,7 +3569,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 66
+        "y": 84
       },
       "hiddenSeries": false,
       "id": 82,
@@ -3623,7 +3731,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 66
+        "y": 84
       },
       "hiddenSeries": false,
       "id": 84,
@@ -3888,7 +3996,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 74
+        "y": 92
       },
       "hiddenSeries": false,
       "id": 88,
@@ -4055,7 +4163,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 74
+        "y": 92
       },
       "hiddenSeries": false,
       "id": 15,
@@ -4246,7 +4354,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 74
+        "y": 92
       },
       "hiddenSeries": false,
       "id": 14,
@@ -4755,7 +4863,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 80
+        "y": 98
       },
       "id": 8,
       "panels": [],
@@ -4831,7 +4939,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 81
+        "y": 99
       },
       "hiddenSeries": false,
       "id": 2,
@@ -5013,7 +5121,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 88
+        "y": 106
       },
       "hiddenSeries": false,
       "id": 89,
@@ -5325,7 +5433,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 95
+        "y": 113
       },
       "hiddenSeries": false,
       "id": 4,
@@ -5628,7 +5736,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 95
+        "y": 113
       },
       "hiddenSeries": false,
       "id": 6,
@@ -5828,7 +5936,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 102
+        "y": 120
       },
       "hiddenSeries": false,
       "id": 96,
@@ -5984,7 +6092,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 109
+        "y": 127
       },
       "hiddenSeries": false,
       "id": 98,
@@ -6136,8 +6244,9 @@
         },
         "definition": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"name\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /vd[a-z]$/",
         "description": "Variable containing all host disks (e.g. vda, vdb, etc.) to populate disk IO query rows",
-        "hide": 1,
+        "hide": 0,
         "includeAll": true,
+        "label": "Disks",
         "multi": true,
         "name": "host_disks",
         "options": [],
