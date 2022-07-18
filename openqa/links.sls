@@ -16,7 +16,7 @@
       - template: jinja
         links_footer:
           1:
-            url: https://build.suse.de/staging_workflows/SUSE:SLE-15-SP4:GA
+            url: https://build.suse.de/staging_workflows/SUSE:SLE-15-SP5:GA
             description: SLE15 staging dashboard
 
 /usr/share/openqa/templates/webapi/branding/openqa.suse.de/docbox.html.ep:
