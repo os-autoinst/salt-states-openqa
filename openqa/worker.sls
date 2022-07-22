@@ -347,6 +347,7 @@ python3-augeas:
     - retry:
         attempts: 5
 
+{% set additional_linux_cmdline_args = pillar['workerconf'].get(grains['host'], {}).get('additional_linux_cmdline_args', '') %}
 grub-conf:
   augeas.change:
     - require:
@@ -355,7 +356,7 @@ grub-conf:
     - context: /files/etc/default/grub
     - changes:
       - set GRUB_TERMINAL '"serial console"'
-      - set GRUB_CMDLINE_LINUX_DEFAULT '"{{ ttyconsolearg }} nospec kvm.nested=1 kvm_intel.nested=1 kvm_amd.nested=1 kvm-arm.nested=1 crashkernel=210M"'
+      - set GRUB_CMDLINE_LINUX_DEFAULT '"{{ ttyconsolearg }} nospec kvm.nested=1 kvm_intel.nested=1 kvm_amd.nested=1 kvm-arm.nested=1 crashkernel=210M {{ additional_linux_cmdline_args }}"'
       - set GRUB_SERIAL_COMMAND '"serial --unit=1 --speed=115200"'
 
 'grub2-mkconfig > /boot/grub2/grub.cfg':
