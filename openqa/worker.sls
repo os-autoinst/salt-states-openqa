@@ -1,7 +1,13 @@
 {% if grains['osarch'] == 'x86_64' %}
-{% set ttyconsolearg = "console=tty0 console=ttyS1,115200" %}
+{% set serial_tty_default = "ttyS1,115200" %}
 {% elif grains['osarch'] == 'aarch64' %}
-{% set ttyconsolearg = "console=tty0 console=ttyAMA0,115200" %}
+{% set serial_tty_default = "ttyAMA0,115200" %}
+{% else %}
+{% set serial_tty_default = None %}
+{% endif %}
+{% set serial_tty = pillar['workerconf'].get(grains['host'], {}).get('tty_dev', serial_tty_default) %}
+{% if serial_tty %}
+{% set ttyconsolearg = "console=tty0 console=" + serial_tty %}
 {% else %}
 {% set ttyconsolearg = "" %}
 {% endif %}
