@@ -1451,7 +1451,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "name": "{{ worker }}: QA network infrastructure Package loss alert",
+        "name": "{{ worker }}: QA network infrastructure packet loss alert",
         "noDataState": "no_data",
         "notifications": [
           {
@@ -1589,7 +1589,7 @@
           "visible": true
         }
       ],
-      "title": "QA network infrastructure Package loss",
+      "title": "QA network infrastructure packet loss",
       "type": "timeseries"
     },
     {
