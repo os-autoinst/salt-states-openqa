@@ -32,6 +32,190 @@
           {
             "evaluator": {
               "params": [
+                50
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "At least one host listed under `required_external_networks` in `workerconf.sls` in the pillars repository is not pingable from at least one openQA worker host.\n\nCheck the panel associated with the alert. The legend table on the right shows the problematic hosts on top.",
+        "name": "Packet loss between worker hosts and other hosts alert",
+        "noDataState": "keep_state",
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
+      },
+      "description": "Shows packet loss within the the QA network infrastructure.\n\nThe first hostname is an openQA worker host. The second hostname is a host listed under `required_external_networks` in `workerconf.sls` in the pillars repository that is pinged from the openQA worker host.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Packet loss reported by ping",
+            "axisPlacement": "left",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_host - $tag_url",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "url"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "ping",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"percent_packet_loss\") FROM \"ping\" AND $timeFilter GROUP BY time($__interval), \"url\" fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "percent_packet_loss"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 50,
+          "visible": true
+        }
+      ],
+      "title": "Packet loss between worker hosts and other hosts",
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
                 0
               ],
               "type": "gt"
@@ -76,7 +260,7 @@
       "gridPos": {
         "h": 9,
         "w": 12,
-        "x": 0,
+        "x": 12,
         "y": 0
       },
       "hiddenSeries": false,
@@ -182,6 +366,6 @@
   "timezone": "",
   "title": "Monitoring",
   "uid": "EML0bpuGk",
-  "version": 5,
+  "version": 6,
   "weekStart": ""
 }
