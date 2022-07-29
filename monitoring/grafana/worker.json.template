@@ -1447,12 +1447,12 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "alerting",
+        "executionErrorState": "keep_state",
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "name": "{{ worker }}: QA network infrastructure Package loss alert",
-        "noDataState": "no_data",
+        "name": "{{ worker }}: QA network infrastructure packet loss alert",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -1589,7 +1589,7 @@
           "visible": true
         }
       ],
-      "title": "QA network infrastructure Package loss",
+      "title": "QA network infrastructure packet loss",
       "type": "timeseries"
     },
     {
@@ -4260,6 +4260,6 @@
   "timezone": "browser",
   "title": "Worker dashboard ({{ worker }})",
   "uid": "WD{{ worker }}",
-  "version": 30,
+  "version": 38,
   "weekStart": ""
 }
