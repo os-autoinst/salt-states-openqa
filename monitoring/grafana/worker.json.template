@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 5955,
   "graphTooltip": 1,
-  "iteration": 1658845280776,
+  "iteration": 1659087691481,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1420,45 +1420,6 @@
       }
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                50
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "{{ worker }}: QA network infrastructure packet loss alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1581,14 +1542,7 @@
           ]
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "op": "gt",
-          "value": 50,
-          "visible": true
-        }
-      ],
+      "thresholds": [],
       "title": "QA network infrastructure packet loss",
       "type": "timeseries"
     },
