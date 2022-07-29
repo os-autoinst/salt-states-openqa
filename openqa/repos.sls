@@ -25,9 +25,10 @@ devel_openQA:
         attempts: 5
 
 /etc/zypp/repos.d/devel_openQA.repo:
-  file.append:
-    - text:
-      - keeppackages=1
+  file.replace:
+    - pattern: '^keeppackages=0$'
+    - repl: 'keeppackages=1'
+    - append_if_not_found: True
     - require:
       - pkgrepo: devel_openQA
 
@@ -44,9 +45,10 @@ devel_openQA_Modules:
         attempts: 5
 
 /etc/zypp/repos.d/devel_openQA_Modules.repo:
-  file.append:
-    - text:
-      - keeppackages=1
+  file.replace:
+    - pattern: '^keeppackages=0$'
+    - repl: 'keeppackages=1'
+    - append_if_not_found: True
     - require:
       - pkgrepo: devel_openQA_Modules
 {% endif %}
