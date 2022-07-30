@@ -5,29 +5,6 @@
 {% set openqamodulesrepo = "SLE-12" %}
 {% endif %}
 
-{%- if grains.osrelease < '15.2' %}
-telegraf-monitoring:
-  pkgrepo.managed:
-    - humanname: telegraf-monitoring
-    - baseurl: http://download.opensuse.org/repositories/devel:/languages:/go/{{ repo }}/
-    - gpgautoimport: True
-    - refresh: True
-    - priority: 105
-    - retry:
-        attempts: 5
-
-# workaround for https://progress.opensuse.org/issues/58331
-# not using ini.options_present due to
-# https://github.com/saltstack/salt/issues/33669
-/etc/zypp/repos.d/telegraf-monitoring.repo:
-  file.append:
-    - text:
-      - keeppackages=1
-    - require:
-      - pkgrepo: telegraf-monitoring
-
-{%- endif %}
-
 SUSE_CA:
   pkgrepo.managed:
     - humanname: SUSE_CA
@@ -48,9 +25,10 @@ devel_openQA:
         attempts: 5
 
 /etc/zypp/repos.d/devel_openQA.repo:
-  file.append:
-    - text:
-      - keeppackages=1
+  file.replace:
+    - pattern: '^keeppackages=0$'
+    - repl: 'keeppackages=1'
+    - append_if_not_found: True
     - require:
       - pkgrepo: devel_openQA
 
@@ -67,9 +45,10 @@ devel_openQA_Modules:
         attempts: 5
 
 /etc/zypp/repos.d/devel_openQA_Modules.repo:
-  file.append:
-    - text:
-      - keeppackages=1
+  file.replace:
+    - pattern: '^keeppackages=0$'
+    - repl: 'keeppackages=1'
+    - append_if_not_found: True
     - require:
       - pkgrepo: devel_openQA_Modules
 {% endif %}
