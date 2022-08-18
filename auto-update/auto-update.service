@@ -6,6 +6,6 @@ StartLimitBurst=12
 
 [Service]
 Type=simple
-ExecStart=/bin/sh -c 'zypper -n --non-interactive-include-reboot-patches patch --replacefiles --auto-agree-with-licenses --force-resolution --download-in-advance && needs-restarting --reboothint >/dev/null || (command -v rebootmgrctl >/dev/null && rebootmgrctl reboot ||:)'
+ExecStart=/bin/sh -c 'zypper -n --non-interactive-include-reboot-patches patch --replacefiles --auto-agree-with-licenses --download-in-advance && needs-restarting --reboothint >/dev/null || (command -v rebootmgrctl >/dev/null && rebootmgrctl reboot ||:)'
 Restart=on-failure
 RestartSec=300
