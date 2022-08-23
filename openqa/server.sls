@@ -430,6 +430,14 @@ git-clone-os-autoinst-scripts:
         SystemMaxFileSize=1G
         SystemMaxFiles=200
 
+/etc/systemd/system/systemd-journal-flush.service.d/storage.conf:
+  file.managed:
+    - mode: 644
+    - makedirs: true
+    - contents: |
+        [Unit]
+        RequiresMountsFor=/srv
+
 /etc/systemd/system/systemd-journal-flush.service.d/startup-timeout.conf:
   file.managed:
     - mode: 644
