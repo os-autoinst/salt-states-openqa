@@ -28,6 +28,7 @@ base:
   'G@roles:worker and G@osarch:aarch64':
     - haveged
   'G@roles:monitor':
+    - monitoring.maintenance_queue
     - monitoring.grafana
     - monitoring.influxdb
     - certificates.dehydrated
