@@ -3,6 +3,7 @@ base:
     - network
     - salt.minion
     - sshd
+    - sysctl
     - chrony
     - auto-update
     - monitoring.telegraf
