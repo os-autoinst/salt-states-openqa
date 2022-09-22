@@ -26,7 +26,7 @@ git -C /srv clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git pillar #
 To connect to the master, e.g. openqa.suse.de:
 
 ```
-grep -q '\<salt\>' /etc/hosts || echo -e "10.160.0.207\tsalt\tsalt.openqa.suse.de" >> /etc/hosts
+grep -q '\<openqa.suse.de\>' /etc/salt/minion || echo "master: openqa.suse.de" >> /etc/salt/minion
 ```
 
 and accept the key on the master with `salt-key -y -a $host` with `$host`
