@@ -328,7 +328,7 @@ postgresql-work_mem:
   file.replace:
     - name: /srv/PSQL/data/postgresql.conf
     - pattern: "^#?(work_mem =)[^B]*(.*$)"
-    - repl: '\1 16M\2'
+    - repl: '\1 64M\2'
 
 /srv/PSQL/data/pg_hba.conf:
   file.append:
