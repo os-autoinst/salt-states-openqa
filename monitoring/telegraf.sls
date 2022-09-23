@@ -27,11 +27,9 @@ telegraf.packages:
 telegraf:
   service.running:
     - enable: True
-    {%- if grains.get('roles', '') in ['webui', 'worker'] %}
     - watch:
       - file: /etc/telegraf/telegraf.conf
       - file: /etc/telegraf/telegraf.d/*
-    {%- endif %}
 {%- endif %}
 
 /etc/telegraf/scripts/systemd_list_service_by_state_for_telegraf.sh:
