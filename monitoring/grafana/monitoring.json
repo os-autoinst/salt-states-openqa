@@ -57,7 +57,7 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "5m",
+        "for": "15m",
         "frequency": "1m",
         "handler": 1,
         "message": "At least one host listed under `required_external_networks` in `workerconf.sls` in the pillars repository is not pingable from at least one openQA worker host.\n\nCheck the panel associated with the alert. The legend table on the right shows the problematic hosts on top.",
