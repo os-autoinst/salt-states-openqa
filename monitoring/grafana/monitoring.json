@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -65,6 +68,10 @@
             "uid": "2ACofrdWz"
           }
         ]
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
       },
       "description": "Shows packet loss within the the QA network infrastructure.\n\nThe first hostname is an openQA worker host. The second hostname is a host listed under `required_external_networks` in `workerconf.sls` in the pillars repository that is pinged from the openQA worker host.",
       "fieldConfig": {
@@ -138,7 +145,8 @@
           "sortDesc": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -254,6 +262,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "This panel contains no data. Its only purpose is the InfluxDB alert.\n\nThis alert is only supposed to catch \"execution errors\" like `tsdb.HandleRequest() error Get \"http://localhost:8086/query?…: dial tcp [::1]:8086: connect: connection refused`. Hence there's just a query which is never supposed to return any data which is treated as \"ok\" and only execution errors trigger the alert.",
       "fill": 1,
       "fillGradient": 0,
@@ -352,7 +364,8 @@
       }
     }
   ],
-  "schemaVersion": 34,
+  "refresh": "",
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -366,6 +379,6 @@
   "timezone": "",
   "title": "Monitoring",
   "uid": "EML0bpuGk",
-  "version": 6,
+  "version": 9,
   "weekStart": ""
 }
