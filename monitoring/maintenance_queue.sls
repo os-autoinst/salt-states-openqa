@@ -1,3 +1,12 @@
+maintenance_queue.packages:
+  pkg.installed:
+    - refresh: False
+    - retry:
+        attempts: 5
+    - pkgs:
+      - python3-pandas
+
+
 /etc/telegraf/telegraf.d/maintenance_queue.conf:
   file.managed:
     - source: salt://monitoring/maintenance_queue/maintenance_queue.conf
