@@ -69,7 +69,7 @@ wicked ifup br1:
       - PRE_UP_SCRIPT="wicked:gre_tunnel_preup.sh"
      {% endif %}
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
 
 # Configure tap devices for openvswitch
 
@@ -89,7 +89,7 @@ wicked ifup br1:
       - TUNNEL_SET_GROUP='kvm'
       - TUNNEL_SET_OWNER='_openqa-worker'
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
 {% endfor %}
 
 # Worker for GRE needs to have defined entry bridge_ip: <uplink_address_of_this_worker> in pillar data
@@ -125,7 +125,7 @@ wicked ifup br1:
     - contents:
       - OS_AUTOINST_USE_BRIDGE='br1'
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
 
 /etc/systemd/system/os-autoinst-openvswitch.service.d/30-init-timeout.conf:
   file.managed:

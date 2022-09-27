@@ -17,12 +17,12 @@ include:
  - openqa.journal
  - sudo
 
-# Packages that must come from the openQA repo
-worker-openqa.packages:
+
+worker.packages:
   pkg.installed:
     - refresh: False
-    - retry:
-        attempts: 10
+    - retry:  # some packages can change rapidly in our repos needing a retry as zypper does not do that
+        attempts: 5
     - pkgs:
       - openQA-worker
       - xterm-console
@@ -30,14 +30,6 @@ worker-openqa.packages:
       - os-autoinst-openvswitch
       # force the installation of the full gzip so that vagrant-libvirt can be installed
       - gzip
-
-# Packages that can come from anywhere
-worker.packages:
-  pkg.installed:
-    - refresh: False
-    - retry:  # some packages can change rapidly in our repos needing a retry as zypper does not do that
-        attempts: 5
-    - pkgs:
       - kdump
       - x3270 # for s390x backend
       - icewm-lite # for localXvnc console
@@ -69,8 +61,6 @@ worker.packages:
       {% endif %}
       - os-autoinst-distri-opensuse-deps
       - ca-certificates-suse # secure connection with public-cloud-helper
-    - require:
-      - pkg: worker-openqa.packages
 
 nfs-client:
   pkg.installed:
@@ -97,7 +87,7 @@ nfs-client:
       - x-systemd.mount-timeout
       - x-systemd.device-timeout
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
 {%- endif %}
 
 ## setup workers.ini based on info in workerconf pillar
@@ -168,7 +158,7 @@ nfs-client:
       webuis: {{ webuidict }}
       global: {{ globaldict }}
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
 
 # setup client.conf based on info in workerconf pillar
 /etc/openqa/client.conf:
@@ -184,7 +174,7 @@ nfs-client:
           secret: {{ pillar['workerconf'][workerhost]['webuis'][webui]['secret'] }}
         {% endfor %}
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
 
 /etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf:
   file.managed:
@@ -192,7 +182,7 @@ nfs-client:
     - source: salt://openqa/openqa-max-inactive-caching-downloads.conf
     - makedirs: true
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
 
 {%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
@@ -210,7 +200,7 @@ openqa-worker-auto-restart@{{ i }}:
       - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf
 {% if loop.first %}
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
       - stop_and_disable_all_not_configured_workers
 {% endif %}
 
@@ -239,13 +229,13 @@ openqa-worker-cacheservice:
   service.running:
     - enable: True
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
 
 openqa-worker-cacheservice-minion:
   service.running:
     - enable: True
     - require:
-      - pkg: worker-openqa.packages
+      - pkg: worker.packages
 
 # Stop and disable all openqa-worker-auto-restart@ service instances which are exceeding the configured
 # number of worker slots
