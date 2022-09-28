@@ -6,7 +6,7 @@ from datetime import timedelta
 import json
 import dateutil.parser
 import pandas as pd
-
+import socket
 
 def gql_query(url, first=100, offset=0):
     query = f"""query {{
@@ -143,6 +143,8 @@ outgoing = len(tested) + len(declined) + len(sle_over)
 tested = len(tested)
 declined = len(declined)
 sle_finished = len(sle_over)
+fqdn=socket.getfqdn()
 
-res_string = f"maintenance_queue,incoming={incoming}i,queue={queue}i,outgoing={outgoing}i,queue_unassigned={queue_unassigned}i,queue_assigned={queue_assigned}i,tested={tested}i,declined={declined}i,sle_finished={sle_finished}i"
+res_string = f"maintenance_queue,machine={fqdn} incoming={incoming}i,queue={queue}i,outgoing={outgoing}i,queue_unassigned={queue_unassigned}i,queue_assigned={queue_assigned}i,tested={tested}i,declined={declined}i,sle_finished={sle_finished}i"
+
 print(res_string)
