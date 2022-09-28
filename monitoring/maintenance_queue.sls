@@ -1,5 +1,6 @@
 maintenance_queue.packages:
   pkg.installed:
+    - resolve_capabilities: True
     - refresh: False
     - retry:
         attempts: 5
