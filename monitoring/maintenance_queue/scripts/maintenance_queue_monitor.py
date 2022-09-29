@@ -99,7 +99,8 @@ for i in range(0, 100):
         rev_users = {}
         for rev in rr.node.reviewSet.edges:
             if rev.node.status.name == "new":
-                if rev.node.assignedByGroup is None or rev.node.assignedByGroup.name != "maintenance-release-approver":
+                if (rev.node.assignedByGroup is None or
+                        rev.node.assignedByGroup.name != "maintenance-release-approver"):
                     testing.add(rr.node.requestId)
             if rev.node.assignedByGroup is not None:
                 grp_name = rev.node.assignedByGroup.name
@@ -118,16 +119,22 @@ for i in range(0, 100):
                 rev_users[usr_name]['status'] = rev.node.status.name
                 if rev.node.reviewedAt is not None:
                     rev_users[usr_name]['reviewedAt'] = rev.node.reviewedAt
-        if rr.node.requestId in testing and rev_groups['qam-sle']['user'] is not None and rev_groups['qam-sle']['status'] != "new":
+        if (rr.node.requestId in testing and
+                rev_groups['qam-sle']['user'] is not None and
+                rev_groups['qam-sle']['status'] != "new"):
             on_review.add(rr.node.requestId)
             testing.remove(rr.node.requestId)
-        if rr.node.requestId in on_review and 'reviewedAt' in rev_users[rev_groups['qam-sle']['user']]:
+        if (rr.node.requestId in on_review and
+                'reviewedAt' in rev_users[rev_groups['qam-sle']['user']]):
             on_review.remove(rr.node.requestId)
             sle_over.add(rr.node.requestId)
-        if rr.node.requestId not in testing and rr.node.requestId not in on_review and rr.node.requestId not in sle_over:
+        if (rr.node.requestId not in testing and
+                rr.node.requestId not in on_review and
+                rr.node.requestId not in sle_over):
             tested.add(rr.node.requestId)
         as_at = dateutil.parser.isoparse(rev_groups['qam-sle']['assignedAt'])
-        if rr.node.requestId in testing and as_at.date() >= datetime.datetime.now().date():
+        if (rr.node.requestId in testing and
+                as_at.date() >= datetime.datetime.now().date()):
             incoming.add(rr.node.requestId)
     if json_data.data.requests.pageInfo.hasNextPage is False:
         break
@@ -153,6 +160,22 @@ declined = len(declined)
 sle_finished = len(sle_over)
 fqdn = socket.getfqdn()
 
-res_string = f"maintenance_queue,machine={fqdn} incoming={incoming}i,queue={queue}i,outgoing={outgoing}i,queue_unassigned={queue_unassigned}i,queue_assigned={queue_assigned}i,tested={tested}i,declined={declined}i,sle_finished={sle_finished}i"
+res_string = "maintenance_queue,machine=%s " \
+             "incoming=%di," \
+             "queue=%di," \
+             "outgoing=%di," \
+             "queue_unassigned=%di," \
+             "queue_assigned=%di," \
+             "tested=%di," \
+             "declined=%di," \
+             "sle_finished=%di" % (fqdn,
+                                   incoming,
+                                   queue,
+                                   outgoing,
+                                   queue_unassigned,
+                                   queue_assigned,
+                                   tested,
+                                   declined,
+                                   sle_finished)
 
 print(res_string)
