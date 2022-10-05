@@ -27,7 +27,7 @@ kdump-conf:
 # must not start the service but only enable it to be started on bootup
 kdump-service:
   service.enabled:
-    - name: kump.service
+    - name: kdump.service
     - watch:
       - augeas: kdump-conf
 {%- endif %}
