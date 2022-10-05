@@ -36,6 +36,12 @@ variables:
     - "echo 'noservices: True' >> /etc/salt/grains"
     # speed up salt a lot, see https://github.com/saltstack/salt/issues/48773#issuecomment-443599880
     - echo -e 'disable_grains:\n  - esxi\n\ndisable_modules:\n  - vsphere' >> /etc/salt/minion
+    # Ensure all salt state internal requirements to be able to execute all
+    # even in a mocked environment where the dependencies would not be
+    # automatically pulled in. This is not a problem for non-mocked
+    # environments because of correctly specified package dependencies
+    - zypper -n in python3-augeas
+
 
 test-general-mock:
   <<: *test_setup
@@ -54,11 +60,6 @@ test-worker-mock:
   stage: test-static
   script:
     - "echo 'roles: worker' >> /etc/salt/grains"
-    # Ensure all salt state internal requirements to be able to execute all
-    # even in a mocked environment where the dependencies would not be
-    # automatically pulled in. This is not a problem for non-mocked
-    # environments because of correctly specified package dependencies
-    - zypper -n in python3-augeas
     - $salt_call mock=True
 
 test-monitor-mock:

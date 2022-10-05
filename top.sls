@@ -6,6 +6,7 @@ base:
     - sysctl
     - chrony
     - auto-update
+    - kdump
     - monitoring.telegraf
     - udev.disk_descriptions
   'G@roles:webui':
