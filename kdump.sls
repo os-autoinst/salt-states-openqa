@@ -25,8 +25,9 @@ kdump-conf:
 {%- if not grains.get('noservices', False) %}
 # as kdump needs reserved memory which is only made effective by a reboot we
 # must not start the service but only enable it to be started on bootup
-kdump:
+kdump-service:
   service.enabled:
+    - name: kump.service
     - watch:
       - augeas: kdump-conf
 {%- endif %}
