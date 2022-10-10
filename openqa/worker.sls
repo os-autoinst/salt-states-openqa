@@ -327,21 +327,33 @@ btrfs-nocow:
     - onlyif: which btrfs && btrfs filesystem df /var/lib/openqa/cache
 
 {% set additional_linux_cmdline_args = pillar['workerconf'].get(grains['host'], {}).get('additional_linux_cmdline_args', '') %}
-grub-conf:
-  augeas.change:
-    - require:
-      - pkg: python3-augeas
-    - lens: Shellvars.lns
-    - context: /files/etc/default/grub
-    - changes:
-      - set GRUB_TERMINAL '"serial console"'
-      - set GRUB_CMDLINE_LINUX_DEFAULT '"{{ ttyconsolearg }} nospec kvm.nested=1 kvm_intel.nested=1 kvm_amd.nested=1 kvm-arm.nested=1 crashkernel=210M {{ additional_linux_cmdline_args }}"'
-      - set GRUB_SERIAL_COMMAND '"serial --unit=1 --speed=115200"'
+grub-conf-terminal:
+  file.replace:  # not using augeas here and below as it cannot handle the "+="-syntax used in kdump.sls
+    - name: /etc/default/grub
+    - pattern: '^GRUB_TERMINAL=.*$'
+    - repl: 'GRUB_TERMINAL="serial console"'
+    - append_if_not_found: True
+
+grub-conf-cmdline:
+  file.replace:
+    - name: /etc/default/grub
+    - pattern: '^GRUB_CMDLINE_LINUX_DEFAULT=.*$'
+    - repl: 'GRUB_CMDLINE_LINUX_DEFAULT="{{ ttyconsolearg }} nospec kvm.nested=1 kvm_intel.nested=1 kvm_amd.nested=1 kvm-arm.nested=1 {{ additional_linux_cmdline_args }}"'
+    - append_if_not_found: True
+
+grub-conf-serial-cmd:
+  file.replace:
+    - name: /etc/default/grub
+    - pattern: '^GRUB_SERIAL_COMMAND=.*$'
+    - repl: 'GRUB_SERIAL_COMMAND="serial --unit=1 --speed=115200"'
+    - append_if_not_found: True
 
 'grub2-mkconfig > /boot/grub2/grub.cfg':
   cmd.run:
-    - onchanges:
-      - augeas: grub-conf
+    - listen:
+      - file: grub-conf-terminal
+      - file: grub-conf-cmdline
+      - file: grub-conf-serial-cmd
     - onlyif: grub2-probe /boot
 
 # TAPSCRIPT requires qemu to be able have the CAP_NET_ADMIN capability

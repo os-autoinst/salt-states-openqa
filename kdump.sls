@@ -12,6 +12,17 @@ python3-augeas:
     - retry:
         attempts: 5
 
+/etc/default/grub:
+  file.append:
+    - text: 'GRUB_CMDLINE_LINUX_DEFAULT+=" crashkernel=210M"'
+
+update grub config with crashkernel setting:
+  cmd.run:
+    - name: 'grub2-mkconfig > /boot/grub2/grub.cfg'
+    - listen:
+      - file: /etc/default/grub
+    - onlyif: grub2-probe /boot
+
 kdump-conf:
   augeas.change:
     - require:
