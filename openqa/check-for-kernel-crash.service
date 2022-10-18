@@ -1,0 +1,11 @@
+[Unit]
+Description=Fail if at least one kernel crash has been recorded under /var/crash
+RequiresMountsFor=/var/crash
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'find /var/crash -type d -empty | read'
+
+[Install]
+WantedBy=multi-user.target

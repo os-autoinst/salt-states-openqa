@@ -23,6 +23,11 @@ update grub config with crashkernel setting:
       - file: /etc/default/grub
     - onlyif: grub2-probe /boot
 
+/etc/systemd/system/check-for-kernel-crash.service:
+  file.managed:
+    - mode: 644
+    - source: salt://openqa/check-for-kernel-crash.service
+
 kdump-conf:
   augeas.change:
     - require:
@@ -41,4 +46,7 @@ kdump-service:
     - name: kdump.service
     - watch:
       - augeas: kdump-conf
+
+check-for-kernel-crash:
+  service.enabled
 {%- endif %}
