@@ -1,0 +1,6 @@
+users:
+
+  testuser:
+    fullname: Test User
+    pub_ssh_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9M6JMOBGDHD1YqJKRicxl3v/W8Fv8wHkPUWGOKRi6uOFbGI9eHjVMloeJo7/ZPmRazs9p10IdKXy1QSeYFr1VCA/oqANJDVctEMMt8fiaVnbpDtckcofPntJw2I+t7RxHnO9XNZmzLp98z7masfc7DeAK8SFjNR+O2GT4mBpYkSLiT+emF77hVSJ+ILf0pF6bifiWcr418UEbfHC2JLDhorgPEtAcfYWdrwz2cjrlusCJ6ahbQPmI++uqRG7AKwDSNYjKDgkJRv5qZhcuoA7KPpwLVShZhIWiXKAtmG1gPmei6PuX8b+ZJ9JuQVf/0FjtKKbrifnnC+zy4GfJG+DwGnQDX7fKUj0WLAoS3bYSpR2MxEu/2vNA85SxQQTF+ukevb8/nMyHEkuDwWjo4CS2ROJsBAtVyvyPD7riyA1HZTLvoyJqcpW58LAA9ZDVBt763PgECZsWYh8lG/kCu8JCWm1ckNdoOcUfN0aoDTT8YXrTmnz4iBAOm/dEbig9yc0= testuser
