@@ -79,7 +79,7 @@
         "handler": 1,
         "message": "The machine ${tag_url} was not pingable for several minutes.\n\nSuggested actions:\n* Check if *you* can ping the machine (network connection within the infrastructure might be disrupted)\n* Login over ssh if possible, otherwise use a management interface, e.g. IPMI (machine could be stuck in boot process)",
         "name": "Average Ping time (ms) alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -496,7 +496,7 @@
         "handler": 1,
         "message": "IOwait too high\n\nCheck system journal on the host at the time of alert to see if there are any unexpected events coinciding with the alert.\n\nhttps://progress.opensuse.org/issues/69664 describes that a higher IO usage could be related to recent changes to openQA to load more test modules in parallel.",
         "name": "CPU usage alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -1066,7 +1066,7 @@
         "frequency": "1m",
         "handler": 1,
         "name": "CPU Load alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -1446,7 +1446,7 @@
         "handler": 1,
         "message": "One of the file systems is too full",
         "name": "File systems alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -2460,7 +2460,7 @@
         "frequency": "1m",
         "handler": 1,
         "name": "Memory usage alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -2739,7 +2739,7 @@
         "frequency": "1m",
         "handler": 1,
         "name": "NTP offset alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -4850,7 +4850,7 @@
         "handler": 1,
         "message": "Too few apache workers idle",
         "name": "Apache Workers alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -6639,7 +6639,7 @@
         "handler": 1,
         "message": "There is at least one broken worker for more than 15 minutes. Have a look at https://openqa.suse.de/admin/workers to find out which one it is (click the help icon to view the concrete error message).",
         "name": "Broken workers alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -7024,6 +7024,6 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 43,
+  "version": 46,
   "weekStart": ""
 }
