@@ -18,9 +18,9 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
     [[ $attempt -gt 1 ]] && echo "Trying RAID0 creation again after timeout (attempt $attempt of $attempts)"
 
     # ensure RAID is not already running (will fail if RAID is currently mounted)
-    if [[ -e /dev/md/openqa ]]; then
-        echo 'Stopping current RAID "/dev/md/openqa"'
-        mdadm --stop /dev/md/openqa || echo "Unable to stop RAID (mdadm return code: $?)"
+    if [ -e /dev/md/*openqa ]; then
+        echo 'Stopping current RAID "/dev/md/*openqa"'
+        mdadm --stop /dev/md/*openqa || echo "Unable to stop RAID (mdadm return code: $?)"
     fi
 
     # make arguments for mdadm invocation
