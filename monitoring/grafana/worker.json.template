@@ -978,7 +978,7 @@
         "handler": 1,
         "message": "No data received for pings from worker to central host, likely host is down (or split network).\n\nSee https://progress.opensuse.org/issues/71098 for details",
         "name": "{{ worker }}: host up alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
