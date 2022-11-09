@@ -1,4 +1,4 @@
-# iSCSI setup for openqaworker - currently only supports openqaworker2
+# iSCSI setup for openqaworker - currently only supports worker2
 
 qemu:
   pkg.installed:

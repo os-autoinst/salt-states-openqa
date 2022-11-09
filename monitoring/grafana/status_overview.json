@@ -923,23 +923,23 @@
           },
           {
             "selected": false,
-            "text": "openqaworker3.suse.de",
-            "value": "openqaworker3.suse.de"
+            "text": "worker3.oqa.suse.de",
+            "value": "worker3.oqa.suse.de"
           },
           {
             "selected": false,
-            "text": "openqaworker2.suse.de",
-            "value": "openqaworker2.suse.de"
+            "text": "worker2.oqa.suse.de",
+            "value": "worker2.oqa.suse.de"
           },
           {
             "selected": false,
-            "text": "openqaworker6.suse.de",
-            "value": "openqaworker6.suse.de"
+            "text": "worker6.oqa.suse.de",
+            "value": "worker6.oqa.suse.de"
           },
           {
             "selected": false,
-            "text": "openqaworker5.suse.de",
-            "value": "openqaworker5.suse.de"
+            "text": "worker5.oqa.suse.de",
+            "value": "worker5.oqa.suse.de"
           },
           {
             "selected": false,
@@ -948,16 +948,16 @@
           },
           {
             "selected": false,
-            "text": "openqaworker13.suse.de",
-            "value": "openqaworker13.suse.de"
+            "text": "worker13.oqa.suse.de",
+            "value": "worker13.oqa.suse.de"
           },
           {
             "selected": false,
-            "text": "openqaworker10.suse.de",
-            "value": "openqaworker10.suse.de"
+            "text": "worker10.oqa.suse.de",
+            "value": "worker10.oqa.suse.de"
           }
         ],
-        "query": "openqaworker8.suse.de, openqaworker3.suse.de, openqaworker2.suse.de, openqaworker6.suse.de, openqaworker5.suse.de, openqaworker9.suse.de, openqaworker13.suse.de, openqaworker10.suse.de",
+        "query": "openqaworker8.suse.de, worker3.oqa.suse.de, worker2.oqa.suse.de, worker6.oqa.suse.de, worker5.oqa.suse.de, openqaworker9.suse.de, worker13.oqa.suse.de, worker10.oqa.suse.de",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
