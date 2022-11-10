@@ -196,7 +196,7 @@
         "frequency": "10s",
         "handler": 1,
         "name": "Failed systemd services alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -369,7 +369,7 @@
         "handler": 1,
         "message": "Check failed systemd services on hosts with `systemctl --failed`.\n\nHint: Go to parent dashboard https://stats.openqa-monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.",
         "name": "Failed systemd services alert (except openqa.suse.de)",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -651,6 +651,6 @@
   "timezone": "",
   "title": "Failed systemd services",
   "uid": "KToPYLEWz",
-  "version": 17,
+  "version": 18,
   "weekStart": ""
 }

@@ -58,7 +58,7 @@
         "frequency": "1m",
         "handler": 1,
         "name": "{{ service }}.service alert",
-        "noDataState": "no_data",
+        "noDataState": "keep_state",
         "notifications": [
           {
             "uid": "2ACofrdWz"
@@ -214,6 +214,6 @@
   "timezone": "",
   "title": "Webui Systemd Services",
   "uid": "webuiSyS",
-  "version": 6,
+  "version": 7,
   "weekStart": ""
 }
