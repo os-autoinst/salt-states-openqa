@@ -150,7 +150,6 @@ nfs-client:
       {% set workerdict = pillar.get('workerconf', {}).get(workerhost, {}).get('workers', {}) %}
       {% set webuidict = pillar.get('workerconf', {}).get(workerhost, {}).get('webuis', {}) %}
       {% set globaldict = pillar.get('workerconf', {}).get(workerhost, {}).get('global', {}) %}
-      {% do globaldict.update({'WORKER_HOSTNAME': grains['fqdn']}) %}
       workers: {{ workerdict }}
       webuis: {{ webuidict }}
       global: {{ globaldict }}
