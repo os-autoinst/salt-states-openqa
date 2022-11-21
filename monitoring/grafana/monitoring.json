@@ -246,7 +246,7 @@
           }
         ],
         "executionErrorState": "alerting",
-        "for": "2m",
+        "for": "20m",
         "frequency": "15s",
         "handler": 1,
         "message": "InfluxDB not reachable for too long. The means the rest of the monitoring is currently broken. Check `systemctl status influxdb.service` on the monitoring host. InfluxDB is supposed to respond to HTTP requests on port 8086, use e.g. `curl http://localhost:8086/query` on the monitoring host to verify whether it responds.",
@@ -379,6 +379,6 @@
   "timezone": "",
   "title": "Monitoring",
   "uid": "EML0bpuGk",
-  "version": 10,
+  "version": 11,
   "weekStart": ""
 }
