@@ -23,6 +23,9 @@ variables:
 
 .test_setup: &test_setup
   stage: test
+  # our test steps can fail especially on repository refresh errors so let's
+  # retry
+  retry: 2
   except:
     - master@openqa/salt-pillars-openqa
   before_script:
