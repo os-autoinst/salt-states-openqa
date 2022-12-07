@@ -70,6 +70,10 @@ reverse-proxy-group:
           host: 'localhost:25'
           from_address: 'osd-admins@suse.de'
           from_name: 'Grafana'
+        security:
+          allow_embedding: true
+        panels:
+          disable_sanitize_html: true
 
 /etc/grafana/ldap.toml:
   ini.options_present:
