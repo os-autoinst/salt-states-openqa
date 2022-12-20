@@ -8,5 +8,6 @@ base:
     - certificates.hosts
   'G@roles:monitor':
     - certificates.hosts
+    - openqa.monitoring
   'G@roles:worker':
     - openqa.workerconf
