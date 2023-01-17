@@ -9,6 +9,7 @@ base:
     - kdump
     - monitoring.telegraf
     - udev.disk_descriptions
+    - logging
   'G@roles:webui':
     - salt.master
     - etc.master
