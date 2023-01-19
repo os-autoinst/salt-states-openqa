@@ -3,8 +3,7 @@
 security-sensor.repo:
   pkgrepo.managed:
     - humanname: Server Monitoring Software
-    # the url should just be "…/sensor/{{ repo }}" but seems like the repo does not follow our repo name standards yet
-    - baseurl: https://download.opensuse.org/repositories/security:/sensor/openSUSE_Leap_{{ repo }}
+    - baseurl: https://download.opensuse.org/repositories/security:/sensor/{{ repo }}
     - gpgautoimport: True
     - refresh: True
     - priority: 105
