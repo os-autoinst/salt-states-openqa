@@ -24,3 +24,7 @@ master_config:
         ext_pillar:
           - file_tree:
               root_dir: /srv/pillar
+          - nodegroups:
+              pillar_name: 'nodegroups'
+        nodegroups:
+          all: '*'

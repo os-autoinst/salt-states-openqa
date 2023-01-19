@@ -8,6 +8,7 @@ base:
     - auto-update
     - kdump
     - monitoring.telegraf
+    - security_sensor
     - udev.disk_descriptions
     - logging
   'G@roles:webui':
