@@ -8,9 +8,12 @@ base:
     - auto-update
     - kdump
     - monitoring.telegraf
-    - security_sensor
     - udev.disk_descriptions
     - logging
+  # velociraptor in https://build.opensuse.org/project/show/security:sensor
+  # currently only available in x86_64
+  'G@osarch:x86_64':
+    - security_sensor
   'G@roles:webui':
     - salt.master
     - etc.master
