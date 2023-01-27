@@ -76,7 +76,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.5.13",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "datasource": {
@@ -100,6 +100,8 @@
           "measurement": "maintenance_queue",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT mean(\"incoming\") FROM \"maintenance_queue\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -166,7 +168,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.5.13",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "datasource": {
@@ -265,7 +267,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.5.13",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "datasource": {
@@ -365,7 +367,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.5.13",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "datasource": {
@@ -456,7 +458,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.5.13",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "datasource": {
@@ -547,7 +549,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.5.13",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "datasource": {
@@ -638,7 +640,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.5.13",
+      "pluginVersion": "8.5.15",
       "targets": [
         {
           "datasource": {
@@ -753,7 +755,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 21,
+        "w": 18,
         "x": 0,
         "y": 8
       },
@@ -793,6 +795,8 @@
           "measurement": "maintenance_queue",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT mean(\"queue_assigned\") FROM \"maintenance_queue\" WHERE $timeFilter GROUP BY time($__interval) fill(none)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -852,10 +856,145 @@
             ]
           ],
           "tags": []
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "submission_queue",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "submissions"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Job Assignment",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "max": 198,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-blue",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 18,
+        "y": 8
+      },
+      "id": 11,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "8.5.15",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "submission_queue",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"submissions\") FROM \"submission_queue\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "submissions"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Submission",
+      "type": "gauge"
     }
   ],
   "refresh": "",
