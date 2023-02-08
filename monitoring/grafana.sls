@@ -74,6 +74,8 @@ reverse-proxy-group:
           allow_embedding: true
         panels:
           disable_sanitize_html: true
+        unified_alerting:
+          enabled: true
 
 /etc/grafana/ldap.toml:
   ini.options_present:
