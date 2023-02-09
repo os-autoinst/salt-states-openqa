@@ -29,8 +29,13 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
         echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme?n1
         mdadm_args+=(--raid-devices="$(ls /dev/nvme?n1 | wc -l)" --run /dev/nvme?n1)
     else
-        echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme0n1p3
-        mdadm_args+=(--raid-devices=1 --run /dev/nvme0n1p3)
+        if [ $(lsblk --noheadings | grep 'nvme' | grep -c 'disk') -eq 2 ] ; then
+            echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme1n1
+            mdadm_args+=(--raid-devices=1 --run /dev/nvme1n1)
+        else
+            echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme0n1p3
+            mdadm_args+=(--raid-devices=1 --run /dev/nvme0n1p3)
+        fi
     fi
 
     if ! mdadm "${mdadm_args[@]}" 2>&1 | tee /tmp/mdadm_output; then
