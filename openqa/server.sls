@@ -78,10 +78,10 @@ server.packages:
           keys_to_render_as_links: YAML_SCHEDULE,YAML_TEST_DATA,AUTOYAST
         hooks:
           # Some groups excluded that have too many expected failing jobs or special review workflows
-          job_done_hook_failed: env enable_force_result=true from_email=openqa-review@suse.de notification_address=discuss-openqa-auto-r-aaaagmhuypu2hq2kmzgovutmqm@suse.slack.com host=openqa.suse.de exclude_group_regex='.*(Development|Public Cloud|Released|Others|Kernel|Virtualization).*' grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-and-investigate-hook
-          job_done_hook_incomplete: env enable_force_result=true from_email=openqa-review@suse.de notification_address=discuss-openqa-auto-r-aaaagmhuypu2hq2kmzgovutmqm@suse.slack.com host=openqa.suse.de grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-hook
-          job_done_hook_timeout_exceeded: env from_email=openqa-review@suse.de notification_address=discuss-openqa-auto-r-aaaagmhuypu2hq2kmzgovutmqm@suse.slack.com host=openqa.suse.de grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-hook
-          job_done_hook: env host=openqa.suse.de exclude_group_regex='.*(Development|Public Cloud|Released|Others|Kernel|Virtualization).*' grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-and-investigate-hook
+          job_done_hook_failed: env enable_force_result=true email_unreviewed=true from_email=openqa-review@suse.de notification_address=discuss-openqa-auto-r-aaaagmhuypu2hq2kmzgovutmqm@suse.slack.com host=openqa.suse.de exclude_group_regex='.*(Development|Public Cloud|Released|Others|Kernel|Virtualization).*' grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-and-investigate-hook
+          job_done_hook_incomplete: env enable_force_result=true email_unreviewed=true from_email=openqa-review@suse.de notification_address=discuss-openqa-auto-r-aaaagmhuypu2hq2kmzgovutmqm@suse.slack.com host=openqa.suse.de grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-hook
+          job_done_hook_timeout_exceeded: env email_unreviewed=true from_email=openqa-review@suse.de notification_address=discuss-openqa-auto-r-aaaagmhuypu2hq2kmzgovutmqm@suse.slack.com host=openqa.suse.de grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-hook
+          job_done_hook: env host=openqa.suse.de email_unreviewed=true exclude_group_regex='.*(Development|Public Cloud|Released|Others|Kernel|Virtualization).*' grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-and-investigate-hook
         influxdb:
           ignored_failed_minion_jobs: obs_rsync_run obs_rsync_update_builds_text
     - require:
