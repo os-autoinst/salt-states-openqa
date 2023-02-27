@@ -5,6 +5,7 @@ ConditionACPower=true
 
 [Service]
 Type=oneshot
+ExecCondition=/bin/bash -xc 'is_active=$(/usr/bin/systemctl --user is-active logrotate.service); [[ $is_active == active || $is_active == activating ]] && exit 1 || exit 0'
 ExecStart=/usr/sbin/logrotate -v /etc/logrotate.d/openqa /etc/logrotate.d/openqa-apache
 Nice=19
 IOSchedulingClass=best-effort
