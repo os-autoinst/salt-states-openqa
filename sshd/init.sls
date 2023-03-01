@@ -30,7 +30,7 @@ AAAAC3NzaC1lZDI1NTE5AAAAIODlqAE/HJh5EvjIioaHbfUY0JC6Rk5MK0FVM1hKBRmx:
   ssh_auth.present:
     - user: root
     - enc: ssh-ed25519
-    - comment: root@storage.qa.suse.de, backup OSD
+    - comment: root@storage.oqa.suse.de, backup OSD
 
 {% for username, details in pillar.get('users', {}).items() %}
 {{ username }}:
