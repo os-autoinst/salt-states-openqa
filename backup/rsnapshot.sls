@@ -36,7 +36,7 @@ rsnapshot-{{backup_type}}.timer:
 # ssh key files and config for backup
 # https://progress.opensuse.org/issues/96269
 # Generated with
-# `ssh-keygen -t ed25519 -N '' -C 'root@storage.qa.suse.de, backup OSD' -f id_ed25519.backup_osd`
+# `ssh-keygen -t ed25519 -N '' -C 'root@storage.oqa.suse.de, backup OSD' -f id_ed25519.backup_osd`
 /root/.ssh/id_ed25519.backup_osd:
   file.managed:
     - mode: 600
