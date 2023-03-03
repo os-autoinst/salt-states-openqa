@@ -33,6 +33,7 @@ base:
     - haveged
   'G@roles:monitor':
     - monitoring.maintenance_queue
+    - monitoring.slo
     - monitoring.grafana
     - monitoring.influxdb
     - certificates.dehydrated
