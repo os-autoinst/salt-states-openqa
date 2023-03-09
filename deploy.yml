@@ -4,6 +4,7 @@
 deploy:
   stage: deploy
   image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
+  timeout: 2h
   only:
     - master@openqa/salt-pillars-openqa
     - master@openqa/salt-states-openqa
