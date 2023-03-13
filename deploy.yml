@@ -38,6 +38,7 @@ deploy:
     - ssh $TARGET "echo 'Currently the following minions are down:'; diff <(sudo salt --timeout 1 '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort) <(sudo salt --timeout 1 --hide-timeout '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort); echo '==================='" | tee salt_ping.log
     - ssh $TARGET "salt --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,," | tee salt_syncupdate.log
     - ssh $TARGET "salt --hide-timeout \* state.highstate queue=True" | tee salt_highstate.log
+    - ssh $TARGET "salt --hide-timeout \* cmd.run '! sudo telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \"" && echo "telegraf inputs are correct"
     - )
   artifacts:
     when: always
