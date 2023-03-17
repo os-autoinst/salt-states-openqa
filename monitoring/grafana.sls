@@ -46,13 +46,6 @@ reverse-proxy-group:
     - separator: '='
     - strict: True
     - sections:
-        # Use legacy alerting
-        # See https://progress.opensuse.org/issues/125303#note-15
-        force_migration: true
-        alerting:
-          enabled: true
-        unified_alerting:
-          enabled: false
         server:
           protocol: socket
           domain: 'stats.openqa-monitor.qa.suse.de'
@@ -81,6 +74,8 @@ reverse-proxy-group:
           allow_embedding: true
         panels:
           disable_sanitize_html: true
+        unified_alerting:
+          enabled: true
 
 /etc/grafana/ldap.toml:
   ini.options_present:
