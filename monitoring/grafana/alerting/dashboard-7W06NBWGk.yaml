@@ -1,0 +1,160 @@
+---
+apiVersion: 1
+groups:
+- folder: Salt
+  interval: 1h
+  name: Job age (scheduled) (max) alert
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '224'
+      __dashboardUid__: 7W06NBWGk
+      __panelId__: '2'
+      message: |-
+        Jobs not scheduled for 4 days (345600s).
+
+        Possible reasons:
+
+        * There are no online workers for selected scheduled jobs, misconfiguration on the side of tests likely
+
+        See https://progress.opensuse.org/issues/73174#note-2 for an explanation of the selection of the specific value
+    condition: B
+    dashboardUid: 7W06NBWGk
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: 50% percentile (max)
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - 'null'
+          type: fill
+        interval: 2m
+        measurement: postgresql
+        orderByTime: ASC
+        policy: default
+        query: SELECT mean("value") FROM "measurement" WHERE $timeFilter GROUP BY
+          time($__interval) fill(null)
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - job_age_p50
+            type: field
+          - params: []
+            type: mean
+        tags: []
+      refId: A
+      relativeTimeRange:
+        from: 300
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 345600
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: last
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 3h
+    isPaused: true
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: XzAh5mfVz
+    noDataState: NoData
+    panelId: 2
+    title: Job age (scheduled) (max) alert
+    uid: XzAh5mfVz
+- folder: Salt
+  interval: 5m
+  name: Job age (scheduled) (median) alert
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '223'
+      __dashboardUid__: 7W06NBWGk
+      __panelId__: '5'
+      message: |-
+        Check for overall decrease of "time to start".
+
+        Possible reasons for regression:
+
+        * Not enough ressources
+        * Too many tests scheduled due to misconfiguration
+
+        2020-11-27: Alert limit set to 259200s = 3d, see https://progress.opensuse.org/issues/73174#note-2 about the decision
+
+        Related progress issue: https://progress.opensuse.org/issues/65975
+    condition: B
+    dashboardUid: 7W06NBWGk
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: 50% percentile (median)
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - 'null'
+          type: fill
+        interval: 2m
+        measurement: postgresql
+        orderByTime: ASC
+        policy: default
+        query: SELECT mean("value") FROM "measurement" WHERE $timeFilter GROUP BY
+          time($__interval) fill(null)
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - job_age_p50
+            type: field
+          - params: []
+            type: median
+        tags: []
+      refId: A
+      relativeTimeRange:
+        from: 900
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 259200
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: median
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 3h
+    isPaused: true
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: QkA25iBVk
+    noDataState: NoData
+    panelId: 5
+    title: Job age (scheduled) (median) alert
+    uid: QkA25iBVk

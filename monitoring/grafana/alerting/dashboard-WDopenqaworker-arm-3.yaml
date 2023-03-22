@@ -1,0 +1,759 @@
+---
+apiVersion: 1
+groups:
+- folder: Salt
+  interval: 1m
+  name: 'openqaworker-arm-3: Disk I/O time alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '190'
+      __dashboardUid__: WDopenqaworker-arm-3
+      __panelId__: '56720'
+      message: ''
+    condition: A
+    dashboardUid: WDopenqaworker-arm-3
+    data:
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 20000
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - C
+          reducer:
+            type: avg
+        refId: A
+        type: classic_conditions
+      refId: A
+    - datasourceUid: '000000001'
+      model:
+        alias: $tag_name
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - name
+          type: tag
+        - params:
+          - 'null'
+          type: fill
+        interval: 1m
+        measurement: diskio
+        orderByTime: ASC
+        policy: default
+        query: SELECT non_negative_derivative(mean("io_time"), 1s) FROM "diskio" WHERE
+          ("host" = 'openqaworker-arm-3' AND ("name" <> 'nvme0n1' OR "name" = 'nvme1n1'
+          OR "name" = 'sda' OR "name" = 'sdb')) AND $timeFilter GROUP BY time($__interval),
+          "name" fill(null)
+        rawQuery: true
+        refId: C
+        resultFormat: time_series
+        select:
+        - - params:
+            - read_time
+            type: field
+          - params: []
+            type: mean
+          - params:
+            - 1s
+            type: non_negative_derivative
+        tags:
+        - key: host
+          operator: =
+          value: openqaworker-arm-3
+        - condition: AND
+          key: name
+          operator: <>
+          value: nvme0n1
+        - condition: OR
+          key: name
+          operator: =
+          value: nvme1n1
+        - condition: OR
+          key: name
+          operator: =
+          value: sda
+        - condition: OR
+          key: name
+          operator: =
+          value: sdb
+      refId: C
+      relativeTimeRange:
+        from: 300
+        to: 0
+    execErrState: Error
+    for: 5m
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: 0kAh5mfVk
+    noDataState: NoData
+    panelId: 56720
+    title: 'openqaworker-arm-3: Disk I/O time alert'
+    uid: 0kAh5mfVk
+- folder: Salt
+  interval: 1m
+  name: 'openqaworker-arm-3: Download rate alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '395'
+      __dashboardUid__: WDopenqaworker-arm-3
+      __panelId__: '65109'
+      message: |-
+        Cache service download rate is lower than expected.
+
+        See https://progress.opensuse.org/issues/106904 for details.
+    condition: B
+    dashboardUid: WDopenqaworker-arm-3
+    data:
+    - datasourceUid: '000000001'
+      model:
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - previous
+          type: fill
+        measurement: openqa_download_rate
+        orderByTime: ASC
+        policy: default
+        query: SELECT mean("bytes") FROM "openqa_download_rate" WHERE ("host" = 'openqaworker-arm-3')
+          AND $timeFilter GROUP BY time($__interval) fill(previous)
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - bytes
+            type: field
+          - params: []
+            type: mean
+        tags:
+        - key: host
+          operator: =
+          value: openqaworker-arm-3
+      refId: A
+      relativeTimeRange:
+        from: 3600
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 5.24288e+06
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: max
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 4h
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: Pz0hcmBVz
+    noDataState: NoData
+    panelId: 65109
+    title: 'openqaworker-arm-3: Download rate alert'
+    uid: Pz0hcmBVz
+- folder: Salt
+  interval: 1m
+  name: 'openqaworker-arm-3: Memory usage alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '186'
+      __dashboardUid__: WDopenqaworker-arm-3
+      __panelId__: '12054'
+      message: ''
+    condition: A
+    dashboardUid: WDopenqaworker-arm-3
+    data:
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - -3e+09
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - B
+          reducer:
+            type: avg
+        - evaluator:
+            params:
+            - 3e+09
+            type: lt
+          operator:
+            type: or
+          query:
+            params:
+            - B
+          reducer:
+            type: avg
+        refId: A
+        type: classic_conditions
+      refId: A
+    - datasourceUid: '000000001'
+      model:
+        alias: $col
+        dsType: influxdb
+        function: mean
+        groupBy:
+        - interval: auto
+          params:
+          - auto
+          type: time
+        - key: host
+          params:
+          - tag
+          type: tag
+        interval: 1m
+        measurement: mem_inactive
+        orderByTime: ASC
+        policy: default
+        query: SELECT mean(available) as available  FROM "mem" WHERE host = 'openqaworker-arm-3'
+          AND $timeFilter GROUP BY time($interval), host ORDER BY asc
+        rawQuery: true
+        refId: B
+        resultFormat: time_series
+        select:
+        - - params:
+            - value
+            type: field
+          - params: []
+            type: mean
+        tags: []
+      refId: B
+      relativeTimeRange:
+        from: 300
+        to: 0
+    execErrState: Error
+    for: 5m
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: 5kAh5ifVk
+    noDataState: NoData
+    panelId: 12054
+    title: 'openqaworker-arm-3: Memory usage alert'
+    uid: 5kAh5ifVk
+- folder: Salt
+  interval: 1m
+  name: 'openqaworker-arm-3: NTP offset alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '191'
+      __dashboardUid__: WDopenqaworker-arm-3
+      __panelId__: '65102'
+      message: ''
+    condition: B
+    dashboardUid: WDopenqaworker-arm-3
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: Stratum $tag_stratum
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - stratum
+          type: tag
+        - params:
+          - 'null'
+          type: fill
+        interval: 1m
+        measurement: chrony
+        orderByTime: ASC
+        policy: default
+        query: SELECT mean(abs("rms_offset")) FROM "chrony" WHERE ("host" = 'openqaworker-arm-3')
+          AND $timeFilter GROUP BY time($__interval), "stratum" fill(null)
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - rms_offset
+            type: field
+          - params: []
+            type: mean
+        tags:
+        - key: host
+          operator: =
+          value: openqaworker-arm-3
+      refId: A
+      relativeTimeRange:
+        from: 300
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 1000
+            - -1000
+            type: outside_range
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 20m
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: bzAhcmf4k
+    noDataState: NoData
+    panelId: 65102
+    title: 'openqaworker-arm-3: NTP offset alert'
+    uid: bzAhcmf4k
+- folder: Salt
+  interval: 1m
+  name: 'openqaworker-arm-3: OpenQA Ping time alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '188'
+      __dashboardUid__: WDopenqaworker-arm-3
+      __panelId__: '65098'
+      message: ''
+    condition: B
+    dashboardUid: WDopenqaworker-arm-3
+    data:
+    - datasourceUid: '000000001'
+      model:
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - 'null'
+          type: fill
+        interval: 1m
+        measurement: ping
+        orderByTime: ASC
+        policy: default
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - average_response_ms
+            type: field
+          - params: []
+            type: mean
+        tags:
+        - key: host
+          operator: =
+          value: openqaworker-arm-3
+        - condition: AND
+          key: url
+          operator: =
+          value: openqa.suse.de
+      refId: A
+      relativeTimeRange:
+        from: 300
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 200
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 5m
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: 2zA25iBVz
+    noDataState: NoData
+    panelId: 65098
+    title: 'openqaworker-arm-3: OpenQA Ping time alert'
+    uid: 2zA25iBVz
+- folder: Salt
+  interval: 1m
+  name: 'openqaworker-arm-3: QA network infrastructure Ping time alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '415'
+      __dashboardUid__: WDopenqaworker-arm-3
+      __panelId__: '65099'
+      message: ''
+    condition: B
+    dashboardUid: WDopenqaworker-arm-3
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: $tag_url
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - url
+          type: tag
+        - params:
+          - 'null'
+          type: fill
+        interval: 1m
+        measurement: ping
+        orderByTime: ASC
+        policy: default
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - average_response_ms
+            type: field
+          - params: []
+            type: mean
+        tags:
+        - key: host
+          operator: =
+          value: openqaworker-arm-3
+      refId: A
+      relativeTimeRange:
+        from: 300
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 200
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 5m
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: sz0hciBVk
+    noDataState: NoData
+    panelId: 65099
+    title: 'openqaworker-arm-3: QA network infrastructure Ping time alert'
+    uid: sz0hciBVk
+- folder: Salt
+  interval: 1m
+  name: 'openqaworker-arm-3: Too many Minion job failures alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '219'
+      __dashboardUid__: WDopenqaworker-arm-3
+      __panelId__: '65104'
+      message: |-
+        Too many Minion jobs have failed on openqaworker-arm-3.
+
+        Review failed jobs on http://localhost:9530/minion/jobs?state=failed after tunneling the worker's Minion dashboard via `ssh -L 9530:localhost:9530 -N openqaworker-arm-3`. Create a ticket if there's not already one. For the general log of the Minion job queue, checkout `journalctl -u openqa-worker-cacheservice.service -u openqa-worker-cacheservice-minion.service`. To remove all failed jobs on the machine:
+
+        ```
+        /usr/share/openqa/script/openqa-workercache eval 'my $jobs = app->minion->jobs({states => ["failed"]}); while (my $job = $jobs->next) { $job->remove }'
+        ```
+    condition: B
+    dashboardUid: WDopenqaworker-arm-3
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: Active
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - previous
+          type: fill
+        measurement: openqa_minion_jobs
+        orderByTime: ASC
+        policy: default
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - active
+            type: field
+          - params: []
+            type: mean
+        tags:
+        - key: host
+          operator: =
+          value: openqaworker-arm-3
+      refId: A
+      relativeTimeRange:
+        from: 300
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 2000
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: last
+        - evaluator:
+            params:
+            - 100
+            type: gt
+          operator:
+            type: or
+          query:
+            params:
+            - C
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    - datasourceUid: '000000001'
+      model:
+        alias: Failed
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - previous
+          type: fill
+        measurement: openqa_minion_jobs
+        orderByTime: ASC
+        policy: default
+        refId: C
+        resultFormat: time_series
+        select:
+        - - params:
+            - failed
+            type: field
+          - params: []
+            type: mean
+        tags:
+        - key: host
+          operator: =
+          value: openqaworker-arm-3
+      refId: C
+      relativeTimeRange:
+        from: 300
+        to: 0
+    execErrState: Error
+    for: 5m
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: azAhcmfVk
+    noDataState: NoData
+    panelId: 65104
+    title: 'openqaworker-arm-3: Too many Minion job failures alert'
+    uid: azAhcmfVk
+- folder: Salt
+  interval: 5m
+  name: 'openqaworker-arm-3: host up alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '291'
+      __dashboardUid__: WDopenqaworker-arm-3
+      __panelId__: '65105'
+      message: |-
+        No data received for pings from worker to central host, likely host is down (or split network).
+
+        See https://progress.opensuse.org/issues/71098 for details
+    condition: B
+    dashboardUid: WDopenqaworker-arm-3
+    data:
+    - datasourceUid: '000000001'
+      model:
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - 'null'
+          type: fill
+        interval: 1m
+        measurement: ping
+        orderByTime: ASC
+        policy: default
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - average_response_ms
+            type: field
+          - params: []
+            type: mean
+        tags:
+        - key: host
+          operator: =
+          value: openqaworker-arm-3
+      refId: A
+      relativeTimeRange:
+        from: 300
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params: []
+            type: no_value
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 1h30m
+    isPaused: true
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: BzAh5if4k
+    noDataState: NoData
+    panelId: 65105
+    title: 'openqaworker-arm-3: host up alert'
+    uid: BzAh5if4k
+- folder: Salt
+  interval: 1m
+  name: 'openqaworker-arm-3: partitions usage (%) alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '189'
+      __dashboardUid__: WDopenqaworker-arm-3
+      __panelId__: '65090'
+      message: ''
+    condition: A
+    dashboardUid: WDopenqaworker-arm-3
+    data:
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 200
+            type: gt
+          operator:
+            type: and
+          query:
+            params:
+            - B
+          reducer:
+            type: avg
+        - evaluator:
+            params:
+            - 85
+            type: gt
+          operator:
+            type: or
+          query:
+            params:
+            - B
+          reducer:
+            type: avg
+        refId: A
+        type: classic_conditions
+      refId: A
+    - datasourceUid: '000000001'
+      model:
+        alias: $tag_device ($tag_fstype)
+        dsType: influxdb
+        function: mean
+        groupBy:
+        - interval: auto
+          params:
+          - auto
+          type: time
+        - key: host
+          params:
+          - tag
+          type: tag
+        - key: path
+          params:
+          - tag
+          type: tag
+        interval: 1m
+        measurement: disk_total
+        orderByTime: ASC
+        policy: default
+        query: SELECT mean("used_percent") AS "used_percent" FROM "disk" WHERE ("host"
+          = 'openqaworker-arm-3' AND fstype != 'nfs') AND $timeFilter GROUP BY time($interval),
+          "device", "fstype" fill(null)
+        rawQuery: true
+        refId: B
+        resultFormat: time_series
+        select:
+        - - params:
+            - value
+            type: field
+          - params: []
+            type: mean
+        tags: []
+      refId: B
+      relativeTimeRange:
+        from: 300
+        to: 0
+    execErrState: Error
+    for: 5m
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: oz0hcmBVk
+    noDataState: NoData
+    panelId: 65090
+    title: 'openqaworker-arm-3: partitions usage (%) alert'
+    uid: oz0hcmBVk
