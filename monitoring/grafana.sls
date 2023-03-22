@@ -99,10 +99,11 @@ reverse-proxy-group:
   file.managed:
     - source: salt://monitoring/grafana/salt.yaml
 
-/etc/grafana/provisioning/alerting/alerts.yaml:
-  file.managed:
-    - source: salt://monitoring/grafana/alerts.yaml
+/etc/grafana/provisioning/alerting:
+  file.recurse:
+    - source: salt://monitoring/grafana/alerting
     - makedirs: True
+    - clean: True
 
 {% for plugin in grafana_plugins %}
 install_{{plugin}}:

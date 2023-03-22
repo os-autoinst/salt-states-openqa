@@ -1,0 +1,341 @@
+---
+apiVersion: 1
+groups:
+- folder: Salt
+  interval: 1h
+  name: monitor.qa.suse.de - SSL expiration
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '366'
+      __dashboardUid__: E9tyiQ17k
+      __panelId__: '7'
+      message: |-
+        One of the TLS certificates (fullchain.pem) located in /etc/dehydrated/certs on monitor.qa.suse.de is nearing expiration.
+        The most likely issue is dehydrated not being able to reach our CA. Check the dehydrated logs for further issues.
+
+        Notes about the dehydrated setup can be found in https://progress.opensuse.org/issues/103149
+    condition: B
+    dashboardUid: E9tyiQ17k
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: $tag_source validity left
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - source
+          type: tag
+        - params:
+          - 'null'
+          type: fill
+        interval: 1h
+        measurement: x509_cert
+        orderByTime: ASC
+        policy: default
+        query: SELECT last("expiry") FROM "x509_cert" WHERE ("common_name" = 'monitor.qa.suse.de'
+          AND "source" =~ /.pem$/) AND $timeFilter GROUP BY time($__interval), "source"
+          fill(null)
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - expiry
+            type: field
+          - params: []
+            type: last
+        tags:
+        - key: common_name
+          operator: =
+          value: monitor.qa.suse.de
+        - condition: AND
+          key: source
+          operator: =~
+          value: /.pem$/
+      refId: A
+      relativeTimeRange:
+        from: 3600
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 604800
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 1h
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: 3MA2cmf4k
+    noDataState: NoData
+    panelId: 7
+    title: monitor.qa.suse.de - SSL expiration
+    uid: 3MA2cmf4k
+- folder: Salt
+  interval: 1h
+  name: openqa.suse.de - SSL expiration
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '364'
+      __dashboardUid__: E9tyiQ17k
+      __panelId__: '4'
+      message: |-
+        One of the TLS certificates (fullchain.pem) located in /etc/dehydrated/certs on openqa.suse.de is nearing expiration.
+        The most likely issue is dehydrated not being able to reach our CA. Check the dehydrated logs for further issues.
+
+        Notes about the dehydrated setup can be found in https://progress.opensuse.org/issues/103149
+    condition: B
+    dashboardUid: E9tyiQ17k
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: $tag_source validity left
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - source
+          type: tag
+        - params:
+          - 'null'
+          type: fill
+        interval: 1h
+        measurement: x509_cert
+        orderByTime: ASC
+        policy: default
+        query: SELECT last("expiry") FROM "x509_cert" WHERE ("common_name" = 'openqa.suse.de'
+          AND "source" =~ /.pem$/) AND $timeFilter GROUP BY time($__interval), "source"
+          fill(null)
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - expiry
+            type: field
+          - params: []
+            type: last
+        tags:
+        - key: common_name
+          operator: =
+          value: openqa.suse.de
+        - condition: AND
+          key: source
+          operator: =~
+          value: /.pem$/
+      refId: A
+      relativeTimeRange:
+        from: 3600
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 604800
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 1h
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: CMAhcmfVz
+    noDataState: NoData
+    panelId: 4
+    title: openqa.suse.de - SSL expiration
+    uid: CMAhcmfVz
+- folder: Salt
+  interval: 1h
+  name: 'openqa.suse.de: SAN validity'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '367'
+      __dashboardUid__: E9tyiQ17k
+      __panelId__: '8'
+      message: |-
+        One of the SAN endpoints on monitor.qa.suse.de is nearing expiration.
+        The most likely issue is that the service serving this SAN (e.g. apache2) on the host monitor.qa.suse.de was not restarted/reloaded after a new certificate got fetched.
+
+        As a short term solution you can manually restart the service but please also open a ticket because it indicates that our salt automation does not cover all service restarts.
+    condition: B
+    dashboardUid: E9tyiQ17k
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: $tag_source validity left
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - source
+          type: tag
+        - params:
+          - 'null'
+          type: fill
+        interval: 1h
+        measurement: x509_cert
+        orderByTime: ASC
+        policy: default
+        query: SELECT (bottom(expiry,common_name,1)/60/60/24) as exp,common_name FROM
+          "x509_cert" WHERE time >= now() - 1h
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - expiry
+            type: field
+          - params: []
+            type: last
+        tags:
+        - key: common_name
+          operator: =
+          value: monitor.qa.suse.de
+        - condition: AND
+          key: source
+          operator: '!~'
+          value: /.pem$/
+      refId: A
+      relativeTimeRange:
+        from: 3600
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 604800
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 1h
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: eM025iB4k
+    noDataState: NoData
+    panelId: 8
+    title: 'openqa.suse.de: SAN validity'
+    uid: eM025iB4k
+- folder: Salt
+  interval: 1h
+  name: 'openqa.suse.de: SAN validity jG02cmBVzz'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '365'
+      __dashboardUid__: E9tyiQ17k
+      __panelId__: '5'
+      message: |-
+        One of the SAN endpoints on openqa.suse.de is nearing expiration.
+        The most likely issue is that the service serving this SAN (e.g. apache2) on the host openqa.suse.de was not restarted/reloaded after a new certificate got fetched.
+
+        As a short term solution you can manually restart the service but please also open a ticket because it indicates that our salt automation does not cover all service restarts.
+    condition: B
+    dashboardUid: E9tyiQ17k
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: $tag_source validity left
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - source
+          type: tag
+        - params:
+          - 'null'
+          type: fill
+        interval: 1h
+        measurement: x509_cert
+        orderByTime: ASC
+        policy: default
+        query: SELECT (bottom(expiry,common_name,1)/60/60/24) as exp,common_name FROM
+          "x509_cert" WHERE time >= now() - 1h
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - expiry
+            type: field
+          - params: []
+            type: last
+        tags:
+        - key: common_name
+          operator: =
+          value: openqa.suse.de
+        - condition: AND
+          key: source
+          operator: '!~'
+          value: /.pem$/
+      refId: A
+      relativeTimeRange:
+        from: 3600
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 604800
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 1h
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: jG02cmBVzz
+    noDataState: NoData
+    panelId: 5
+    title: 'openqa.suse.de: SAN validity jG02cmBVzz'
+    uid: jG02cmBVzz
