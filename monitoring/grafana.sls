@@ -103,7 +103,6 @@ reverse-proxy-group:
   file.recurse:
     - source: salt://monitoring/grafana/alerting
     - makedirs: True
-    - clean: True
 
 {% for plugin in grafana_plugins %}
 install_{{plugin}}:
@@ -148,12 +147,18 @@ dashboard-cleanup:
     - template: jinja
 {% endfor %}
 
-#create dashboards for each worker contained in the mine
+#create dashboards and alerts for each worker contained in the mine
 #iterating over worker_dashboardnames would be cleaner but we need the workername itself for the template
 {% for workername in workernames -%}
 {{"/".join([dashboard_template_folder, "worker-" + workername + ".json"])}}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/worker.json.template
+    - template: jinja
+    - worker: {{workername}}
+
+/etc/grafana/provisioning/alerting/dashboard-WD{{ workername }}.yaml
+  file.managed:
+    - source: salt://monitoring/grafana/alertinig-dashboard-WD.yaml.template
     - template: jinja
     - worker: {{workername}}
 {% endfor %}
@@ -164,6 +169,13 @@ dashboard-cleanup:
 {{"/".join([dashboard_template_folder, "generic-" + genericname + ".json"])}}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/generic.json.template
+    - template: jinja
+    - generic_host: {{genericname}}
+    - host_interface: {{ interfaces[0] }}
+
+/etc/grafana/provisioning/alerting/dashboard-GD{{ genericname }}.yaml
+  file.managed:
+    - source: salt://monitoring/grafana/alertinig-dashboard-GD.yaml.template
     - template: jinja
     - generic_host: {{genericname}}
     - host_interface: {{ interfaces[0] }}
