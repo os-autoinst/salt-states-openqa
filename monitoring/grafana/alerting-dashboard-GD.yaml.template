@@ -3,16 +3,16 @@ apiVersion: 1
 groups:
 - folder: Salt
   interval: 1m
-  name: 'worker6: Disk I/O time alert'
+  name: '{{ generic_host }}: Disk I/O time alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '586'
-      __dashboardUid__: WDworker6
+      __alertId__: '326'
+      __dashboardUid__: GD{{ generic_host }}
       __panelId__: '56720'
       message: ''
     condition: A
-    dashboardUid: WDworker6
+    dashboardUid: GD{{ generic_host }}
     data:
     - datasourceUid: __expr__
       model:
@@ -49,8 +49,8 @@ groups:
         orderByTime: ASC
         policy: default
         query: SELECT non_negative_derivative(mean("io_time"), 1s) FROM "diskio" WHERE
-          ("host" = 'worker6' AND ("name" <> 'nvme0n1' OR "name" = 'nvme1n1' OR "name"
-          = 'sda' OR "name" = 'sdb')) AND $timeFilter GROUP BY time($__interval),
+          ("host" = '{{ generic_host }}' AND ("name" <> 'nvme0n1' OR "name" = 'nvme1n1' OR
+          "name" = 'sda' OR "name" = 'sdb')) AND $timeFilter GROUP BY time($__interval),
           "name" fill(null)
         rawQuery: true
         refId: C
@@ -67,7 +67,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: worker6
+          value: {{ generic_host }}
         - condition: AND
           key: name
           operator: <>
@@ -93,121 +93,36 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: EHAh5mf4k
+      rule_uid: disk_io_time_alert_{{ generic_host }}
     noDataState: NoData
     panelId: 56720
-    title: 'worker6: Disk I/O time alert'
-    uid: EHAh5mf4k
+    title: '{{ generic_host }}: Disk I/O time alert'
+    uid: disk_io_time_alert_{{ generic_host }}
 - folder: Salt
   interval: 1m
-  name: 'worker6: Download rate alert'
+  name: '{{ generic_host }}: Memory usage alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '587'
-      __dashboardUid__: WDworker6
-      __panelId__: '65109'
-      message: |-
-        Cache service download rate is lower than expected.
-
-        See https://progress.opensuse.org/issues/106904 for details.
-    condition: B
-    dashboardUid: WDworker6
-    data:
-    - datasourceUid: '000000001'
-      model:
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - previous
-          type: fill
-        measurement: openqa_download_rate
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("bytes") FROM "openqa_download_rate" WHERE ("host" = 'worker6')
-          AND $timeFilter GROUP BY time($__interval) fill(previous)
-        rawQuery: false
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - bytes
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: worker6
-      refId: A
-      relativeTimeRange:
-        from: 3600
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 5.24288e+06
-            type: lt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: max
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: Error
-    for: 4h
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: yH0hcmf4k
-    noDataState: NoData
-    panelId: 65109
-    title: 'worker6: Download rate alert'
-    uid: yH0hcmf4k
-- folder: Salt
-  interval: 1m
-  name: 'worker6: Memory usage alert'
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '581'
-      __dashboardUid__: WDworker6
+      __alertId__: '319'
+      __dashboardUid__: GD{{ generic_host }}
       __panelId__: '12054'
       message: ''
     condition: A
-    dashboardUid: WDworker6
+    dashboardUid: GD{{ generic_host }}
     data:
     - datasourceUid: __expr__
       model:
         conditions:
         - evaluator:
             params:
-            - -3e+09
+            - 0.1
             type: lt
           operator:
             type: and
           query:
             params:
-            - B
-          reducer:
-            type: avg
-        - evaluator:
-            params:
-            - 3e+09
-            type: lt
-          operator:
-            type: or
-          query:
-            params:
-            - B
+            - Available percentage
           reducer:
             type: avg
         refId: A
@@ -215,7 +130,7 @@ groups:
       refId: A
     - datasourceUid: '000000001'
       model:
-        alias: $col
+        alias: available (percentage)
         dsType: influxdb
         function: mean
         groupBy:
@@ -231,10 +146,11 @@ groups:
         measurement: mem_inactive
         orderByTime: ASC
         policy: default
-        query: SELECT mean(available) as available  FROM "mem" WHERE host = 'worker6'
-          AND $timeFilter GROUP BY time($interval), host ORDER BY asc
+        query: SELECT mean(available) / mean(total) as available_p  FROM "mem" WHERE
+          host = '{{ generic_host }}' AND $timeFilter GROUP BY time($interval), host ORDER
+          BY asc
         rawQuery: true
-        refId: B
+        refId: Available percentage
         resultFormat: time_series
         select:
         - - params:
@@ -243,7 +159,7 @@ groups:
           - params: []
             type: mean
         tags: []
-      refId: B
+      refId: Available percentage
       relativeTimeRange:
         from: 300
         to: 0
@@ -252,23 +168,23 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: oN02ciB4k
+      rule_uid: memory_usage_alert_{{ generic_host }}
     noDataState: NoData
     panelId: 12054
-    title: 'worker6: Memory usage alert'
-    uid: oN02ciB4k
+    title: '{{ generic_host }}: Memory usage alert'
+    uid: memory_usage_alert_{{ generic_host }}
 - folder: Salt
   interval: 1m
-  name: 'worker6: NTP offset alert'
+  name: '{{ generic_host }}: NTP offset alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '588'
-      __dashboardUid__: WDworker6
+      __alertId__: '324'
+      __dashboardUid__: GD{{ generic_host }}
       __panelId__: '65102'
       message: ''
     condition: B
-    dashboardUid: WDworker6
+    dashboardUid: GD{{ generic_host }}
     data:
     - datasourceUid: '000000001'
       model:
@@ -287,7 +203,7 @@ groups:
         measurement: chrony
         orderByTime: ASC
         policy: default
-        query: SELECT mean(abs("rms_offset")) FROM "chrony" WHERE ("host" = 'worker6')
+        query: SELECT mean(abs("rms_offset")) FROM "chrony" WHERE ("host" = '{{ generic_host }}')
           AND $timeFilter GROUP BY time($__interval), "stratum" fill(null)
         rawQuery: false
         refId: A
@@ -301,7 +217,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: worker6
+          value: {{ generic_host }}
       refId: A
       relativeTimeRange:
         from: 300
@@ -329,23 +245,23 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: QH0h5if4z
+      rule_uid: ntp_offset_alert_{{ generic_host }}
     noDataState: NoData
     panelId: 65102
-    title: 'worker6: NTP offset alert'
-    uid: QH0h5if4z
+    title: '{{ generic_host }}: NTP offset alert'
+    uid: ntp_offset_alert_{{ generic_host }}
 - folder: Salt
   interval: 1m
-  name: 'worker6: OpenQA Ping time alert'
+  name: '{{ generic_host }}: Ping time alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '582'
-      __dashboardUid__: WDworker6
+      __alertId__: '320'
+      __dashboardUid__: GD{{ generic_host }}
       __panelId__: '65098'
       message: ''
     condition: B
-    dashboardUid: WDworker6
+    dashboardUid: GD{{ generic_host }}
     data:
     - datasourceUid: '000000001'
       model:
@@ -369,13 +285,9 @@ groups:
           - params: []
             type: mean
         tags:
-        - key: host
+        - key: url
           operator: =
-          value: worker6
-        - condition: AND
-          key: url
-          operator: =
-          value: openqa.suse.de
+          value: backup.qa.suse.de
       refId: A
       relativeTimeRange:
         from: 300
@@ -402,215 +314,26 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: AN02cmf4k
+      rule_uid: ping_time_alert_{{ generic_host }}
     noDataState: NoData
     panelId: 65098
-    title: 'worker6: OpenQA Ping time alert'
-    uid: AN02cmf4k
-- folder: Salt
-  interval: 1m
-  name: 'worker6: QA network infrastructure Ping time alert'
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '584'
-      __dashboardUid__: WDworker6
-      __panelId__: '65099'
-      message: ''
-    condition: B
-    dashboardUid: WDworker6
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: $tag_url
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - url
-          type: tag
-        - params:
-          - 'null'
-          type: fill
-        interval: 1m
-        measurement: ping
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - average_response_ms
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: worker6
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 200
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: avg
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: Error
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: xNA2cifVz
-    noDataState: NoData
-    panelId: 65099
-    title: 'worker6: QA network infrastructure Ping time alert'
-    uid: xNA2cifVz
-- folder: Salt
-  interval: 1m
-  name: 'worker6: Too many Minion job failures alert'
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '589'
-      __dashboardUid__: WDworker6
-      __panelId__: '65104'
-      message: |-
-        Too many Minion jobs have failed on worker6.
-
-        Review failed jobs on http://localhost:9530/minion/jobs?state=failed after tunneling the worker's Minion dashboard via `ssh -L 9530:localhost:9530 -N worker6`. Create a ticket if there's not already one. For the general log of the Minion job queue, checkout `journalctl -u openqa-worker-cacheservice.service -u openqa-worker-cacheservice-minion.service`. To remove all failed jobs on the machine:
-
-        ```
-        /usr/share/openqa/script/openqa-workercache eval 'my $jobs = app->minion->jobs({states => ["failed"]}); while (my $job = $jobs->next) { $job->remove }'
-        ```
-    condition: B
-    dashboardUid: WDworker6
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: Active
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - previous
-          type: fill
-        measurement: openqa_minion_jobs
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - active
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: worker6
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 2000
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: last
-        - evaluator:
-            params:
-            - 100
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - C
-          reducer:
-            type: avg
-        refId: B
-        type: classic_conditions
-      refId: B
-    - datasourceUid: '000000001'
-      model:
-        alias: Failed
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - previous
-          type: fill
-        measurement: openqa_minion_jobs
-        orderByTime: ASC
-        policy: default
-        refId: C
-        resultFormat: time_series
-        select:
-        - - params:
-            - failed
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: worker6
-      refId: C
-      relativeTimeRange:
-        from: 300
-        to: 0
-    execErrState: Error
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: lN025iB4z
-    noDataState: NoData
-    panelId: 65104
-    title: 'worker6: Too many Minion job failures alert'
-    uid: lN025iB4z
+    title: '{{ generic_host }}: Ping time alert'
+    uid: ping_time_alert_{{ generic_host }}
 - folder: Salt
   interval: 5m
-  name: 'worker6: host up alert'
+  name: '{{ generic_host }}: host up alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '583'
-      __dashboardUid__: WDworker6
+      __alertId__: '321'
+      __dashboardUid__: GD{{ generic_host }}
       __panelId__: '65105'
       message: |-
         No data received for pings from worker to central host, likely host is down (or split network).
 
         See https://progress.opensuse.org/issues/71098 for details
     condition: B
-    dashboardUid: WDworker6
+    dashboardUid: GD{{ generic_host }}
     data:
     - datasourceUid: '000000001'
       model:
@@ -634,9 +357,9 @@ groups:
           - params: []
             type: mean
         tags:
-        - key: host
+        - key: url
           operator: =
-          value: worker6
+          value: backup.qa.suse.de
       refId: A
       relativeTimeRange:
         from: 300
@@ -662,23 +385,23 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: JH025mf4z
+      rule_uid: host_up_alert_{{ generic_host }}
     noDataState: NoData
     panelId: 65105
-    title: 'worker6: host up alert'
-    uid: JH025mf4z
+    title: '{{ generic_host }}: host up alert'
+    uid: host_up_alert_{{ generic_host }}
 - folder: Salt
   interval: 1m
-  name: 'worker6: partitions usage (%) alert'
+  name: '{{ generic_host }}: partitions usage (%) alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '585'
-      __dashboardUid__: WDworker6
+      __alertId__: '325'
+      __dashboardUid__: GD{{ generic_host }}
       __panelId__: '65090'
       message: ''
     condition: A
-    dashboardUid: WDworker6
+    dashboardUid: GD{{ generic_host }}
     data:
     - datasourceUid: __expr__
       model:
@@ -731,7 +454,7 @@ groups:
         orderByTime: ASC
         policy: default
         query: SELECT mean("used_percent") AS "used_percent" FROM "disk" WHERE ("host"
-          = 'worker6' AND fstype != 'nfs') AND $timeFilter GROUP BY time($interval),
+          = '{{ generic_host }}' AND fstype != 'nfs') AND $timeFilter GROUP BY time($interval),
           "device", "fstype" fill(null)
         rawQuery: true
         refId: B
@@ -752,8 +475,8 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: LHAhcmB4k
+      rule_uid: partitions_usage_alert_{{ generic_host }}
     noDataState: NoData
     panelId: 65090
-    title: 'worker6: partitions usage (%) alert'
-    uid: LHAhcmB4k
+    title: '{{ generic_host }}: partitions usage (%) alert'
+    uid: partitions_usage_alert_{{ generic_host }}

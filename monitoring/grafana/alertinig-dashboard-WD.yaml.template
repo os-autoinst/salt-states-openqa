@@ -3,16 +3,16 @@ apiVersion: 1
 groups:
 - folder: Salt
   interval: 1m
-  name: 'openqaworker16: Disk I/O time alert'
+  name: '{{ worker }}: Disk I/O time alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '648'
-      __dashboardUid__: WDopenqaworker16
+      __alertId__: '577'
+      __dashboardUid__: WD{{ worker }}
       __panelId__: '56720'
       message: ''
     condition: A
-    dashboardUid: WDopenqaworker16
+    dashboardUid: WD{{ worker }}
     data:
     - datasourceUid: __expr__
       model:
@@ -49,8 +49,8 @@ groups:
         orderByTime: ASC
         policy: default
         query: SELECT non_negative_derivative(mean("io_time"), 1s) FROM "diskio" WHERE
-          ("host" = 'openqaworker16' AND ("name" <> 'nvme0n1' OR "name" = 'nvme1n1'
-          OR "name" = 'sda' OR "name" = 'sdb')) AND $timeFilter GROUP BY time($__interval),
+          ("host" = '{{ worker }}' AND ("name" <> 'nvme0n1' OR "name" = 'nvme1n1' OR "name"
+          = 'sda' OR "name" = 'sdb')) AND $timeFilter GROUP BY time($__interval),
           "name" fill(null)
         rawQuery: true
         refId: C
@@ -67,7 +67,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: openqaworker16
+          value: {{ worker }}
         - condition: AND
           key: name
           operator: <>
@@ -93,26 +93,26 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: xKA25mfVk
+      rule_uid: disk_io_time_alert_{{ worker }}
     noDataState: NoData
     panelId: 56720
-    title: 'openqaworker16: Disk I/O time alert'
-    uid: xKA25mfVk
+    title: '{{ worker }}: Disk I/O time alert'
+    uid: disk_io_time_alert_{{ worker }}
 - folder: Salt
   interval: 1m
-  name: 'openqaworker16: Download rate alert'
+  name: '{{ worker }}: Download rate alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '649'
-      __dashboardUid__: WDopenqaworker16
+      __alertId__: '578'
+      __dashboardUid__: WD{{ worker }}
       __panelId__: '65109'
       message: |-
         Cache service download rate is lower than expected.
 
         See https://progress.opensuse.org/issues/106904 for details.
     condition: B
-    dashboardUid: WDopenqaworker16
+    dashboardUid: WD{{ worker }}
     data:
     - datasourceUid: '000000001'
       model:
@@ -126,7 +126,7 @@ groups:
         measurement: openqa_download_rate
         orderByTime: ASC
         policy: default
-        query: SELECT mean("bytes") FROM "openqa_download_rate" WHERE ("host" = 'openqaworker16')
+        query: SELECT mean("bytes") FROM "openqa_download_rate" WHERE ("host" = '{{ worker }}')
           AND $timeFilter GROUP BY time($__interval) fill(previous)
         rawQuery: false
         refId: A
@@ -140,7 +140,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: openqaworker16
+          value: {{ worker }}
       refId: A
       relativeTimeRange:
         from: 3600
@@ -167,23 +167,23 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: aFA25iB4z
+      rule_uid: download_rate_alert_{{ worker }}
     noDataState: NoData
     panelId: 65109
-    title: 'openqaworker16: Download rate alert'
-    uid: aFA25iB4z
+    title: '{{ worker }}: Download rate alert'
+    uid: download_rate_alert_{{ worker }}
 - folder: Salt
   interval: 1m
-  name: 'openqaworker16: Memory usage alert'
+  name: '{{ worker }}: Memory usage alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '643'
-      __dashboardUid__: WDopenqaworker16
+      __alertId__: '572'
+      __dashboardUid__: WD{{ worker }}
       __panelId__: '12054'
       message: ''
     condition: A
-    dashboardUid: WDopenqaworker16
+    dashboardUid: WD{{ worker }}
     data:
     - datasourceUid: __expr__
       model:
@@ -231,7 +231,7 @@ groups:
         measurement: mem_inactive
         orderByTime: ASC
         policy: default
-        query: SELECT mean(available) as available  FROM "mem" WHERE host = 'openqaworker16'
+        query: SELECT mean(available) as available  FROM "mem" WHERE host = '{{ worker }}'
           AND $timeFilter GROUP BY time($interval), host ORDER BY asc
         rawQuery: true
         refId: B
@@ -252,23 +252,23 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: KK0h5mf4z
+      rule_uid: memory_usage_alert_{{ worker }}
     noDataState: NoData
     panelId: 12054
-    title: 'openqaworker16: Memory usage alert'
-    uid: KK0h5mf4z
+    title: '{{ worker }}: Memory usage alert'
+    uid: memory_usage_alert_{{ worker }}
 - folder: Salt
   interval: 1m
-  name: 'openqaworker16: NTP offset alert'
+  name: '{{ worker }}: NTP offset alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '650'
-      __dashboardUid__: WDopenqaworker16
+      __alertId__: '579'
+      __dashboardUid__: WD{{ worker }}
       __panelId__: '65102'
       message: ''
     condition: B
-    dashboardUid: WDopenqaworker16
+    dashboardUid: WD{{ worker }}
     data:
     - datasourceUid: '000000001'
       model:
@@ -287,7 +287,7 @@ groups:
         measurement: chrony
         orderByTime: ASC
         policy: default
-        query: SELECT mean(abs("rms_offset")) FROM "chrony" WHERE ("host" = 'openqaworker16')
+        query: SELECT mean(abs("rms_offset")) FROM "chrony" WHERE ("host" = '{{ worker }}')
           AND $timeFilter GROUP BY time($__interval), "stratum" fill(null)
         rawQuery: false
         refId: A
@@ -301,7 +301,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: openqaworker16
+          value: {{ worker }}
       refId: A
       relativeTimeRange:
         from: 300
@@ -329,23 +329,23 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: fKAh5iBVk
+      rule_uid: ntp_offset_alert_{{ worker }}
     noDataState: NoData
     panelId: 65102
-    title: 'openqaworker16: NTP offset alert'
-    uid: fKAh5iBVk
+    title: '{{ worker }}: NTP offset alert'
+    uid: ntp_offset_alert_{{ worker }}
 - folder: Salt
   interval: 1m
-  name: 'openqaworker16: OpenQA Ping time alert'
+  name: '{{ worker }}: OpenQA Ping time alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '644'
-      __dashboardUid__: WDopenqaworker16
+      __alertId__: '573'
+      __dashboardUid__: WD{{ worker }}
       __panelId__: '65098'
       message: ''
     condition: B
-    dashboardUid: WDopenqaworker16
+    dashboardUid: WD{{ worker }}
     data:
     - datasourceUid: '000000001'
       model:
@@ -371,7 +371,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: openqaworker16
+          value: {{ worker }}
         - condition: AND
           key: url
           operator: =
@@ -402,23 +402,23 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: cK02ciBVk
+      rule_uid: openqa_ping_time_alert_{{ worker }}
     noDataState: NoData
     panelId: 65098
-    title: 'openqaworker16: OpenQA Ping time alert'
-    uid: cK02ciBVk
+    title: '{{ worker }}: OpenQA Ping time alert'
+    uid: openqa_ping_time_alert_{{ worker }}
 - folder: Salt
   interval: 1m
-  name: 'openqaworker16: QA network infrastructure Ping time alert'
+  name: '{{ worker }}: QA network infrastructure Ping time alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '646'
-      __dashboardUid__: WDopenqaworker16
+      __alertId__: '575'
+      __dashboardUid__: WD{{ worker }}
       __panelId__: '65099'
       message: ''
     condition: B
-    dashboardUid: WDopenqaworker16
+    dashboardUid: WD{{ worker }}
     data:
     - datasourceUid: '000000001'
       model:
@@ -448,7 +448,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: openqaworker16
+          value: {{ worker }}
       refId: A
       relativeTimeRange:
         from: 300
@@ -475,30 +475,30 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: TFA25mBVk
+      rule_uid: qa_network_infra_ping_time_alert_{{ worker }}
     noDataState: NoData
     panelId: 65099
-    title: 'openqaworker16: QA network infrastructure Ping time alert'
-    uid: TFA25mBVk
+    title: '{{ worker }}: QA network infrastructure Ping time alert'
+    uid: qa_network_infra_ping_time_alert_{{ worker }}
 - folder: Salt
   interval: 1m
-  name: 'openqaworker16: Too many Minion job failures alert'
+  name: '{{ worker }}: Too many Minion job failures alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '651'
-      __dashboardUid__: WDopenqaworker16
+      __alertId__: '580'
+      __dashboardUid__: WD{{ worker }}
       __panelId__: '65104'
       message: |-
-        Too many Minion jobs have failed on openqaworker16.
+        Too many Minion jobs have failed on {{ worker }}.
 
-        Review failed jobs on http://localhost:9530/minion/jobs?state=failed after tunneling the worker's Minion dashboard via `ssh -L 9530:localhost:9530 -N openqaworker16`. Create a ticket if there's not already one. For the general log of the Minion job queue, checkout `journalctl -u openqa-worker-cacheservice.service -u openqa-worker-cacheservice-minion.service`. To remove all failed jobs on the machine:
+        Review failed jobs on http://localhost:9530/minion/jobs?state=failed after tunneling the worker's Minion dashboard via `ssh -L 9530:localhost:9530 -N {{ worker }}`. Create a ticket if there's not already one. For the general log of the Minion job queue, checkout `journalctl -u openqa-worker-cacheservice.service -u openqa-worker-cacheservice-minion.service`. To remove all failed jobs on the machine:
 
         ```
         /usr/share/openqa/script/openqa-workercache eval 'my $jobs = app->minion->jobs({states => ["failed"]}); while (my $job = $jobs->next) { $job->remove }'
         ```
     condition: B
-    dashboardUid: WDopenqaworker16
+    dashboardUid: WD{{ worker }}
     data:
     - datasourceUid: '000000001'
       model:
@@ -524,7 +524,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: openqaworker16
+          value: {{ worker }}
       refId: A
       relativeTimeRange:
         from: 300
@@ -581,7 +581,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: openqaworker16
+          value: {{ worker }}
       refId: C
       relativeTimeRange:
         from: 300
@@ -591,26 +591,26 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: sK0hcmB4k
+      rule_uid: too_many_minion_job_failures_alert_{{ worker }}
     noDataState: NoData
     panelId: 65104
-    title: 'openqaworker16: Too many Minion job failures alert'
-    uid: sK0hcmB4k
+    title: '{{ worker }}: Too many Minion job failures alert'
+    uid: too_many_minion_job_failures_alert_{{ worker }}
 - folder: Salt
   interval: 5m
-  name: 'openqaworker16: host up alert'
+  name: '{{ worker }}: host up alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '645'
-      __dashboardUid__: WDopenqaworker16
+      __alertId__: '574'
+      __dashboardUid__: WD{{ worker }}
       __panelId__: '65105'
       message: |-
         No data received for pings from worker to central host, likely host is down (or split network).
 
         See https://progress.opensuse.org/issues/71098 for details
     condition: B
-    dashboardUid: WDopenqaworker16
+    dashboardUid: WD{{ worker }}
     data:
     - datasourceUid: '000000001'
       model:
@@ -636,7 +636,7 @@ groups:
         tags:
         - key: host
           operator: =
-          value: openqaworker16
+          value: {{ worker }}
       refId: A
       relativeTimeRange:
         from: 300
@@ -662,23 +662,23 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: 2F0hcmB4z
+      rule_uid: host_up_alert_{{ worker }}
     noDataState: NoData
     panelId: 65105
-    title: 'openqaworker16: host up alert'
-    uid: 2F0hcmB4z
+    title: '{{ worker }}: host up alert'
+    uid: host_up_alert_{{ worker }}
 - folder: Salt
   interval: 1m
-  name: 'openqaworker16: partitions usage (%) alert'
+  name: '{{ worker }}: partitions usage (%) alert'
   orgId: 1
   rules:
   - annotations:
-      __alertId__: '647'
-      __dashboardUid__: WDopenqaworker16
+      __alertId__: '576'
+      __dashboardUid__: WD{{ worker }}
       __panelId__: '65090'
       message: ''
     condition: A
-    dashboardUid: WDopenqaworker16
+    dashboardUid: WD{{ worker }}
     data:
     - datasourceUid: __expr__
       model:
@@ -731,7 +731,7 @@ groups:
         orderByTime: ASC
         policy: default
         query: SELECT mean("used_percent") AS "used_percent" FROM "disk" WHERE ("host"
-          = 'openqaworker16' AND fstype != 'nfs') AND $timeFilter GROUP BY time($interval),
+          = '{{ worker }}' AND fstype != 'nfs') AND $timeFilter GROUP BY time($interval),
           "device", "fstype" fill(null)
         rawQuery: true
         refId: B
@@ -752,8 +752,8 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: 0F0h5iB4z
+      rule_uid: partitions_usage_alert_{{ worker }}
     noDataState: NoData
     panelId: 65090
-    title: 'openqaworker16: partitions usage (%) alert'
-    uid: 0F0h5iB4z
+    title: '{{ worker }}: partitions usage (%) alert'
+    uid: partitions_usage_alert_{{ worker }}
