@@ -156,11 +156,12 @@ dashboard-cleanup:
     - template: jinja
     - worker: {{workername}}
 
-/etc/grafana/provisioning/alerting/dashboard-WD{{ workername }}.yaml
+/etc/grafana/provisioning/alerting/dashboard-WD{{ workername }}.yaml:
   file.managed:
     - source: salt://monitoring/grafana/alertinig-dashboard-WD.yaml.template
     - template: jinja
     - worker: {{workername}}
+
 {% endfor %}
 
 #create dashboards for each generic host contained in the mine
@@ -173,10 +174,11 @@ dashboard-cleanup:
     - generic_host: {{genericname}}
     - host_interface: {{ interfaces[0] }}
 
-/etc/grafana/provisioning/alerting/dashboard-GD{{ genericname }}.yaml
+/etc/grafana/provisioning/alerting/dashboard-GD{{ genericname }}.yaml:
   file.managed:
     - source: salt://monitoring/grafana/alertinig-dashboard-GD.yaml.template
     - template: jinja
     - generic_host: {{genericname}}
     - host_interface: {{ interfaces[0] }}
+
 {% endfor %}
