@@ -158,7 +158,7 @@ dashboard-cleanup:
 
 /etc/grafana/provisioning/alerting/dashboard-WD{{ workername }}.yaml:
   file.managed:
-    - source: salt://monitoring/grafana/alertinig-dashboard-WD.yaml.template
+    - source: salt://monitoring/grafana/alerting-dashboard-WD.yaml.template
     - template: jinja
     - worker: {{workername}}
 
@@ -176,7 +176,7 @@ dashboard-cleanup:
 
 /etc/grafana/provisioning/alerting/dashboard-GD{{ genericname }}.yaml:
   file.managed:
-    - source: salt://monitoring/grafana/alertinig-dashboard-GD.yaml.template
+    - source: salt://monitoring/grafana/alerting-dashboard-GD.yaml.template
     - template: jinja
     - generic_host: {{genericname}}
     - host_interface: {{ interfaces[0] }}
