@@ -1,7 +1,7 @@
 ---
 apiVersion: 1
 groups:
-- folder: Salt
+- folder: Generic
   interval: 1m
   name: '{{ generic_host }}: Disk I/O time alert'
   orgId: 1
@@ -94,11 +94,13 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: disk_io_time_alert_{{ generic_host }}
+      type: generic
+      hostname: {{ generic_host }}
     noDataState: NoData
     panelId: 56720
     title: '{{ generic_host }}: Disk I/O time alert'
     uid: disk_io_time_alert_{{ generic_host }}
-- folder: Salt
+- folder: Generic
   interval: 1m
   name: '{{ generic_host }}: Memory usage alert'
   orgId: 1
@@ -169,11 +171,13 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: memory_usage_alert_{{ generic_host }}
+      type: generic
+      hostname: {{ generic_host }}
     noDataState: NoData
     panelId: 12054
     title: '{{ generic_host }}: Memory usage alert'
     uid: memory_usage_alert_{{ generic_host }}
-- folder: Salt
+- folder: Generic
   interval: 1m
   name: '{{ generic_host }}: NTP offset alert'
   orgId: 1
@@ -246,11 +250,13 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: ntp_offset_alert_{{ generic_host }}
+      type: generic
+      hostname: {{ generic_host }}
     noDataState: NoData
     panelId: 65102
     title: '{{ generic_host }}: NTP offset alert'
     uid: ntp_offset_alert_{{ generic_host }}
-- folder: Salt
+- folder: Generic
   interval: 1m
   name: '{{ generic_host }}: Ping time alert'
   orgId: 1
@@ -315,11 +321,13 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: ping_time_alert_{{ generic_host }}
+      type: generic
+      hostname: {{ generic_host }}
     noDataState: NoData
     panelId: 65098
     title: '{{ generic_host }}: Ping time alert'
     uid: ping_time_alert_{{ generic_host }}
-- folder: Salt
+- folder: Generic
   interval: 5m
   name: '{{ generic_host }}: host up alert'
   orgId: 1
@@ -386,11 +394,13 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: host_up_alert_{{ generic_host }}
+      type: generic
+      hostname: {{ generic_host }}
     noDataState: NoData
     panelId: 65105
     title: '{{ generic_host }}: host up alert'
     uid: host_up_alert_{{ generic_host }}
-- folder: Salt
+- folder: Generic
   interval: 1m
   name: '{{ generic_host }}: partitions usage (%) alert'
   orgId: 1
@@ -476,6 +486,8 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: partitions_usage_alert_{{ generic_host }}
+      type: generic
+      hostname: {{ generic_host }}
     noDataState: NoData
     panelId: 65090
     title: '{{ generic_host }}: partitions usage (%) alert'
