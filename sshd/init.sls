@@ -11,6 +11,15 @@ openssh:
   file.managed:
     - source: salt://sshd/sshd_config
 
+{%- if grains["host"] == "openqaw5-xen" %}
+permitrootlogin:
+  file.line:
+    - name: /etc/ssh/sshd_config
+    - mode: replace
+    - match: PermitRootLogin without-password
+    - content: PermitRootLogin yes
+{%- endif %}
+
 {%- if not grains.get('noservices', False) %}
 sshd:
   service.running:
