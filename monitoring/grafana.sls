@@ -9,6 +9,7 @@
 {% set generic_dashboardnames = (genericnames | map('regex_replace', '^(.*)$', 'generic-\\1.json'))|list %} #we name our dashboards for generic hosts "generic-$nodename.json"
 {% set grafana_plugins = ['grafana-image-renderer', 'blackmirror1-singlestat-math-panel'] %}
 {% set preserved_dashboards = worker_dashboardnames + generic_dashboardnames + templated_dashboardnames + manual_dashboardnames %}
+{% set services_for_templated_dashboards = 'sshd openqa-gru openqa-webui openqa-livehandler openqa-scheduler openqa-websockets smb vsftpd telegraf saltmaster salt-minion rsyncd postgresql postfix cron apache2' %}
 
 {% from 'openqa/repo_config.sls' import repo %}
 monitoring-software.repo:
@@ -145,6 +146,13 @@ dashboard-cleanup:
   file.managed:
     - source: salt://monitoring/grafana/{{templated_dashboardname}}.template
     - template: jinja
+    - services: {{services_for_templated_dashboards}}
+
+/etc/grafana/provisioning/alerting/dashboard-{{ templated_dashboardname | replace(".json", ".yaml") }}:
+  file.managed:
+    - source: salt://monitoring/grafana/alerting-dashboard-{{ templated_dashboardname | replace(".json", ".yaml") }}.template
+    - template: jinja
+    - services: {{services_for_templated_dashboards}}
 {% endfor %}
 
 #create dashboards and alerts for each worker contained in the mine

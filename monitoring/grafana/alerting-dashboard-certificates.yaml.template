@@ -1,0 +1,174 @@
+---
+apiVersion: 1
+groups:
+{% for host in pillar['dehydrated']['hosts.txt'] %}
+- folder: Salt
+  interval: 1h
+  name: '{{host}} - SSL expiration'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '366'
+      __dashboardUid__: E9tyiQ17k
+      __panelId__: '{{loop.index*3+1}}'
+      message: |-
+        One of the TLS certificates (fullchain.pem) located in /etc/dehydrated/certs on {{host}} is nearing expiration.
+        The most likely issue is dehydrated not being able to reach our CA. Check the dehydrated logs for further issues.
+
+        Notes about the dehydrated setup can be found in https://progress.opensuse.org/issues/103149
+    condition: B
+    dashboardUid: E9tyiQ17k
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: $tag_source validity left
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - source
+          type: tag
+        - params:
+          - 'null'
+          type: fill
+        interval: 1h
+        measurement: x509_cert
+        orderByTime: ASC
+        policy: default
+        query: SELECT last("expiry") FROM "x509_cert" WHERE ("common_name" = '{{host}}'
+          AND "source" =~ /.pem$/) AND $timeFilter GROUP BY time($__interval), "source"
+          fill(null)
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - expiry
+            type: field
+          - params: []
+            type: last
+        tags:
+        - key: common_name
+          operator: =
+          value: {{host}}
+        - condition: AND
+          key: source
+          operator: =~
+          value: /.pem$/
+      refId: A
+      relativeTimeRange:
+        from: 3600
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 604800
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 1h
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: ssl_expiration_alert_{{host}}
+    noDataState: NoData
+    panelId: {{loop.index*3+1}}
+    title: {{host}} - SSL expiration
+    uid: ssl_expiration_alert_{{host}}
+- folder: Salt
+  interval: 1h
+  name: '{{host}}: SAN validity'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '367'
+      __dashboardUid__: E9tyiQ17k
+      __panelId__: '{{loop.index*3+2}}'
+      message: |-
+        One of the SAN endpoints on {{host}} is nearing expiration.
+        The most likely issue is that the service serving this SAN (e.g. apache2) on the host {{host}} was not restarted/reloaded after a new certificate got fetched.
+
+        As a short term solution you can manually restart the service but please also open a ticket because it indicates that our salt automation does not cover all service restarts.
+    condition: B
+    dashboardUid: E9tyiQ17k
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: $tag_source validity left
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - source
+          type: tag
+        - params:
+          - 'null'
+          type: fill
+        interval: 1h
+        measurement: x509_cert
+        orderByTime: ASC
+        policy: default
+        query: SELECT (bottom(expiry,common_name,1)/60/60/24) as exp,common_name FROM
+          "x509_cert" WHERE time >= now() - 1h
+        rawQuery: false
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - expiry
+            type: field
+          - params: []
+            type: last
+        tags:
+        - key: common_name
+          operator: =
+          value: {{host}}
+        - condition: AND
+          key: source
+          operator: '!~'
+          value: /.pem$/
+      refId: A
+      relativeTimeRange:
+        from: 3600
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 604800
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: avg
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 1h
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: san_validity_alert_{{host}}
+    noDataState: NoData
+    panelId: {{loop.index*3+2}}
+    title: '{{host}}: SAN validity'
+    uid: san_validity_alert_{{host}}
+{% endfor %}

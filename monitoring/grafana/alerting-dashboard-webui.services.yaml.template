@@ -1,0 +1,79 @@
+---
+apiVersion: 1
+groups:
+{% for service in services.split(' ') %}
+- folder: Salt
+  interval: 1m
+  name: {{ service }}.service alert
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '70'
+      __dashboardUid__: webuiSyS
+      __panelId__: '{{ loop.index }}'
+      message: ''
+    condition: B
+    dashboardUid: webuiSyS
+    data:
+    - datasourceUid: '000000001'
+      model:
+        alias: Procs
+        groupBy:
+        - params:
+          - $__interval
+          type: time
+        - params:
+          - 'null'
+          type: fill
+        interval: 10s
+        measurement: procstat_lookup
+        orderByTime: ASC
+        policy: default
+        refId: A
+        resultFormat: time_series
+        select:
+        - - params:
+            - pid_count
+            type: field
+          - params: []
+            type: mean
+        tags:
+        - key: host
+          operator: =
+          value: openqa
+        - condition: AND
+          key: cgroup
+          operator: =
+          value: systemd/system.slice/{{ service }}.service
+      refId: A
+      relativeTimeRange:
+        from: 300
+        to: 0
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+            - 1
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - A
+          reducer:
+            type: last
+        refId: B
+        type: classic_conditions
+      refId: B
+    execErrState: Error
+    for: 5m
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: {{ service }}_service_alert
+    noDataState: NoData
+    panelId: {{ loop.index }}
+    title: {{ service }}.service alert
+    uid: {{ service }}_service_alert
+{% endfor %}

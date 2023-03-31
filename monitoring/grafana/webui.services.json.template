@@ -24,7 +24,7 @@
   "links": [],
   "liveNow": false,
   "panels": [
-{% for service in ['sshd','openqa-gru','openqa-webui','openqa-livehandler','openqa-scheduler','openqa-websockets','smb','vsftpd','telegraf','salt-master','salt-minion','rsyncd','postgresql','postfix','cron','apache2'] %}
+{% for service in services.split(' ') %}
     {
       "alert": {
         "alertRuleTags": {},
