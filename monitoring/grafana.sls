@@ -14,7 +14,7 @@
 server-monitoring-software.repo:
   pkgrepo.managed:
     - humanname: Server Monitoring Software
-    - baseurl: http://download.opensuse.org/repositories/server:/monitoring/{{ repo }}
+    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/monitoring/{{ repo }}
     - gpgautoimport: True
     - refresh: True
     - priority: 105
