@@ -72,6 +72,8 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: {{ service }}_service_alert
+      type: service
+      service_name: {{service}}
     noDataState: NoData
     panelId: {{ loop.index }}
     title: {{ service }}.service alert
