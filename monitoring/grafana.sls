@@ -17,7 +17,7 @@ monitoring-software.repo:
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/monitoring/{{ repo }}
     - gpgautoimport: True
     - refresh: True
-    - priority: 105
+    - priority: 90
     - require_in:
       - pkg: grafana
 
