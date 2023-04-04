@@ -11,7 +11,7 @@
 {% set preserved_dashboards = worker_dashboardnames + generic_dashboardnames + templated_dashboardnames + manual_dashboardnames %}
 
 {% from 'openqa/repo_config.sls' import repo %}
-server-monitoring-software.repo:
+monitoring-software.repo:
   pkgrepo.managed:
     - humanname: Server Monitoring Software
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/monitoring/{{ repo }}
