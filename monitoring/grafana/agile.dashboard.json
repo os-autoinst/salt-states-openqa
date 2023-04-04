@@ -24,7 +24,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 105,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -43,6 +42,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 71,
@@ -428,6 +428,7 @@
             "axisColorMode": "text",
             "axisLabel": "days",
             "axisPlacement": "auto",
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -477,7 +478,7 @@
         "y": 0
       },
       "id": 4,
-      "interval": "7d",
+      "interval": "14d",
       "options": {
         "legend": {
           "calcs": [
@@ -567,6 +568,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 80,
@@ -698,8 +700,9 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "5s",
-  "schemaVersion": 37,
+  "refresh": "30m",
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -713,6 +716,6 @@
   "timezone": "",
   "title": "Agile",
   "uid": "ck8uu5f4z",
-  "version": 11,
+  "version": 12,
   "weekStart": ""
 }
