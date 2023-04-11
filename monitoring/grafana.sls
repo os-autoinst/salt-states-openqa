@@ -9,7 +9,7 @@
 {% set generic_dashboardnames = (genericnames | map('regex_replace', '^(.*)$', 'generic-\\1.json'))|list %} #we name our dashboards for generic hosts "generic-$nodename.json"
 {% set grafana_plugins = ['grafana-image-renderer', 'blackmirror1-singlestat-math-panel'] %}
 {% set preserved_dashboards = worker_dashboardnames + generic_dashboardnames + templated_dashboardnames + manual_dashboardnames %}
-{% set services_for_templated_dashboards = 'sshd openqa-gru openqa-webui openqa-livehandler openqa-scheduler openqa-websockets smb vsftpd telegraf saltmaster salt-minion rsyncd postgresql postfix cron apache2' %}
+{% set services_for_templated_dashboards = 'sshd openqa-gru openqa-webui openqa-livehandler openqa-scheduler openqa-websockets smb vsftpd telegraf salt-master salt-minion rsyncd postgresql postfix cron apache2' %}
 
 {% from 'openqa/repo_config.sls' import repo %}
 monitoring-software.repo:
