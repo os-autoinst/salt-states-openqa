@@ -116,54 +116,107 @@ groups:
     condition: B
     dashboardUid: WD{{ worker }}
     data:
-    - datasourceUid: '000000001'
-      model:
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - previous
-          type: fill
-        measurement: openqa_download_rate
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("bytes") FROM "openqa_download_rate" WHERE ("host" = '{{ worker }}')
-          AND $timeFilter GROUP BY time($__interval) fill(previous)
-        rawQuery: false
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - bytes
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: {{ worker }}
-      refId: A
+    - refId: download_rate
       relativeTimeRange:
         from: 3600
         to: 0
-    - datasourceUid: __expr__
+      datasourceUid: "000000001"
+      model:
+        groupBy:
+            - params:
+                - $__interval
+              type: time
+            - params:
+                - previous
+              type: fill
+        intervalMs: 1000
+        maxDataPoints: 43200
+        measurement: openqa_download_rate
+        orderByTime: ASC
+        policy: default
+        query: SELECT mean("bytes") FROM "openqa_download_rate" WHERE ("host" = '{{ worker }}') AND $timeFilter GROUP BY time($__interval) fill(previous)
+        rawQuery: false
+        refId: download_rate
+        resultFormat: time_series
+        select:
+            - - params:
+                    - bytes
+                type: field
+              - params: []
+                type: mean
+        tags:
+            - key: host
+              operator: =
+              value: {{ worker }}
+    - refId: download_count
+      relativeTimeRange:
+        from: 3600
+        to: 0
+      datasourceUid: "000000001"
+      model:
+        groupBy:
+            - params:
+                - $__interval
+              type: time
+            - params:
+                - previous
+              type: fill
+        hide: false
+        intervalMs: 1000
+        maxDataPoints: 43200
+        measurement: openqa_download_count
+        orderByTime: ASC
+        policy: default
+        query: SELECT mean("bytes") FROM "openqa_download_rate" WHERE ("host" = '{{ worker }}') AND $timeFilter GROUP BY time($__interval) fill(previous)
+        rawQuery: false
+        refId: download_count
+        resultFormat: time_series
+        select:
+            - - params:
+                    - count
+                type: field
+              - params: []
+                type: mean
+        tags:
+            - key: host
+              operator: =
+              value: {{ worker }}
+    - refId: condition
+      relativeTimeRange:
+        from: 600
+        to: 0
+      datasourceUid: __expr__
       model:
         conditions:
-        - evaluator:
-            params:
-            - 5.24288e+06
-            type: lt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: max
-        refId: B
+            - evaluator:
+                params:
+                    - 5.24288e+06
+                type: lt
+              operator:
+                type: and
+              query:
+                params:
+                    - download_rate
+              reducer:
+                type: max
+            - evaluator:
+                params:
+                    - 0
+                    - 0
+                type: gt
+              operator:
+                type: and
+              query:
+                params:
+                    - download_count
+              reducer:
+                params: []
+                type: last
+              type: query
+        intervalMs: 1000
+        maxDataPoints: 43200
+        refId: condition
         type: classic_conditions
-      refId: B
     execErrState: Error
     for: 4h
     isPaused: false
