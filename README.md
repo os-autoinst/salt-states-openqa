@@ -282,6 +282,25 @@ systemctl start openqa-worker-auto-restart@{20,21}.service openqa-reload-worker-
   This also reveals routes like `/api/ruler/grafana/api/v1/rules/{Namespace}/{Groupname}`
   which can be useful as well to delete alerts by folder/name.
 
+### Test alert provisioning locally
+Simply move the YAML files you want to test on your local Grafana instance
+into `/etc/grafana/provisioning/alerting` and checkout the
+[official documentation](https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning)
+for details.
+
+For templated alert rules, one can render and deploy a specific template locally
+by running e.g.:
+
+```
+sudo bash -c "salt-call --out=json --local slsutil.renderer \\
+    '$PWD/monitoring/grafana/alerting-dashboard-WD.yaml.template' \\
+    default_renderer=jinja worker=openqaworker14 \\
+  | jq -r '.local' > /etc/grafana/provisioning/alerting/test-alert.yaml"
+```
+
+In any case you need to restart Grafana (e.g.
+`sudo systemctl restart grafana-server.service`) for any changes to have effect.
+
 ## Communication
 
 If you have questions, visit us on IRC in [#opensuse-factory](irc://chat.freenode.net/opensuse-factory)
