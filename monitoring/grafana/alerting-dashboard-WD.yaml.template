@@ -113,7 +113,7 @@ groups:
         Cache service download rate is lower than expected.
 
         See https://progress.opensuse.org/issues/106904 for details.
-    condition: B
+    condition: condition
     dashboardUid: WD{{ worker }}
     data:
     - refId: download_rate
