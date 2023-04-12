@@ -24,7 +24,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "iteration": 1661769459023,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -3325,8 +3324,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3453,8 +3451,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3494,7 +3491,8 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -3658,8 +3656,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3699,7 +3696,8 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -3948,8 +3946,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "red",
@@ -3989,7 +3986,8 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -4119,7 +4117,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 108
+        "y": 99
       },
       "id": 10,
       "panels": [],
@@ -4147,7 +4145,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 109
+        "y": 100
       },
       "hiddenSeries": false,
       "id": 80,
@@ -4278,7 +4276,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 109
+        "y": 100
       },
       "hiddenSeries": false,
       "id": 82,
@@ -4423,10 +4421,6 @@
           }
         ]
       },
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -4434,71 +4428,165 @@
       "description": "Response time measured by the apache proxy for requests with exclusion of some known routes which are allowed to run for much longer.",
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 35,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "log": 10,
+              "type": "log"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 500000
+              }
+            ]
+          },
+          "unit": "µs"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Avg"
+            },
+            "properties": [
+              {
+                "id": "custom.fillBelowTo",
+                "value": "Min"
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Min"
+            },
+            "properties": [
+              {
+                "id": "custom.lineWidth",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Max"
+            },
+            "properties": [
+              {
+                "id": "custom.fillBelowTo",
+                "value": "Avg"
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Avg"
+            },
+            "properties": [
+              {
+                "id": "custom.lineWidth",
+                "value": 0
+              }
+            ]
+          }
+        ]
       },
-      "fill": 0,
-      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 109
+        "y": 100
       },
-      "hiddenSeries": false,
       "id": 84,
       "interval": "12s",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "8.5.10",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:271",
-          "alias": "Avg",
-          "fillBelowTo": "Min",
-          "lines": false
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
         },
-        {
-          "$$hashKey": "object:272",
-          "alias": "Min",
-          "lines": false
-        },
-        {
-          "$$hashKey": "object:273",
-          "alias": "Max",
-          "fillBelowTo": "Avg",
-          "lines": false
-        },
-        {
-          "$$hashKey": "object:274",
-          "alias": "Avg",
-          "lines": false
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "9.4.7",
       "targets": [
         {
           "alias": "Min",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -4513,6 +4601,7 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "measurement": "apache_log",
           "orderByTime": "ASC",
           "policy": "default",
@@ -4550,6 +4639,10 @@
         },
         {
           "alias": "Max",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -4564,6 +4657,7 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "measurement": "apache_log",
           "orderByTime": "ASC",
           "policy": "default",
@@ -4601,6 +4695,10 @@
         },
         {
           "alias": "Avg",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -4615,6 +4713,7 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "measurement": "apache_log",
           "orderByTime": "ASC",
           "policy": "default",
@@ -4651,46 +4750,8 @@
           ]
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 500000,
-          "visible": true
-        }
-      ],
-      "timeRegions": [],
       "title": "Apache Response Time",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:303",
-          "format": "µs",
-          "logBase": 10,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:304",
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
       "aliasColors": {},
@@ -4713,7 +4774,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 117
+        "y": 108
       },
       "hiddenSeries": false,
       "id": 88,
@@ -4880,7 +4941,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 117
+        "y": 108
       },
       "hiddenSeries": false,
       "id": 15,
@@ -5071,7 +5132,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 117
+        "y": 108
       },
       "hiddenSeries": false,
       "id": 14,
@@ -5584,7 +5645,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 123
+        "y": 114
       },
       "id": 8,
       "panels": [],
@@ -5660,7 +5721,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 124
+        "y": 115
       },
       "hiddenSeries": false,
       "id": 2,
@@ -5842,7 +5903,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 131
+        "y": 122
       },
       "hiddenSeries": false,
       "id": 89,
@@ -6154,7 +6215,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 138
+        "y": 129
       },
       "hiddenSeries": false,
       "id": 4,
@@ -6457,7 +6518,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 138
+        "y": 129
       },
       "hiddenSeries": false,
       "id": 6,
@@ -6661,7 +6722,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 145
+        "y": 136
       },
       "hiddenSeries": false,
       "id": 96,
@@ -6821,7 +6882,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 152
+        "y": 143
       },
       "hiddenSeries": false,
       "id": 98,
@@ -6948,7 +7009,8 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 36,
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -7024,6 +7086,6 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 46,
+  "version": 47,
   "weekStart": ""
 }
