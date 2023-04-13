@@ -301,6 +301,30 @@ sudo bash -c "salt-call --out=json --local slsutil.renderer \\
 In any case you need to restart Grafana (e.g.
 `sudo systemctl restart grafana-server.service`) for any changes to have effect.
 
+### Removing stale provisioned alerts
+These steps show how to remove a stale provisioned alert for the example
+alert with the rule UID `saltmaster_service_alert`.
+
+1. Check whether the alert is actually not provisioned anymore, e.g. run:
+   ```
+   grep -R 'saltmaster_service_alert' /etc/grafana/provisioning/alerting
+   ```
+2. Ensure that `grafana-server.service` has been restarted after the provisioning
+   file was removed.
+3. If it is really a stale alert, remove it manually from the database:
+   ```
+   sudo -u grafana sqlite3 /var/lib/grafana/grafana.db "
+     delete from alert_rule where uid = 'saltmaster_service_alert';
+     delete from alert_rule_version where rule_uid = 'saltmaster_service_alert';
+     delete from provenance_type where record_key = 'saltmaster_service_alert';
+     delete from annotation where text like '%saltmaster_service_alert%';
+    "
+   ```
+4. Check whether the alert is gone for good:
+   ```
+   sudo -u grafana sqlite3 /var/lib/grafana/grafana.db '.dump' | grep 'saltmaster_service_alert'`
+   ```
+
 ## Communication
 
 If you have questions, visit us on IRC in [#opensuse-factory](irc://chat.freenode.net/opensuse-factory)
