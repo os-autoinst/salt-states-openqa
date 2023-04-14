@@ -224,6 +224,107 @@ systemctl unmask openqa-worker-auto-restart@{20,21}.service openqa-reload-worker
 systemctl start openqa-worker-auto-restart@{20,21}.service openqa-reload-worker-auto-restart@{20,21}.path
 ```
 
+## Hints about using Grafana
+
+### Updating alert rules with the help of the Grafana web UI
+1. Copy the provisioned alert you want to update.
+    1. Select the alert under "Alerts". If the same alert exists for multiple hosts
+       it is templated which must be taken into account later. For now, just pick
+       any of those alerts.
+    2. Click on the "Copy" button in the "Actions" column and and proceed despite
+       the warning.
+2. In the editor opened by the copy action, do the changes you want to do. Do *not*
+   save yet.
+3. Additionally, do the following changes:
+    * In section 1: Enter a title that makes it easy to find the alert later.
+    * In section 3: Select a different folder, e.g. "WIP". This makes it clear
+      that the alert is none of our normal production alerts.
+    * In section 5: Remove the label "osd-admins". This avoids notification mails
+      to the team.
+4. Save the alert.
+5. Create an API key under https://stats.openqa-monitor.qa.suse.de/org/apikeys if
+   you don't already have one. The role needs to be "Admin".
+6. Determine the alert's ID via the title entered in step 3. and get its YAML
+   representation:
+   ```
+   url=https://stats.openqa-monitor.qa.suse.de/api/v1/provisioning/alert-rules
+   key=… # the API key from step 5.
+   uid=$(curl -H "Authorization: Bearer $key" "$url" | jq -r '.[] | select(.title == "Testrule") | .uid')
+   yaml=$(curl -H "Authorization: Bearer $key" "$url/$uid/export")
+   ```
+   Note that the UID is also shown in the browser's URL-bar when viewing/editing
+   the alert.
+7. Update the relevant section in the relevant YAML file in this repository. There
+   is one file per dashboard. The relevant file is the one matching the alert rule's
+   "Dashboard UID".
+    * `monitoring/grafana/alerting`: contains alerts not using templates
+    * `monitoring/grafana/aleting-dashboard-*`: contains alerts using templates
+        * Replace the concrete host/worker name with the placeholder (e.g. `{{ worker }}`)
+          again.
+8. After the merge request has been merged and deployed, restart Grafana and check
+   whether everything is in-place.
+9. Delete the temporarily created copy of the original alert again. This can be
+   done via the web UI or API:
+   ```
+   curl -H "Authorization: Bearer $key" -X DELETE "$url/$uid"
+   ```
+
+### Remarks about alerting API
+* The API routes mentioned in previous sections are documented in the
+  [official documentation](https://grafana.com/docs/grafana/latest/developers/http_api/alerting_provisioning).
+  Replace the "latest" in that URL with e.g. "v9.3" to view the documentation
+  page for an earlier version. This can be useful if the latest version hasn't
+  been deployed yet to see the subset of routes actually available. Note that
+  the documentation of [api/alerting](https://grafana.com/docs/grafana/v8.4/http_api/alerting)
+  is not relevant as it is only about legacy alerts.
+* All Grafana API routes can be browsed using the
+  [Swagger Editor](https://editor.swagger.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgrafana%2Fgrafana%2Fmain%2Fpkg%2Fservices%2Fngalert%2Fapi%2Ftooling%2Fpost.json).
+  This also reveals routes like `/api/ruler/grafana/api/v1/rules/{Namespace}/{Groupname}`
+  which can be useful as well to delete alerts by folder/name.
+
+### Test alert provisioning locally
+Simply move the YAML files you want to test on your local Grafana instance
+into `/etc/grafana/provisioning/alerting` and checkout the
+[official documentation](https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning)
+for details.
+
+For templated alert rules, one can render and deploy a specific template locally
+by running e.g.:
+
+```
+sudo bash -c "salt-call --out=json --local slsutil.renderer \\
+    '$PWD/monitoring/grafana/alerting-dashboard-WD.yaml.template' \\
+    default_renderer=jinja worker=openqaworker14 \\
+  | jq -r '.local' > /etc/grafana/provisioning/alerting/test-alert.yaml"
+```
+
+In any case you need to restart Grafana (e.g.
+`sudo systemctl restart grafana-server.service`) for any changes to have effect.
+
+### Removing stale provisioned alerts
+These steps show how to remove a stale provisioned alert for the example
+alert with the rule UID `saltmaster_service_alert`.
+
+1. Check whether the alert is actually not provisioned anymore, e.g. run:
+   ```
+   grep -R 'saltmaster_service_alert' /etc/grafana/provisioning/alerting
+   ```
+2. Ensure that `grafana-server.service` has been restarted after the provisioning
+   file was removed.
+3. If it is really a stale alert, remove it manually from the database:
+   ```
+   sudo -u grafana sqlite3 /var/lib/grafana/grafana.db "
+     delete from alert_rule where uid = 'saltmaster_service_alert';
+     delete from alert_rule_version where rule_uid = 'saltmaster_service_alert';
+     delete from provenance_type where record_key = 'saltmaster_service_alert';
+     delete from annotation where text like '%saltmaster_service_alert%';
+    "
+   ```
+4. Check whether the alert is gone for good:
+   ```
+   sudo -u grafana sqlite3 /var/lib/grafana/grafana.db '.dump' | grep 'saltmaster_service_alert'`
+   ```
+
 ## Communication
 
 If you have questions, visit us on IRC in [#opensuse-factory](irc://chat.freenode.net/opensuse-factory)
