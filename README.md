@@ -292,11 +292,16 @@ For templated alert rules, one can render and deploy a specific template locally
 by running e.g.:
 
 ```
-sudo bash -c "salt-call --out=json --local slsutil.renderer \\
+sudo bash -c "salt-call --out=json \\
+    --pillar-root=../salt-pillars-openqa --local slsutil.renderer \\
     '$PWD/monitoring/grafana/alerting-dashboard-WD.yaml.template' \\
     default_renderer=jinja worker=openqaworker14 \\
   | jq -r '.local' > /etc/grafana/provisioning/alerting/test-alert.yaml"
 ```
+
+This example assumes pillars are checked out locally as well, next to the states
+repository. You could of course also specify a different path, e.g. `t/pillar` for
+pillars included in the states repository for test purposes.
 
 In any case you need to restart Grafana (e.g.
 `sudo systemctl restart grafana-server.service`) for any changes to have effect.
