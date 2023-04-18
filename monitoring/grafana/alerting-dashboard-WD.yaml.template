@@ -765,7 +765,7 @@ groups:
             type: avg
         - evaluator:
             params:
-            - 85
+            - {{ pillar.get('commonconf', {}).get(grains['host'], {}).get('partitions_usage_alert_threshold', '85') }}
             type: gt
           operator:
             type: or
