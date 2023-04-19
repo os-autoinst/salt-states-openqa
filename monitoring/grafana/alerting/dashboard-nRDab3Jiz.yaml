@@ -58,6 +58,7 @@ groups:
         refId: B
         type: classic_conditions
       refId: B
+    noDataState: OK
     execErrState: Error
     for: 10m
     isPaused: false
@@ -124,6 +125,7 @@ groups:
         refId: B
         type: classic_conditions
       refId: B
+    noDataState: OK
     execErrState: Error
     for: 30s
     isPaused: false
@@ -342,6 +344,7 @@ groups:
       relativeTimeRange:
         from: 60
         to: 0
+    noDataState: OK
     execErrState: Error
     for: 1m
     isPaused: false
@@ -421,6 +424,7 @@ groups:
       relativeTimeRange:
         from: 120
         to: 0
+    noDataState: OK
     execErrState: Error
     for: 6m
     isPaused: false
@@ -491,6 +495,7 @@ groups:
       relativeTimeRange:
         from: 120
         to: 0
+    noDataState: OK
     execErrState: Error
     for: 2m
     isPaused: false
