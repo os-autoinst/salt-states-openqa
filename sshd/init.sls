@@ -11,7 +11,7 @@ openssh:
   file.managed:
     - source: salt://sshd/sshd_config
 
-{%- if grains["host"] == "openqaw5-xen" %}
+{%- if grains.get("passwordlogin", False) %}
 permitrootlogin:
   file.line:
     - name: /etc/ssh/sshd_config
