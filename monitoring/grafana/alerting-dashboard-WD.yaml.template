@@ -96,7 +96,7 @@ groups:
       rule_uid: disk_io_time_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
-    noDataState: NoData
+    noDataState: OK
     panelId: 56720
     title: '{{ worker }}: Disk I/O time alert'
     uid: disk_io_time_alert_{{ worker }}
@@ -225,7 +225,7 @@ groups:
       rule_uid: download_rate_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
-    noDataState: NoData
+    noDataState: OK
     panelId: 65109
     title: '{{ worker }}: Download rate alert'
     uid: download_rate_alert_{{ worker }}
@@ -312,7 +312,7 @@ groups:
       rule_uid: memory_usage_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
-    noDataState: NoData
+    noDataState: OK
     panelId: 12054
     title: '{{ worker }}: Memory usage alert'
     uid: memory_usage_alert_{{ worker }}
@@ -391,7 +391,7 @@ groups:
       rule_uid: ntp_offset_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
-    noDataState: NoData
+    noDataState: OK
     panelId: 65102
     title: '{{ worker }}: NTP offset alert'
     uid: ntp_offset_alert_{{ worker }}
@@ -466,7 +466,7 @@ groups:
       rule_uid: openqa_ping_time_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
-    noDataState: NoData
+    noDataState: OK
     panelId: 65098
     title: '{{ worker }}: OpenQA Ping time alert'
     uid: openqa_ping_time_alert_{{ worker }}
@@ -541,7 +541,7 @@ groups:
       rule_uid: qa_network_infra_ping_time_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
-    noDataState: NoData
+    noDataState: OK
     panelId: 65099
     title: '{{ worker }}: QA network infrastructure Ping time alert'
     uid: qa_network_infra_ping_time_alert_{{ worker }}
@@ -659,7 +659,7 @@ groups:
       rule_uid: too_many_minion_job_failures_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
-    noDataState: NoData
+    noDataState: OK
     panelId: 65104
     title: '{{ worker }}: Too many Minion job failures alert'
     uid: too_many_minion_job_failures_alert_{{ worker }}
@@ -732,7 +732,7 @@ groups:
       rule_uid: host_up_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
-    noDataState: NoData
+    noDataState: OK
     panelId: 65105
     title: '{{ worker }}: host up alert'
     uid: host_up_alert_{{ worker }}
@@ -824,7 +824,7 @@ groups:
       rule_uid: partitions_usage_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
-    noDataState: NoData
+    noDataState: OK
     panelId: 65090
     title: '{{ worker }}: partitions usage (%) alert'
     uid: partitions_usage_alert_{{ worker }}

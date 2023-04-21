@@ -85,7 +85,7 @@ groups:
       rule_uid: ssl_expiration_alert_{{host}}
       type: tls
       hostname: {{host}}
-    noDataState: NoData
+    noDataState: OK
     panelId: {{loop.index*3+1}}
     title: {{host}} - SSL expiration
     uid: ssl_expiration_alert_{{host}}
@@ -171,7 +171,7 @@ groups:
       rule_uid: san_validity_alert_{{host}}
       type: tls
       hostname: {{host}}
-    noDataState: NoData
+    noDataState: OK
     panelId: {{loop.index*3+2}}
     title: '{{host}}: SAN validity'
     uid: san_validity_alert_{{host}}

@@ -81,7 +81,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: zZAh5mf4k
-    noDataState: NoData
+    noDataState: OK
     panelId: 84
     title: Apache Response Time alert
     uid: zZAh5mf4k
@@ -151,7 +151,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: MW025mB4z
-    noDataState: NoData
+    noDataState: OK
     panelId: 15
     title: Apache Workers alert
     uid: MW025mB4z
@@ -235,7 +235,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: Fm02cmf4z
-    noDataState: NoData
+    noDataState: OK
     panelId: 76
     title: Average Ping time (ms) alert
     uid: Fm02cmf4z
@@ -300,7 +300,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: dZ025mf4z
-    noDataState: NoData
+    noDataState: OK
     panelId: 96
     title: Broken workers alert
     uid: dZ025mf4z
@@ -381,7 +381,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: Ji0h5mfVz
-    noDataState: NoData
+    noDataState: OK
     panelId: 25
     title: CPU Load alert
     uid: Ji0h5mfVz
@@ -507,7 +507,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: om0h5mB4k
-    noDataState: NoData
+    noDataState: OK
     panelId: 23
     title: CPU usage alert
     uid: om0h5mB4k
@@ -744,7 +744,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: ai0h5ifVk
-    noDataState: NoData
+    noDataState: OK
     panelId: 74
     title: File systems alert
     uid: ai0h5ifVk
@@ -818,7 +818,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: tm0h5mf4k
-    noDataState: NoData
+    noDataState: OK
     panelId: 78
     title: HTTP Response alert
     uid: tm0h5mf4k
@@ -899,7 +899,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: Ci0h5mfVz
-    noDataState: NoData
+    noDataState: OK
     panelId: 68
     title: Memory usage alert
     uid: Ci0h5mfVz
@@ -983,7 +983,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: em025mfVz
-    noDataState: NoData
+    noDataState: OK
     panelId: 86
     title: NTP offset alert
     uid: em025mfVz
@@ -1057,7 +1057,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: SW025iB4k
-    noDataState: Alerting
+    noDataState: OK
     panelId: 2
     title: Open database connections by user alert
     uid: SW025iB4k
@@ -1136,7 +1136,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: FZ0hciBVz
-    noDataState: NoData
+    noDataState: OK
     panelId: 98
     title: SSL expiration alert
     uid: FZ0hciBVz
@@ -1208,7 +1208,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: 8i02cmB4z
-    noDataState: NoData
+    noDataState: OK
     panelId: 17
     title: 'web UI: Minion workers alert'
     uid: 8i02cmB4z
@@ -1320,7 +1320,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: liA25iB4k
-    noDataState: Alerting
+    noDataState: OK
     panelId: 19
     title: 'web UI: Too many Minion job failures alert'
     uid: liA25iB4k
