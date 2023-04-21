@@ -5,12 +5,14 @@ base:
     - sshd
     - sysctl
     - chrony
-    - auto-update
     - kdump
     - monitoring.telegraf
     - security_sensor
     - udev.disk_descriptions
     - logging
+    - rebootmgr
+  'not G@roles:webui and not G@roles:worker':
+    - auto-upgrade
   'G@roles:webui':
     - salt.master
     - etc.master
@@ -27,6 +29,8 @@ base:
     - openqa.openvswitch
     - openqa.openvswitch_boo1181418
     - openqa.dbus
+  'G@roles:webui or G@roles:worker':
+    - openqa.auto-update
   'openqaworker3.suse.de':
     - openqa.hacustombridges
   'G@roles:worker and G@osarch:aarch64':
