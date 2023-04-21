@@ -1,4 +1,4 @@
-{% set dashboard_template_folder = '/var/lib/grafana/dashboards/' %}
+{% set dashboard_template_folder = '/var/lib/grafana/dashboards' %}
 
 
 {% set workernames = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
