@@ -111,13 +111,6 @@ install_{{plugin}}:
     - name: /usr/sbin/grafana-cli plugins install {{plugin}}
     - runas: grafana
     - creates: /var/lib/grafana/plugins/{{plugin}}
-{%- if not grains.get('noservices', False) %}
-  service.running:
-    - enable: True
-    - name: grafana-server.service
-    - watch:
-      - cmd: install_{{plugin}}
-{%- endif %}
 {% endfor %}
 
 #remove all dashboards which are not preserved (see manual_dashboardnames above)
@@ -190,3 +183,15 @@ dashboard-cleanup:
     - host_interface: {{ interfaces[0] }}
 
 {% endfor %}
+
+{%- if not grains.get('noservices', False) %}
+grafana-server:
+  service.running:
+    - enable: True
+    - watch:
+{% for plugin in grafana_plugins %}
+      - cmd: install_{{plugin}}
+{% endfor %}
+      - file: /etc/grafana/*
+      - file: {{dashboard_template_folder}}*
+{%- endif %}
