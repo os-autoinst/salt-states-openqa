@@ -74,7 +74,7 @@ groups:
       rule_uid: {{ service }}_service_alert
       type: service
       service_name: {{service}}
-    noDataState: NoData
+    noDataState: OK
     panelId: {{ loop.index }}
     title: {{ service }}.service alert
     uid: {{ service }}_service_alert

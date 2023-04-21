@@ -74,7 +74,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: XzAh5mfVz
-    noDataState: NoData
+    noDataState: OK
     panelId: 2
     title: Job age (scheduled) (max) alert
     uid: XzAh5mfVz
@@ -154,7 +154,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: QkA25iBVk
-    noDataState: NoData
+    noDataState: OK
     panelId: 5
     title: Job age (scheduled) (median) alert
     uid: QkA25iBVk

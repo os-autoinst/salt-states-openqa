@@ -65,7 +65,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: UzAhcmBVk
-    noDataState: NoData
+    noDataState: OK
     panelId: 2
     title: Failed systemd services alert
     uid: UzAhcmBVk
@@ -138,7 +138,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: Uk02cifVkz
-    noDataState: NoData
+    noDataState: OK
     panelId: 6
     title: Failed systemd services alert (except openqa.suse.de)
     uid: Uk02cifVkz

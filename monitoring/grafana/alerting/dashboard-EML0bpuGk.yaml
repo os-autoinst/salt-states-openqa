@@ -139,7 +139,7 @@ groups:
     labels:
       __contacts__: '"osd-admins"'
       rule_uid: 2Z025iB4km
-    noDataState: NoData
+    noDataState: OK
     panelId: 4
     title: Packet loss between worker hosts and other hosts alert
     uid: 2Z025iB4km
