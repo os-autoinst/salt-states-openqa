@@ -59,7 +59,7 @@ groups:
         refId: B
         type: classic_conditions
       refId: B
-    execErrState: Error
+    execErrState: OK
     for: 3m
     isPaused: false
     labels:
@@ -132,7 +132,7 @@ groups:
         refId: B
         type: classic_conditions
       refId: B
-    execErrState: Error
+    execErrState: OK
     for: 15m
     isPaused: false
     labels:

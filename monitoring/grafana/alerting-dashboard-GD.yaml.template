@@ -88,7 +88,7 @@ groups:
       relativeTimeRange:
         from: 300
         to: 0
-    execErrState: Error
+    execErrState: OK
     for: 5m
     isPaused: false
     labels:
@@ -165,7 +165,7 @@ groups:
       relativeTimeRange:
         from: 300
         to: 0
-    execErrState: Error
+    execErrState: OK
     for: 5m
     isPaused: false
     labels:
@@ -244,7 +244,7 @@ groups:
         refId: B
         type: classic_conditions
       refId: B
-    execErrState: Error
+    execErrState: OK
     for: 20m
     isPaused: false
     labels:
@@ -315,7 +315,7 @@ groups:
         refId: B
         type: classic_conditions
       refId: B
-    execErrState: Error
+    execErrState: OK
     for: 5m
     isPaused: false
     labels:
@@ -388,7 +388,7 @@ groups:
         refId: B
         type: classic_conditions
       refId: B
-    execErrState: Error
+    execErrState: OK
     for: 1h30m
     isPaused: false
     labels:
@@ -480,7 +480,7 @@ groups:
       relativeTimeRange:
         from: 300
         to: 0
-    execErrState: Error
+    execErrState: OK
     for: 5m
     isPaused: false
     labels:

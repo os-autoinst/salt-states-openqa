@@ -52,7 +52,7 @@ groups:
       relativeTimeRange:
         from: 10
         to: 0
-    execErrState: Alerting
+    execErrState: Error
     for: 20m
     isPaused: false
     labels:
@@ -133,7 +133,7 @@ groups:
         refId: B
         type: classic_conditions
       refId: B
-    execErrState: Error
+    execErrState: OK
     for: 4h
     isPaused: false
     labels:

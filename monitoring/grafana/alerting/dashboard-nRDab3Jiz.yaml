@@ -59,7 +59,7 @@ groups:
         type: classic_conditions
       refId: B
     noDataState: OK
-    execErrState: Error
+    execErrState: OK
     for: 10m
     isPaused: false
     labels:
@@ -125,7 +125,7 @@ groups:
         type: classic_conditions
       refId: B
     noDataState: OK
-    execErrState: Error
+    execErrState: OK
     for: 30s
     isPaused: false
     labels:
@@ -343,7 +343,7 @@ groups:
         from: 60
         to: 0
     noDataState: OK
-    execErrState: Error
+    execErrState: OK
     for: 1m
     isPaused: false
     labels:
@@ -422,7 +422,7 @@ groups:
         from: 120
         to: 0
     noDataState: OK
-    execErrState: Error
+    execErrState: OK
     for: 6m
     isPaused: false
     labels:
@@ -492,7 +492,7 @@ groups:
         from: 120
         to: 0
     noDataState: OK
-    execErrState: Error
+    execErrState: OK
     for: 2m
     isPaused: false
     labels:
