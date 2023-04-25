@@ -1384,7 +1384,7 @@
               "condition": "AND",
               "key": "server",
               "operator": "=",
-              "value": "https://openqa.suse.de/changelog"
+              "value": "https://openqa.suse.de/health"
             }
           ]
         }
