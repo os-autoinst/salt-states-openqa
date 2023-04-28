@@ -15,12 +15,7 @@ others.
 zypper ar -G http://download.suse.de/ibs/SUSE:/CA/${PRETTY_NAME// /_}/SUSE:CA.repo
 zypper ref
 zypper in ca-certificates-suse git-core salt-minion
-echo "file_client: local" >> /etc/salt/minion
 systemctl enable --now salt-minion
-
-# checkout repositories
-git -C /srv clone https://gitlab.suse.de/openqa/salt-states-openqa.git salt    # actual salt recipes
-git -C /srv clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git pillar # credentials such as SSH keys
 ```
 
 To connect to the master, e.g. openqa.suse.de:
@@ -32,6 +27,12 @@ grep -q '\<openqa.suse.de\>' /etc/salt/minion || echo "master: openqa.suse.de" >
 and accept the key on the master with `salt-key -y -a $host` with `$host`
 being the name of the host as announced by the salt-minion.
 
+For using Salt repositories locally, check them out and use commands from the
+"Local test deployment" section:
+```
+git -C /srv clone https://gitlab.suse.de/openqa/salt-states-openqa.git salt    # actual salt recipes
+git -C /srv clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git pillar # credentials such as SSH keys
+```
 
 ### Common salt commands to use
 
