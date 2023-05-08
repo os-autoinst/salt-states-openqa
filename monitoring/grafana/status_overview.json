@@ -836,9 +836,14 @@
             "selected": false,
             "text": "openqaworker-arm-5.qa.suse.de",
             "value": "openqaworker-arm-5.qa.suse.de"
+          },
+          {
+            "selected": false,
+            "text": "openqa-piworker.qa.suse.de",
+            "value": "openqa-piworker.qa.suse.de"
           }
         ],
-        "query": "openqaworker-arm-1.suse.de, openqaworker-arm-2.suse.de, openqaworker-arm-3.suse.de,openqaworker-arm-4.qa.suse.de,openqaworker-arm-5.qa.suse.de",
+        "query": "openqaworker-arm-1.suse.de, openqaworker-arm-2.suse.de, openqaworker-arm-3.suse.de,openqaworker-arm-4.qa.suse.de,openqaworker-arm-5.qa.suse.de, openqa-piworker.qa.suse.de",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
@@ -923,11 +928,6 @@
           },
           {
             "selected": false,
-            "text": "openqaworker8.suse.de",
-            "value": "openqaworker8.suse.de"
-          },
-          {
-            "selected": false,
             "text": "worker3.oqa.suse.de",
             "value": "worker3.oqa.suse.de"
           },
@@ -948,8 +948,33 @@
           },
           {
             "selected": false,
-            "text": "openqaworker9.suse.de",
-            "value": "openqaworker9.suse.de"
+            "text": "worker13.oqa.suse.de",
+            "value": "worker13.oqa.suse.de"
+          },
+          {
+            "selected": false,
+            "text": "worker8.oqa.suse.de",
+            "value": "worker8.oqa.suse.de"
+          },
+          {
+            "selected": false,
+            "text": "worker9.oqa.suse.de",
+            "value": "worker9.oqa.suse.de"
+          },
+          {
+            "selected": false,
+            "text": "worker10.oqa.suse.de",
+            "value": "worker10.oqa.suse.de"
+          },
+          {
+            "selected": false,
+            "text": "worker11.oqa.suse.de",
+            "value": "worker11.oqa.suse.de"
+          },
+          {
+            "selected": false,
+            "text": "worker12.oqa.suse.de",
+            "value": "worker12.oqa.suse.de"
           },
           {
             "selected": false,
@@ -958,11 +983,26 @@
           },
           {
             "selected": false,
-            "text": "worker10.oqa.suse.de",
-            "value": "worker10.oqa.suse.de"
+            "text": "openqaworker14.qa.suse.cz",
+            "value": "openqaworker14.qa.suse.cz"
+          },
+          {
+            "selected": false,
+            "text": "openqaworker16.qa.suse.cz",
+            "value": "openqaworker16.qa.suse.cz"
+          },
+          {
+            "selected": false,
+            "text": "openqaworker17.qa.suse.cz",
+            "value": "openqaworker17.qa.suse.cz"
+          },
+          {
+            "selected": false,
+            "text": "openqaworker18.qa.suse.cz",
+            "value": "openqaworker18.qa.suse.cz"
           }
         ],
-        "query": "openqaworker1.qe.nue2.suse.org, openqaworker8.suse.de, worker3.oqa.suse.de, worker2.oqa.suse.de, worker6.oqa.suse.de, worker5.oqa.suse.de, openqaworker9.suse.de, worker13.oqa.suse.de, worker10.oqa.suse.de",
+        "query": "openqaworker1.qe.nue2.suse.org, worker3.oqa.suse.de, worker2.oqa.suse.de, worker6.oqa.suse.de, worker5.oqa.suse.de,  worker13.oqa.suse.de, worker8.oqa.suse.de, worker9.oqa.suse.de, worker10.oqa.suse.de, worker11.oqa.suse.de, worker12.oqa.suse.de, worker13.oqa.suse.de, openqaworker14.qa.suse.cz, openqaworker16.qa.suse.cz, openqaworker17.qa.suse.cz, openqaworker18.qa.suse.cz",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
