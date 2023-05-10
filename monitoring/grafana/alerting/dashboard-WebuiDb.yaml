@@ -1324,3 +1324,125 @@ groups:
     panelId: 19
     title: 'web UI: Too many Minion job failures alert'
     uid: liA25iB4k
+- folder: Salt
+  interval: 1m
+  name: 'web UI: Disk I O time alert'
+  orgId: 1
+  rules:
+    - uid: d471ecd1-2d5c-418b-bd03-2b6b206fd27a
+      title: Disk I/O time for $host_disks
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 3600
+            to: 0
+          datasourceUid: "000000001"
+          model:
+            adhocFilters: []
+            alias: '$tag_name: $col'
+            datasource:
+                type: influxdb
+                uid: "000000001"
+            dsType: influxdb
+            function: mean
+            groupBy:
+                - interval: auto
+                  params:
+                    - auto
+                  type: time
+                - key: host
+                  params:
+                    - tag
+                  type: tag
+                - key: path
+                  params:
+                    - tag
+                  type: tag
+            intervalMs: 1000
+            limit: ""
+            maxDataPoints: 43200
+            measurement: io_reads
+            orderByTime: ASC
+            policy: default
+            query: SELECT non_negative_derivative(mean("io_time"),1s) FROM "diskio" WHERE  ("host" = 'openqa' AND "name" =~ /vd[a-z]$/)  AND $timeFilter GROUP BY time($interval), "name"::tag, *
+            rawQuery: true
+            refId: A
+            resultFormat: time_series
+            select:
+                - - params:
+                        - value
+                    type: field
+                  - params: []
+                    type: mean
+            slimit: ""
+            tags: []
+            tz: ""
+        - refId: B
+          relativeTimeRange:
+            from: 3600
+            to: 0
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params: []
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: A
+            hide: false
+            intervalMs: 1000
+            maxDataPoints: 43200
+            reducer: max
+            refId: B
+            type: reduce
+        - refId: C
+          relativeTimeRange:
+            from: 3600
+            to: 0
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 20000
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - D
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: B
+            hide: false
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: C
+            type: threshold
+      dashboardUid: WebuiDb
+      panelId: 158
+      noDataState: OK
+      execErrState: OK
+      for: 5m
+      annotations:
+        __dashboardUid__: WebuiDb
+        __panelId__: "158"
+      isPaused: false
+
