@@ -9,5 +9,8 @@
     copytruncate
     compresscmd /usr/bin/xz
     uncompresscmd /usr/bin/xzdec
+    postrotate
+        killall -SIGHUP telegraf;
+    endscript
 }
 
