@@ -2541,12 +2541,15 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:41",
           "format": "gbytes",
           "label": "",
           "logBase": 1,
+          "min": "0",
           "show": true
         },
         {
+          "$$hashKey": "object:42",
           "format": "short",
           "label": "",
           "logBase": 1,
