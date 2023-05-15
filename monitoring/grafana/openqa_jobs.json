@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -13,9 +16,10 @@
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "alert": {
@@ -131,7 +135,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "All running, scheduled and blocked openQA jobs. Alert thresholds are defined per individual as well as cumulative values hence the lower displayed threshold bar can be exceeded by the sum of values.",
       "fieldConfig": {
         "defaults": {
@@ -185,6 +192,10 @@
       "targets": [
         {
           "alias": "Running",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -229,6 +240,10 @@
         },
         {
           "alias": "Scheduled",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -272,6 +287,10 @@
         },
         {
           "alias": "Blocked",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -317,6 +336,10 @@
         },
         {
           "alias": "Scheduled+Blocked",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -368,9 +391,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Queue: State (SUSE)",
       "tooltip": {
         "shared": true,
@@ -379,9 +400,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -389,25 +408,18 @@
         {
           "$$hashKey": "object:54",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:55",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -415,8 +427,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "decimals": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -466,6 +480,10 @@
       "targets": [
         {
           "alias": "$tag_group",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -517,9 +535,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Queue: Groups (SUSE)",
       "tooltip": {
         "shared": true,
@@ -528,9 +544,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -538,25 +552,18 @@
         {
           "$$hashKey": "object:75",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:76",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -564,7 +571,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -611,6 +621,10 @@
       "targets": [
         {
           "alias": "$tag_arch",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -656,9 +670,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Queue: Architecture (SUSE)",
       "tooltip": {
         "shared": true,
@@ -667,33 +679,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -701,7 +704,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -748,6 +754,10 @@
       "targets": [
         {
           "alias": "$tag_worker",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -797,9 +807,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Running by Worker (SUSE)",
       "tooltip": {
         "shared": true,
@@ -808,33 +816,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -842,7 +841,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "Automatic labelling of incompletes, fails on unknown, new issues: https://gitlab.suse.de/openqa/auto-review/pipelines",
       "fieldConfig": {
         "defaults": {
@@ -889,6 +891,10 @@
       "targets": [
         {
           "alias": "Incompletes of last 24h",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -926,9 +932,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Incomplete jobs of last 24h",
       "tooltip": {
         "shared": true,
@@ -937,33 +941,25 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1010,7 +1006,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -1055,6 +1054,10 @@
       "targets": [
         {
           "alias": "New incompletes",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1099,9 +1102,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "New incompletes",
       "tooltip": {
         "shared": true,
@@ -1110,9 +1111,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1122,22 +1121,17 @@
           "format": "short",
           "label": "",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1185,7 +1179,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "Automatic labelling of incompletes, fails on unknown, new issues: https://gitlab.suse.de/openqa/auto-review/pipelines",
       "fieldConfig": {
         "defaults": {
@@ -1232,6 +1229,10 @@
       "targets": [
         {
           "alias": "Incompletes (not restarted) of last 24h",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1278,9 +1279,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Incomplete jobs (not restarted) of last 24h",
       "tooltip": {
         "shared": true,
@@ -1289,33 +1288,25 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1363,7 +1354,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "Ratio of failed vs. all jobs over time.\n\nhttps://progress.opensuse.org/issues/96191",
       "fieldConfig": {
         "defaults": {
@@ -1409,6 +1403,10 @@
       "targets": [
         {
           "alias": "ratio of failed openQA jobs",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1455,9 +1453,7 @@
           "visible": true
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "openQA job fail ratio",
       "tooltip": {
         "shared": true,
@@ -1466,40 +1462,34 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "$$hashKey": "object:107",
-          "decimals": null,
           "format": "percent",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
         {
           "$$hashKey": "object:108",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "https://progress.opensuse.org/issues/96191",
       "fieldConfig": {
         "defaults": {
@@ -1511,8 +1501,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1675,6 +1664,7 @@
         "legend": {
           "displayMode": "list",
           "placement": "right",
+          "showLegend": true,
           "values": []
         },
         "pieType": "pie",
@@ -1691,6 +1681,10 @@
       "targets": [
         {
           "alias": "$tag_result",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1733,7 +1727,6 @@
           "tags": []
         }
       ],
-      "timeFrom": null,
       "title": "Ratio of multi-machine tests by result",
       "type": "piechart"
     },
@@ -1791,13 +1784,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "decimals": 2,
       "description": "https://progress.opensuse.org/issues/96191",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "fill": 10,
       "fillGradient": 0,
       "gridPos": {
@@ -1845,6 +1837,10 @@
       "targets": [
         {
           "alias": "$tag_result",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1888,6 +1884,10 @@
         },
         {
           "alias": "ratio_mm_failed",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1949,9 +1949,7 @@
           "yaxis": "left"
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Ratio of multi-machine tests by result",
       "tooltip": {
         "shared": true,
@@ -1960,36 +1958,27 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "$$hashKey": "object:820",
-          "decimals": null,
           "format": "short",
-          "label": null,
           "logBase": 1,
           "max": "100",
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:821",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2006,13 +1995,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "decimals": 2,
       "description": "https://progress.opensuse.org/issues/96191",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "fill": 10,
       "fillGradient": 0,
       "gridPos": {
@@ -2060,6 +2048,10 @@
       "targets": [
         {
           "alias": "$tag_result",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -2103,9 +2095,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Ratio of tests by result (all-time)",
       "tooltip": {
         "shared": true,
@@ -2114,36 +2104,27 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "$$hashKey": "object:820",
-          "decimals": null,
           "format": "short",
-          "label": null,
           "logBase": 1,
           "max": "100",
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:821",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2160,13 +2141,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "decimals": 2,
       "description": "https://progress.opensuse.org/issues/96191",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "fill": 10,
       "fillGradient": 0,
       "gridPos": {
@@ -2214,6 +2194,10 @@
       "targets": [
         {
           "alias": "$tag_result",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -2257,9 +2241,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Ratio of multi-machine tests by result (all-time)",
       "tooltip": {
         "shared": true,
@@ -2268,36 +2250,27 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "$$hashKey": "object:820",
-          "decimals": null,
           "format": "short",
-          "label": null,
           "logBase": 1,
           "max": "100",
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:821",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2305,13 +2278,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "decimals": 2,
       "description": "https://progress.opensuse.org/issues/99135",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2352,6 +2324,10 @@
       "targets": [
         {
           "alias": "$tag_host",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -2395,9 +2371,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Ratio of failed tests by worker host (all-time)",
       "tooltip": {
         "shared": true,
@@ -2406,36 +2380,26 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "$$hashKey": "object:820",
-          "decimals": null,
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:821",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -2443,7 +2407,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2489,7 +2456,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.11",
+      "pluginVersion": "9.5.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2506,6 +2473,10 @@
       "targets": [
         {
           "alias": "$tag_group_name",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -2555,9 +2526,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Approximate result size by job group",
       "tooltip": {
         "shared": true,
@@ -2566,9 +2535,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -2577,27 +2544,22 @@
           "format": "gbytes",
           "label": "",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
           "label": "",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 27,
+  "refresh": "",
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -2635,5 +2597,6 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 43
+  "version": 48,
+  "weekStart": ""
 }
