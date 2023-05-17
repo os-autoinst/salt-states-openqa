@@ -19,8 +19,14 @@ security-sensor.repo:
     - mode: 644
     - contents_pillar: velociraptor-client.config
 
+/etc/systemd/system/velociraptor-client.service.d/override.conf:
+  file.managed:
+    - source: salt://security_sensor/override.conf
+    - makedirs: True
+
 velociraptor-client.service:
   service.enabled:
     - watch:
       - file: /etc/velociraptor/client.config
+      - file: /etc/systemd/system/velociraptor-client.service.d/override.conf
 {%- endif %}
