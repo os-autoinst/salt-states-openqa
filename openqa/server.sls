@@ -67,6 +67,12 @@ server.packages:
           other: 90
         assets/storage_duration:
           CURRENT: 30
+        default_group_limits:
+          asset_size_limit: 5
+          log_storage_duration: 10
+          important_log_storage_duration: 90
+          result_storage_duration: 21
+          important_result_storage_duration: 0
         misc_limits:
           untracked_assets_storage_duration: 7
           result_cleanup_max_free_percentage: 20
