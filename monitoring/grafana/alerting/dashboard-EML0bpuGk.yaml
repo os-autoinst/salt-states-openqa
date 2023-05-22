@@ -52,7 +52,7 @@ groups:
       relativeTimeRange:
         from: 10
         to: 0
-    execErrState: Error
+    execErrState: Alerting
     for: 20m
     isPaused: false
     labels:
