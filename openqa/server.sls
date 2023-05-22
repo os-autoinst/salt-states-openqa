@@ -73,6 +73,11 @@ server.packages:
           important_log_storage_duration: 90
           result_storage_duration: 21
           important_result_storage_duration: 0
+        no_group_limits:
+          log_storage_duration: 10
+          important_log_storage_duration: 25
+          result_storage_duration: 15
+          important_result_storage_duration: 50
         misc_limits:
           untracked_assets_storage_duration: 7
           result_cleanup_max_free_percentage: 20
