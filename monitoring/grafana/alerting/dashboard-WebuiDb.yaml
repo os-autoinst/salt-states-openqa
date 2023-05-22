@@ -53,7 +53,7 @@ groups:
         policy: default
         query: SELECT min("response_time_us") FROM "apache_log" WHERE ("host" = 'openqa'
           AND "request" !~ /\/api\/v1\/ws/) AND $timeFilter GROUP BY time($__interval)
-          fill(null)
+          fill(0)
         rawQuery: false
         refId: min_apache_response
         resultFormat: time_series
