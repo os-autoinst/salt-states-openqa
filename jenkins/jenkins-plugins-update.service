@@ -1,0 +1,7 @@
+[Unit]
+Description=Automatically update jenkins plugins.
+After=network.target jenkins.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/update-jenkins-plugins
