@@ -1570,4 +1570,123 @@ groups:
       labels:
         __contacts__: '"osd-admins"'
       isPaused: false
-
+- orgId: 1
+  name: PostgreSQL "returned rows" alert
+  folder: openQA
+  interval: 5m
+  rules:
+    - uid: a171549e-d862-43c1-8ad7-92496045a8d4
+      title: PostgreSQL "returned rows" alert
+      condition: Threshold for returned rows
+      data:
+        - refId: Returned rows
+          relativeTimeRange:
+            from: 300
+            to: 0
+          datasourceUid: "000000001"
+          model:
+            adhocFilters: []
+            alias: returned
+            datasource:
+                type: influxdb
+                uid: "000000001"
+            dsType: influxdb
+            groupBy:
+                - params:
+                    - 10s
+                  type: time
+                - params:
+                    - "null"
+                  type: fill
+            intervalMs: 1000
+            limit: ""
+            maxDataPoints: 43200
+            measurement: postgresql
+            orderByTime: ASC
+            policy: default
+            query: ""
+            refId: Returned rows
+            resultFormat: time_series
+            select:
+                - - params:
+                        - tup_returned
+                    type: field
+                  - params: []
+                    type: mean
+                  - params:
+                        - 1s
+                    type: non_negative_derivative
+            slimit: ""
+            tags: []
+            tz: ""
+        - refId: Last number of returned rows
+          relativeTimeRange:
+            from: 300
+            to: 0
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params: []
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - F
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: Returned rows
+            hide: false
+            intervalMs: 1000
+            maxDataPoints: 43200
+            reducer: last
+            refId: Last number of returned rows
+            type: reduce
+        - refId: Threshold for returned rows
+          relativeTimeRange:
+            from: 300
+            to: 0
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 5e+07
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - G
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+            datasource:
+                type: __expr__
+                uid: __expr__
+            expression: Last number of returned rows
+            hide: false
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: Threshold for returned rows
+            type: threshold
+      dashboardUid: WebuiDb
+      panelId: 89
+      noDataState: OK
+      execErrState: OK
+      for: 3h
+      annotations:
+        __dashboardUid__: WebuiDb
+        __panelId__: "89"
+        description: The PostgreSQL database has been returning an unusually high number of rows. This might indicate indexes are not utilized correctly. Checkout https://open.qa/docs/#_working_on_database_related_performance_problems for debugging this.
+      labels:
+        __contacts__: '"osd-admins"'
+        rule_uid: postgres_returned_rows
+      isPaused: false
