@@ -1,21 +1,14 @@
 {%- if not grains.get('noservices', False) %}
-auto_upgrade_service:
+{% for type in ['service', 'timer'] %}
+auto_upgrade_{{type}}:
   file.managed:
-    - name: /etc/systemd/system/auto-upgrade.service
-    - source: salt://auto-upgrade/auto-upgrade.service
+    - name: /etc/systemd/system/auto-upgrade.{{type}}
+    - source: salt://auto-upgrade/auto-upgrade.{{type}}
   module.run:
     - name: service.systemctl_reload
     - onchanges:
-      - file: auto_upgrade_service
-
-auto_upgrade_timer:
-  file.managed:
-    - name: /etc/systemd/system/auto-upgrade.timer
-    - source: salt://auto-upgrade/auto-upgrade.timer
-  module.run:
-    - name: service.systemctl_reload
-    - onchanges:
-      - file: auto_upgrade_timer
+      - file: auto_upgrade_{{type}}
+{% endfor %}
 
 auto-upgrade.timer:
   service.running:

@@ -43,3 +43,5 @@ base:
     - certificates.dehydrated
   'G@roles:storage':
     - backup.rsnapshot
+  'G@roles:jenkins':
+    - jenkins

@@ -74,6 +74,13 @@ test-storage-mock:
     - "echo 'roles: storage' >> /etc/salt/grains"
     - $salt_call mock=True
 
+test-jenkins-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: jenkins' >> /etc/salt/grains"
+    - $salt_call mock=True
+
 test-general-test:
   <<: *test_setup
   script: $salt_call test=True
@@ -130,5 +137,12 @@ test-storage:
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
     - )
+
+test-jenkins:
+  <<: *test_setup
+  script:
+    - "echo 'roles: jenkins' >> /etc/salt/grains"
+    - $salt_call
+
 
 include: 'deploy.yml'

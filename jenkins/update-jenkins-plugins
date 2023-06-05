@@ -1,0 +1,20 @@
+#!/bin/bash
+# based on https://stackoverflow.com/a/63087073/22022448
+
+set -euo pipefail
+
+jenkins_host=$(</etc/hostname)
+jenkins_port=$(curl -s --head http://$jenkins_host/login | grep -oP "^X-SSH-Endpoint: $jenkins_host:\K[0-9]{4,5}")
+
+function jenkins_cli {
+    ssh -o StrictHostKeyChecking=no -p $jenkins_port "$jenkins_host" "$@"
+}
+
+update_list=$( jenkins_cli list-plugins | grep -e ')$' | awk '{ print $1 }' )
+if [ -z "${update_list}" ]; then
+    echo "No updates available"
+    exit
+fi
+echo Updating Jenkins Plugins: ${update_list}
+jenkins_cli install-plugin ${update_list}
+jenkins_cli safe-restart
