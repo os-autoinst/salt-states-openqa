@@ -1,0 +1,11 @@
+[Unit]
+Description=Automatically recover stall nfs shares.
+After=network.target
+StartLimitInterval=3600
+StartLimitBurst=12
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/recover-nfs.sh
+Restart=on-failure
+RestartSec=300
