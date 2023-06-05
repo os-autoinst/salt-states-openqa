@@ -8,7 +8,7 @@
 
 {%- if not grains.get('noservices', False) %}
 {% for type in ['service', 'timer'] %}
-recover-nfs_{{type}}
+recover-nfs_{{type}}:
   file.managed:
     - name: /etc/systemd/system/recover-nfs.{{type}}
     - source: salt://openqa/recover-nfs.{{type}}
