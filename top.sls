@@ -29,6 +29,7 @@ base:
     - openqa.openvswitch
     - openqa.openvswitch_boo1181418
     - openqa.dbus
+    - openqa.recover-nfs
   'G@roles:webui or G@roles:worker':
     - openqa.auto-update
   'openqaworker3.suse.de':
