@@ -12,15 +12,12 @@ logrotate:
 /etc/systemd/system/logrotate.timer.d/override.conf:
    file.absent
 
-/etc/systemd/system/logrotate-openqa.service:
+{% for type in ['service', 'timer'] %}
+/etc/systemd/system/logrotate-openqa.{{type}}:
   file.managed:
-    - source: salt://logrotate/logrotate-openqa.service
+    - source: salt://logrotate/logrotate-openqa.{{type}}
     - makedirs: true
-
-/etc/systemd/system/logrotate-openqa.timer:
-  file.managed:
-    - source: salt://logrotate/logrotate-openqa.timer
-    - makedirs: true
+{% endfor %}
 
 /etc/logrotate.d/openqa-apache:
   file.managed:

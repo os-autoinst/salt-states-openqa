@@ -1,21 +1,14 @@
 {%- if not grains.get('noservices', False) %}
-auto_update_service:
+{% for type in ['service', 'timer'] %}
+auto_update_{{type}}:
   file.managed:
-    - name: /etc/systemd/system/auto-update.service
-    - source: salt://openqa/auto-update.service
+    - name: /etc/systemd/system/auto-update.{{type}}
+    - source: salt://openqa/auto-update.{{type}}
   module.run:
     - name: service.systemctl_reload
     - onchanges:
-      - file: auto_update_service
-
-auto_update_timer:
-  file.managed:
-    - name: /etc/systemd/system/auto-update.timer
-    - source: salt://openqa/auto-update.timer
-  module.run:
-    - name: service.systemctl_reload
-    - onchanges:
-      - file: auto_update_timer
+      - file: auto_update_{{type}}
+{% endfor %}
 
 auto-update.timer:
   service.running:
