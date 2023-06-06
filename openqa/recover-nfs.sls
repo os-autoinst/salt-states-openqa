@@ -21,5 +21,5 @@ recover-nfs_{{type}}:
 
 recover-nfs.timer:
   service.running:
-    - enabled: True
+    - enable: True
 {%- endif %}
