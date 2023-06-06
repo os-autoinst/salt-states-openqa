@@ -18,4 +18,8 @@ recover-nfs_{{type}}:
     - onchanges:
       - file: recover-nfs_{{type}}
 {% endfor %}
+
+recover-nfs.timer:
+  service.running:
+    - enabled: True
 {%- endif %}
