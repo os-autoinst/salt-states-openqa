@@ -1,6 +1,7 @@
 [Unit]
 Description=Automatically recover stall nfs shares.
 After=network.target
+RequiresMountsFor=/usr/local/bin
 StartLimitInterval=3600
 StartLimitBurst=12
 
