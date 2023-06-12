@@ -10,7 +10,7 @@ function jenkins_cli {
     ssh -o StrictHostKeyChecking=no -p $jenkins_port "$jenkins_host" "$@"
 }
 
-update_list=$( jenkins_cli list-plugins | grep -e ')$' | awk '{ print $1 }' )
+update_list=$( jenkins_cli list-plugins | grep -e ')$' | awk '{ print $1 }' ||:)
 if [ -z "${update_list}" ]; then
     echo "No updates available"
     exit
