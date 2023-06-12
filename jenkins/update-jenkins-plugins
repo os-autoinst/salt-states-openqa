@@ -4,7 +4,7 @@
 set -euo pipefail
 
 jenkins_host=$(</etc/hostname)
-jenkins_port=$(curl -s --head http://$jenkins_host/login | grep -oP "^X-SSH-Endpoint: $jenkins_host:\K[0-9]{4,5}")
+jenkins_port=$(curl -s --head http://$jenkins_host/login | grep -oP "^X-SSH-Endpoint: $jenkins_host.*:\K[0-9]{4,5}")
 
 function jenkins_cli {
     ssh -o StrictHostKeyChecking=no -p $jenkins_port "$jenkins_host" "$@"
