@@ -1690,3 +1690,79 @@ groups:
         __contacts__: '"osd-admins"'
         rule_uid: postgres_returned_rows
       isPaused: false
+- orgId: 1
+  name: 'web UI: Too many Minion jobs with failed hooks'
+  folder: Salt
+  interval: 1h
+  rules:
+    - uid: e06a9f3f-205f-4733-b63b-4a84dfea1535
+      title: 'web UI: Minion jobs failed hook alert'
+      condition: A
+      data:
+        - refId: minion_jobs_failed_hook_script
+          relativeTimeRange:
+            from: 86400
+            to: 0
+          datasourceUid: "000000001"
+          model:
+            alias: ""
+            groupBy:
+                - params:
+                    - 1h
+                  type: time
+                - params:
+                    - "0"
+                  type: fill
+            interval: 2m
+            intervalMs: 1000
+            maxDataPoints: 43200
+            measurement: openqa_minion_jobs_hook_rc_failed
+            orderByTime: ASC
+            policy: default
+            query: SELECT sum("rc_failed_per_10min") FROM "default"."openqa_minion_jobs_hook_rc_failed" WHERE $timeFilter GROUP BY time(1h) fill(0)
+            rawQuery: false
+            refId: minion_jobs_failed_hook_script
+            resultFormat: time_series
+            select:
+                - - params:
+                        - rc_failed_per_10min
+                    type: field
+                  - params: []
+                    type: sum
+            tags: []
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 20
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                        - minion_jobs_failed_hook_script
+                  reducer:
+                    params: []
+                    type: max
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: A
+            type: classic_conditions
+      dashboardUid: WebuiDb
+      panelId: 201
+      noDataState: OK
+      execErrState: OK
+      for: 0s
+      annotations:
+        __dashboardUid__: WebuiDb
+        __panelId__: "201"
+        message: Too many minion jobs with failed hook scripts.
+      labels:
+        __contacts__: '"osd-admins"'
+        rule_uid: minion_jobs_failed_hook_alert
+      isPaused: false
