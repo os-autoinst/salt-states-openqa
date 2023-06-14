@@ -110,17 +110,19 @@ wicked ifup br1:
       - ovs-vsctl set bridge $bridge stp_enable=true
       - for gre_port in $(ovs-vsctl list-ifaces $bridge | grep gre) ; do ovs-vsctl --if-exists del-port $bridge $gre_port ; done
      {% for remote in otherworkers %}
-     {%     set remote_conf=pillar['workerconf'][remote] %}
+     {%     set remote_conf = pillar['workerconf'][remote] %}
      {%     if 'bridge_ip' in remote_conf %}
-     {%         set remote_ip=remote_conf['bridge_ip'] %}
+     {%         set remote_ip = remote_conf['bridge_ip'] %}
      {%     elif 'bridge_iface' in remote_conf %}
-     {%         set remote_interfaces = salt['mine.get']("nodename:" + remote, 'ip4_interfaces', tgt_type='grain').values()|list %}
+     {%         set remote_interfaces = salt.mine.get("nodename:" + remote, 'ip4_interfaces', tgt_type='grain').values()|list %}
      {%         set remote_bridge_interface = remote_conf['bridge_iface'] %}
-     {%         if remote_bridge_interface in remote_interfaces[0] %}
+     {%         if remote_interfaces|length > 0 and remote_bridge_interface in remote_interfaces[0] %}
      {%             set remote_ip = remote_interfaces[0][remote_bridge_interface][0] %}
      {%         endif %}
      {%     endif %}
+     {% if remote_ip is defined and remote_ip|length %}
       - ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }}
+     {% endif %}
      {% endfor %}
 {% else %}
   file.absent
