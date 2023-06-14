@@ -46,3 +46,5 @@ base:
     - backup.rsnapshot
   'G@roles:jenkins':
     - jenkins
+  'openqa-piworker.qa.suse.de':
+    - raspberrypi.external-rtc
