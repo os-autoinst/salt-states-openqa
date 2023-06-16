@@ -32,6 +32,7 @@ worker.packages:
       - icewm-lite # for localXvnc console
       - xorg-x11-Xvnc # for localXvnc console
       - xdotool # for ssh-x
+      - e2fsprogs # for chattr
       - ipmitool # for ipmi backend and generalhw
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
