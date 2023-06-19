@@ -18,7 +18,9 @@ zypper in ca-certificates-suse git-core salt-minion
 systemctl enable --now salt-minion
 ```
 
-To connect to the master, e.g. openqa.suse.de:
+Make sure that /etc/hostname and /etc/salt/minion_id include the FQDN of the
+machine, e.g. example.suse.de. Then to connect to the master, e.g.
+openqa.suse.de:
 
 ```
 grep -q '\<openqa.suse.de\>' /etc/salt/minion || echo "master: openqa.suse.de" >> /etc/salt/minion
@@ -26,6 +28,9 @@ grep -q '\<openqa.suse.de\>' /etc/salt/minion || echo "master: openqa.suse.de" >
 
 and accept the key on the master with `salt-key -y -a $host` with `$host`
 being the name of the host as announced by the salt-minion.
+
+Also ensure that the involved DNS server(s) need to have a valid reverse DNS
+entry so that each host is easily discoverable.
 
 For using Salt repositories locally, check them out and use commands from the
 "Local test deployment" section:
