@@ -293,7 +293,7 @@ groups:
         tags:
         - key: url
           operator: =
-          value: backup.qa.suse.de
+          value: {{ host_interface }}
       refId: A
       relativeTimeRange:
         from: 300
@@ -367,7 +367,7 @@ groups:
         tags:
         - key: url
           operator: =
-          value: backup.qa.suse.de
+          value: {{ host_interface }}
       refId: A
       relativeTimeRange:
         from: 300

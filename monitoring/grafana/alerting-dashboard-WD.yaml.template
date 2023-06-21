@@ -430,13 +430,9 @@ groups:
           - params: []
             type: mean
         tags:
-        - key: host
+        - key: url
           operator: =
-          value: {{ worker }}
-        - condition: AND
-          key: url
-          operator: =
-          value: openqa.suse.de
+          value: {{ host_interface }}
       refId: A
       relativeTimeRange:
         from: 300
@@ -701,9 +697,9 @@ groups:
           - params: []
             type: mean
         tags:
-        - key: host
+        - key: url
           operator: =
-          value: {{ worker }}
+          value: {{ host_interface }}
       refId: A
       relativeTimeRange:
         from: 300
