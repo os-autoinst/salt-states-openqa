@@ -360,7 +360,7 @@ groups:
         resultFormat: time_series
         select:
         - - params:
-            - average_response_ms
+            - result_code
             type: field
           - params: []
             type: mean
@@ -376,8 +376,9 @@ groups:
       model:
         conditions:
         - evaluator:
-            params: []
-            type: no_value
+            params:
+            - 0
+            type: gt
           operator:
             type: and
           query:
