@@ -151,36 +151,39 @@ dashboard-cleanup:
 #create dashboards and alerts for each worker contained in the mine
 #iterating over worker_dashboardnames would be cleaner but we need the workername itself for the template
 {% for workername in workernames -%}
+{% set host_interface = salt['mine.get']("nodename:" + workername, 'network.interfaces', 'grain').keys()|first %}
 {{"/".join([dashboard_template_folder, "worker-" + workername + ".json"])}}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/worker.json.template
     - template: jinja
     - worker: {{workername}}
+    - host_interface: {{ host_interface }}
 
 /etc/grafana/provisioning/alerting/dashboard-WD{{ workername }}.yaml:
   file.managed:
     - source: salt://monitoring/grafana/alerting-dashboard-WD.yaml.template
     - template: jinja
     - worker: {{workername}}
+    - host_interface: {{ host_interface }}
 
 {% endfor %}
 
 #create dashboards for each generic host contained in the mine
 {% for genericname in genericnames -%}
-{% set interfaces = salt['mine.get']("nodename:" + genericname, 'network.interfaces', 'grain').keys()|list %}
+{% set host_interface = salt['mine.get']("nodename:" + genericname, 'network.interfaces', 'grain').keys()|first %}
 {{"/".join([dashboard_template_folder, "generic-" + genericname + ".json"])}}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/generic.json.template
     - template: jinja
     - generic_host: {{genericname}}
-    - host_interface: {{ interfaces[0] }}
+    - host_interface: {{ host_interface }}
 
 /etc/grafana/provisioning/alerting/dashboard-GD{{ genericname }}.yaml:
   file.managed:
     - source: salt://monitoring/grafana/alerting-dashboard-GD.yaml.template
     - template: jinja
     - generic_host: {{genericname}}
-    - host_interface: {{ interfaces[0] }}
+    - host_interface: {{ host_interface }}
 
 {% endfor %}
 
