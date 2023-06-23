@@ -38,6 +38,7 @@ worker.packages:
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT and TAP support
       - firewalld # For TAP support and for other good reasons
+      - ffmpeg-4 # For VP9/AV-1 support in os-autoinst
       - qemu: '>=2.3'
       {% if grains['osarch'] == 'x86_64' %}
       - qemu-x86
