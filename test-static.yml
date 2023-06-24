@@ -1,0 +1,17 @@
+---
+# yamllint disable rule:line-length
+
+# test CI files so far
+test-yaml:
+  stage: test-static
+  image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:yamllint
+  script:
+    - yamllint .gitlab-ci.yml deploy.yml
+
+test-salt-lint:
+  stage: test-static
+  image:
+    name: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-lint
+    entrypoint: [""]
+  script:
+    - salt-lint -v $(if command -v git >/dev/null; then git ls-files "*.sls"; else find -name '*.sls'; fi)
