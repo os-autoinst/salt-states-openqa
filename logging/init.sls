@@ -1,6 +1,6 @@
 /etc/systemd/system/systemd-journal-flush.service.d/startup-timeout.conf:
   file.managed:
-    - mode: 644
+    - mode: "0644"
     - makedirs: true
     - contents: |
         [Service]

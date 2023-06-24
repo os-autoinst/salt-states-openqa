@@ -41,7 +41,7 @@ nrpe:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: "0644"
     - require:
       - pkg: worker-monitoring.packages
 
@@ -52,8 +52,8 @@ nrpe:
     - user: root
     - group: root
     - makedirs: True
-    - file_mode: 744
-    - dir_mode: 755
+    - file_mode: "0744"
+    - dir_mode: "0755"
     - require:
       - pkg: worker-monitoring.packages
 
@@ -62,7 +62,7 @@ nrpe:
     - name: /etc/nagios
     - user: root
     - group: root
-    - mode: 755
+    - mode: "0755"
     - makedirs: True
     - require:
       - pkg: worker-monitoring.packages
@@ -73,7 +73,7 @@ nrpe:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: "0644"
     - require:
       - pkg: worker-monitoring.packages
 

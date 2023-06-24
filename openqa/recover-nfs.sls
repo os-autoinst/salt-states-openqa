@@ -4,7 +4,7 @@
     - template: jinja
     - user: root
     - group: root
-    - mode: 744
+    - mode: "0744"
 
 {%- if not grains.get('noservices', False) %}
 {% for type in ['service', 'timer'] %}

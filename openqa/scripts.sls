@@ -2,7 +2,7 @@
 
 /etc/qemu-ifup-br{{ i }}:
   file.managed:
-    - mode: 755
+    - mode: "0755"
     - contents: |
         #!/bin/sh
         sudo brctl addif br{{ i }} $1
@@ -12,7 +12,7 @@
   file.managed:
     - user: root
     - group: root
-    - mode: 755
+    - mode: "0755"
     - contents: |
         #!/bin/sh
         sudo brctl delif br{{ i }} $1

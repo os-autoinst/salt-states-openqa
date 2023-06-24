@@ -15,7 +15,7 @@ jenkins.repo:
 /usr/local/bin/update-jenkins-plugins:
   file.managed:
     - source: salt://jenkins/update-jenkins-plugins
-    - mode: 755
+    - mode: "0755"
 
 {%- if not grains.get('noservices', False) %}
 {% for type in ['service', 'timer'] %}

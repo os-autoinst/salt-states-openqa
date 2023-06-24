@@ -30,7 +30,7 @@ monitoring-software.repo:
   file.directory:
     - user: grafana
     - group: grafana
-    - mode: 770
+    - mode: "0770"
 
 include:
  - monitoring.nginx

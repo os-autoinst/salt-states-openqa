@@ -13,19 +13,19 @@ server.packages:
 /etc/systemd/system/openqa_nvme_format.service:
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_format.service
-    - mode: 644
+    - mode: "0644"
     - source: salt://openqa/nvme_store/openqa_nvme_format.service
 
 /etc/systemd/system/openqa_nvme_prepare.service:
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_prepare.service
-    - mode: 644
+    - mode: "0644"
     - source: salt://openqa/nvme_store/openqa_nvme_prepare.service
 
 /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf:
   file.managed:
     - name: /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf
-    - mode: 644
+    - mode: "0644"
     - source: salt://openqa/nvme_store/openqa-worker@_override.conf
     - makedirs: true
 
@@ -41,14 +41,14 @@ server.packages:
 /etc/systemd/system/var-lib-openqa.mount.d/override.conf:
   file.managed:
     - name: /etc/systemd/system/var-lib-openqa.mount.d/override.conf
-    - mode: 644
+    - mode: "0644"
     - source: salt://openqa/nvme_store/var-lib-openqa.mount_override.conf
     - makedirs: true
 
 /usr/local/bin/openqa-establish-nvme-setup:
   file.managed:
     - name: /usr/local/bin/openqa-establish-nvme-setup
-    - mode: 755
+    - mode: "0755"
     - source: salt://openqa/nvme_store/openqa-establish-nvme-setup.sh
     - makedirs: true
 

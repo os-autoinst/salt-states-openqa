@@ -12,7 +12,7 @@ rsnapshot.pkgs:
     - source: salt://etc/backup/rsnapshot.conf
     - user: root
     - group: root
-    - mode: 644
+    - mode: "0644"
 
 {%- if not grains.get('noservices', False) %}
 # add the service and timers for rsnapshot
@@ -39,7 +39,7 @@ rsnapshot-{{backup_type}}.timer:
 # `ssh-keygen -t ed25519 -N '' -C 'root@storage.oqa.suse.de, backup OSD' -f id_ed25519.backup_osd`
 /root/.ssh/id_ed25519.backup_osd:
   file.managed:
-    - mode: 600
+    - mode: "0600"
     - user: root
     - group: root
     - contents_pillar: id_ed25519.backup_osd

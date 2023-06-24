@@ -25,7 +25,7 @@ update grub config with crashkernel setting:
 
 /etc/systemd/system/check-for-kernel-crash.service:
   file.managed:
-    - mode: 644
+    - mode: "0644"
     - source: salt://openqa/check-for-kernel-crash.service
 
 kdump-conf:

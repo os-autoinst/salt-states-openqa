@@ -16,7 +16,7 @@ security-sensor.repo:
 
 /etc/velociraptor/client.config:
   file.managed:
-    - mode: 644
+    - mode: "0644"
     - contents_pillar: velociraptor-client.config
 
 /etc/systemd/system/velociraptor-client.service.d/override.conf:
