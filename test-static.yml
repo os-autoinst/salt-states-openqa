@@ -6,7 +6,7 @@ test-yaml:
   stage: test-static
   image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:yamllint
   script:
-    - yamllint .gitlab-ci.yml deploy.yml
+    - yamllint $(if command -v git >/dev/null; then git ls-files "*.yml"; else find -name '*.yml'; fi)
 
 test-salt-lint:
   stage: test-static
