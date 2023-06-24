@@ -45,7 +45,7 @@
 
 {% for i in ['br0','br2','br3'] %}
 wicked ifup {{ i }}:
-  cmd.wait:
-    - watch:
+  cmd.run:
+    - onchanges:
       - file: /etc/sysconfig/network/ifcfg-{{ i }}
 {% endfor %}

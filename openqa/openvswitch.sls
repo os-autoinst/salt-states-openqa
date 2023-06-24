@@ -16,8 +16,8 @@ wicked:
 
 {%- if not grains.get('noservices', False) %}
 wicked ifup br1:
-  cmd.wait:
-    - watch:
+  cmd.run:
+    - onchanges:
       - file: /etc/sysconfig/network/ifcfg-br1
 {%- endif %}
 
