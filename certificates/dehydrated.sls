@@ -9,7 +9,7 @@ dehydrated.packages:
         attempts: 5
     - pkgs:
       - dehydrated
-      - dehydrated-{{grains.get('webserver', 'webserver-grain-not-set')}}
+      - dehydrated-{{ grains.get('webserver', 'webserver-grain-not-set') }}
     - require:
       - webserver_grain
 

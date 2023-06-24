@@ -106,11 +106,11 @@ reverse-proxy-group:
     - makedirs: True
 
 {% for plugin in grafana_plugins %}
-install_{{plugin}}:
+install_{{ plugin }}:
   cmd.run:
-    - name: /usr/sbin/grafana-cli plugins install {{plugin}}
+    - name: /usr/sbin/grafana-cli plugins install {{ plugin }}
     - runas: grafana
-    - creates: /var/lib/grafana/plugins/{{plugin}}
+    - creates: /var/lib/grafana/plugins/{{ plugin }}
 {% endfor %}
 
 #remove all dashboards which are not preserved (see manual_dashboardnames above)
@@ -118,52 +118,52 @@ install_{{plugin}}:
 dashboard-cleanup:
 {% if preserved_dashboards|length > 0 %}
   cmd.run: #this find statement only works if we have at least one dashboard to preserve
-    - cwd: {{dashboard_template_folder}}
-    - name: find -type f ! -name {{preserved_dashboards|join(' ! -name ')}} -exec rm {} \;
+    - cwd: {{ dashboard_template_folder }}
+    - name: find -type f ! -name {{ preserved_dashboards|join(' ! -name ') }} -exec rm {} \;
 {% else %}
   file.directory: #if we have absolutely no node, just purge the folder
-    - name: {{dashboard_template_folder}}
+    - name: {{ dashboard_template_folder }}
     - clean: True
 {% endif %}
 
 #create dashboards manually defined but managed by salt
 {% for manual_dashboardname in manual_dashboardnames %}
-{{"/".join([dashboard_template_folder, manual_dashboardname])}}: #works even if variables already contain slashes
+{{ "/".join([dashboard_template_folder, manual_dashboardname]) }}: #works even if variables already contain slashes
   file.managed:
-    - source: salt://monitoring/grafana/{{manual_dashboardname}}
+    - source: salt://monitoring/grafana/{{ manual_dashboardname }}
 {% endfor %}
 
 #create templated dashboards
 {% for templated_dashboardname in templated_dashboardnames %}
-{{"/".join([dashboard_template_folder, templated_dashboardname])}}: #works even if variables already contain slashes
+{{ "/".join([dashboard_template_folder, templated_dashboardname]) }}: #works even if variables already contain slashes
   file.managed:
-    - source: salt://monitoring/grafana/{{templated_dashboardname}}.template
+    - source: salt://monitoring/grafana/{{ templated_dashboardname }}.template
     - template: jinja
-    - services: {{services_for_templated_dashboards}}
+    - services: {{ services_for_templated_dashboards }}
 
 /etc/grafana/provisioning/alerting/dashboard-{{ templated_dashboardname | replace(".json", ".yaml") }}:
   file.managed:
     - source: salt://monitoring/grafana/alerting-dashboard-{{ templated_dashboardname | replace(".json", ".yaml") }}.template
     - template: jinja
-    - services: {{services_for_templated_dashboards}}
+    - services: {{ services_for_templated_dashboards }}
 {% endfor %}
 
 #create dashboards and alerts for each worker contained in the mine
 #iterating over worker_dashboardnames would be cleaner but we need the workername itself for the template
 {% for workername in workernames -%}
 {% set host_interface = salt['mine.get']("nodename:" + workername, 'network.interfaces', 'grain').keys()|first %}
-{{"/".join([dashboard_template_folder, "worker-" + workername + ".json"])}}: #same as for manual dashboards too
+{{ "/".join([dashboard_template_folder, "worker-" + workername + ".json"]) }}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/worker.json.template
     - template: jinja
-    - worker: {{workername}}
+    - worker: {{ workername }}
     - host_interface: {{ host_interface }}
 
 /etc/grafana/provisioning/alerting/dashboard-WD{{ workername }}.yaml:
   file.managed:
     - source: salt://monitoring/grafana/alerting-dashboard-WD.yaml.template
     - template: jinja
-    - worker: {{workername}}
+    - worker: {{ workername }}
     - host_interface: {{ host_interface }}
 
 {% endfor %}
@@ -171,18 +171,18 @@ dashboard-cleanup:
 #create dashboards for each generic host contained in the mine
 {% for genericname in genericnames -%}
 {% set host_interface = salt['mine.get']("nodename:" + genericname, 'network.interfaces', 'grain').keys()|first %}
-{{"/".join([dashboard_template_folder, "generic-" + genericname + ".json"])}}: #same as for manual dashboards too
+{{ "/".join([dashboard_template_folder, "generic-" + genericname + ".json"]) }}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/generic.json.template
     - template: jinja
-    - generic_host: {{genericname}}
+    - generic_host: {{ genericname }}
     - host_interface: {{ host_interface }}
 
 /etc/grafana/provisioning/alerting/dashboard-GD{{ genericname }}.yaml:
   file.managed:
     - source: salt://monitoring/grafana/alerting-dashboard-GD.yaml.template
     - template: jinja
-    - generic_host: {{genericname}}
+    - generic_host: {{ genericname }}
     - host_interface: {{ host_interface }}
 
 {% endfor %}
@@ -193,8 +193,8 @@ grafana-server:
     - enable: True
     - watch:
 {% for plugin in grafana_plugins %}
-      - cmd: install_{{plugin}}
+      - cmd: install_{{ plugin }}
 {% endfor %}
       - file: /etc/grafana/*
-      - file: {{dashboard_template_folder}}*
+      - file: {{ dashboard_template_folder }}*
 {%- endif %}

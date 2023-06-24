@@ -159,9 +159,9 @@ webserver_grain:
 # check as workaround to disable the following in our test environment
 {%- if not grains.get('noservices', False) %}
 {% for i in ['key', 'crt'] %}
-/etc/apache2/ssl.{{i}}/{{grains['fqdn']}}.{{i}}:
+/etc/apache2/ssl.{{ i }}/{{ grains['fqdn'] }}.{{ i }}:
   file.managed:
-    - contents_pillar: {{grains['fqdn']}}.{{i}}
+    - contents_pillar: {{ grains['fqdn'] }}.{{ i }}
 {% endfor %}
 
 /etc/apache2/vhosts.d/openqa-ssl.conf:
@@ -380,8 +380,8 @@ apache2:
     - enable: True
     - watch:
       - file: /etc/apache2/vhosts.d/openqa.conf
-      - file: /etc/apache2/ssl.key/{{grains['fqdn']}}.key
-      - file: /etc/apache2/ssl.crt/{{grains['fqdn']}}.crt
+      - file: /etc/apache2/ssl.key/{{ grains['fqdn'] }}.key
+      - file: /etc/apache2/ssl.crt/{{ grains['fqdn'] }}.crt
 {%- endif %}
 
 {%- if not grains.get('noservices', False) %}

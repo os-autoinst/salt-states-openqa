@@ -19,14 +19,14 @@ jenkins.repo:
 
 {%- if not grains.get('noservices', False) %}
 {% for type in ['service', 'timer'] %}
-jenkins_plugins_update_{{type}}:
+jenkins_plugins_update_{{ type }}:
   file.managed:
-    - name: /etc/systemd/system/jenkins-plugins-update.{{type}}
-    - source: salt://jenkins/jenkins-plugins-update.{{type}}
+    - name: /etc/systemd/system/jenkins-plugins-update.{{ type }}
+    - source: salt://jenkins/jenkins-plugins-update.{{ type }}
   module.run:
     - name: service.systemctl_reload
     - onchanges:
-      - file: jenkins_plugins_update_{{type}}
+      - file: jenkins_plugins_update_{{ type }}
 {% endfor %}
 
 jenkins-plugins-update.timer:

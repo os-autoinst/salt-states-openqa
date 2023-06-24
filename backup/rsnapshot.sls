@@ -21,16 +21,16 @@ rsnapshot_service:
     - name: /etc/systemd/system/rsnapshot@.service
     - source: salt://etc/backup/systemd/system/rsnapshot@.service
 {% for backup_type in ['alpha', 'beta'] %}
-rsnapshot_timer_{{backup_type}}:
+rsnapshot_timer_{{ backup_type }}:
   file.managed:
-    - name: /etc/systemd/system/rsnapshot-{{backup_type}}.timer
-    - source: salt://etc/backup/systemd/system/rsnapshot-{{backup_type}}.timer
-rsnapshot-{{backup_type}}.timer:
+    - name: /etc/systemd/system/rsnapshot-{{ backup_type }}.timer
+    - source: salt://etc/backup/systemd/system/rsnapshot-{{ backup_type }}.timer
+rsnapshot-{{ backup_type }}.timer:
   service.running:
     - enable: True
     - require:
       - rsnapshot_service
-      - rsnapshot_timer_{{backup_type}}
+      - rsnapshot_timer_{{ backup_type }}
 {% endfor %}
 
 # ssh key files and config for backup
