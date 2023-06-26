@@ -32,11 +32,11 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": {{loop.index}}
+        "y": {{ loop.index }}
       },
-      "id": {{loop.index*3+0}},
+      "id": {{ loop.index*3+0 }},
       "panels": [],
-      "title": "Certificates on {{host}}",
+      "title": "Certificates on {{ host }}",
       "type": "row"
     },
     {
@@ -71,8 +71,8 @@
         "for": "1h",
         "frequency": "1h",
         "handler": 1,
-        "message": "One of the TLS certificates (fullchain.pem) located in /etc/dehydrated/certs on {{host}} is nearing expiration.\nThe most likely issue is dehydrated not being able to reach our CA. Check the dehydrated logs for further issues.\n\nNotes about the dehydrated setup can be found in https://progress.opensuse.org/issues/103149",
-        "name": "{{host}} - SSL expiration",
+        "message": "One of the TLS certificates (fullchain.pem) located in /etc/dehydrated/certs on {{ host }} is nearing expiration.\nThe most likely issue is dehydrated not being able to reach our CA. Check the dehydrated logs for further issues.\n\nNotes about the dehydrated setup can be found in https://progress.opensuse.org/issues/103149",
+        "name": "{{ host }} - SSL expiration",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -94,7 +94,7 @@
         "y": 1
       },
       "hiddenSeries": false,
-      "id": {{loop.index*3+1}},
+      "id": {{ loop.index*3+1 }},
       "interval": "1h",
       "legend": {
         "avg": false,
@@ -147,7 +147,7 @@
           "measurement": "x509_cert",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(\"expiry\") FROM \"x509_cert\" WHERE (\"common_name\" = '{{host}}' AND \"source\" =~ /.pem$/) AND $timeFilter GROUP BY time($__interval), \"source\" fill(null)",
+          "query": "SELECT last(\"expiry\") FROM \"x509_cert\" WHERE (\"common_name\" = '{{ host }}' AND \"source\" =~ /.pem$/) AND $timeFilter GROUP BY time($__interval), \"source\" fill(null)",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -169,7 +169,7 @@
             {
               "key": "common_name",
               "operator": "=",
-              "value": "{{host}}"
+              "value": "{{ host }}"
             },
             {
               "condition": "AND",
@@ -255,7 +255,7 @@
         "for": "1h",
         "frequency": "1h",
         "handler": 1,
-        "message": "One of the SAN endpoints on {{host}} is nearing expiration.\nThe most likely issue is that the service serving this SAN (e.g. apache2) on the host {{host}} was not restarted/reloaded after a new certificate got fetched.\n\nAs a short term solution you can manually restart the service but please also open a ticket because it indicates that our salt automation does not cover all service restarts.",
+        "message": "One of the SAN endpoints on {{ host }} is nearing expiration.\nThe most likely issue is that the service serving this SAN (e.g. apache2) on the host {{ host }} was not restarted/reloaded after a new certificate got fetched.\n\nAs a short term solution you can manually restart the service but please also open a ticket because it indicates that our salt automation does not cover all service restarts.",
         "name": "openqa.suse.de: SAN validity",
         "noDataState": "keep_state",
         "notifications": [
@@ -282,7 +282,7 @@
         "y": 12
       },
       "hiddenSeries": false,
-      "id": {{loop.index*3+2}},
+      "id": {{ loop.index*3+2 }},
       "interval": "1h",
       "legend": {
         "alignAsTable": true,
@@ -359,7 +359,7 @@
             {
               "key": "common_name",
               "operator": "=",
-              "value": "{{host}}"
+              "value": "{{ host }}"
             },
             {
               "condition": "AND",

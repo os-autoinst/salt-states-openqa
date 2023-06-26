@@ -101,7 +101,7 @@ server.packages:
 /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf:
   file.managed:
     - name: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
-    - mode: 644
+    - mode: "0644"
     - source: salt://openqa/openqa-hook-timeout.conf
     - makedirs: true
     - require:
@@ -159,9 +159,9 @@ webserver_grain:
 # check as workaround to disable the following in our test environment
 {%- if not grains.get('noservices', False) %}
 {% for i in ['key', 'crt'] %}
-/etc/apache2/ssl.{{i}}/{{grains['fqdn']}}.{{i}}:
+/etc/apache2/ssl.{{ i }}/{{ grains['fqdn'] }}.{{ i }}:
   file.managed:
-    - contents_pillar: {{grains['fqdn']}}.{{i}}
+    - contents_pillar: {{ grains['fqdn'] }}.{{ i }}
 {% endfor %}
 
 /etc/apache2/vhosts.d/openqa-ssl.conf:
@@ -179,13 +179,13 @@ webserver_grain:
 # ``ssh-keygen -t ed25519 -N '' -C 'geekotest@openqa.suse.de, openqa-pusher needle pushing to gitlab' -f id_ed25519.gitlab`
 openqa_user_ssh:
   file.managed:
-    - mode: 644
+    - mode: "0644"
     - user: geekotest
     - group: nogroup
     - makedirs: True
     - names:
       - /var/lib/openqa/.ssh/id_ed25519.gitlab:
-        - mode: 600
+        - mode: "0600"
         - contents_pillar: id_ed25519.gitlab
       - /var/lib/openqa/.ssh/id_ed25519.gitlab.pub:
         - contents_pillar: id_ed25519.gitlab.pub
@@ -233,7 +233,7 @@ openqa_user_ssh:
     - source: salt://monitoring/telegraf/telegraf-webui.conf
     - user: root
     - group: root
-    - mode: 600
+    - mode: "0600"
     - makedirs: True
     - require:
       - pkg: server.packages
@@ -362,7 +362,7 @@ postgresql.service:
     - source: salt://vsftpd/vsftpd.conf
     - user: root
     - group: root
-    - mode: 600
+    - mode: "0600"
     - require:
       - pkg: server.packages
 
@@ -380,8 +380,8 @@ apache2:
     - enable: True
     - watch:
       - file: /etc/apache2/vhosts.d/openqa.conf
-      - file: /etc/apache2/ssl.key/{{grains['fqdn']}}.key
-      - file: /etc/apache2/ssl.crt/{{grains['fqdn']}}.crt
+      - file: /etc/apache2/ssl.key/{{ grains['fqdn'] }}.key
+      - file: /etc/apache2/ssl.crt/{{ grains['fqdn'] }}.crt
 {%- endif %}
 
 {%- if not grains.get('noservices', False) %}
@@ -444,7 +444,7 @@ git-clone-os-autoinst-scripts:
 
 /etc/systemd/system/systemd-journal-flush.service.d/storage.conf:
   file.managed:
-    - mode: 644
+    - mode: "0644"
     - makedirs: true
     - contents: |
         [Unit]

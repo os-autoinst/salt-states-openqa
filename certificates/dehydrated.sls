@@ -9,7 +9,7 @@ dehydrated.packages:
         attempts: 5
     - pkgs:
       - dehydrated
-      - dehydrated-{{grains.get('webserver', 'webserver-grain-not-set')}}
+      - dehydrated-{{ grains.get('webserver', 'webserver-grain-not-set') }}
     - require:
       - webserver_grain
 
@@ -19,7 +19,7 @@ dehydrated.packages:
     - source: salt://monitoring/telegraf/certificates.conf
     - user: root
     - group: root
-    - mode: 600
+    - mode: "0600"
     - makedirs: True
 
 /etc/dehydrated/config.d/{{ pillar['dehydrated']['config_script'] }}:
@@ -31,7 +31,7 @@ dehydrated.packages:
 
 /etc/dehydrated/postrun-hooks.d/reload-webserver.sh:
   file.managed:
-    - mode: 755
+    - mode: "0755"
     - contents: |
         #!/bin/sh
         systemctl reload {{ grains.get('webserver', '') }}

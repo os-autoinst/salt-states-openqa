@@ -4,15 +4,15 @@ groups:
 {% for host in pillar['dehydrated']['hosts.txt'] %}
 - folder: Salt
   interval: 1h
-  name: '{{host}} - SSL expiration'
+  name: '{{ host }} - SSL expiration'
   orgId: 1
   rules:
   - annotations:
       __alertId__: '366'
       __dashboardUid__: E9tyiQ17k
-      __panelId__: '{{loop.index*3+1}}'
+      __panelId__: '{{ loop.index*3+1 }}'
       message: |-
-        One of the TLS certificates (fullchain.pem) located in /etc/dehydrated/certs on {{host}} is nearing expiration.
+        One of the TLS certificates (fullchain.pem) located in /etc/dehydrated/certs on {{ host }} is nearing expiration.
         The most likely issue is dehydrated not being able to reach our CA. Check the dehydrated logs for further issues.
 
         Notes about the dehydrated setup can be found in https://progress.opensuse.org/issues/103149
@@ -36,7 +36,7 @@ groups:
         measurement: x509_cert
         orderByTime: ASC
         policy: default
-        query: SELECT last("expiry") FROM "x509_cert" WHERE ("common_name" = '{{host}}'
+        query: SELECT last("expiry") FROM "x509_cert" WHERE ("common_name" = '{{ host }}'
           AND "source" =~ /.pem$/) AND $timeFilter GROUP BY time($__interval), "source"
           fill(null)
         rawQuery: false
@@ -51,7 +51,7 @@ groups:
         tags:
         - key: common_name
           operator: =
-          value: {{host}}
+          value: {{ host }}
         - condition: AND
           key: source
           operator: =~
@@ -82,25 +82,25 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: ssl_expiration_alert_{{host}}
+      rule_uid: ssl_expiration_alert_{{ host }}
       type: tls
-      hostname: {{host}}
+      hostname: {{ host }}
     noDataState: OK
-    panelId: {{loop.index*3+1}}
-    title: {{host}} - SSL expiration
-    uid: ssl_expiration_alert_{{host}}
+    panelId: {{ loop.index*3+1 }}
+    title: {{ host }} - SSL expiration
+    uid: ssl_expiration_alert_{{ host }}
 - folder: Salt
   interval: 1h
-  name: '{{host}}: SAN validity'
+  name: '{{ host }}: SAN validity'
   orgId: 1
   rules:
   - annotations:
       __alertId__: '367'
       __dashboardUid__: E9tyiQ17k
-      __panelId__: '{{loop.index*3+2}}'
+      __panelId__: '{{ loop.index*3+2 }}'
       message: |-
-        One of the SAN endpoints on {{host}} is nearing expiration.
-        The most likely issue is that the service serving this SAN (e.g. apache2) on the host {{host}} was not restarted/reloaded after a new certificate got fetched.
+        One of the SAN endpoints on {{ host }} is nearing expiration.
+        The most likely issue is that the service serving this SAN (e.g. apache2) on the host {{ host }} was not restarted/reloaded after a new certificate got fetched.
 
         As a short term solution you can manually restart the service but please also open a ticket because it indicates that our salt automation does not cover all service restarts.
     condition: B
@@ -137,7 +137,7 @@ groups:
         tags:
         - key: common_name
           operator: =
-          value: {{host}}
+          value: {{ host }}
         - condition: AND
           key: source
           operator: '!~'
@@ -168,11 +168,11 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: san_validity_alert_{{host}}
+      rule_uid: san_validity_alert_{{ host }}
       type: tls
-      hostname: {{host}}
+      hostname: {{ host }}
     noDataState: OK
-    panelId: {{loop.index*3+2}}
-    title: '{{host}}: SAN validity'
-    uid: san_validity_alert_{{host}}
+    panelId: {{ loop.index*3+2 }}
+    title: '{{ host }}: SAN validity'
+    uid: san_validity_alert_{{ host }}
 {% endfor %}

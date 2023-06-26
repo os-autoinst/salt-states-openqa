@@ -16,8 +16,8 @@ wicked:
 
 {%- if not grains.get('noservices', False) %}
 wicked ifup br1:
-  cmd.wait:
-    - watch:
+  cmd.run:
+    - onchanges:
       - file: /etc/sysconfig/network/ifcfg-br1
 {%- endif %}
 
@@ -56,7 +56,7 @@ wicked ifup br1:
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: "0644"
     - contents:
       - BOOTPROTO='static'
       - IPADDR='10.0.2.2/15'
@@ -78,7 +78,7 @@ wicked ifup br1:
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: "0644"
     - contents:
       - BOOTPROTO='none'
       - IPADDR=''
@@ -100,7 +100,7 @@ wicked ifup br1:
   file.managed:
     - user: root
     - group: root
-    - mode: 744
+    - mode: "0744"
     - makedirs: true
     - contents:
       - '#!/bin/sh'
@@ -133,7 +133,7 @@ wicked ifup br1:
   file.managed:
     - user: root
     - group: root
-    - mode: 644
+    - mode: "0644"
     - contents:
       - OS_AUTOINST_USE_BRIDGE='br1'
     - require:
@@ -142,7 +142,7 @@ wicked ifup br1:
 /etc/systemd/system/os-autoinst-openvswitch.service.d/30-init-timeout.conf:
   file.managed:
     - name: /etc/systemd/system/os-autoinst-openvswitch.service.d/30-init-timeout.conf
-    - mode: 644
+    - mode: "0644"
     - source: salt://openqa/os-autoinst-openvswitch-init-timeout.conf
     - makedirs: true
 

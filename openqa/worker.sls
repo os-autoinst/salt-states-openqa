@@ -146,7 +146,7 @@ nfs-client:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: "0644"
     - context:
       {% set workerhost = grains['host'] %}
       {% set workerdict = pillar.get('workerconf', {}).get(workerhost, {}).get('workers', {}) %}
@@ -178,7 +178,7 @@ nfs-client:
 
 /etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf:
   file.managed:
-    - mode: 644
+    - mode: "0644"
     - source: salt://openqa/openqa-max-inactive-caching-downloads.conf
     - makedirs: true
     - require:
@@ -374,7 +374,7 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
 # TAPSCRIPT requires _openqa-worker to be able to sudo
 /etc/sudoers.d/_openqa-worker:
   file.managed:
-    - mode: 600
+    - mode: "0600"
     - contents:
       - '_openqa-worker ALL=(ALL) NOPASSWD: ALL'
     - require:
@@ -386,7 +386,7 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - source: salt://monitoring/telegraf/telegraf-worker.conf
     - user: root
     - group: root
-    - mode: 600
+    - mode: "0600"
     - makedirs: True
     - require:
       - pkg: worker.packages

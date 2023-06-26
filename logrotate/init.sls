@@ -13,9 +13,9 @@ logrotate:
    file.absent
 
 {% for type in ['service', 'timer'] %}
-/etc/systemd/system/logrotate-openqa.{{type}}:
+/etc/systemd/system/logrotate-openqa.{{ type }}:
   file.managed:
-    - source: salt://logrotate/logrotate-openqa.{{type}}
+    - source: salt://logrotate/logrotate-openqa.{{ type }}
     - makedirs: true
 {% endfor %}
 

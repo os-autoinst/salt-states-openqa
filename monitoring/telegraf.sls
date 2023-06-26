@@ -13,7 +13,7 @@ telegraf.packages:
     - source: salt://monitoring/telegraf/telegraf-common.conf
     - user: root
     - group: root
-    - mode: 600
+    - mode: "0600"
     - require:
       - pkg: telegraf.packages
 
@@ -39,7 +39,7 @@ telegraf:
     - source: salt://monitoring/telegraf/scripts/systemd_list_service_by_state_for_telegraf.sh
     - user: root
     - group: root
-    - mode: 700
+    - mode: "0700"
     - makedirs: True
     - require:
       - pkg: telegraf.packages

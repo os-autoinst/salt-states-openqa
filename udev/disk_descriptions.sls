@@ -4,7 +4,7 @@
     - source: salt://udev/80-disk-descriptions.rules.template
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
     - makedirs: True
 {%- if not grains.get('noservices', False) %}
   cmd.run:

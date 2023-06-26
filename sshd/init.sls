@@ -23,8 +23,8 @@ permitpasswordauth:
   file.line:
     - name: /etc/ssh/sshd_config
     - mode: replace
-    - match: PasswordAuthentication no 
-    - content: PasswordAuthentication yes 
+    - match: PasswordAuthentication no
+    - content: PasswordAuthentication yes
 {%- endif %}
 
 {%- if not grains.get('noservices', False) %}
@@ -72,7 +72,7 @@ AAAAC3NzaC1lZDI1NTE5AAAAIODlqAE/HJh5EvjIioaHbfUY0JC6Rk5MK0FVM1hKBRmx:
 
   file.managed:
     - name: /etc/sudoers.d/{{ username }}
-    - mode: 600
+    - mode: "0600"
     - contents:
       - '{{ username }} ALL=(ALL) NOPASSWD: ALL'
     - require:
@@ -83,7 +83,7 @@ AAAAC3NzaC1lZDI1NTE5AAAAIODlqAE/HJh5EvjIioaHbfUY0JC6Rk5MK0FVM1hKBRmx:
 nagios_permissions:
   file.managed:
     - name: /etc/sudoers.d/nagios
-    - mode: 600
+    - mode: "0600"
     - contents:
       - 'nagios ALL=(ALL) NOPASSWD: /usr/sbin/zypp-refresh,/usr/bin/zypper ref,/usr/bin/zypper sl,/usr/bin/zypper --xmlout --non-interactive list-updates -t package -t patch'
     - require:
