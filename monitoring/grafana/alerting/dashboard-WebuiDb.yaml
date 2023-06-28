@@ -1623,7 +1623,7 @@ groups:
                         - minion_jobs_failed_hook_script
                   reducer:
                     params: []
-                    type: max
+                    type: last
             intervalMs: 1000
             maxDataPoints: 43200
             refId: A
