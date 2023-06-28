@@ -1,3 +1,11 @@
+utilities.packages:
+  pkg.installed:
+    - refresh: False
+    - retry:
+        attempts: 5
+    - pkgs:
+      - git-core # not present on machines of all roles anyways
+
 /opt/retry:
   git.latest:
     - name: https://github.com/okurz/retry.git
