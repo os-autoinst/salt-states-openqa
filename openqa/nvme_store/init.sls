@@ -9,7 +9,7 @@ server.packages:
 # apply for NVMes only, in recent salt versions the key is renamed from
 # uppercase "SSDs" to "ssds", see
 # https://github.com/saltstack/salt/commit/1b21bcc02fbb0e19413a18281661da4b9dbc0501
-{% if grains.get('SSDs', grains.get('ssds'))|map('regex_search', '(nvme)')|select|list|length > 0 and grains.get('format_nvme', True) %}
+{% if grains.get('openqa_store') or (grains.get('SSDs', grains.get('ssds'))|map('regex_search', '(nvme)')|select|list|length > 0 and grains.get('format_nvme', True)) %}
 /etc/systemd/system/openqa_nvme_format.service:
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_format.service

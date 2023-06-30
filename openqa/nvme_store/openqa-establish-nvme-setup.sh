@@ -11,6 +11,8 @@ lsblk
 # another device or from a potential third NVMe partition when there is only a
 # single NVMe device for the complete storage
 
+device=$(sed -n -e 's|openqa_store: ||p'  /etc/salt/grains)
+
 # create RAID0, try again if mdadm ran into timeout (see poo#88191)
 attempts=${RAID_CREATION_ATTEMPTS:-10}
 busy_delay=${RAID_CREATION_BUSY_DELAY:-10}
@@ -25,18 +27,21 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
 
     # make arguments for mdadm invocation
     mdadm_args=(--create /dev/md/openqa --level=0 --force --assume-clean)
-    if lsblk --noheadings | grep -q "raid" || findmnt --noheadings -o SOURCE / | grep -v nvme; then
-        echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme?n1
-        mdadm_args+=(--raid-devices="$(ls /dev/nvme?n1 | wc -l)" --run /dev/nvme?n1)
-    else
-        if [ $(lsblk --noheadings | grep 'nvme' | grep -c 'disk') -eq 2 ] ; then
-            echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme1n1
-            mdadm_args+=(--raid-devices=1 --run /dev/nvme1n1)
+    raid_devices=1
+    if [[ -z $device ]]; then
+        if lsblk --noheadings | grep -q "raid" || findmnt --noheadings -o SOURCE / | grep -v nvme; then
+            device=/dev/nvme?n1
+            raid_devices=$(ls /dev/nvme?n1 | wc -l)
         else
-            echo 'Creating RAID0 "/dev/md/openqa" on:' /dev/nvme0n1p3
-            mdadm_args+=(--raid-devices=1 --run /dev/nvme0n1p3)
+            if [ $(lsblk --noheadings | grep 'nvme' | grep -c 'disk') -eq 2 ] ; then
+                device=/dev/nvme1n1
+            else
+                device=/dev/nvme0n1p3
+            fi
         fi
     fi
+    echo 'Creating RAID0 "/dev/md/openqa" on:' $device
+    mdadm_args+=(--raid-devices="$raid_devices" --run $device)
 
     if ! mdadm "${mdadm_args[@]}" 2>&1 | tee /tmp/mdadm_output; then
         if grep --quiet 'Device or resource busy' /tmp/mdadm_output; then
@@ -64,7 +69,7 @@ done
 # Ensure device is correctly initialized but also spend a little time before
 # trying to create a filesystem to prevent a "busy" error
 echo 'Status for RAID0 "/dev/md/openqa"'
-grep nvme /proc/mdstat
+cat /proc/mdstat
 mdadm --detail --scan | grep openqa
 
 echo 'Creating ext2 filesystem on RAID0 "/dev/md/openqa"'
