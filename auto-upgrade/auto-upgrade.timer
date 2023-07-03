@@ -3,6 +3,8 @@ Description=Nightly trigger of auto-upgrade.
 
 [Timer]
 OnCalendar=3:00
+RandomizedDelaySec=1h
+FixedRandomDelay=true
 Persistent=true
 
 [Install]
