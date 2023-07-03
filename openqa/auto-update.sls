@@ -8,6 +8,10 @@ auto_update_{{ type }}:
     - name: service.systemctl_reload
     - onchanges:
       - file: auto_update_{{ type }}
+
+auto-upgrade.{{ type }}:
+  service.dead:
+    - enable: False
 {% endfor %}
 
 auto-update.timer:
