@@ -52,7 +52,7 @@
           "refId": "A"
         }
       ],
-      "title": "SYSTEM - CPU, Memory, Disk",
+      "title": "SYSTEM - CPU, Memory, Processes, …",
       "type": "row"
     },
     {
@@ -2176,6 +2176,32 @@
       "type": "timeseries"
     },
     {
+      "collapsed": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 53
+      },
+      "id": 65059,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Network",
+      "type": "row"
+    },
+    {
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -2291,7 +2317,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 53
+        "y": 54
       },
       "id": 28572,
       "interval": "1m",
@@ -2426,32 +2452,6 @@
       ],
       "title": "Network Packets",
       "type": "timeseries"
-    },
-    {
-      "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 61
-      },
-      "id": 65059,
-      "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "Network",
-      "type": "row"
     },
     {
       "datasource": {
@@ -3728,6 +3728,6 @@
   "timezone": "browser",
   "title": "Dashboard for {{ generic_host }}",
   "uid": "GD{{ generic_host }}",
-  "version": 6,
+  "version": 2,
   "weekStart": ""
 }
