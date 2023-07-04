@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,11 +24,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1653300780403,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -108,9 +114,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -155,6 +165,10 @@
       "circleBackground": true,
       "colorBackground": true,
       "colorValue": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "decimals": 2,
       "defaultColor": "rgb(117, 117, 117)",
       "description": "Availability of openqa.suse.de (compare to google SRE definition, target must not be 100%; purpose: How users/teams/departments can rely on the service; data source: HTTP response code accessing test results; presentation: availability ratio [0:1])\n\nA threshold of 0.99 (99%) corresponds to a downtime of 87h/y. For comparison:\n\n* 2×9s: `99%`: 5250min (87hrs or 3.64days)\n* 3×9s: `99.9%`: 525min (8.7hrs)\n* 4×9s: `99.99%`: 52.5min\n* 5×9s: `99.999%`: 5min <- rule of thumb: `5× 9s -> 5 mins` (per year)\n\nSee\nhttps://stats.openqa-monitor.qa.suse.de/d/WebuiDb/webui-summary for low level details\n\nhttps://progress.opensuse.org/issues/68233",
@@ -222,6 +236,10 @@
       "targets": [
         {
           "alias": "response_openqa_200",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -271,6 +289,10 @@
         },
         {
           "alias": "response_openqa",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -344,6 +366,10 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -352,10 +378,23 @@
       },
       "id": 39,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "X86_64 worker status",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -422,11 +461,15 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "repeat": "workers_x86_64",
       "repeatDirection": "h",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -481,18 +524,35 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 17
       },
       "id": 28,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "PPC64LE worker status",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -539,7 +599,7 @@
         "h": 3,
         "w": 6,
         "x": 0,
-        "y": 12
+        "y": 18
       },
       "id": 31,
       "links": [],
@@ -559,11 +619,15 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "repeat": "workers_ppc64le",
       "repeatDirection": "h",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -618,18 +682,35 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 24
       },
       "id": 24,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "ARM worker status",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -655,8 +736,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#299c46",
-                "value": null
+                "color": "#299c46"
               },
               {
                 "color": "#37872D",
@@ -676,7 +756,7 @@
         "h": 3,
         "w": 6,
         "x": 0,
-        "y": 19
+        "y": 25
       },
       "id": 6,
       "links": [],
@@ -701,6 +781,10 @@
       "repeatDirection": "h",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -754,10 +838,14 @@
       "type": "stat"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 34,
+  "refresh": "",
+  "schemaVersion": 38,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "openQA",
+    "overview",
+    "status"
+  ],
   "templating": {
     "list": [
       {
@@ -1041,6 +1129,6 @@
   "timezone": "",
   "title": "OSD status overview",
   "uid": "4KkGdvvZk",
-  "version": 29,
+  "version": 33,
   "weekStart": ""
 }
