@@ -12,6 +12,7 @@ base:
     - utilities
     - logging
     - rebootmgr
+    - etc.zypper
   'not G@roles:webui and not G@roles:worker':
     - auto-upgrade
   'G@roles:webui':

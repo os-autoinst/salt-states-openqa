@@ -13,6 +13,7 @@ NPI:
     - humanname: Infra
     - baseurl: http://download.suse.de/ibs/NON_Public:/infrastructure/{{ opensuserepopath }}/
     - gpgcheck: False
+    - priority: 115
     - refresh: True
 
 {%- if not grains.get('noservices', False) %}
