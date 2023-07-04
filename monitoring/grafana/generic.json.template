@@ -52,7 +52,7 @@
           "refId": "A"
         }
       ],
-      "title": "SYSTEM - CPU, Memory, Disk",
+      "title": "SYSTEM - CPU, Memory, Processes, …",
       "type": "row"
     },
     {
@@ -1225,246 +1225,6 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "stepAfter",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "iops"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byValue",
-              "options": {
-                "op": "gte",
-                "reducer": "allIsZero",
-                "value": 0
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": false
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byValue",
-              "options": {
-                "op": "gte",
-                "reducer": "allIsNull",
-                "value": 0
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": false
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 37
-      },
-      "id": 13782,
-      "interval": "1m",
-      "links": [],
-      "options": {
-        "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.0.1",
-      "targets": [
-        {
-          "alias": "$tag_name: $col",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "key": "path",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "io_reads",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE \"host\" = '{{ generic_host }}' AND $timeFilter GROUP BY time($interval), *",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "$tag_name: $col",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "key": "path",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "io_reads",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "\nSELECT non_negative_derivative(mean(writes),1s) as \"write\" FROM \"diskio\" WHERE \"host\" = '{{ generic_host }}' AND $timeFilter GROUP BY time($interval), *",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "title": "Disk I/O requests",
-      "type": "timeseries"
-    },
-    {
       "alert": {
         "alertRuleTags": {},
         "conditions": [
@@ -1613,7 +1373,7 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 12,
+        "x": 0,
         "y": 37
       },
       "id": 65090,
@@ -1671,7 +1431,7 @@
           "measurement": "disk_total",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"used_percent\") AS \"used_percent\" FROM \"disk\" WHERE (\"host\" = '{{ generic_host }}' AND fstype != 'nfs') AND $timeFilter GROUP BY time($interval), \"device\", \"fstype\" fill(null)",
+          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE \"host\" = '{{ generic_host }}' AND $timeFilter GROUP BY time($interval), *",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1693,6 +1453,120 @@
         }
       ],
       "title": "All partitions usage (%)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Inodes used"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "continuous-GrYlRd",
+                  "seriesBy": "last"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 37
+      },
+      "id": 222,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "Inodes used",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "query": "SELECT mean(\"inodes_used\")/mean(\"inodes_total\") FROM \"autogen\".\"disk\" WHERE (\"host\"::tag = '{{ generic_host }}') AND $timeFilter GROUP BY time($__interval), \"path\"::tag fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Inode utilization",
       "type": "timeseries"
     },
     {
@@ -1750,18 +1624,26 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "iops"
         },
         "overrides": [
           {
             "matcher": {
-              "id": "byRegexp",
-              "options": "/read/"
+              "id": "byValue",
+              "options": {
+                "op": "gte",
+                "reducer": "allIsZero",
+                "value": 0
+              }
             },
             "properties": [
               {
-                "id": "custom.transform",
-                "value": "negative-Y"
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": false
+                }
               }
             ]
           },
@@ -1793,7 +1675,7 @@
         "x": 0,
         "y": 45
       },
-      "id": 60200,
+      "id": 13782,
       "interval": "1m",
       "links": [],
       "options": {
@@ -1816,7 +1698,7 @@
       "pluginVersion": "10.0.1",
       "targets": [
         {
-          "alias": "$tag_host: $tag_name: $col",
+          "alias": "$tag_name: $col",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
@@ -1870,7 +1752,7 @@
           "tags": []
         },
         {
-          "alias": "$tag_host: $tag_name: $col",
+          "alias": "$tag_name: $col",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
@@ -1924,7 +1806,7 @@
           "tags": []
         }
       ],
-      "title": "Disk I/O bytes",
+      "title": "Disk I/O requests",
       "type": "timeseries"
     },
     {
@@ -2199,6 +2081,264 @@
               "tooltip": false,
               "viz": false
             },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/read/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byValue",
+              "options": {
+                "op": "gte",
+                "reducer": "allIsNull",
+                "value": 0
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 53
+      },
+      "id": 60200,
+      "interval": "1m",
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.0.1",
+      "targets": [
+        {
+          "alias": "$tag_host: $tag_name: $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(read_bytes),1s) as \"read\" FROM \"diskio\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$tag_host: $tag_name: $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "interval": "auto",
+              "params": [
+                "auto"
+              ],
+              "type": "time"
+            },
+            {
+              "key": "host",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            },
+            {
+              "key": "path",
+              "params": [
+                "tag"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "io_reads",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(write_bytes),1s) as \"write\" FROM \"diskio\" WHERE \"host\" =~ /$server$/ AND $timeFilter GROUP BY time($interval), *",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Disk I/O bytes",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 61
+      },
+      "id": 65059,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Network",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2291,7 +2431,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 53
+        "y": 62
       },
       "id": 28572,
       "interval": "1m",
@@ -2428,32 +2568,6 @@
       "type": "timeseries"
     },
     {
-      "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 61
-      },
-      "id": 65059,
-      "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "Network",
-      "type": "row"
-    },
-    {
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -2549,7 +2663,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 62
+        "y": 70
       },
       "id": 42026,
       "interval": "1m",
@@ -2789,7 +2903,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 70
+        "y": 78
       },
       "id": 65094,
       "interval": "1m",
@@ -3101,7 +3215,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 77
+        "y": 85
       },
       "id": 58901,
       "interval": "1m",
@@ -3342,7 +3456,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 77
+        "y": 85
       },
       "id": 50643,
       "interval": "1m",
@@ -3585,7 +3699,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 85
+        "y": 93
       },
       "id": 65102,
       "interval": "1m",
@@ -3728,6 +3842,6 @@
   "timezone": "browser",
   "title": "Dashboard for {{ generic_host }}",
   "uid": "GD{{ generic_host }}",
-  "version": 6,
+  "version": 2,
   "weekStart": ""
 }
