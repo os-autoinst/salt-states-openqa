@@ -1535,8 +1535,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1924,8 +1923,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4462,7 +4460,10 @@
   "refresh": "",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "openQA",
+    "worker"
+  ],
   "templating": {
     "list": [
       {
@@ -4524,6 +4525,6 @@
   "timezone": "browser",
   "title": "Worker dashboard ({{ worker }})",
   "uid": "WD{{ worker }}",
-  "version": 45,
+  "version": 66,
   "weekStart": ""
 }

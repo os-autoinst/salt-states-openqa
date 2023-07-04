@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -25,6 +28,10 @@
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
@@ -87,9 +94,13 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -130,6 +141,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "## Time to starting of tests on openqa.suse.de (p99, long tail, worst case excluding likely configuration errors)\n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
@@ -192,10 +207,14 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "alias": "job_age_p99_mean",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -280,6 +299,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
@@ -318,7 +341,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -329,6 +352,10 @@
       "targets": [
         {
           "alias": "50% percentile (median)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -369,6 +396,10 @@
         },
         {
           "alias": "90% percentile (median)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -409,6 +440,10 @@
         },
         {
           "alias": "99% percentile (median)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -449,6 +484,10 @@
         },
         {
           "alias": "100% percentile (median)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -573,6 +612,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nMaximum value over all arch+machine values\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
@@ -607,7 +650,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -618,6 +661,10 @@
       "targets": [
         {
           "alias": "50% percentile (max)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -658,6 +705,10 @@
         },
         {
           "alias": "90% percentile (max)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -698,6 +749,10 @@
         },
         {
           "alias": "99% percentile (max)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -738,6 +793,10 @@
         },
         {
           "alias": "100% percentile (max)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -822,6 +881,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
@@ -856,7 +919,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -867,6 +930,10 @@
       "targets": [
         {
           "alias": "50% percentile ($tag_machine_class)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -913,6 +980,10 @@
         },
         {
           "alias": "90% percentile ($tag_machine_class)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -959,6 +1030,10 @@
         },
         {
           "alias": "99% percentile ($tag_machine_class)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1005,6 +1080,10 @@
         },
         {
           "alias": "100% percentile ($tag_machine_class)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1087,6 +1166,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
@@ -1121,7 +1204,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1132,6 +1215,10 @@
       "targets": [
         {
           "alias": "50% percentile ($tag_machine_class)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1214,6 +1301,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
@@ -1248,7 +1339,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1259,6 +1350,10 @@
       "targets": [
         {
           "alias": "90% percentile ($tag_machine_class)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1341,6 +1436,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
@@ -1375,7 +1474,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1386,6 +1485,10 @@
       "targets": [
         {
           "alias": "99% percentile ($tag_machine_class)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1468,6 +1571,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
@@ -1502,7 +1609,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.5",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1513,6 +1620,10 @@
       "targets": [
         {
           "alias": "100% percentile ($tag_machine_class)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -1591,10 +1702,12 @@
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 34,
+  "refresh": "",
+  "schemaVersion": 38,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "openQA"
+  ],
   "templating": {
     "list": []
   },
@@ -1619,6 +1732,6 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 31,
+  "version": 32,
   "weekStart": ""
 }
