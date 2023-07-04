@@ -1885,7 +1885,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 100,
+            "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1893,7 +1893,7 @@
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineWidth": 0,
+            "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1908,6 +1908,7 @@
               "mode": "off"
             }
           },
+          "decimals": 1,
           "mappings": [],
           "max": 1,
           "min": 0,
@@ -1958,23 +1959,23 @@
             "mean",
             "lastNotNull"
           ],
-          "displayMode": "list",
-          "placement": "bottom",
+          "displayMode": "table",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
       "targets": [
         {
-          "alias": "Inodes used",
+          "alias": "$tag_path",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
           },
-	  "query": "SELECT mean(\"inodes_used\")/mean(\"inodes_total\") FROM \"autogen\".\"disk\" WHERE (\"host\"::tag = 'openqa') AND $timeFilter GROUP BY time($__interval), \"path\"::tag fill(null)",
+          "query": "SELECT mean(\"inodes_used\")/mean(\"inodes_total\") FROM \"autogen\".\"disk\" WHERE (\"host\"::tag = 'openqa') AND $timeFilter GROUP BY time($__interval), \"path\"::tag fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series"
@@ -3106,7 +3107,7 @@
           "reverse": false
         }
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "alias": "[[tag_process_name]]",
@@ -3284,7 +3285,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3432,7 +3433,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3626,7 +3627,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3817,7 +3818,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3852,7 +3854,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -3946,7 +3948,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -4153,7 +4156,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -4445,7 +4449,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -4665,7 +4670,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -4796,7 +4801,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -4967,7 +4972,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -5293,7 +5299,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -5465,7 +5471,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -5650,7 +5656,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -6240,7 +6246,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -6421,7 +6427,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -6733,7 +6739,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -7032,7 +7038,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -7234,7 +7240,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -7396,7 +7402,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -7578,6 +7584,6 @@
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 50,
+  "version": 51,
   "weekStart": ""
 }
