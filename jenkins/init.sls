@@ -5,6 +5,8 @@ jenkins.repo:
     - gpgautoimport: True
     - refresh: True
     - priority: 105
+    - retry:
+        attempts: 5
     - require_in:
       - pkg: jenkins
 
