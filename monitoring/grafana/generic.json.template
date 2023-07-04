@@ -1472,7 +1472,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 100,
+            "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1480,7 +1480,7 @@
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineWidth": 0,
+            "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1495,6 +1495,7 @@
               "mode": "off"
             }
           },
+          "decimals": 1,
           "mappings": [],
           "max": 1,
           "min": 0,
@@ -1544,18 +1545,18 @@
             "mean",
             "lastNotNull"
           ],
-          "displayMode": "list",
-          "placement": "bottom",
+          "displayMode": "table",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
       "targets": [
         {
-          "alias": "Inodes used",
+          "alias": "$tag_path",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
@@ -3842,6 +3843,6 @@
   "timezone": "browser",
   "title": "Dashboard for {{ generic_host }}",
   "uid": "GD{{ generic_host }}",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
