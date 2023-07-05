@@ -17,3 +17,4 @@ sap_perf.packages:
 /etc/telegraf/scripts/gitlab_commits.py:
   file.managed:
     - source: salt://monitoring/sap_perf/scripts/gitlab_commits.py
+    - mode: "0755"
