@@ -3,6 +3,7 @@
 from datetime import datetime
 # counter class is like a dictionary specialized in keeping count of keys
 from collections import Counter
+from socket import getfqdn
 import requests
 
 
@@ -16,6 +17,9 @@ def to_timestamp(source_date: str) -> float:
     "converts a date in format 2022-04-25 to unix nanosecond timestamp required by influxdb"
     return int(datetime.strptime(source_date, "%Y-%m-%d").timestamp()*1E9)
 
+
+# where are we running ?
+hostname = getfqdn()
 
 # try to reuse http session
 session = requests.Session()
@@ -35,4 +39,4 @@ for pj_name, pj_id in PROJECTS.items():
             break
     # once all pages has been collected, print the data
     for date, value in commits.items():
-        print(f"{pj_name} commits={value} {to_timestamp(date)}")
+        print(f"{pj_name},machine={hostname} commits={value} {to_timestamp(date)}")
