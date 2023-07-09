@@ -93,8 +93,8 @@ groups:
             settings:
                 mode: dropNN
             type: reduce
-      noDataState: NoData
-      execErrState: Error
+      noDataState: OK
+      execErrState: OK
       for: 5m
       annotations:
         description: Inode utilization inside the OSD infrastructure is too high. Check affected hosts and consider removing (temporary) files.
