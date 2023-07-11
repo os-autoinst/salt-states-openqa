@@ -7,34 +7,34 @@ They should be generic enough to also be useful (with some modification) for
 others.
 
 ## How to use
+### Setup production machine
+1. Before adding a host, ensure it has a proper DNS setup. That includes
+   that the involved DNS server(s) need to have a valid reverse DNS entry so
+   that each host is easily discoverable.
+2. Ensure Salt and a few useful utilities are installed:
+   `zypper in salt-minion git-core htop vim systemd-coredump`
+3. Set `/etc/salt/minion_id` and `/etc/hostname` to the FQDN and hostname
+   respectively.
+4. Configure `/etc/salt/minion` similar to the other production hosts (by just
+   appending what is configured on other production hosts)
+    * Most importantly, set the "master", e.g. `echo 'master: openqa.suse.de' >> /etc/salt/minion`
+5. Configure the machine's role by putting e.g. `/etc/salt/grains` in
+   `roles: worker` if applicable. By default with a role only generic states
+   will be
+6. If it is an openQA worker, add it to `workerconf.sls` in our Salt pillars.
+7. Invoke `systemctl enable --now salt-minion` and use to see what is happening
+   `tail -f /var/log/salt/minion`.
+8. Invoke `sudo salt-key --accept=…` on the "master" (e.g. OSD).
+9. Run a command like `sudo salt -C 'G@nodename:… or G@nodename:…' -l error --state-output=changes state.apply`
+   on the "master" until no failing salt states are remaining
 
-### Initial setup of salt and repositories
-
-```sh
-. /etc/os-release
-zypper ar -G http://download.suse.de/ibs/SUSE:/CA/${PRETTY_NAME// /_}/SUSE:CA.repo
-zypper ref
-zypper in ca-certificates-suse git-core salt-minion
-systemctl enable --now salt-minion
-```
-
-Make sure that /etc/hostname and /etc/salt/minion_id include the FQDN of the
-machine, e.g. example.suse.de. Then to connect to the master, e.g.
-openqa.suse.de:
-
-```
-grep -q '\<openqa.suse.de\>' /etc/salt/minion || echo "master: openqa.suse.de" >> /etc/salt/minion
-```
-
-and accept the key on the master with `salt-key -y -a $host` with `$host`
-being the name of the host as announced by the salt-minion.
-
-Also ensure that the involved DNS server(s) need to have a valid reverse DNS
-entry so that each host is easily discoverable.
-
+### Clone repositories for using Salt locally
 For using Salt repositories locally, check them out and use commands from the
 "Local test deployment" section:
 ```
+. /etc/os-release
+zypper ar -G http://download.suse.de/ibs/SUSE:/CA/${PRETTY_NAME// /_}/SUSE:CA.repo
+zypper in ca-certificates-suse git-core
 git -C /srv clone https://gitlab.suse.de/openqa/salt-states-openqa.git salt    # actual salt recipes
 git -C /srv clone https://gitlab.suse.de/openqa/salt-pillars-openqa.git pillar # credentials such as SSH keys
 ```
