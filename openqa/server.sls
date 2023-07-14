@@ -121,6 +121,7 @@ openqa-gru:
     - restart: True
     - watch:
       - file: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
+      - ini: /etc/openqa/openqa.ini
 {%- endif %}
 
 /etc/openqa/database.ini:
