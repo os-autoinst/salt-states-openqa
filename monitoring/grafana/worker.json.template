@@ -1196,7 +1196,7 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "5m",
+        "for": "1h",
         "frequency": "1m",
         "handler": 1,
         "name": "{{ worker }}: QA network infrastructure Ping time alert",
