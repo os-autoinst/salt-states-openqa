@@ -50,7 +50,7 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-12-SP5:Update:Products:SLERT') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP5:Update:WSL') }}
-{{ scriptgen('SUSE:SLE-15-SP4:Update:Products:Micro54:TEST') }}
+{{ scriptgen('SUSE:SLE-15-SP5:Update:Products:Micro55:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:QR:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP3:Update:BCI') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:BCI') }}
@@ -59,5 +59,5 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:ALP:Products:Micro:1.0:ToTest') }}
 
 {% for i in ['A','B'] %}
-{{ scriptgen('SUSE:SLE-15-SP4:Update:Products:Micro54:Staging:' + i) }}
+{{ scriptgen('SUSE:SLE-15-SP5:Update:Products:Micro55:Staging:' + i) }}
 {% endfor %}
