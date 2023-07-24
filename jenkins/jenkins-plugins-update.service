@@ -1,5 +1,6 @@
 [Unit]
 Description=Automatically update jenkins plugins.
+RequiresMountsFor=/usr/local
 After=network.target jenkins.service
 
 [Service]
