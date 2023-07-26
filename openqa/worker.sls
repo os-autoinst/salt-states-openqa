@@ -67,6 +67,12 @@ nfs-client:
     - retry:
         attempts: 5
 
+# Newer Os versions and in particular container environments might not have
+# /etc/fstab so we ensure it does exist.
+# Also see https://github.com/saltstack/salt/issues/14103#issuecomment-1652305681
+/etc/fstab:
+  file.managed
+
 {%- if not grains.get('noservices', False) %}
 # Ensure NFS share is mounted and setup on boot
 # Additional options to prevent failed mount attempts after bootup. Remote
@@ -87,6 +93,7 @@ nfs-client:
       - x-systemd.device-timeout
     - require:
       - pkg: worker.packages
+      - file: /etc/fstab
 {%- endif %}
 
 ## setup workers.ini based on info in workerconf pillar
