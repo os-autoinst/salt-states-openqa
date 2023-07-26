@@ -36,7 +36,7 @@ systemctl_cmd="systemctl --no-legend --state=\"$state\" --plain"
 if [[ -z $exclude ]]; then
     UNITS=$(eval $systemctl_cmd)
 else
-    UNITS=$(eval $systemctl_cmd | grep -E -v "$exclude")
+    UNITS=$(eval $systemctl_cmd | grep -E -v "$exclude" ||:)
 fi
 UNITS_COUNT=$(echo "$UNITS" | grep -v "^$" | wc -l ||:)
 UNITS_NAMES=$(echo -n "$UNITS" | cut -d" " -f 1 | xargs -I{} basename {} .service)
