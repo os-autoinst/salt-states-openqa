@@ -15,6 +15,7 @@ base:
     - etc.zypper
     - ca-certificates
     - debug_poo133469
+    - openqa.nfs_share
   'not G@roles:webui and not G@roles:worker':
     - auto-upgrade
   'G@roles:webui':
