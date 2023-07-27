@@ -793,14 +793,14 @@ groups:
           value: https://openqa.suse.de/tests
       refId: A
       relativeTimeRange:
-        from: 300
+        from: 720
         to: 0
     - datasourceUid: __expr__
       model:
         conditions:
         - evaluator:
             params:
-            - 4
+            - 6
             type: gt
           operator:
             type: and
