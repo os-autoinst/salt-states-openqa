@@ -73,7 +73,7 @@ nfs-client:
 /etc/fstab:
   file.managed
 
-{%- if not grains.get('noservices', False) %}
+{%- if grains.get('openqa_share_nfs', True) and not grains.get('noservices', False) %}
 # Ensure NFS share is mounted and setup on boot
 # Additional options to prevent failed mount attempts after bootup. Remote
 # filesystem mounts wait for network-online.target which apparently is not
