@@ -13,6 +13,7 @@ base:
     - logging
     - rebootmgr
     - etc.zypper
+    - ca-certificates
   'not G@roles:webui and not G@roles:worker':
     - auto-upgrade
   'G@roles:webui':
