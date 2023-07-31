@@ -27,11 +27,9 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
 
     # make arguments for mdadm invocation
     mdadm_args=(--create /dev/md/openqa --level=0 --force --assume-clean)
-    raid_devices=1
     if [[ -z $device ]]; then
         if lsblk --noheadings | grep -q "raid" || findmnt --noheadings -o SOURCE / | grep -v nvme; then
             device=/dev/nvme?n1
-            raid_devices=$(ls /dev/nvme?n1 | wc -l)
         else
             if [ $(lsblk --noheadings | grep 'nvme' | grep -c 'disk') -eq 2 ] ; then
                 device=/dev/nvme1n1
@@ -41,7 +39,7 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
         fi
     fi
     echo 'Creating RAID0 "/dev/md/openqa" on:' $device
-    mdadm_args+=(--raid-devices="$raid_devices" --run $device)
+    mdadm_args+=(--raid-devices="$(echo $device | wc -w)" --run $device)
 
     if ! mdadm "${mdadm_args[@]}" 2>&1 | tee /tmp/mdadm_output; then
         if grep --quiet 'Device or resource busy' /tmp/mdadm_output; then
