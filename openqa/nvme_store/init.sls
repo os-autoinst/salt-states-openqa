@@ -37,6 +37,8 @@ server.packages:
     # the mount should only be done at boot time as we depend on device
     # preparation
     - mount: False
+    - opts:
+      - nofail
 
 /etc/systemd/system/var-lib-openqa.mount.d/override.conf:
   file.managed:
