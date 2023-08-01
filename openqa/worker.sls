@@ -74,6 +74,15 @@ nfs-client:
   file.managed
 
 {%- if grains.get('openqa_share_nfs', True) and not grains.get('noservices', False) %}
+# Define static dns entries in /etc/hosts for our nfs server to ensure
+# reachability even in early boot steps.
+static_nfs_hostname:
+  {% set nfs_hostname = pillar['workerconf']['nfspath'].split(":", 1)[0] %}
+  host.present:
+    - ip: {{ salt["dnsutil.A"](nfs_hostname) + salt["dnsutil.AAAA"](nfs_hostname) }}
+    - names:
+      - {{ nfs_hostname }}
+
 # Ensure NFS share is mounted and setup on boot
 # Additional options to prevent failed mount attempts after bootup. Remote
 # filesystem mounts wait for network-online.target which apparently is not
@@ -94,6 +103,7 @@ nfs-client:
     - require:
       - pkg: worker.packages
       - file: /etc/fstab
+      - sls: static_nfs_hostname
 {%- endif %}
 
 ## setup workers.ini based on info in workerconf pillar
