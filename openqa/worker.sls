@@ -103,7 +103,7 @@ static_nfs_hostname:
     - require:
       - pkg: worker.packages
       - file: /etc/fstab
-      - sls: static_nfs_hostname
+      - host: static_nfs_hostname
 {%- endif %}
 
 ## setup workers.ini based on info in workerconf pillar
