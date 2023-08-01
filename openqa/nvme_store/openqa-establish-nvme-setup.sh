@@ -25,21 +25,29 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
         mdadm --stop /dev/md/*openqa || echo "Unable to stop RAID (mdadm return code: $?)"
     fi
 
-    # make arguments for mdadm invocation
-    mdadm_args=(--create /dev/md/openqa --level=0 --force --assume-clean)
+    # find suitable NVMe device
     if [[ -z $device ]]; then
-        if lsblk --noheadings | grep -q "raid" || findmnt --noheadings -o SOURCE / | grep -v nvme; then
-            device=/dev/nvme?n1
+        # add all NVMe devices that are not the root device
+        root_dev=$(findmnt --noheadings -o SOURCE /)
+        if echo "$root_dev" | grep /dev/nvme; then # is the root device an NVMe?
+            # filter root device from list of NVMe devices
+            root_nvme=$(echo "$root_dev" | sed -r 's|(/dev/nvme.+n1)p.*|\1|g')
+            shopt -s nullglob
+            for nvme in /dev/nvme?n1; do [[ $nvme != "$root_nvme" ]] && device+=" $nvme" ; done
+            shopt -u nullglob
         else
-            if [ $(lsblk --noheadings | grep 'nvme' | grep -c 'disk') -eq 2 ] ; then
-                device=/dev/nvme1n1
-            else
-                device=/dev/nvme0n1p3
-            fi
+            # use all
+            device=/dev/nvme?n1
         fi
     fi
+
+    # fallback to using the 3rd partition on the first NVMe
+    device=${device:-/dev/nvme0n1p3}
+
+    # make arguments for mdadm invocation
     echo 'Creating RAID0 "/dev/md/openqa" on:' $device
-    mdadm_args+=(--raid-devices="$(echo $device | wc -w)" --run $device)
+    mdadm_args=(--create /dev/md/openqa --level=0 --force --assume-clean
+                --raid-devices="$(echo $device | wc -w)" --run $device)
 
     if ! mdadm "${mdadm_args[@]}" 2>&1 | tee /tmp/mdadm_output; then
         if grep --quiet 'Device or resource busy' /tmp/mdadm_output; then
