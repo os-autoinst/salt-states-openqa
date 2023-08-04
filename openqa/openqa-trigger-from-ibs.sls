@@ -41,10 +41,14 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
     - cwd: {{ dir }}
 {%- endmacro %}
 
-{{ scriptgen('SUSE:SLE-15-SP5:GA:TEST') }}
+{{ scriptgen('SUSE:SLE-15-SP6:GA:TEST') }}
 
 {% for i in ['A','B','C','D','E','F','G','H','S','Y','V'] %}
-{{ scriptgen('SUSE:SLE-15-SP5:GA:Staging:' + i) }}
+{{ scriptgen('SUSE:SLE-15-SP6:GA:Staging:' + i) }}
+{% endfor %}
+
+{% for i in ['A','B'] %}
+{{ scriptgen('SUSE:SLE-15-SP5:Update:Products:Micro55:Staging:' + i) }}
 {% endfor %}
 
 {{ scriptgen('SUSE:SLE-12-SP5:Update:Products:SLERT') }}
@@ -59,6 +63,3 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:ALP:Products:Dolomite:1.0:ToTest') }}
 {{ scriptgen('Devel:Elemental:Teal53') }}
 
-{% for i in ['A','B'] %}
-{{ scriptgen('SUSE:SLE-15-SP5:Update:Products:Micro55:Staging:' + i) }}
-{% endfor %}
