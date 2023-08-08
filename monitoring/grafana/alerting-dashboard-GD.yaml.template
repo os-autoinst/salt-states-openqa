@@ -397,6 +397,7 @@ groups:
       rule_uid: host_up_alert_{{ generic_host }}
       type: generic
       hostname: {{ generic_host }}
+      alert: host_up
     noDataState: OK
     panelId: 65105
     title: '{{ generic_host }}: host up alert'

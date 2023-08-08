@@ -729,6 +729,7 @@ groups:
       rule_uid: host_up_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
+      alert: host_up
     noDataState: OK
     panelId: 65105
     title: '{{ worker }}: host up alert'
