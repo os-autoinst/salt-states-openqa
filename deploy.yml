@@ -11,44 +11,58 @@
   - set -ex
   - export TARGET=${TARGET:-"openqa.suse.de"}
 
-deploy:
+.defaults:
   stage: deploy
   image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
   timeout: 2h
   only:
     - master@openqa/salt-pillars-openqa
     - master@openqa/salt-states-openqa
-  script:
-    - *setup_script
-    - ssh $TARGET "(
-       set -x; cd /srv &&
-       for i in salt pillar; do
-         [ "\$i" = "salt" ] && repo="states" || repo="pillars";
-         token=\${repo^^}_CLONE_TOKEN;
-         mkdir -p \$i &&
-         chown root:salt \$i &&
-         (cd \$i &&
-           git status || git clone --depth 3 https://osd_deployment_ci:\${!token}@gitlab.suse.de/openqa/salt-\$repo-openqa.git . &&
-           git fetch origin &&
-           git reset --hard origin/master &&
-           git checkout -f master &&
-           git pull);
-       done
-       )"
-    # workaround for https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
-    - (
-    - set +x; trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
-    - set -x
-    - ssh $TARGET "echo 'Currently the following minions are down:'; diff <(sudo salt --timeout 1 '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort) <(sudo salt --timeout 1 --hide-timeout '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort); echo '==================='" | tee salt_ping.log
-    - ssh $TARGET "salt --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,,"
-    - ssh $TARGET "salt --log-file=salt_highstate.log --log-file-level=debug --state-output=changes --hide-timeout \* state.highstate queue=True | awk '/Result..Clean - Started/ {print > \"salt_profiling.log\"; next} 1'"
-    - ssh $TARGET "salt --hide-timeout \* cmd.run '! sudo telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \"'" && echo "telegraf inputs are correct" | tee salt_post_deploy_checks.log
-    - )
-  after_script:
-    - *setup_script
-    - scp $TARGET:salt_\*.log .
   artifacts:
     when: always
     paths:
       - salt_*.log
     expire_in: 1 week
+
+clone:
+  extends: .defaults
+  parallel:
+    matrix:
+      - TOKEN: STATES_CLONE_TOKEN
+        REPO: states
+      - TOKEN: PILLARS_CLONE_TOKEN
+        REPO: pillars
+  script:
+    - *setup_script
+    - ssh $TARGET "(
+       set -x; cd /srv &&
+       mkdir -p $REPO &&
+       chown root:salt $REPO &&
+       cd $REPO &&
+       git status || git clone --depth 3 https://osd_deployment_ci:\$$TOKEN@gitlab.suse.de/openqa/salt-$REPO-openqa.git . &&
+       git fetch origin &&
+       git reset --hard origin/master &&
+       git checkout -f master &&
+       git pull
+       )"
+
+refresh:
+  extends: .defaults
+  needs:
+    - clone
+  script:
+    - *setup_script
+    - ssh $TARGET "echo 'Currently the following minions are down:'; diff <(sudo salt --timeout 1 '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort) <(sudo salt --timeout 1 --hide-timeout '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort); echo '==================='" | tee salt_ping.log
+    - ssh $TARGET "salt --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,,"
+
+deploy:
+  extends: .defaults
+  needs:
+    - refresh
+  script:
+    - *setup_script
+    - ssh $TARGET "salt --log-file=salt_highstate.log --log-file-level=debug --state-output=changes --hide-timeout \* state.highstate queue=True | awk '/Result..Clean - Started/ {print > \"salt_profiling.log\"; next} 1'"
+    - ssh $TARGET "salt --hide-timeout \* cmd.run '! sudo telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \"'" && echo "telegraf inputs are correct" | tee salt_post_deploy_checks.log
+  after_script:
+    - *setup_script
+    - scp $TARGET:salt_\*.log .
