@@ -134,6 +134,7 @@ dashboard-cleanup:
 {% endfor %}
 
 #create templated dashboards
+{% set provisioned_alerts = [] %}
 {% for templated_dashboardname in templated_dashboardnames %}
 {{ "/".join([dashboard_template_folder, templated_dashboardname]) }}: #works even if variables already contain slashes
   file.managed:
@@ -141,11 +142,13 @@ dashboard-cleanup:
     - template: jinja
     - services: {{ services_for_templated_dashboards }}
 
-/etc/grafana/provisioning/alerting/dashboard-{{ templated_dashboardname | replace(".json", ".yaml") }}:
+{% set provisioned_alert = templated_dashboardname | replace(".json", ".yaml") %}
+/etc/grafana/provisioning/alerting/dashboard-{{ provisioned_alert }}:
   file.managed:
-    - source: salt://monitoring/grafana/alerting-dashboard-{{ templated_dashboardname | replace(".json", ".yaml") }}.template
+    - source: salt://monitoring/grafana/alerting-dashboard-{{ provisioned_alert }}.template
     - template: jinja
     - services: {{ services_for_templated_dashboards }}
+{% do provisioned_alerts.append('dashboard-' + provisioned_alert) %}
 {% endfor %}
 
 #create dashboards and alerts for each worker contained in the mine
@@ -165,7 +168,7 @@ dashboard-cleanup:
     - template: jinja
     - worker: {{ workername }}
     - host_interface: {{ host_interface }}
-
+{% do provisioned_alerts.append('dashboard-WD' + workername + '.yaml') %}
 {% endfor %}
 
 #create dashboards for each generic host contained in the mine
@@ -184,8 +187,21 @@ dashboard-cleanup:
     - template: jinja
     - generic_host: {{ genericname }}
     - host_interface: {{ host_interface }}
-
+{% do provisioned_alerts.append('dashboard-GD' + genericname + '.yaml') %}
 {% endfor %}
+
+# remove all alerts which are not provisioned anymore
+alert-cleanup:
+{% set provisioned_alerts_folder = '/etc/grafana/provisioning/alerting' %}
+{% if provisioned_alerts | length > 0 %}
+  cmd.run:
+    - cwd: {{ provisioned_alerts_folder }}
+    - name: find -type f ! -name {{ provisioned_alerts | join(' ! -name ') }} -delete
+{% else %}
+  file.directory:
+    - name: {{ provisioned_alerts_folder }}
+    - clean: True
+{% endif %}
 
 {%- if not grains.get('noservices', False) %}
 grafana-server:
