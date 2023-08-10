@@ -119,7 +119,7 @@ dashboard-cleanup:
 {% if preserved_dashboards|length > 0 %}
   cmd.run: #this find statement only works if we have at least one dashboard to preserve
     - cwd: {{ dashboard_template_folder }}
-    - name: find -type f ! -name {{ preserved_dashboards|join(' ! -name ') }} -exec rm {} \;
+    - name: find -type f ! -name {{ preserved_dashboards|join(' ! -name ') }} -delete
 {% else %}
   file.directory: #if we have absolutely no node, just purge the folder
     - name: {{ dashboard_template_folder }}
