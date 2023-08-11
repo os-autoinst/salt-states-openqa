@@ -336,6 +336,27 @@ alert with the rule UID `saltmaster_service_alert`.
    sudo -u grafana sqlite3 /var/lib/grafana/grafana.db '.dump' | grep 'saltmaster_service_alert'`
    ```
 
+#### Further remarks
+To delete a bunch of alerts in one go it can be useful to use a regex. For
+instance, to delete all alerts for hosts with names like `d160`, `d161`, … one
+could use:
+
+```
+sudo -u grafana sqlite3 /var/lib/grafana/grafana.db "
+  select uid from alert_rule where uid regexp '.*_alert_d\d\d\d';"
+```
+
+```
+sudo -u grafana sqlite3 /var/lib/grafana/grafana.db "
+  delete from alert_rule where uid regexp '.*_alert_d\d\d\d';
+  delete from alert_rule_version where rule_uid regexp '.*_alert_d\d\d\d';
+  delete from provenance_type where record_key regexp '.*_alert_d\d\d\d';
+  delete from annotation where text regexp '.*_d\d\d\d';
+ "
+```
+
+The first `select` is for checking whether the regex matches only intended rows.
+
 ## Communication
 
 If you have questions, visit us on IRC in [#opensuse-factory](irc://chat.freenode.net/opensuse-factory)
