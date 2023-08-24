@@ -28,9 +28,9 @@ clone:
   extends: .defaults
   parallel:
     matrix:
-      - TOKEN: STATES_CLONE_TOKEN
+      - TOKEN: ${STATES_CLONE_TOKEN}
         REPO: states
-      - TOKEN: PILLARS_CLONE_TOKEN
+      - TOKEN: ${PILLARS_CLONE_TOKEN}
         REPO: pillars
   script:
     - *setup_script
@@ -39,7 +39,7 @@ clone:
        mkdir -p $REPO &&
        chown root:salt $REPO &&
        cd $REPO &&
-       git status || git clone --depth 3 https://osd_deployment_ci:\$$TOKEN@gitlab.suse.de/openqa/salt-$REPO-openqa.git . &&
+       git status || git clone --depth 3 https://osd_deployment_ci:$TOKEN@gitlab.suse.de/openqa/salt-$REPO-openqa.git . &&
        git fetch origin &&
        git reset --hard origin/master &&
        git checkout -f master &&
