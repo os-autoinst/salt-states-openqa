@@ -62,7 +62,7 @@ deploy:
   script:
     - *setup_script
     - ssh $TARGET "salt --log-file=salt_highstate.log --log-file-level=debug --state-output=changes --hide-timeout \* state.highstate queue=True | awk '/Result..Clean - Started/ {print > \"salt_profiling.log\"; next} 1'"
-    - ssh $TARGET "salt --hide-timeout \* cmd.run '! sudo telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \"'" | tee salt_post_deploy_checks.log; [[ ! -s salt_post_deploy_checks.log ]] && echo "telegraf inputs are correct"
+    - ssh $TARGET "salt --hide-timeout \* cmd.run 'sudo telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \" && echo \"telegraf errors\" || echo \"telegraf is fine\"' | tee salt_post_deploy_checks.log; ! grep \" E\! \" salt_post_deploy_checks.log
   after_script:
     - *setup_script
     - scp $TARGET:salt_\*.log .
