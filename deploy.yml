@@ -10,22 +10,14 @@
   - chmod 644 ~/.ssh/known_hosts
   - set -ex
   - export TARGET=${TARGET:-"openqa.suse.de"}
-
-.defaults:
-  stage: deploy
-  image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
-  timeout: 2h
-  only:
-    - master@openqa/salt-pillars-openqa
-    - master@openqa/salt-states-openqa
-  artifacts:
-    when: always
-    paths:
-      - salt_*.log
-    expire_in: 1 week
+  - export REMOTE_CMD=${REMOTE_CMD:-"ssh $TARGET"}
 
 clone:
-  extends: .defaults
+  image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
+  rules:
+    - if: $CI_COMMIT_REF_NAME !~ /master/
+      variables:
+        REMOTE_CMD: bash -c
   parallel:
     matrix:
       - TOKEN: ${STATES_CLONE_TOKEN}
@@ -34,7 +26,7 @@ clone:
         REPO: pillars
   script:
     - *setup_script
-    - ssh $TARGET "(
+    - $REMOTE_CMD "(
        set -x; cd /srv &&
        mkdir -p $REPO &&
        chown root:salt $REPO &&
@@ -47,22 +39,36 @@ clone:
        )"
 
 refresh:
-  extends: .defaults
+  stage: deploy
   needs:
     - clone
+  rules:
+    - if: $CI_COMMIT_REF_NAME =~ /master/
   script:
     - *setup_script
-    - ssh $TARGET "echo 'Currently the following minions are down:'; diff <(sudo salt --timeout 1 '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort) <(sudo salt --timeout 1 --hide-timeout '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort); echo '==================='" | tee salt_ping.log
-    - ssh $TARGET "salt --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,,"
+    - $REMOTE_CMD "echo 'Currently the following minions are down:'; diff <(sudo salt --timeout 1 '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort) <(sudo salt --timeout 1 --hide-timeout '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort); echo '==================='" | tee salt_ping.log
+    - $REMOTE_CMD "salt --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,,"
+  artifacts:
+    when: always
+    paths:
+      - salt_*.log
+    expire_in: 1 week
 
 deploy:
-  extends: .defaults
+  stage: deploy
   needs:
     - refresh
+  rules:
+    - if: $CI_COMMIT_REF_NAME =~ /master/
   script:
     - *setup_script
-    - ssh $TARGET "salt --log-file=salt_highstate.log --log-file-level=debug --state-output=changes --hide-timeout \* state.highstate queue=True | awk '/Result..Clean - Started/ {print > \"salt_profiling.log\"; next} 1'"
-    - ssh $TARGET "salt --hide-timeout \* cmd.run '! sudo telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \"'" | tee salt_post_deploy_checks.log; [[ ! -s salt_post_deploy_checks.log ]] && echo "telegraf inputs are correct"
+    - $REMOTE_CMD "salt --log-file=salt_highstate.log --log-file-level=debug --state-output=changes --hide-timeout \* state.highstate queue=True | awk '/Result..Clean - Started/ {print > \"salt_profiling.log\"; next} 1'"
+    - $REMOTE_CMD "salt --hide-timeout \* cmd.run '! sudo telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \"'" | tee salt_post_deploy_checks.log; [[ ! -s salt_post_deploy_checks.log ]] && echo "telegraf inputs are correct"
   after_script:
     - *setup_script
     - scp $TARGET:salt_\*.log .
+  artifacts:
+    when: always
+    paths:
+      - salt_*.log
+    expire_in: 1 week
