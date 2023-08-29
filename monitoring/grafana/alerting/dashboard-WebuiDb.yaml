@@ -790,7 +790,7 @@ groups:
         - condition: AND
           key: server
           operator: =
-          value: https://openqa.suse.de/tests
+          value: https://openqa.oqa.prg2.suse.org/tests
       refId: A
       relativeTimeRange:
         from: 720
