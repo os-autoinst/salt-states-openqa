@@ -32,13 +32,14 @@ clone:
         REPO: states
       - TOKEN: ${PILLARS_CLONE_TOKEN}
         REPO: pillars
+        DIR: pillar
   script:
     - *setup_script
     - ssh $TARGET "(
        set -x; cd /srv &&
-       mkdir -p $REPO &&
-       chown root:salt $REPO &&
-       cd $REPO &&
+       mkdir -p ${DIR:-$REPO} &&
+       chown root:salt ${DIR:-$REPO} &&
+       cd ${DIR:-$REPO} &&
        git status || git clone --depth 3 https://osd_deployment_ci:$TOKEN@gitlab.suse.de/openqa/salt-$REPO-openqa.git . &&
        git fetch origin &&
        git reset --hard origin/master &&
