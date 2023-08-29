@@ -8,7 +8,7 @@
   - chmod 700 ~/.ssh
   - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
   - chmod 644 ~/.ssh/known_hosts
-  - set -ex
+  - set -exo pipefail
   - export TARGET=${TARGET:-"openqa.suse.de"}
 
 .defaults:
