@@ -19,7 +19,7 @@ python3-augeas:
 update grub config with crashkernel setting:
   cmd.run:
     - name: 'grub2-mkconfig > /boot/grub2/grub.cfg'
-    - listen:
+    - onchanges:
       - file: /etc/default/grub
     - onlyif: grub2-probe /boot
 
