@@ -74,12 +74,21 @@ nfs-client:
   file.managed
 
 {%- if grains.get('openqa_share_nfs', True) and not grains.get('noservices', False) %}
+{% set nfs_hostname = pillar['workerconf']['nfspath'].split(":", 1)[0] %}
+{% set ipv4 = salt["dnsutil.A"](nfs_hostname) %}
+{% set ipv6 = salt["dnsutil.AAAA"](nfs_hostname) %}
+{% set ip_list = [] %}
+{%- if ipv4 is list %}
+{% do ip_list.extend(ipv4) %}
+{%- endif %}
+{%- if ipv6 is list %}
+{% do ip_list.extend(ipv6) %}
+{%- endif %}
 # Define static dns entries in /etc/hosts for our nfs server to ensure
 # reachability even in early boot steps.
 static_nfs_hostname:
-  {% set nfs_hostname = pillar['workerconf']['nfspath'].split(":", 1)[0] %}
   host.present:
-    - ip: {{ salt["dnsutil.A"](nfs_hostname) + salt["dnsutil.AAAA"](nfs_hostname) }}
+    - ip: {{ ip_list }}
     - names:
       - {{ nfs_hostname }}
 
