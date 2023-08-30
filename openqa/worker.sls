@@ -392,7 +392,7 @@ grub-conf-serial-cmd:
 {% endif %}
 setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
   cmd.run:
-    - unless: getcap /usr/bin/qemu-system-{{ qemu_arch }} | grep -q 'cap_net_admin+ep'
+    - unless: getcap /usr/bin/qemu-system-{{ qemu_arch }} | grep -q 'cap_net_admin=ep'
     - require:
       - pkg: worker.packages
 
