@@ -12,7 +12,6 @@
   - export TARGET=${TARGET:-"openqa.suse.de"}
 
 .defaults:
-  stage: deploy
   image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
   timeout: 2h
   only:
@@ -26,6 +25,7 @@
 
 clone:
   extends: .defaults
+  stage: deploy
   parallel:
     matrix:
       - TOKEN: ${STATES_CLONE_TOKEN}
@@ -49,6 +49,7 @@ clone:
 
 refresh:
   extends: .defaults
+  stage: deploy
   needs:
     - clone
   script:
@@ -58,12 +59,19 @@ refresh:
 
 deploy:
   extends: .defaults
+  stage: deploy
   needs:
     - refresh
   script:
     - *setup_script
     - ssh $TARGET "salt --log-file=salt_highstate.log --log-file-level=debug --state-output=changes --hide-timeout \* state.highstate queue=True | awk '/Result..Clean - Started/ {print > \"salt_profiling.log\"; next} 1'"
-    - ssh $TARGET "salt --hide-timeout \* cmd.run 'sudo telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \" && echo \"telegraf errors\" || echo \"telegraf is fine\"'" | tee salt_post_deploy_checks.log; ! grep ' E! ' salt_post_deploy_checks.log
   after_script:
     - *setup_script
     - scp $TARGET:salt_\*.log .
+
+telegraf:
+  extends: .defaults
+  stage: post-deploy
+  script:
+    - *setup_script
+    - ssh $TARGET "salt --hide-timeout \* cmd.run 'sudo timeout -v --kill-after=1m 30s telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \" && echo \"telegraf errors\" || echo \"telegraf is fine\"'" | tee salt_post_deploy_checks.log; ! grep ' E! ' salt_post_deploy_checks.log

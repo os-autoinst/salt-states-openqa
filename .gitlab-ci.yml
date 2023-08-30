@@ -6,6 +6,7 @@ stages:
   - test-static
   - test
   - deploy
+  - post-deploy
 
 variables:
   GIT_DEPTH: "3"
