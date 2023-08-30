@@ -379,7 +379,7 @@ grub-conf-serial-cmd:
 
 'grub2-mkconfig > /boot/grub2/grub.cfg':
   cmd.run:
-    - listen:
+    - onchanges:
       - file: grub-conf-terminal
       - file: grub-conf-cmdline
       - file: grub-conf-serial-cmd
