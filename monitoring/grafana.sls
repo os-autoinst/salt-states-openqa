@@ -10,6 +10,7 @@
 {% set grafana_plugins = ['grafana-image-renderer', 'blackmirror1-singlestat-math-panel'] %}
 {% set preserved_dashboards = worker_dashboardnames + generic_dashboardnames + templated_dashboardnames + manual_dashboardnames %}
 {% set services_for_templated_dashboards = 'sshd openqa-gru openqa-webui openqa-livehandler openqa-scheduler openqa-websockets smb vsftpd telegraf salt-master salt-minion rsyncd postgresql postfix cron apache2' %}
+{% set provisioned_alerts = ['dashboard-automatic-actions.yaml', 'dashboard-failed-systemd-services.yaml', 'dashboard-job-age.yaml', 'dashboard-monitoring.yaml', 'dashboard-openqa-jobs-test.yaml', 'dashboard-WebuiDb.yaml', 'inodes.yaml'] %}
 
 {% from 'openqa/repo_config.sls' import repo %}
 monitoring-software.repo:
@@ -100,10 +101,12 @@ reverse-proxy-group:
   file.managed:
     - source: salt://monitoring/grafana/salt.yaml
 
-/etc/grafana/provisioning/alerting:
-  file.recurse:
-    - source: salt://monitoring/grafana/alerting
+{% for provisioned_alert in provisioned_alerts %}
+/etc/grafana/provisioning/alerting/{{ provisioned_alert }}:
+  file.managed:
     - makedirs: True
+    - source: salt://monitoring/grafana/alerting/{{ provisioned_alert }}
+{% endfor %}
 
 {% for plugin in grafana_plugins %}
 install_{{ plugin }}:
@@ -134,7 +137,6 @@ dashboard-cleanup:
 {% endfor %}
 
 #create templated dashboards
-{% set provisioned_alerts = [] %}
 {% for templated_dashboardname in templated_dashboardnames %}
 {{ "/".join([dashboard_template_folder, templated_dashboardname]) }}: #works even if variables already contain slashes
   file.managed:
