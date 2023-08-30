@@ -3,8 +3,7 @@
     - makedirs: True
     - contents: |
         [[inputs.exec]]
-          commands = [ "/etc/telegraf/scripts/backlogger/backlogger.py --output=influxdb /etc/telegraf/scripts/tools-backlog/queries.yaml" ]
-          environment = ["REDMINE_API_KEY={{ pillar['credentials']['redmine']['api_key'] }}"]
+          commands = [ "env REDMINE_API_KEY={{ pillar['credentials']['redmine']['api_key'] }} /etc/telegraf/scripts/backlogger/backlogger.py --output=influxdb /etc/telegraf/scripts/tools-backlog/queries.yaml" ]
           interval = "4h"
           timeout = "10s"
           data_format = "influx"
