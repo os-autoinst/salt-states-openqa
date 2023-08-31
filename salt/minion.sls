@@ -28,3 +28,10 @@ speedup_minion:
         disable_modules:
           - vsphere
         grains_cache: True
+
+{% if 'Leap' in grains['oscodename'] %}
+lock_salt_minion_pkg:
+  cmd.run:
+    - unless: "zypper ll | grep -q 131249"
+    - name: "zypper -n in --oldpackage --allow-downgrade 'salt<=3005' && zypper al -m 'poo#131249' salt"
+{%- endif %}
