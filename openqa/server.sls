@@ -425,6 +425,12 @@ git-clone-os-autoinst-scripts:
     - contents:
       - '-*/3    * * * *  geekotest     git -C /opt/os-autoinst-scripts pull --quiet --rebase origin master'
 
+{%- if not grains.get('noservices', False) %}
+cron.service:
+  service.running:
+    - enable: True
+{%- endif %}
+
 /etc/systemd/journald.conf.d/journal_size.conf:
   file.managed:
     - makedirs: True
