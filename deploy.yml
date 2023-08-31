@@ -30,6 +30,7 @@ clone:
     matrix:
       - TOKEN: ${STATES_CLONE_TOKEN}
         REPO: states
+        DIR: salt
       - TOKEN: ${PILLARS_CLONE_TOKEN}
         REPO: pillars
         DIR: pillar
