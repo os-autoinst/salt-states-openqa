@@ -75,4 +75,4 @@ telegraf:
   stage: post-deploy
   script:
     - *setup_script
-    - ssh $TARGET "salt --hide-timeout \* cmd.run 'sudo timeout -v --kill-after=1m 30s telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \" && echo \"telegraf errors\" || echo \"telegraf is fine\"'" | tee salt_post_deploy_checks.log; ! grep ' E! ' salt_post_deploy_checks.log
+    - ssh $TARGET "salt --hide-timeout \* cmd.run 'sudo timeout -v --kill-after=1m 5m telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \" && echo \"telegraf errors\" || echo \"telegraf is fine\"'" | tee salt_post_deploy_checks.log; ! grep ' E! ' salt_post_deploy_checks.log
