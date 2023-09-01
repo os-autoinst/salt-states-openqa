@@ -33,5 +33,5 @@ speedup_minion:
 lock_salt_minion_pkg:
   cmd.run:
     - unless: "zypper ll | grep -q 131249"
-    - name: "zypper -n in --oldpackage --allow-downgrade 'salt<=3005' && zypper al -m 'poo#131249' salt"
+    - name: "(zypper -n in --oldpackage --allow-downgrade 'salt<=3005' || zypper -n in --oldpackage --allow-downgrade 'salt<=3005.1') && zypper al -m 'poo#131249' salt"
 {%- endif %}
