@@ -20,8 +20,6 @@ variables:
   # our test steps can fail especially on repository refresh errors so let's
   # retry
   retry: 2
-  except:
-    - master@openqa/salt-pillars-openqa
   before_script:
     - ln -s $(pwd -P)/ /srv/salt
     - ln -s $(pwd -P)/t/pillar /srv/pillar
