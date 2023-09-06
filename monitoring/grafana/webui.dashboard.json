@@ -377,7 +377,7 @@
               "condition": "AND",
               "key": "server",
               "operator": "=",
-              "value": "https://openqa.oqa.prg2.suse.org/tests"
+              "value": "https://openqa.suse.de/tests"
             }
           ]
         }
