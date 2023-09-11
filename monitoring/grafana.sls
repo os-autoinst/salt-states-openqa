@@ -27,11 +27,15 @@ monitoring-software.repo:
     - name: grafana
     - refresh: False
 
-/var/run/grafana:
-  file.directory:
-    - user: grafana
-    - group: grafana
-    - mode: "0770"
+/etc/tmpfiles.d/grafana.conf:
+  file.managed:
+    - contents:
+      - 'd      /run/grafana            0770 root grafana'
+
+'systemd-tmpfiles --create':
+  cmd.run:
+    - onchanges:
+      - file: /etc/tmpfiles.d/grafana.conf
 
 include:
  - monitoring.nginx
