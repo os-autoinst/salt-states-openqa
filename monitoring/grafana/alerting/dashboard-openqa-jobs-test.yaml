@@ -507,7 +507,7 @@ groups:
   interval: 10m
   rules:
     - uid: ad8b5de6-d5ca-43e0-b734-6289739bc2d8
-      title: Queue: State (SUSE) - too few jobs executed alert
+      title: 'Queue: State (SUSE) - too few jobs executed alert'
       condition: E
       data:
         - refId: A
