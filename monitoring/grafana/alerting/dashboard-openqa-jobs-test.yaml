@@ -507,7 +507,7 @@ groups:
   interval: 10m
   rules:
     - uid: ad8b5de6-d5ca-43e0-b734-6289739bc2d8
-      title: openQA jobs ammount
+      title: Queue: State (SUSE) - too few jobs executed alert
       condition: E
       data:
         - refId: A
@@ -695,10 +695,10 @@ groups:
         __dashboardUid__: nRDab3Jiz
         __panelId__: "9"
         description: |-
-            Jobs aren't assigned to workers and run in OSD while exists more jobs in scheduled state
+            Not enough openQA jobs are assigned to workers and executed while many scheduled jobs exist in the scheduled state.
 
-            see https://progress.opensuse.org/issues/135122
-        summary: Too low running job on OSD
+            see https://progress.opensuse.org/issues/135122 for details
+        summary: Too few openQA jobs are executed
       labels:
         __contacts__: '"osd-admins"'
       isPaused: false
