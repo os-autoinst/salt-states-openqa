@@ -30,8 +30,10 @@ speedup_minion:
         grains_cache: True
 
 {% if 'Leap' in grains['oscodename'] %}
-lock_salt_minion_pkg:
+{% for pkg_name in ['salt', 'salt-bash-completion', 'salt-minion'] %}
+lock_{{ pkg_name }}_pkg:
   cmd.run:
-    - unless: "zypper ll | grep -q 131249"
-    - name: "(zypper -n in --oldpackage --allow-downgrade 'salt<=3005' || zypper -n in --oldpackage --allow-downgrade 'salt<=3005.1') && zypper al -m 'poo#131249' salt"
+    - unless: 'zypper ll | grep -qE "{{pkg_name}}.*\| poo#131249"'
+    - name: "(zypper -n in --oldpackage --allow-downgrade '{{pkg_name}}<=3005' || zypper -n in --oldpackage --allow-downgrade '{{pkg_name}}<=3005.1') && zypper al -m 'poo#131249' - potential salt regression, unresponsive salt-minion"
+{% endfor %}
 {%- endif %}
