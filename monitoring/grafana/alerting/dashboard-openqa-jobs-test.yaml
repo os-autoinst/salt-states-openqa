@@ -651,7 +651,7 @@ groups:
             conditions:
                 - evaluator:
                     params:
-                        - 20 
+                        - 20
                         - 0
                     type: lt
                   operator:
@@ -665,7 +665,7 @@ groups:
                   type: query
                 - evaluator:
                     params:
-                        - 100 
+                        - 100
                         - 0
                     type: gt
                   operator:
@@ -689,7 +689,7 @@ groups:
       dashboardUid: nRDab3Jiz
       panelId: 9
       noDataState: OK
-      execErrState: OK 
+      execErrState: OK
       for: 10m
       annotations:
         __dashboardUid__: nRDab3Jiz
