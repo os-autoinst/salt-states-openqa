@@ -30,8 +30,20 @@ speedup_minion:
         grains_cache: True
 
 {% if 'Leap' in grains['oscodename'] %}
-lock_salt_minion_pkg:
+{% for pkg_name in ['salt', 'salt-bash-completion', 'salt-minion'] %}
+lock_{{ pkg_name }}_pkg:
   cmd.run:
-    - unless: "zypper ll | grep -q 131249"
-    - name: "(zypper -n in --oldpackage --allow-downgrade 'salt<=3005' || zypper -n in --oldpackage --allow-downgrade 'salt<=3005.1') && zypper al -m 'poo#131249' salt"
+    - unless: 'zypper ll | grep -qE "{{ pkg_name }}.*\| poo#131249"'
+    - name: "(zypper -n in --oldpackage --allow-downgrade '{{ pkg_name }}<=3005' || zypper -n in --oldpackage --allow-downgrade '{{ pkg_name }}<=3005.1') && zypper al -m 'poo#131249 - potential salt regression, unresponsive salt-minion' {{ pkg_name }}"
+
+{% set unlocked_conflicting_patches = salt['cmd.shell']('zypper se --conflicts-pkg salt-minion | grep -P \'^!\s.*?\|\' | cut -d "|" -f 2 | awk \'{$1=$1;print}\'').split("\n") %}
+{% if unlocked_conflicting_patches[0] != "" %}
+{% for conflicting_patch in unlocked_conflicting_patches %}
+lock_{{ conflicting_patch }}_for_{{ pkg_name }}_patch:
+  cmd.run:
+    - unless: 'zypper ll | grep -qE "{{ conflicting_patch }}"'
+    - name: "zypper al -m 'poo#131249 - patch would conflict with {{ pkg_name }}' -t patch {{ conflicting_patch }}"
+{% endfor %}
+{% endif %}
+{% endfor %}
 {%- endif %}
