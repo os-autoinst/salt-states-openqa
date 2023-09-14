@@ -14,7 +14,7 @@ sap_perf.packages:
     - makedirs: True
 
 
-/etc/telegraf/scripts/gitlab_commits.py:
+/etc/telegraf/scripts/hanaperf_gitlab.py:
   file.managed:
-    - source: salt://monitoring/sap_perf/scripts/gitlab_commits.py
+    - source: salt://monitoring/sap_perf/scripts/hanaperf_gitlab.py
     - mode: "0755"
