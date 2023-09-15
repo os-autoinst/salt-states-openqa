@@ -8,4 +8,5 @@
   <interface name="{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}"/>
 {%- endif %}
   <masquerade/>
+  <forward/>
 </zone>
