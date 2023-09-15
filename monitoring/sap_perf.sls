@@ -6,7 +6,10 @@ sap_perf.packages:
         attempts: 5
     - pkgs:
       - python3-requests
-
+## newer python versions include dataclasses directly
+{% if 'Tumbleweed' not in grains['oscodename'] %}
+      - python3-dataclasses
+{% endif %}
 
 /etc/telegraf/telegraf.d/sap_perf.conf:
   file.managed:
