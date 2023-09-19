@@ -175,7 +175,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -469,7 +469,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -610,7 +610,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -743,7 +743,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -880,7 +880,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.1.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1043,7 +1043,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.1.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1218,7 +1218,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.1.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1392,7 +1392,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.1.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2576,7 +2576,7 @@
     "list": []
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -2607,6 +2607,6 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 49,
+  "version": 50,
   "weekStart": ""
 }
