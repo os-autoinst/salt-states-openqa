@@ -354,7 +354,7 @@ groups:
     uid: FuT2cmf4k
 - folder: Salt
   interval: 2m
-  name: Ratio of multi-machine tests by result alert
+  name: Ratio of multi-machine tests by result alert (short spike)
   orgId: 1
   rules:
   - annotations:
@@ -366,6 +366,7 @@ groups:
         * Investigate what caused the ratio to change that significantly
         * Check https://openqa.suse.de/tests?resultfilter=Failed and look for a correlation
         * Follow https://progress.opensuse.org/projects/openqatests/wiki/Wiki#Statistical-investigation
+        * Check if the amount of failed jobs stays high for longer or if this was just caused by a single scenario failing as a whole
 
         See https://progress.opensuse.org/issues/96191 for details
     condition: A
@@ -376,7 +377,7 @@ groups:
         conditions:
         - evaluator:
             params:
-            - 60
+            - 30
             type: gt
           operator:
             type: and
