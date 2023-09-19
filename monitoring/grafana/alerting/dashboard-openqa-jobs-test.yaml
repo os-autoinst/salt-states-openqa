@@ -432,6 +432,93 @@ groups:
     panelId: 24
     title: Ratio of multi-machine tests by result alert
     uid: 0XohcmfVk
+- orgId: 1
+  name: Ratio of multi-machine tests by result alert (longterm)
+  folder: Salt
+  interval: 30m
+  rules:
+    - uid: e0912f8b-36e8-40d4-939d-8e8e16a08178
+      title: Ratio of multi-machine tests by result alert (longterm)
+      condition: ratio_mm_failed
+      data:
+        - refId: ratio_mm_failed
+          relativeTimeRange:
+            from: 3600
+            to: 0
+          datasourceUid: "000000001"
+          model:
+            alias: Ratio of failed MM tests
+            groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - result
+                  type: tag
+                - params:
+                    - "null"
+                  type: fill
+            interval: 2m
+            intervalMs: 1000
+            maxDataPoints: 43200
+            measurement: postgresql
+            orderByTime: ASC
+            policy: default
+            refId: ratio_mm_failed
+            resultFormat: time_series
+            select:
+                - - params:
+                        - ratio_mm
+                    type: field
+                  - params: []
+                    type: last
+            tags:
+                - key: result
+                  operator: =
+                  value: failed
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 20
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                        - ratio_mm_failed
+                  reducer:
+                    params: []
+                    type: avg
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: A
+            type: classic_conditions
+      dashboardUid: nRDab3Jiz
+      panelId: 24
+      noDataState: OK
+      execErrState: OK
+      for: 6h
+      annotations:
+        __alertId__: "358"
+        __dashboardUid__: nRDab3Jiz
+        __panelId__: "24"
+        message: |-
+            Investigation hints:
+            * Investigate what caused the ratio to change that significantly
+            * Check https://openqa.suse.de/tests?resultfilter=Failed and look for a correlation
+            * Follow https://progress.opensuse.org/projects/openqatests/wiki/Wiki#Statistical-investigation
+
+            See https://progress.opensuse.org/issues/96191 for details
+      labels:
+        __contacts__: '"osd-admins"'
+        rule_uid: 0XohcmfVk
+      isPaused: false
 - folder: Salt
   interval: 2m
   name: openQA job fail ratio alert
