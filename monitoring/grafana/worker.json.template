@@ -1705,7 +1705,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "name": "openqaworker-arm-3: partitions usage (%) alert",
+        "name": "{{ worker }}: partitions usage (%) alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -1817,7 +1817,7 @@
           "measurement": "disk_total",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"used_percent\") AS \"used_percent\" FROM \"disk\" WHERE (\"host\" = 'openqaworker-arm-3' AND fstype != 'nfs' AND fstype != 'udf') AND $timeFilter GROUP BY time($interval), \"device\", \"fstype\" fill(null)",
+          "query": "SELECT mean(\"used_percent\") AS \"used_percent\" FROM \"disk\" WHERE (\"host\" = '{{ worker }}' AND fstype != 'nfs' AND fstype != 'udf') AND $timeFilter GROUP BY time($interval), \"device\", \"fstype\" fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1966,7 +1966,7 @@
             "type": "influxdb",
             "uid": "000000001"
           },
-          "query": "SELECT mean(\"inodes_used\")/mean(\"inodes_total\") FROM \"autogen\".\"disk\" WHERE (\"host\"::tag = 'openqaworker-arm-3') AND $timeFilter GROUP BY time($__interval), \"path\"::tag fill(null)",
+          "query": "SELECT mean(\"inodes_used\")/mean(\"inodes_total\") FROM \"autogen\".\"disk\" WHERE (\"host\"::tag = '{{ worker }}') AND $timeFilter GROUP BY time($__interval), \"path\"::tag fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series"
@@ -2075,7 +2075,7 @@
           "measurement": "io_reads",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE \"host\" = 'openqaworker-arm-3' AND $timeFilter GROUP BY time($interval), *",
+          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE \"host\" = '{{ worker }}' AND $timeFilter GROUP BY time($interval), *",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -2129,7 +2129,7 @@
           "measurement": "io_reads",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "\nSELECT non_negative_derivative(mean(writes),1s) as \"write\" FROM \"diskio\" WHERE \"host\" = 'openqaworker-arm-3' AND $timeFilter GROUP BY time($interval), *",
+          "query": "\nSELECT non_negative_derivative(mean(writes),1s) as \"write\" FROM \"diskio\" WHERE \"host\" = '{{ worker }}' AND $timeFilter GROUP BY time($interval), *",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -2212,7 +2212,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "name": "openqaworker-arm-3: Disk I/O time alert",
+        "name": "{{ worker }}: Disk I/O time alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -2318,7 +2318,7 @@
           "measurement": "diskio",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(\"io_time\"), 1s) FROM \"diskio\" WHERE (\"host\" = 'openqaworker-arm-3' AND (\"name\" <> 'nvme0n1' OR \"name\" = 'nvme1n1' OR \"name\" = 'sda' OR \"name\" = 'sdb')) AND $timeFilter GROUP BY time($__interval), \"name\" fill(null)",
+          "query": "SELECT non_negative_derivative(mean(\"io_time\"), 1s) FROM \"diskio\" WHERE (\"host\" = '{{ worker }}' AND (\"name\" <> 'nvme0n1' OR \"name\" = 'nvme1n1' OR \"name\" = 'sda' OR \"name\" = 'sdb')) AND $timeFilter GROUP BY time($__interval), \"name\" fill(null)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -2346,7 +2346,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqaworker-arm-3"
+              "value": "{{ worker }}"
             },
             {
               "condition": "AND",
