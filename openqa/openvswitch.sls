@@ -114,7 +114,7 @@ wicked ifup br1:
      {%     if 'bridge_ip' in remote_conf %}
      {%         set remote_ip = remote_conf['bridge_ip'] %}
      {%     elif 'bridge_iface' in remote_conf %}
-     {%         set remote_interfaces = salt.mine.get("nodename:" + remote, 'ip4_interfaces', tgt_type='grain').values()|list %}
+     {%         set remote_interfaces = salt.mine.get("host:" + remote, 'ip4_interfaces', tgt_type='grain').values()|list %}
      {%         set remote_bridge_interface = remote_conf['bridge_iface'] %}
      {%         if remote_interfaces|length > 0 and remote_bridge_interface in remote_interfaces[0] %}
      {%             set remote_ip = remote_interfaces[0][remote_bridge_interface][0] %}
