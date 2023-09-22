@@ -114,7 +114,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.1.0",
       "targets": [
         {
           "datasource": {
@@ -387,7 +387,7 @@
           "refId": "A"
         }
       ],
-      "title": "X86_64 worker status",
+      "title": "Status of all salt monitored machines",
       "type": "row"
     },
     {
@@ -395,6 +395,7 @@
         "type": "influxdb",
         "uid": "000000001"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -404,23 +405,40 @@
             {
               "options": {
                 "0": {
+                  "index": 0,
                   "text": "ONLINE"
                 },
                 "1": {
+                  "index": 1,
+                  "text": "OFFLINE"
+                },
+                "2": {
+                  "index": 2,
                   "text": "OFFLINE"
                 },
                 "": {
-                  "text": "GONE"
+                  "index": 3,
+                  "text": "OFFLINE"
                 }
               },
               "type": "value"
+            },
+            {
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "index": 4,
+                  "text": "OFFLINE"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "#299c46",
+                "color": "dark-red",
                 "value": null
               },
               {
@@ -428,7 +446,7 @@
                 "value": 0
               },
               {
-                "color": "#d44a3a",
+                "color": "dark-red",
                 "value": 1
               }
             ]
@@ -461,8 +479,8 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "10.0.1",
-      "repeat": "workers_x86_64",
+      "pluginVersion": "10.1.0",
+      "repeat": "all_machines",
       "repeatDirection": "h",
       "targets": [
         {
@@ -507,333 +525,12 @@
             {
               "key": "url",
               "operator": "=~",
-              "value": "/^$workers_x86_64$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
+              "value": "/^$all_machines$/"
             }
           ]
         }
       ],
-      "title": "$workers_x86_64",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 17
-      },
-      "id": 28,
-      "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "PPC64LE worker status",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "text": "ONLINE"
-                },
-                "1": {
-                  "text": "OFFLINE"
-                },
-                "": {
-                  "text": "GONE"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 0,
-        "y": 18
-      },
-      "id": 31,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.1",
-      "repeat": "workers_ppc64le",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_ppc64le$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "title": "$workers_ppc64le",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 24
-      },
-      "id": 24,
-      "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "ARM worker status",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "text": "ONLINE"
-                },
-                "1": {
-                  "text": "OFFLINE"
-                },
-                "": {
-                  "text": "GONE"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46"
-              },
-              {
-                "color": "#37872D",
-                "value": 0
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 0,
-        "y": 25
-      },
-      "id": 6,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.5",
-      "repeat": "workers_arm",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_code"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "url",
-              "operator": "=~",
-              "value": "/^$workers_arm$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "title": "$workers_arm",
+      "title": "$all_machines",
       "transparent": true,
       "type": "stat"
     }
@@ -852,10 +549,10 @@
         "current": {
           "selected": true,
           "text": [
-            "openqa.suse.de"
+            "All"
           ],
           "value": [
-            "openqa.suse.de"
+            "$__all"
           ]
         },
         "datasource": {
@@ -863,237 +560,21 @@
           "uid": "000000001"
         },
         "definition": "SHOW TAG VALUES FROM \"ping\" WITH KEY = \"url\"",
-        "hide": 2,
-        "includeAll": false,
-        "label": "Workers",
+        "hide": 0,
+        "includeAll": true,
+        "label": "All salt controlled machines",
         "multi": true,
-        "name": "workers_all",
+        "name": "all_machines",
         "options": [],
         "query": "SHOW TAG VALUES FROM \"ping\" WITH KEY = \"url\"",
         "refresh": 1,
-        "regex": "/.*\\.suse\\.de$/",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
         "useTags": false
-      },
-      {
-        "current": {
-          "selected": true,
-          "tags": [],
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "hide": 0,
-        "includeAll": true,
-        "multi": true,
-        "name": "workers_arm",
-        "options": [
-          {
-            "selected": true,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker-arm-1.suse.de",
-            "value": "openqaworker-arm-1.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker-arm-2.suse.de",
-            "value": "openqaworker-arm-2.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker-arm-3.suse.de",
-            "value": "openqaworker-arm-3.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker-arm-4.qa.suse.de",
-            "value": "openqaworker-arm-4.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker-arm-5.qa.suse.de",
-            "value": "openqaworker-arm-5.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqa-piworker.qa.suse.de",
-            "value": "openqa-piworker.qa.suse.de"
-          }
-        ],
-        "query": "openqaworker-arm-1.suse.de, openqaworker-arm-2.suse.de, openqaworker-arm-3.suse.de,openqaworker-arm-4.qa.suse.de,openqaworker-arm-5.qa.suse.de, openqa-piworker.qa.suse.de",
-        "queryValue": "",
-        "skipUrlSync": false,
-        "type": "custom"
-      },
-      {
-        "current": {
-          "selected": true,
-          "tags": [],
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "hide": 0,
-        "includeAll": true,
-        "multi": true,
-        "name": "workers_ppc64le",
-        "options": [
-          {
-            "selected": true,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "QA-Power8-5-kvm.qa.suse.de",
-            "value": "QA-Power8-5-kvm.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "powerqaworker-qam-1.qa.suse.de",
-            "value": "powerqaworker-qam-1.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "malbec.arch.suse.de",
-            "value": "malbec.arch.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "grenache-1.qa.suse.de",
-            "value": "grenache-1.qa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "QA-Power8-4-kvm.qa.suse.de",
-            "value": "QA-Power8-4-kvm.qa.suse.de"
-          }
-        ],
-        "query": "QA-Power8-5-kvm.qa.suse.de, powerqaworker-qam-1.qa.suse.de, malbec.arch.suse.de, grenache-1.qa.suse.de, QA-Power8-4-kvm.qa.suse.de",
-        "queryValue": "",
-        "skipUrlSync": false,
-        "type": "custom"
-      },
-      {
-        "current": {
-          "selected": true,
-          "tags": [],
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "hide": 0,
-        "includeAll": true,
-        "multi": true,
-        "name": "workers_x86_64",
-        "options": [
-          {
-            "selected": true,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker1.qe.nue2.suse.org",
-            "value": "openqaworker1.qe.nue2.suse.org"
-          },
-          {
-            "selected": false,
-            "text": "worker3.oqa.suse.de",
-            "value": "worker3.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker2.oqa.suse.de",
-            "value": "worker2.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker6.oqa.suse.de",
-            "value": "worker6.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker5.oqa.suse.de",
-            "value": "worker5.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker13.oqa.suse.de",
-            "value": "worker13.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker8.oqa.suse.de",
-            "value": "worker8.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker9.oqa.suse.de",
-            "value": "worker9.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker10.oqa.suse.de",
-            "value": "worker10.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker11.oqa.suse.de",
-            "value": "worker11.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker12.oqa.suse.de",
-            "value": "worker12.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "worker13.oqa.suse.de",
-            "value": "worker13.oqa.suse.de"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker14.qa.suse.cz",
-            "value": "openqaworker14.qa.suse.cz"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker16.qa.suse.cz",
-            "value": "openqaworker16.qa.suse.cz"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker17.qa.suse.cz",
-            "value": "openqaworker17.qa.suse.cz"
-          },
-          {
-            "selected": false,
-            "text": "openqaworker18.qa.suse.cz",
-            "value": "openqaworker18.qa.suse.cz"
-          }
-        ],
-        "query": "openqaworker1.qe.nue2.suse.org, worker3.oqa.suse.de, worker2.oqa.suse.de, worker6.oqa.suse.de, worker5.oqa.suse.de,  worker13.oqa.suse.de, worker8.oqa.suse.de, worker9.oqa.suse.de, worker10.oqa.suse.de, worker11.oqa.suse.de, worker12.oqa.suse.de, worker13.oqa.suse.de, openqaworker14.qa.suse.cz, openqaworker16.qa.suse.cz, openqaworker17.qa.suse.cz, openqaworker18.qa.suse.cz",
-        "queryValue": "",
-        "skipUrlSync": false,
-        "type": "custom"
       }
     ]
   },
@@ -1129,6 +610,6 @@
   "timezone": "",
   "title": "OSD status overview",
   "uid": "4KkGdvvZk",
-  "version": 33,
+  "version": 34,
   "weekStart": ""
 }
