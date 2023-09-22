@@ -9,23 +9,8 @@ openssh:
 
 /etc/ssh/sshd_config:
   file.managed:
+    - template: jinja
     - source: salt://sshd/sshd_config
-
-{%- if grains.get("passwordlogin", False) %}
-permitrootlogin:
-  file.line:
-    - name: /etc/ssh/sshd_config
-    - mode: replace
-    - match: PermitRootLogin without-password
-    - content: PermitRootLogin yes
-
-permitpasswordauth:
-  file.line:
-    - name: /etc/ssh/sshd_config
-    - mode: replace
-    - match: PasswordAuthentication no
-    - content: PasswordAuthentication yes
-{%- endif %}
 
 {%- if not grains.get('noservices', False) %}
 sshd:
