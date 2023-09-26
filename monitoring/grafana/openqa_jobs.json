@@ -1946,6 +1946,21 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "user_cancelled"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#a0a0a0",
+                  "mode": "fixed"
+                }
+              }
+            ]
           }
         ]
       },
