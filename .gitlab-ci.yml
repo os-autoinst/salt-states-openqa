@@ -1,6 +1,6 @@
 ---
 # yamllint disable rule:line-length
-image: registry.opensuse.org/home/okurz/container/ca/containers/tumbleweed:salt-minion-git-core
+image: registry.opensuse.org/home/okurz/container/ca/containers/tumbleweed:salt-minion-git-core-ssh
 
 stages:
   - test-static
