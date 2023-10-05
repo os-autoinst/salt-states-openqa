@@ -51,6 +51,21 @@ wicked ifup br1:
 # Remove duplicate entries and sort them in the list
 {% set multihostworkers = multihostworkers | unique | sort | list %}
 
+{%- if not grains.get('noservices', False) %}
+# Ensure forwarding of traffic for the bridge:
+net.ipv4.ip_forward:
+  sysctl.present:
+    - value: 1
+net.ipv4.conf.br1.forwarding:
+  sysctl.present:
+    - value: 1
+{%- if 'bridge_iface' in pillar['workerconf'][grains['host']].keys() %}
+net.ipv4.conf.{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}.forwarding:
+  sysctl.present:
+    - value: 1
+{%- endif %}
+{%- endif %}
+
 # Make openvswitch bridge br1 persistant
 /etc/sysconfig/network/ifcfg-br1:
   file.managed:
