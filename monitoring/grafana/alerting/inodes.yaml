@@ -26,7 +26,7 @@ groups:
             maxDataPoints: 43200
             measurement: ""
             policy: ""
-            query: SELECT mean("inodes_used")/mean("inodes_total") FROM "autogen"."disk" WHERE $timeFilter GROUP BY time($__interval), "path"::tag, "host"::tag fill(null)
+            query: SELECT mean("inodes_used")/mean("inodes_total") FROM "autogen"."disk" WHERE $timeFilter AND ("origin"::tag = 'salt') GROUP BY time($__interval), "path"::tag, "host"::tag fill(null)
             rawQuery: true
             refId: A
             resultFormat: time_series
