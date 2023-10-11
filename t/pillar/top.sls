@@ -3,6 +3,7 @@ base:
     - sshd.users
     - salt.mine
     - disks.descriptions
+    - openqa.commonconf
   'G@roles:webui':
     - openqa.server
     - certificates.hosts
