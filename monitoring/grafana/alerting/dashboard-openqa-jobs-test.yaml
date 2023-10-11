@@ -739,7 +739,7 @@ groups:
             conditions:
                 - evaluator:
                     params:
-                        - 20
+                        - 5
                         - 0
                     type: lt
                   operator:
