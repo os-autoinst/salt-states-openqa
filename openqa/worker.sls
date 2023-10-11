@@ -15,8 +15,8 @@
 include:
  - openqa.repos
  - openqa.journal
+ - openqa.nfs_share
  - sudo
-
 
 worker.packages:
   pkg.installed:
