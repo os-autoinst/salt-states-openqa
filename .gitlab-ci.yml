@@ -75,6 +75,13 @@ test-jenkins-mock:
     - "echo 'roles: jenkins' >> /etc/salt/grains"
     - $salt_call mock=True
 
+test-libvirt-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: libvirt' >> /etc/salt/grains"
+    - $salt_call mock=True
+
 test-general-test:
   <<: *test_setup
   script: $salt_call test=True
@@ -136,6 +143,12 @@ test-jenkins:
   <<: *test_setup
   script:
     - "echo 'roles: jenkins' >> /etc/salt/grains"
+    - $salt_call
+
+test-libvirt:
+  <<: *test_setup
+  script:
+    - "echo 'roles: libvirt' >> /etc/salt/grains"
     - $salt_call
 
 
