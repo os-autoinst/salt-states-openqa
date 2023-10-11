@@ -51,5 +51,7 @@ base:
     - backup.rsnapshot
   'G@roles:jenkins':
     - jenkins
+  'G@roles:libvirt':
+    - libvirt
   'openqa-piworker.qa.suse.de':
     - raspberrypi.external-rtc
