@@ -1,6 +1,7 @@
 {%- if not grains.get('noservices', False) %}
-{% from 'openqa/repo_config.sls' import repo %}
 security-sensor.repo:
+{%   if grains['osmajorrelease'] == 15 and grains['osrelease_info'][1] < 5 %}
+{%    from 'openqa/repo_config.sls' import repo %}
   pkgrepo.managed:
     - humanname: Server Monitoring Software
     - baseurl: https://download.opensuse.org/repositories/security:/sensor/{{ repo }}
@@ -10,6 +11,7 @@ security-sensor.repo:
     - require_in:
       - pkg: velociraptor-client
 
+{%   endif %}
   pkg.latest:
     - name: velociraptor-client
     - refresh: False
