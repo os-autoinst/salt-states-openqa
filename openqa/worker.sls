@@ -74,7 +74,7 @@ nfs-client:
   file.managed
 
 {%- if grains.get('openqa_share_nfs', True) and not grains.get('noservices', False) %}
-{% set nfs_hostname = pillar['workerconf']['nfspath'].split(":", 1)[0] %}
+{% set nfs_hostname = pillar['commonconf']['nfspath'].split(":", 1)[0] %}
 {% set ipv4 = salt["dnsutil.A"](nfs_hostname) %}
 {% set ipv6 = salt["dnsutil.AAAA"](nfs_hostname) %}
 {% set ip_list = [] %}
@@ -99,7 +99,7 @@ static_nfs_hostname:
 # https://progress.opensuse.org/issues/92302
 /var/lib/openqa/share:
   mount.mounted:
-    - device: {{ pillar['workerconf']['nfspath'] }}
+    - device: {{ pillar['commonconf']['nfspath'] }}
     - fstype: nfs
     - opts: ro,noauto,nofail,retry=30,x-systemd.mount-timeout=30m,x-systemd.device-timeout=10m,x-systemd.automount
     # according to https://docs.saltproject.io/en/latest/ref/states/all/salt.states.mount.html#salt.states.mount.mounted we need to specify "extra mount options/keys" that we need to specify to prevent constent remounting because these options would not show up in /proc/self/mountinfo

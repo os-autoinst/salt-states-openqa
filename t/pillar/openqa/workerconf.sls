@@ -2,7 +2,6 @@ workerconf:
   infra_monitoring: 127.0.0.1
   infra_npre_monitoring: 127.0.0.1
   internal_monitoring: 127.0.0.1
-  nfspath: foo.bar:/var/lib/openqa/share
 
   required_external_networks:
   - host: foo.bar
