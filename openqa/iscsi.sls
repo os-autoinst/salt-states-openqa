@@ -1,4 +1,4 @@
-# iSCSI setup for openqaworker - currently only supports worker2
+# iSCSI setup for openqaworker
 
 qemu:
   pkg.installed:
@@ -6,10 +6,12 @@ qemu:
     - retry:
         attempts: 5
 
-# Coolo says we shouldn't do this - kernel should be packaged
-/usr/share/qemu/ipxe.lkrn:
-  file.managed:
-    - source: salt://openqa/ipxe.lkrn
+# Pull in 'ipxe.lkrn'
+ipxe-bootimgs:
+  pkg.installed:
+    - refresh: False
+    - retry:
+        attempts: 5
 
 # Install iscsi target package
 tgt:
