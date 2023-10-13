@@ -13,7 +13,6 @@ include:
  - openqa.nfs_share
 
 {% if grains['osarch'] == 's390x' %}
-cleanup-openqa-assets:
 /usr/local/bin/cleanup-openqa-assets:
   file.managed:
     - source: salt://libvirt/cleanup-openqa-assets
