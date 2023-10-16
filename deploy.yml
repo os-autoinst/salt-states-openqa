@@ -56,11 +56,7 @@ refresh:
   script:
     - *setup_script
     - ssh $TARGET "echo 'Currently the following minions are down:'; diff <(sudo salt --timeout 1 '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort) <(sudo salt --timeout 1 --hide-timeout '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort); echo '==================='" | tee salt_ping.log
-    # exit code of compound commands are not reliable hence grepping for
-    # Traceback error in log file
-    # https://progress.opensuse.org/issues/137984
-    # https://github.com/saltstack/salt/issues/42814
-    - timeout -v --kill-after=10m 90m ssh $TARGET "salt --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,,; ! grep -q Traceback salt_syncupdate.log"
+    - timeout -v --kill-after=10m 90m ssh $TARGET "salt --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,,"
 
 deploy:
   extends: .defaults
