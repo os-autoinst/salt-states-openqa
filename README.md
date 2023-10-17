@@ -124,7 +124,7 @@ podman run --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar
 To test out a single state, e.g. that `workers.ini` is generated correctly for a
 specific worker instance, use a command like:
 ```sh
-podman run --hostname=worker8 --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core sh -c 'echo -e "roles: worker\ncpu_flags:" "\n  - "{cx16,lahf,popcnt,sse4_1,sse4_2,ssse3} >> /etc/salt/grains && salt-call -ldebug --local saltutil.sync_all && mkdir /etc/openqa && salt-call -l debug --local state.sls_id '/etc/openqa/workers.ini' openqa.worker && cat /etc/openqa/workers.ini'
+podman run --hostname=worker8 --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core sh -c 'echo -e "roles: worker\ncpu_flags:" "\n  - "{cx16,lahf_lm,popcnt,sse4_1,sse4_2,ssse3} >> /etc/salt/grains && salt-call -ldebug --local saltutil.sync_all && mkdir /etc/openqa && salt-call -l debug --local state.sls_id '/etc/openqa/workers.ini' openqa.worker && cat /etc/openqa/workers.ini'
 ```
 
 Further remarks about the previous command:
