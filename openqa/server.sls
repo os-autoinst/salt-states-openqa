@@ -328,7 +328,7 @@ readonly_db_access_audit_events:
 postgresql-listen_address:
   file.replace:
     - name: /srv/PSQL/data/postgresql.conf
-    - pattern: "(listen_addresses = ')[^']*('.*$)"
+    - pattern: "^#?(listen_addresses = ')[^']*('.*$)"
     - repl: '\1*\2'
 
 postgresql-work_mem:
