@@ -100,8 +100,8 @@ groups:
         measurement: ping
         orderByTime: ASC
         policy: default
-        query: SELECT mean("percent_packet_loss") FROM "ping" AND $timeFilter GROUP
-          BY time($__interval), "url" fill(null)
+        query: SELECT mean("percent_packet_loss") FROM "ping" WHERE ("network"::tag = 'external') AND $timeFilter GROUP
+          BY time($__interval), "url", "host" fill(null)
         rawQuery: false
         refId: A
         resultFormat: time_series
