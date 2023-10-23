@@ -4,6 +4,7 @@ libvirt.packages:
     - retry:  # some packages can change rapidly in our repos needing a retry as zypper does not do that
         attempts: 5
     - pkgs:
+      - cronie
       - libvirt
       {% if grains['osarch'] == 's390x' %}
       - multipath-tools
