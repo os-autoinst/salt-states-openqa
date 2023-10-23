@@ -14,7 +14,10 @@ python3-augeas:
 
 /etc/default/grub:
   file.append:
-    - text: 'GRUB_CMDLINE_LINUX_DEFAULT+=" crashkernel=210M"'
+    - text:
+{%- for config_line in ['GRUB_CMDLINE_LINUX_DEFAULT', 'GRUB_CMDLINE_XEN_DEFAULT'] %}
+      - '{{ config_line }} +=" crashkernel=210M"'
+{%- endfor %}
 
 update grub config with crashkernel setting:
   cmd.run:
