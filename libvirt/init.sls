@@ -12,7 +12,6 @@ libvirt.packages:
 include:
  - openqa.nfs_share
 
-{% if grains['osarch'] == 's390x' %}
 /usr/local/bin/cleanup-openqa-assets:
   file.managed:
     - source: salt://libvirt/cleanup-openqa-assets
@@ -21,6 +20,7 @@ include:
     - minute: 0
     - hour: '*/1'
 
+{% if grains['osarch'] == 's390x' %}
 /etc/modules-load.d/kvm.conf:
   file.managed:
     - contents:
