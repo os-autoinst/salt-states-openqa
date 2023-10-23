@@ -16,7 +16,7 @@ python3-augeas:
   file.append:
     - text:
 {%- for config_line in ['GRUB_CMDLINE_LINUX_DEFAULT', 'GRUB_CMDLINE_XEN_DEFAULT'] %}
-      - '{{ config_line }} +=" crashkernel=210M"'
+      - '{{ config_line }}+=" crashkernel=210M"'
 {%- endfor %}
 
 update grub config with crashkernel setting:
