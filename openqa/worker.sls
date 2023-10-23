@@ -324,7 +324,7 @@ grub-conf-serial-cmd:
     - repl: 'GRUB_SERIAL_COMMAND="serial --unit=1 --speed=115200"'
     - append_if_not_found: True
 
-'grub2-mkconfig > /boot/grub2/grub.cfg':
+'grub2-mkconfig -o /boot/grub2/grub.cfg':
   cmd.run:
     - onchanges:
       - file: grub-conf-terminal
