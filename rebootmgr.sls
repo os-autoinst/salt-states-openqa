@@ -21,6 +21,6 @@ rebootmgr:
 
 rebootmgr.service:
   service.running:
-    - enable: True
+    - enable: False
 {%- endif %}
 
