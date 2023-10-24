@@ -60,7 +60,7 @@ refresh:
     # Traceback error in output
     # https://progress.opensuse.org/issues/137984
     # https://github.com/saltstack/salt/issues/42814
-    - timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; salt --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,, | (! ack --passthru --color Traceback)"
+    - timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_syncupdate.log; salt --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed --hide-timeout \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,, | (! ack --passthru --color Traceback)"
 
 deploy:
   extends: .defaults
@@ -69,7 +69,7 @@ deploy:
     - refresh
   script:
     - *setup_script
-    - timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; salt --log-file=salt_highstate.log --log-file-level=debug --state-output=changes --hide-timeout \* state.highstate queue=True | awk '/Result..Clean[- ]*Started/ {print > \"salt_profiling.log\"; next} 1'"
+    - timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_highstate.log; salt --log-file=salt_highstate.log --log-file-level=debug --state-output=changes --hide-timeout \* state.highstate queue=True | awk '/Result..Clean[- ]*Started/ {print > \"salt_profiling.log\"; next} 1'"
   after_script:
     - *setup_script
     - scp $TARGET:salt_\*.log .
