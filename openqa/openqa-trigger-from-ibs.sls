@@ -59,6 +59,7 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP4:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP5:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP5:Update:Products:Micro55:TEST') }}
+{{ scriptgen('SUSE:ALP:Products:SLEMicro:6.0:ToTest') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:QR:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP5:Update:QR:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP3:Update:BCI') }}
