@@ -40,6 +40,17 @@ dehydrated.packages:
   file.managed:
     - source: salt://openqa/dehydrated-postrun-hooks.service
 
+/etc/systemd/system/dehydrated.service.d/override.conf:
+  file.managed:
+    - mode: "0644"
+    - makedirs: True
+    - contents: |
+        [Service]
+        # Restart on sporadic connection failures
+        # https://progress.opensuse.org/issues/139145
+        Restart=on-failure
+        RestartSec=60
+
 'dehydrated --register --accept-terms':
   cmd.run:
     - runas: dehydrated
