@@ -121,7 +121,7 @@ worker.packages:
     - mode: "0644"
     - context:
       {% set workerhost = grains['host'] %}
-      {% set workerdict = pillar.get('workerconf', {}).get(workerhost, {}).get('workers', {}) %}
+      {% set workerdict = pillar.get('workerconf', {}).get(workerhost, {}).get('workers', {}) or {} %}
       {% set webuidict = pillar.get('workerconf', {}).get(workerhost, {}).get('webuis', {}) %}
       {% set globaldict = pillar.get('workerconf', {}).get('global', {}) %}
       {% set global = pillar.get('workerconf', {}).get(workerhost, {}).get('global', {}) %}
