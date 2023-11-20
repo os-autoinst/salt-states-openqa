@@ -41,7 +41,7 @@ wicked ifup br1:
 {%   endif %}
 # The class can be defined in both places (global X numbered workers) at the same time
 {%   if 'workers' in pillar['workerconf'][host] %}
-{%     for wnum in pillar['workerconf'][host]['workers'] %}
+{%     for wnum in pillar['workerconf'][host]['workers'] or {} %}
 {%       if multihostclass in pillar['workerconf'][host]['workers'][wnum]['WORKER_CLASS'] | default('undefined') %}
 {%         do multihostworkers.append(host) %}
 {%       endif %}
