@@ -71,6 +71,10 @@ reverse-proxy-group:
           enabled: true
           org_name: 'SUSE'
           org_role: 'Viewer'
+        auth.ldap:
+          enabled: true
+          config_file: '/etc/grafana/ldap.toml'
+          skip_org_role_sync: true
         smtp:
           enabled: true
           host: 'localhost:25'
