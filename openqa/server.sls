@@ -84,7 +84,10 @@ server.packages:
           asset_cleanup_max_free_percentage: 20
         obs_rsync:
           home: /opt/openqa-trigger-from-ibs
-          project_status_url: https://api.suse.de/public/build/%%PROJECT/_result
+          project_status_url: https://api.suse.de/build/%%PROJECT/_result
+          username: openqa-obs-bot
+          ssh_key_file: /var/lib/openqa/.ssh/id_ed25519
+
         job_settings_ui:
           keys_to_render_as_links: YAML_SCHEDULE,YAML_TEST_DATA,AUTOYAST
         hooks:
