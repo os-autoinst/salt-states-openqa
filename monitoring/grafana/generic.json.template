@@ -1310,6 +1310,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "stepAfter",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1398,48 +1399,47 @@
       "pluginVersion": "10.0.1",
       "targets": [
         {
-          "alias": "$tag_device ($tag_fstype)",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
           },
-          "dsType": "influxdb",
-          "function": "mean",
           "groupBy": [
             {
-              "interval": "auto",
               "params": [
-                "auto"
+                "$__interval"
               ],
               "type": "time"
             },
             {
-              "key": "host",
               "params": [
-                "tag"
+                "device::tag"
               ],
               "type": "tag"
             },
             {
-              "key": "path",
               "params": [
-                "tag"
+                "fstype::tag"
               ],
               "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
             }
           ],
-          "measurement": "disk_total",
+          "hide": false,
+          "measurement": "disk",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE \"host\" = '{{ generic_host }}' AND $timeFilter GROUP BY time($interval), *",
-          "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "value"
+                  "used_percent"
                 ],
                 "type": "field"
               },
@@ -1449,7 +1449,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$server$/"
+            },
+            {
+              "condition": "AND",
+              "key": "fstype::tag",
+              "operator": "!~",
+              "value": "/^(nfs|udf)/"
+            }
+          ]
         }
       ],
       "title": "All partitions usage (%)",
