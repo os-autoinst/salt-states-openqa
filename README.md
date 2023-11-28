@@ -316,7 +316,7 @@ by running e.g.:
 sudo bash -c "salt-call --out=json \\
     --pillar-root=../salt-pillars-openqa --local slsutil.renderer \\
     '$PWD/monitoring/grafana/alerting-dashboard-WD.yaml.template' \\
-    default_renderer=jinja worker=openqaworker14 \\
+    default_renderer=jinja worker=openqaworker14 host_interface=eth0 \\
   | jq -r '.local' > /etc/grafana/provisioning/alerting/test-alert.yaml"
 ```
 
