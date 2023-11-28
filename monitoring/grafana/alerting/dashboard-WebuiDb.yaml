@@ -165,7 +165,11 @@ groups:
       __dashboardUid__: WebuiDb
       __panelId__: '76'
       message: |-
-        The machine ${tag_url} was not pingable for several minutes.
+        The following machines were not pingable for several minutes:
+        {{ range $k, $v := $values -}}
+        {{ if (match "B[0-9]*" $k) -}}
+        * {{ $v.Labels }}{{ end }}
+        {{ end }}
 
         Suggested actions:
         * Check if *you* can ping the machine (network connection within the infrastructure might be disrupted)
