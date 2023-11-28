@@ -831,7 +831,7 @@ groups:
   folder: openQA
   interval: 5m
   rules:
-    - uid: eaa81d74-1a54-4bda-bdf2-ae176c61eeb5
+    - uid: cpu_load_alert_{{ worker }}
       title: '{{ worker }}: CPU load alert'
       condition: C
       data:
