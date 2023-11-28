@@ -7407,6 +7407,10 @@
       "targets": [
         {
           "alias": "SSL expiration",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -7453,8 +7457,22 @@
               "key": "common_name",
               "operator": "=",
               "value": "openqa.suse.de"
+            },
+            {
+              "condition": "OR",
+              "key": "common_name::tag",
+              "operator": "=",
+              "value": "openqa.oqa.prg2.suse.org"
             }
           ]
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "hide": false,
+          "refId": "B"
         }
       ],
       "thresholds": [
