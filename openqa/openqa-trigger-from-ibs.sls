@@ -22,7 +22,6 @@ openqa-trigger-from-ibs:
     - pkgs:
       - git
       - python3
-      - ca-certificates-suse
 
   git.latest:
     - name: https://github.com/os-autoinst/openqa-trigger-from-obs
