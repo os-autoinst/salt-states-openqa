@@ -16,7 +16,6 @@ server.packages:
       - vsftpd
       - samba
       - postfix
-      - ca-certificates-suse  # for https://github.com/os-autoinst/scripts
       - os-autoinst-scripts-deps  # for https://github.com/os-autoinst/scripts
 
 /etc/fstab:

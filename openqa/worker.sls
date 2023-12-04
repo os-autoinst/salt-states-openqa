@@ -59,7 +59,6 @@ worker.packages:
       - vagrant-libvirt
       {% endif %}
       - os-autoinst-distri-opensuse-deps
-      - ca-certificates-suse # secure connection with public-cloud-helper
 
 ## setup workers.ini based on info in workerconf pillar
 ## pillar must contain the following

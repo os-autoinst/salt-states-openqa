@@ -5,14 +5,6 @@
 {% set openqamodulesrepo = "SLE-12" %}
 {% endif %}
 
-SUSE_CA:
-  pkgrepo.managed:
-    - humanname: SUSE_CA
-    - baseurl: http://download.suse.de/ibs/SUSE:/CA/{{ repo }}/
-    - gpgautoimport: True
-    - refresh: True
-    - priority: 110
-
 devel_openQA:
   pkgrepo.managed:
     - humanname: devel_openQA
