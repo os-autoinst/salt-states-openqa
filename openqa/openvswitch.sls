@@ -66,9 +66,9 @@ net.ipv4.conf.{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}.forward
 {%- endif %}
 
 # See https://progress.opensuse.org/issues/151310
-ovs-vsctl set int br1 mtu_request=1450:
+ovs-vsctl set int br1 mtu_request=1460:
   cmd.run:
-    - unless: 'ovs-vsctl get int br1 mtu_request | grep -q 1450'
+    - unless: 'ovs-vsctl get int br1 mtu_request | grep -q 1460'
 {%- endif %}
 
 # Make openvswitch bridge br1 persistant
