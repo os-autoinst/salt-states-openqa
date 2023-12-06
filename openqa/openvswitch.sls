@@ -21,8 +21,9 @@ wicked ifup br1:
       - file: /etc/sysconfig/network/ifcfg-br1
 {%- endif %}
 
+# Add 3 tap devices per worker slot; pretend there is one more worker slot to have one more set of tap devices for debugging
 {% set tapdevices = [] %}
-{% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0)) %}
+{% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) + 1) %}
 {%   for network in range(0, 3) %}
 {%      do tapdevices.append(i+network*64) %}
 {%     endfor %}
