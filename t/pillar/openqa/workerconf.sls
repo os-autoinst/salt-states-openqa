@@ -1,8 +1,4 @@
 workerconf:
-  infra_monitoring: 127.0.0.1
-  infra_npre_monitoring: 127.0.0.1
-  internal_monitoring: 127.0.0.1
-
   required_external_networks:
   - host: foo.bar
 
