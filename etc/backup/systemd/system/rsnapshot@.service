@@ -6,3 +6,7 @@ Type=oneshot
 Nice=19
 IOSchedulingClass=idle
 ExecStart=/usr/bin/rsnapshot %I
+
+# avoid alerts due to temporary issues
+Restart=on-failure
+RestartSec=10min
