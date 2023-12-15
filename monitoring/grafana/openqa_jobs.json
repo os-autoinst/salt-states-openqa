@@ -610,7 +610,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.1.0",
+      "pluginVersion": "10.1.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -648,7 +648,7 @@
           "measurement": "openqa_jobs_by_arch",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_arch\" WHERE (\"url\" = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval), \"arch\" fill(0)",
+          "query": "SELECT mean(\"running\") + mean(\"scheduled\") + mean(\"blocked\") FROM \"openqa_jobs_by_arch\" WHERE (\"url\" = 'https://openqa.suse.de') AND (\"arch\"::tag =~ /^[A-Za-z0-9_-]+$/) AND $timeFilter GROUP BY time($__interval), \"arch\" fill(0)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -685,11 +685,13 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:63",
           "format": "short",
           "logBase": 1,
           "show": true
         },
         {
+          "$$hashKey": "object:64",
           "format": "short",
           "logBase": 1,
           "show": true
@@ -1819,8 +1821,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               }
             ]
           },
@@ -2721,6 +2722,6 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 54,
+  "version": 56,
   "weekStart": ""
 }
