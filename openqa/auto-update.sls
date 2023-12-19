@@ -1,4 +1,9 @@
 {%- if not grains.get('noservices', False) %}
+/usr/local/bin/auto-update:
+  file.managed:
+    - mode: "0755"
+    - source: salt://openqa/auto-update.sh
+
 {% for type in ['service', 'timer'] %}
 auto_update_{{ type }}:
   file.managed:
