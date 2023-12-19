@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 zypper_patch() {
-    ret=0
+    local ret=0
     zypper -n --no-refresh --non-interactive-include-reboot-patches patch --replacefiles --auto-agree-with-licenses --download-in-advance || ret=$?
     [[ $ret == 102 ]] && ret=0 # don't interpret exit code [102 - ZYPPER_EXIT_INF_REBOOT_NEEDED] as an error
     return $ret
