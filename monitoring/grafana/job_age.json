@@ -94,7 +94,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -207,7 +207,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "alias": "job_age_p99_mean",
@@ -295,10 +295,6 @@
           }
         ]
       },
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -306,49 +302,85 @@
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "age",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 259200
+              }
+            ]
+          },
+          "unit": "dthms"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 8
       },
-      "hiddenSeries": false,
       "id": 5,
       "interval": "2m",
-      "legend": {
-        "alignAsTable": false,
-        "avg": true,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "10.0.1",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "alias": "50% percentile (median)",
@@ -527,45 +559,8 @@
           "tags": []
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 259200
-        }
-      ],
-      "timeRegions": [],
       "title": "Job age (scheduled) (median)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "dthms",
-          "label": "age",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "dthms",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
       "alert": {
@@ -608,10 +603,6 @@
           }
         ]
       },
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -619,45 +610,81 @@
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nMaximum value over all arch+machine values\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "age",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 345600
+              }
+            ]
+          },
+          "unit": "dthms"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 8,
         "x": 0,
         "y": 15
       },
-      "hiddenSeries": false,
       "id": 2,
       "interval": "2m",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "10.0.1",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "alias": "50% percentile (max)",
@@ -836,51 +863,10 @@
           "tags": []
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 345600
-        }
-      ],
-      "timeRegions": [],
       "title": "Job age (scheduled) (max)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "dthms",
-          "label": "age",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "dthms",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -888,45 +874,81 @@
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "age",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dthms"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 16,
         "x": 8,
         "y": 15
       },
-      "hiddenSeries": false,
       "id": 4,
       "interval": "2m",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "10.0.1",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "alias": "50% percentile ($tag_machine_class)",
@@ -1129,43 +1151,10 @@
           "tags": []
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Job age (scheduled) by machine class",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "dthms",
-          "label": "age",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "dthms",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -1173,45 +1162,81 @@
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "age",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dthms"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
         "y": 23
       },
-      "hiddenSeries": false,
       "id": 6,
       "interval": "2m",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "10.0.1",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "alias": "50% percentile ($tag_machine_class)",
@@ -1264,43 +1289,10 @@
           "tags": []
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Job age p50 (scheduled) by machine class",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "dthms",
-          "label": "age",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "dthms",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -1308,45 +1300,81 @@
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "age",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dthms"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
         "y": 23
       },
-      "hiddenSeries": false,
       "id": 9,
       "interval": "2m",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "10.0.1",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "alias": "90% percentile ($tag_machine_class)",
@@ -1399,43 +1427,10 @@
           "tags": []
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Job age p90 (scheduled) by machine class",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "dthms",
-          "label": "age",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "dthms",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -1443,45 +1438,81 @@
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "age",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dthms"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
         "y": 31
       },
-      "hiddenSeries": false,
       "id": 8,
       "interval": "2m",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "10.0.1",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "alias": "99% percentile ($tag_machine_class)",
@@ -1534,43 +1565,10 @@
           "tags": []
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Job age p99 (scheduled) by machine class",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "dthms",
-          "label": "age",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "dthms",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -1578,45 +1576,81 @@
       "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "age",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dthms"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
         "y": 31
       },
-      "hiddenSeries": false,
       "id": 7,
       "interval": "2m",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "10.0.1",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "alias": "100% percentile ($tag_machine_class)",
@@ -1669,37 +1703,8 @@
           "tags": []
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Job age p100 (scheduled) by machine class",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "dthms",
-          "label": "age",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "dthms",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     }
   ],
   "refresh": "",
@@ -1732,6 +1737,6 @@
   "timezone": "",
   "title": "Job age",
   "uid": "7W06NBWGk",
-  "version": 32,
+  "version": 33,
   "weekStart": ""
 }
