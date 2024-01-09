@@ -354,7 +354,7 @@ groups:
     uid: FuT2cmf4k
 - folder: Salt
   interval: 2m
-  name: Ratio of multi-machine tests by result alert (short spike)
+  name: Ratio of not restarted multi-machine tests by result alert (short spike)
   orgId: 1
   rules:
   - annotations:
@@ -430,15 +430,15 @@ groups:
       __contacts__: '"osd-admins"'
       rule_uid: 0XohcmfVk
     panelId: 24
-    title: Ratio of multi-machine tests by result alert
+    title: Ratio of not restarted multi-machine tests by result alert
     uid: 0XohcmfVk
 - orgId: 1
-  name: Ratio of multi-machine tests by result alert (longterm)
+  name: Ratio of not restarted multi-machine tests by result alert (longterm)
   folder: Salt
   interval: 30m
   rules:
     - uid: e0912f8b-36e8-40d4-939d-8e8e16a08178
-      title: Ratio of multi-machine tests by result alert (longterm)
+      title: Ratio of not restarted multi-machine tests by result alert (longterm)
       condition: ratio_mm_failed
       data:
         - refId: ratio_mm_failed
