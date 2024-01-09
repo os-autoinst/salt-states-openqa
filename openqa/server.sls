@@ -241,90 +241,33 @@ telegraf_sql_queries:
   postgres_user.present:
     - name: telegraf
     - login: True
-  postgres_privileges.present:
-    - name: telegraf
-    - object_name: jobs
-    - object_type: table
-    - privileges:
-      - SELECT
-    - maintenance_db: openqa
 
-telegraf_db_job_groups:
+{% for table in ['jobs', 'job_groups', 'job_group_parents', 'job_dependencies', 'workers'] %}
+telegraf_db_{{ table }}:
   postgres_privileges.present:
     - name: telegraf
-    - object_name: job_groups
+    - object_name: {{ table }}
     - object_type: table
     - privileges:
       - SELECT
     - maintenance_db: openqa
-
-telegraf_db_job_group_parents:
-  postgres_privileges.present:
-    - name: telegraf
-    - object_name: job_group_parents
-    - object_type: table
-    - privileges:
-      - SELECT
-    - maintenance_db: openqa
-
-telegraf_db_job_dependencies:
-  postgres_privileges.present:
-    - name: telegraf
-    - object_name: job_dependencies
-    - object_type: table
-    - privileges:
-      - SELECT
-    - maintenance_db: openqa
-
-telegraf_db_workers:
-  postgres_privileges.present:
-    - name: telegraf
-    - object_name: workers
-    - object_type: table
-    - privileges:
-      - SELECT
-    - maintenance_db: openqa
+{% endfor %}
 
 readonly_db_access:
   postgres_user.present:
     - name: openqa
     - password: openqa
 
-readonly_db_access_jobs:
+{% for table in ['jobs', 'job_modules', 'job_dependencies', 'job_groups', 'job_group_parents', 'workers', 'audit_events'] %}
+readonly_db_access_{{ table }}:
   postgres_privileges.present:
     - name: openqa
-    - object_name: jobs
+    - object_name: {{ table }}
     - object_type: table
     - privileges:
       - SELECT
     - maintenance_db: openqa
-
-readonly_db_access_job_modules:
-  postgres_privileges.present:
-    - name: openqa
-    - object_name: job_modules
-    - object_type: table
-    - privileges:
-      - SELECT
-    - maintenance_db: openqa
-
-readonly_db_access_job_dependencies:
-  postgres_privileges.present:
-    - name: openqa
-    - object_name: job_dependencies
-    - object_type: table
-    - privileges:
-      - SELECT
-    - maintenance_db: openqa
-
-readonly_db_access_audit_events:
-  postgres_privileges.present:
-    - name: openqa
-    - object_name: audit_events
-    - object_type: table
-    - privileges:
-      - SELECT
-    - maintenance_db: openqa
+{% endfor %}
 
 # allow access to postgres database from outside so far this does not ensure
 # that the configuration becomes effective which needs a server restart
