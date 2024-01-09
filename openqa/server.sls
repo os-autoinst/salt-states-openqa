@@ -258,7 +258,7 @@ readonly_db_access:
     - name: openqa
     - password: openqa
 
-{% for table in ['jobs', 'job_modules', 'job_dependencies', 'audit_events'] %}
+{% for table in ['jobs', 'job_modules', 'job_dependencies', 'job_groups', 'job_group_parents', 'workers', 'audit_events'] %}
 readonly_db_access_{{ table }}:
   postgres_privileges.present:
     - name: openqa
