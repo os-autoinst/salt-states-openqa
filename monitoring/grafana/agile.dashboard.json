@@ -440,11 +440,12 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "stepBefore",
+            "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
-              "type": "linear"
+              "log": 10,
+              "type": "symlog"
             },
             "showPoints": "auto",
             "spanNulls": false,
@@ -472,7 +473,40 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "C"
+            },
+            "properties": [
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "D"
+            },
+            "properties": [
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -552,6 +586,30 @@
           "query": "SELECT ((sum(\"leadTimeSum\") / sum(\"count\")))/24 FROM \"leadTime\" WHERE (\"team\" = '\"QE Tools\"' AND \"status\" = '\"Resolved\"') AND $timeFilter GROUP BY time($__interval) fill(none)",
           "rawQuery": true,
           "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "cycleTime 10d avg",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "hide": false,
+          "query": "SELECT ((sum(\"cycleTimeSum\") / sum(\"count\")))/24 FROM \"leadTime\" WHERE (\"team\" = '\"QE Tools\"' AND \"status\" = '\"Resolved\"') AND $timeFilter GROUP BY time($__interval*10) fill(none)",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "cycleTime 30d avg",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "hide": false,
+          "query": "SELECT ((sum(\"cycleTimeSum\") / sum(\"count\")))/24 FROM \"leadTime\" WHERE (\"team\" = '\"QE Tools\"' AND \"status\" = '\"Resolved\"') AND $timeFilter GROUP BY time($__interval*30) fill(none)",
+          "rawQuery": true,
+          "refId": "D",
           "resultFormat": "time_series"
         }
       ],
