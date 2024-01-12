@@ -52,6 +52,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "stepBefore",
             "lineWidth": 1,
             "pointSize": 5,
@@ -430,7 +431,7 @@
             "axisPlacement": "auto",
             "axisSoftMin": 0,
             "barAlignment": 0,
-            "drawStyle": "line",
+            "drawStyle": "points",
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
@@ -438,7 +439,8 @@
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "smooth",
+            "insertNulls": false,
+            "lineInterpolation": "stepBefore",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -451,10 +453,11 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line+area"
             }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -478,11 +481,13 @@
         "y": 0
       },
       "id": 4,
-      "interval": "14d",
+      "interval": "1d",
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull"
+            "max",
+            "mean",
+            "stdDev"
           ],
           "displayMode": "table",
           "placement": "right",
@@ -578,6 +583,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "stepBefore",
             "lineStyle": {
               "fill": "solid"
@@ -716,6 +722,6 @@
   "timezone": "",
   "title": "Agile",
   "uid": "ck8uu5f4z",
-  "version": 12,
+  "version": 13,
   "weekStart": ""
 }
