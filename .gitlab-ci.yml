@@ -91,6 +91,11 @@ test-general:
   script:
     - $salt_call
 
+test-unit:
+  script:
+    - zypper --non-interactive in python3-pytest
+    - pytest
+
 test-webui:
   <<: *test_setup
   script:

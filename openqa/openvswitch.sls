@@ -29,29 +29,6 @@ wicked ifup br1:
 {%     endfor %}
 {%  endfor %}
 
-# Will create a list "multihostworkers" of all multi-host workers to be connected over GRE tunnel(s)
-# Those hosts are identified by WORKER_CLASS value from pillar defined in "multihostclass" variable
-# Only one class is supported and its name have to be unique - will match also the strings that contain it!
-{% set multihostclass = 'tap' %}
-{% set multihostworkers = [] %}
-{% for host in pillar['workerconf'] %}
-{%   if 'global' in pillar['workerconf'][host] %}
-{%     if multihostclass in pillar['workerconf'][host]['global']['WORKER_CLASS'] | default('undefined') %}
-{%       do multihostworkers.append(host) %}
-{%     endif %}
-{%   endif %}
-# The class can be defined in both places (global X numbered workers) at the same time
-{%   if 'workers' in pillar['workerconf'][host] %}
-{%     for wnum in pillar['workerconf'][host]['workers'] or {} %}
-{%       if multihostclass in pillar['workerconf'][host]['workers'][wnum]['WORKER_CLASS'] | default('undefined') %}
-{%         do multihostworkers.append(host) %}
-{%       endif %}
-{%     endfor %}
-{%   endif %}
-{% endfor %}
-# Remove duplicate entries and sort them in the list
-{% set multihostworkers = multihostworkers | unique | sort | list %}
-
 {%- if not grains.get('noservices', False) %}
 # Ensure forwarding of traffic for the bridge:
 net.ipv4.ip_forward:
@@ -71,6 +48,9 @@ ovs-vsctl set int br1 mtu_request=1460:
   cmd.run:
     - unless: 'ovs-vsctl get int br1 mtu_request | grep -q 1460'
 {%- endif %}
+
+# Create list "multihostworkers" of all multi-host workers to be connected over GRE tunnel(s)
+{% set multihostworkers = salt['gre_peers.compute'](grains['host'], pillar['workerconf']) | unique | sort | list %}
 
 # Make openvswitch bridge br1 persistant
 /etc/sysconfig/network/ifcfg-br1:
