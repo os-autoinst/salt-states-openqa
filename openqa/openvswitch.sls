@@ -110,7 +110,6 @@ ovs-vsctl set int br1 mtu_request=1460:
       - '# enable STP for the multihost bridges'
       - ovs-vsctl set bridge $bridge stp_enable=true
       - for gre_port in $(ovs-vsctl list-ifaces $bridge | grep gre) ; do ovs-vsctl --if-exists del-port $bridge $gre_port ; done
-      - '# Disabling GRE tunnels due to https://progress.opensuse.org/issues/152389'
      {% for remote in otherworkers %}
      {%     set remote_conf = pillar['workerconf'][remote] %}
      {%     if 'bridge_ip' in remote_conf %}
@@ -123,7 +122,7 @@ ovs-vsctl set int br1 mtu_request=1460:
      {%         endif %}
      {%     endif %}
      {% if remote_ip is defined and remote_ip|length %}
-      - '# ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }}'
+      - ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }}
      {% endif %}
      {% endfor %}
 {% else %}
