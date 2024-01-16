@@ -61,6 +61,177 @@
         "conditions": [
           {
             "evaluator": {
+              "params": [],
+              "type": "no_value"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "90m",
+        "frequency": "5m",
+        "handler": 1,
+        "message": "No data received for pings from worker to central host, likely host is down (or split network).\n\nSee https://progress.opensuse.org/issues/71098 for details",
+        "name": "{{ worker }}: host up alert",
+        "noDataState": "no_data",
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "description": "Detect the absence of ping data for ping from worker to central instance as indication for host being down.\n\nHosts with known stability problems are excluded from this check and handled explicitly elsewhere, e.g. see \"automatic actions\" dashboard.\n\nhttps://progress.opensuse.org/issues/71098",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 65105,
+      "interval": "1m",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.1.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "ping",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "average_response_ms"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ worker }}"
+            }
+          ]
+        }
+      ],
+      "title": "host up",
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
               "params": [
                 -3000000000
               ],
@@ -206,7 +377,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 11
       },
       "id": 12054,
       "interval": "1m",
@@ -438,7 +609,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 21
       },
       "id": 65092,
       "interval": "1m",
@@ -633,7 +804,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 21
+        "y": 31
       },
       "id": 54694,
       "interval": "1m",
@@ -793,7 +964,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 21
+        "y": 31
       },
       "id": 28239,
       "interval": "1m",
@@ -875,7 +1046,7 @@
           {
             "evaluator": {
               "params": [
-                200
+                2000
               ],
               "type": "gt"
             },
@@ -891,6 +1062,29 @@
             },
             "reducer": {
               "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          },
+          {
+            "evaluator": {
+              "params": [
+                100
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "or"
+            },
+            "query": {
+              "params": [
+                "C",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
               "type": "avg"
             },
             "type": "query"
@@ -900,7 +1094,8 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "name": "{{ worker }}: OpenQA Ping time alert",
+        "message": "Too many Minion jobs have failed on {{ worker }}.\n\nReview failed jobs on http://localhost:9530/minion/jobs?state=failed after tunneling the worker's Minion dashboard via `ssh -L 9530:localhost:9530 -N {{ worker }}`. Create a ticket if there's not already one. For the general log of the Minion job queue, checkout `journalctl -u openqa-worker-cacheservice.service -u openqa-worker-cacheservice-minion.service`. To remove all failed jobs on the machine:\n\n```\n/usr/share/openqa/script/openqa-workercache eval 'my $jobs = app->minion->jobs({states => [\"failed\"]}); while (my $job = $jobs->next) { $job->remove }'\n```",
+        "name": "{{ worker }}: Too many Minion job failures alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -959,369 +1154,38 @@
               },
               {
                 "color": "red",
-                "value": 200
+                "value": 2000
               }
             ]
           },
-          "unit": "ms"
+          "unit": "short"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 28
-      },
-      "id": 65098,
-      "interval": "1m",
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.1.5",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Failed"
             },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
+            "properties": [
               {
-                "params": [
-                  "average_response_ms"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
+                "id": "color",
+                "value": {
+                  "fixedColor": "#C4162A",
+                  "mode": "fixed"
+                }
               }
             ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "{{ worker }}"
-            },
-            {
-              "condition": "AND",
-              "key": "url",
-              "operator": "=",
-              "value": "openqa.suse.de"
-            }
-          ]
-        }
-      ],
-      "title": "OpenQA Ping time",
-      "type": "timeseries"
-    },
-    {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [],
-              "type": "no_value"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "90m",
-        "frequency": "5m",
-        "handler": 1,
-        "message": "No data received for pings from worker to central host, likely host is down (or split network).\n\nSee https://progress.opensuse.org/issues/71098 for details",
-        "name": "{{ worker }}: host up alert",
-        "noDataState": "no_data",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
           }
         ]
       },
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "description": "Detect the absence of ping data for ping from worker to central instance as indication for host being down.\n\nHosts with known stability problems are excluded from this check and handled explicitly elsewhere, e.g. see \"automatic actions\" dashboard.\n\nhttps://progress.opensuse.org/issues/71098",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 28
-      },
-      "id": 65105,
-      "interval": "1m",
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.1.5",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "average_response_ms"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "{{ worker }}"
-            }
-          ]
-        }
-      ],
-      "title": "host up",
-      "type": "timeseries"
-    },
-    {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                200
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "1h",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "{{ worker }}: QA network infrastructure Ping time alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "line+area"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "transparent"
-              },
-              {
-                "color": "red",
-                "value": 200
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": []
-      },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 36
+        "y": 38
       },
-      "id": 65099,
-      "interval": "1m",
+      "id": 65104,
+      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -1337,7 +1201,7 @@
       "pluginVersion": "10.1.5",
       "targets": [
         {
-          "alias": "$tag_url",
+          "alias": "Active",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
@@ -1351,18 +1215,12 @@
             },
             {
               "params": [
-                "url"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
+                "previous"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "ping",
+          "measurement": "openqa_minion_jobs",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1371,7 +1229,7 @@
             [
               {
                 "params": [
-                  "average_response_ms"
+                  "active"
                 ],
                 "type": "field"
               },
@@ -1388,94 +1246,9 @@
               "value": "{{ worker }}"
             }
           ]
-        }
-      ],
-      "title": "QA network infrastructure Ping time",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 36
-      },
-      "id": 65100,
-      "interval": "10m",
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.1.5",
-      "targets": [
         {
-          "alias": "Response time",
+          "alias": "Delayed",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
@@ -1489,21 +1262,21 @@
             },
             {
               "params": [
-                "null"
+                "previous"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "http_response",
+          "measurement": "openqa_minion_jobs",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "response_time"
+                  "delayed"
                 ],
                 "type": "field"
               },
@@ -1518,98 +1291,11 @@
               "key": "host",
               "operator": "=",
               "value": "{{ worker }}"
-            },
-            {
-              "condition": "AND",
-              "key": "server",
-              "operator": "=",
-              "value": "https://openqa.suse.de/health"
             }
           ]
-        }
-      ],
-      "title": "OpenQA Web Performance",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 44
-      },
-      "id": 65113,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
         {
-          "alias": "$tag_url",
+          "alias": "Failed",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
@@ -1623,27 +1309,68 @@
             },
             {
               "params": [
-                "url"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
+                "previous"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "ping",
+          "measurement": "openqa_minion_jobs",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "C",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "percent_packet_loss"
+                  "failed"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ worker }}"
+            }
+          ]
+        },
+        {
+          "alias": "Inactive",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "openqa_minion_jobs",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "inactive"
                 ],
                 "type": "field"
               },
@@ -1662,8 +1389,7 @@
           ]
         }
       ],
-      "thresholds": [],
-      "title": "QA network infrastructure packet loss",
+      "title": "Minion Jobs",
       "type": "timeseries"
     },
     {
@@ -1676,7 +1402,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 52
+        "y": 46
       },
       "id": 65096,
       "panels": [],
@@ -1802,7 +1528,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -1842,7 +1569,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 53
+        "y": 47
       },
       "id": 65090,
       "interval": "1m",
@@ -1969,7 +1696,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1985,7 +1713,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 53
+        "y": 47
       },
       "id": 65114,
       "interval": "1m",
@@ -2068,7 +1796,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2125,7 +1854,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 61
+        "y": 55
       },
       "id": 13782,
       "interval": "1m",
@@ -2347,7 +2076,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -2396,7 +2126,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 61
+        "y": 55
       },
       "id": 56720,
       "interval": "1m",
@@ -2556,7 +2286,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2605,7 +2336,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 69
+        "y": 63
       },
       "id": 60200,
       "interval": "1m",
@@ -2751,7 +2482,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 77
+        "y": 71
       },
       "id": 65059,
       "panels": [],
@@ -2814,7 +2545,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2863,7 +2595,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 78
+        "y": 72
       },
       "id": 42026,
       "interval": "1m",
@@ -3046,7 +2778,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3115,7 +2848,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 86
+        "y": 80
       },
       "id": 28572,
       "interval": "1m",
@@ -3298,7 +3031,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3355,7 +3089,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 94
+        "y": 88
       },
       "id": 65094,
       "interval": "1m",
@@ -3610,7 +3344,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3667,7 +3402,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 101
+        "y": 95
       },
       "id": 58901,
       "interval": "1m",
@@ -3851,7 +3586,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3908,7 +3644,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 101
+        "y": 95
       },
       "id": 50643,
       "interval": "1m",
@@ -4131,7 +3867,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "red",
+                "value": null
               },
               {
                 "color": "transparent",
@@ -4147,7 +3884,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 109
+        "y": 103
       },
       "id": 65109,
       "options": {
@@ -4303,7 +4040,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "red",
+                "value": null
               },
               {
                 "color": "transparent",
@@ -4323,7 +4061,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 109
+        "y": 103
       },
       "id": 65102,
       "interval": "1m",
@@ -4401,13 +4139,26 @@
       "type": "timeseries"
     },
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 111
+      },
+      "id": 65115,
+      "panels": [],
+      "title": "Infrastructure reachability",
+      "type": "row"
+    },
+    {
       "alert": {
         "alertRuleTags": {},
         "conditions": [
           {
             "evaluator": {
               "params": [
-                2000
+                200
               ],
               "type": "gt"
             },
@@ -4423,29 +4174,6 @@
             },
             "reducer": {
               "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                100
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "C",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
               "type": "avg"
             },
             "type": "query"
@@ -4455,8 +4183,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "message": "Too many Minion jobs have failed on {{ worker }}.\n\nReview failed jobs on http://localhost:9530/minion/jobs?state=failed after tunneling the worker's Minion dashboard via `ssh -L 9530:localhost:9530 -N {{ worker }}`. Create a ticket if there's not already one. For the general log of the Minion job queue, checkout `journalctl -u openqa-worker-cacheservice.service -u openqa-worker-cacheservice-minion.service`. To remove all failed jobs on the machine:\n\n```\n/usr/share/openqa/script/openqa-workercache eval 'my $jobs = app->minion->jobs({states => [\"failed\"]}); while (my $job = $jobs->next) { $job->remove }'\n```",
-        "name": "{{ worker }}: Too many Minion job failures alert",
+        "name": "{{ worker }}: OpenQA Ping time alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -4510,42 +4237,27 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
-                "value": 2000
+                "value": 200
               }
             ]
           },
-          "unit": "short"
+          "unit": "ms"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Failed"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#C4162A",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 12,
-        "y": 117
+        "x": 0,
+        "y": 112
       },
-      "id": 65104,
-      "links": [],
+      "id": 65098,
+      "interval": "1m",
       "options": {
         "legend": {
           "calcs": [],
@@ -4561,7 +4273,6 @@
       "pluginVersion": "10.1.5",
       "targets": [
         {
-          "alias": "Active",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
@@ -4575,12 +4286,12 @@
             },
             {
               "params": [
-                "previous"
+                "null"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "openqa_minion_jobs",
+          "measurement": "ping",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -4589,7 +4300,7 @@
             [
               {
                 "params": [
-                  "active"
+                  "average_response_ms"
                 ],
                 "type": "field"
               },
@@ -4604,58 +4315,142 @@
               "key": "host",
               "operator": "=",
               "value": "{{ worker }}"
-            }
-          ]
-        },
-        {
-          "alias": "Delayed",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
             },
             {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
+              "condition": "AND",
+              "key": "url",
+              "operator": "=",
+              "value": "openqa.suse.de"
             }
-          ],
-          "measurement": "openqa_minion_jobs",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
+          ]
+        }
+      ],
+      "title": "OpenQA Ping time",
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                200
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "1h",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "{{ worker }}: QA network infrastructure Ping time alert",
+        "noDataState": "keep_state",
+        "notifications": [
+          {
+            "uid": "2ACofrdWz"
+          }
+        ]
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                "params": [
-                  "delayed"
-                ],
-                "type": "field"
+                "color": "transparent",
+                "value": null
               },
               {
-                "params": [],
-                "type": "mean"
+                "color": "red",
+                "value": 200
               }
             ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "{{ worker }}"
-            }
-          ]
+          },
+          "unit": "ms"
         },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 112
+      },
+      "id": 65099,
+      "interval": "1m",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.1.5",
+      "targets": [
         {
-          "alias": "Failed",
+          "alias": "$tag_url",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
@@ -4669,68 +4464,27 @@
             },
             {
               "params": [
-                "previous"
+                "url"
               ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "openqa_minion_jobs",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "failed"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "{{ worker }}"
-            }
-          ]
-        },
-        {
-          "alias": "Inactive",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
+              "type": "tag"
             },
             {
               "params": [
-                "previous"
+                "null"
               ],
               "type": "fill"
             }
           ],
-          "measurement": "openqa_minion_jobs",
+          "measurement": "ping",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "D",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "inactive"
+                  "average_response_ms"
                 ],
                 "type": "field"
               },
@@ -4749,7 +4503,282 @@
           ]
         }
       ],
-      "title": "Minion Jobs",
+      "title": "QA network infrastructure Ping time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 120
+      },
+      "id": 65113,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$tag_url",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "url"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "ping",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "percent_packet_loss"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ worker }}"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "title": "QA network infrastructure packet loss",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 120
+      },
+      "id": 65100,
+      "interval": "10m",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.1.5",
+      "targets": [
+        {
+          "alias": "Response time",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "http_response",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "response_time"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "{{ worker }}"
+            },
+            {
+              "condition": "AND",
+              "key": "server",
+              "operator": "=",
+              "value": "https://openqa.suse.de/health"
+            }
+          ]
+        }
+      ],
+      "title": "OpenQA Web Performance",
       "type": "timeseries"
     }
   ],
@@ -4821,6 +4850,6 @@
   "timezone": "browser",
   "title": "Worker dashboard ({{ worker }})",
   "uid": "WD{{ worker }}",
-  "version": 10,
+  "version": 11,
   "weekStart": ""
 }
