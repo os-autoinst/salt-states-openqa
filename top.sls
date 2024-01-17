@@ -44,6 +44,7 @@ base:
     - monitoring.maintenance_queue
     - monitoring.sap_perf
     - monitoring.slo
+    - monitoring.yam
     - monitoring.grafana
     - monitoring.influxdb
     - certificates.dehydrated
