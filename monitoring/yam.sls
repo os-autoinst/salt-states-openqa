@@ -9,7 +9,7 @@
           timeout = "5m"
           data_format = "influx"
 
-tools:
+yam:
   git.latest:
     - name: https://github.com/rakoenig/qe-yam-backlog-assistant.git
     - target: /etc/telegraf/scripts/tools-yam-backlog
