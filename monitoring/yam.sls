@@ -4,7 +4,7 @@
     - contents: |
         [[inputs.exec]]
           commands = [ "/etc/telegraf/scripts/backlogger/backlogger.py --output=influxdb /etc/telegraf/scripts/tools-yam-backlog/queries.yaml" ]
-          environment = ["REDMINE_API_KEY={{ pillar['credentials']['redmine']['api_key'] }}"]
+          environment = ["REDMINE_API_KEY={{ pillar['credentials']['redmine']['yam_api_key'] }}"]
           interval = "4h"
           timeout = "5m"
           data_format = "influx"
