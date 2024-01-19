@@ -1507,7 +1507,7 @@
               "mode": "off"
             }
           },
-          "decimals": 1,
+          "decimals": 3,
           "mappings": [],
           "max": 1,
           "min": 0,
