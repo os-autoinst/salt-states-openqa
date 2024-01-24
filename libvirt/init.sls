@@ -19,8 +19,7 @@ include:
 {%- if not grains.get('noservices', False) %}
   cron.present:
     - user: root
-    - minute: 0
-    - hour: '*/1'
+    - minute: '*/10'
 {%- endif %}
 
 {% if grains['osarch'] == 's390x' %}
