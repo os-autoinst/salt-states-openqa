@@ -78,7 +78,7 @@ server.packages:
           result_storage_duration: 15
           important_result_storage_duration: 50
         misc_limits:
-          untracked_assets_storage_duration: 7
+          untracked_assets_storage_duration: 4
           result_cleanup_max_free_percentage: 20
           asset_cleanup_max_free_percentage: 20
         obs_rsync:
