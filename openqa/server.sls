@@ -65,7 +65,7 @@ server.packages:
           needle: 90
           other: 90
         assets/storage_duration:
-          CURRENT: 30
+          CURRENT: 10
         default_group_limits:
           asset_size_limit: 5
           log_storage_duration: 10
