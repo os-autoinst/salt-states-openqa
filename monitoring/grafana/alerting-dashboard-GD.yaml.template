@@ -166,7 +166,7 @@ groups:
         from: 300
         to: 0
     execErrState: OK
-    for: 5m
+    for: 20m
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
