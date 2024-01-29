@@ -16,6 +16,11 @@ security-sensor.repo:
     - name: velociraptor-client
     - refresh: False
 
+/etc/sysconfig/velociraptor-client:
+  file.replace:
+    - pattern: '^VELOCIRAPTOR_CLIENT_OPTS="([^"]*\s)?-v(\s[^"]*)?"$'
+    - repl: 'VELOCIRAPTOR_CLIENT_OPTS="\1\2"'
+
 /etc/velociraptor/client.config:
   file.managed:
     - mode: "0644"
