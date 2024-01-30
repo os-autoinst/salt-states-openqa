@@ -125,6 +125,11 @@ ovs-vsctl set int br1 mtu_request=1460:
       - ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }}
      {% endif %}
      {% endfor %}
+
+wicked ifup all:
+  cmd.run:
+    - onchanges:
+      - file: /etc/wicked/scripts/gre_tunnel_preup.sh
 {% else %}
   file.absent
 {% endif %}
