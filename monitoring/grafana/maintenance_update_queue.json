@@ -38,6 +38,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
           "max": 50,
           "thresholds": {
@@ -134,6 +135,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
           "max": 100,
           "thresholds": {
@@ -225,6 +227,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
           "max": 300,
           "thresholds": {
@@ -424,6 +427,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
           "max": 100,
           "thresholds": {
@@ -515,6 +519,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
           "max": 100,
           "thresholds": {
@@ -914,6 +919,7 @@
             "fixedColor": "dark-blue",
             "mode": "fixed"
           },
+          "decimals": 0,
           "mappings": [],
           "max": 198,
           "thresholds": {
