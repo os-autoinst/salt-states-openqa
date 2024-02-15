@@ -1,4 +1,4 @@
 {%- for package in pillar.get('locked_packages', []) %}
-{{ package }}:
+{{ package["name"] }}:
   pkg.held
 {%- endfor %}
