@@ -1,5 +1,6 @@
 base:
   '*':
+    - system.packages.locks
     - network
     - salt.minion
     - sshd
