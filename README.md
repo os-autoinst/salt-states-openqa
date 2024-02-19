@@ -97,6 +97,15 @@ Remove a worker host:
 salt-key -y -d openqaworker13.suse.de
 ```
 
+### Add salt manage package locks
+
+Add a new file to [our pillars](https://gitlab.suse.de/openqa/salt-pillars-openqa/-/tree/master/packages/locks) expanding the existing `locked_packages`-list.
+Multiple lists can coexist and will get merged by salt automatically if multiple apply to the same minion.
+Assign this newly created list to all workers the lock should apply to. Advanced grain-matching can be used.
+An example for such an entry can be found [here](https://gitlab.suse.de/openqa/salt-pillars-openqa/-/blob/6e7917eca9511074fb20816509405e148773cffb/top.sls#L16-17).
+
+Our states will [ensure](https://gitlab.suse.de/openqa/salt-states-openqa/-/blob/master/openqa/auto-update.sh) this lock is in place and will take care of e.g. locking subsequent patches which would conflict with this salt managed lock.
+
 ## Testing
 ### Local test deployment
 
