@@ -611,6 +611,7 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
           "max": 100,
           "thresholds": {
