@@ -108,7 +108,8 @@ ovs-vsctl set int br1 mtu_request=1460:
       - action="$1"
       - bridge="$2"
       - '# enable STP for the multihost bridges'
-      - ovs-vsctl set bridge $bridge stp_enable=true
+      - ovs-vsctl set bridge $bridge stp_enable=false
+      - ovs-vsctl set bridge $bridge rstp_enable=true
       - for gre_port in $(ovs-vsctl list-ifaces $bridge | grep gre) ; do ovs-vsctl --if-exists del-port $bridge $gre_port ; done
      {% for remote in otherworkers %}
      {%     set remote_conf = pillar['workerconf'][remote] %}
