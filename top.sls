@@ -2,6 +2,7 @@ base:
   '*':
     - system.packages.locks
     - network
+    - network.accept_ra
     - salt.minion
     - sshd
     - sysctl
