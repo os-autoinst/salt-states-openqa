@@ -4,6 +4,7 @@
 ## See https://progress.opensuse.org/issues/155179
 {%    from 'openqa/repo_config.sls' import repo %}
 security-sensor.repo:
+  pkgrepo.managed:
     - humanname: Server Monitoring Software
     - baseurl: https://download.opensuse.org/repositories/security:/sensor/{{ repo }}
     - gpgautoimport: True
