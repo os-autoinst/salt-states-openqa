@@ -1,17 +1,16 @@
 {%- if not grains.get('noservices', False) %}
+## Unconditionally enable and use the security sensor for the development
+## version to participate in the alpha-testing
+## See https://progress.opensuse.org/issues/155179
 security-sensor.repo:
-{%   if grains['osmajorrelease'] == 15 and grains['osrelease_info'][1] < 5 %}
-{%    from 'openqa/repo_config.sls' import repo %}
-  pkgrepo.managed:
     - humanname: Server Monitoring Software
     - baseurl: https://download.opensuse.org/repositories/security:/sensor/{{ repo }}
     - gpgautoimport: True
     - refresh: True
-    - priority: 105
+    - priority: 90
     - require_in:
       - pkg: velociraptor-client
 
-{%   endif %}
   pkg.latest:
     - name: velociraptor-client
     - refresh: False
