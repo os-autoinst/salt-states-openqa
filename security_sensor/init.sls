@@ -2,6 +2,7 @@
 ## Unconditionally enable and use the security sensor for the development
 ## version to participate in the alpha-testing
 ## See https://progress.opensuse.org/issues/155179
+{%    from 'openqa/repo_config.sls' import repo %}
 security-sensor.repo:
     - humanname: Server Monitoring Software
     - baseurl: https://download.opensuse.org/repositories/security:/sensor/{{ repo }}
