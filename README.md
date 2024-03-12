@@ -62,6 +62,11 @@ services:
 salt -C 'G@roles:worker' cmd.run 'systemctl --no-legend --failed'
 ```
 
+Apply a specific state from any `.sls` file on any machine:
+```sh
+salt \* state.sls network.accept_ra
+```
+
 Applies the specific state `stop_…_workers` from `worker.sls` on the specific
 worker `openqaworker-arm-1.suse.de` with debug output enabled:
 
