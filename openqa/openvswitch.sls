@@ -123,7 +123,7 @@ ovs-vsctl set int br1 mtu_request=1460:
      {%         endif %}
      {%     endif %}
      {% if remote_ip is defined and remote_ip|length %}
-      - ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }}
+      - 'ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }} # {{ remote }}'
      {% endif %}
      {% endfor %}
 
