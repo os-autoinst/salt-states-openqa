@@ -50,21 +50,14 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:ALP:Source:Standard:1.0:Staging:' + i) }}
 {% endfor %}
 
-{% for i in ['A','B'] %}
-{{ scriptgen('SUSE:SLE-15-SP5:Update:Products:Micro55:Staging:' + i) }}
-{% endfor %}
-
 {{ scriptgen('SUSE:SLE-12-SP5:Update:Products:SLERT') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP5:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP6:Update:WSL') }}
-{{ scriptgen('SUSE:SLE-15-SP5:Update:Products:Micro55:TEST') }}
 {{ scriptgen('SUSE:ALP:Products:SLMicro:6.0:ToTest') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:QR:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP5:Update:QR:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP5:Update:BCI') }}
 {{ scriptgen('SUSE:SLE-15-SP6:Update:BCI') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:Products:SLERT') }}
-{{ scriptgen('SUSE:ALP:Products:Installer:1.0:ToTest') }}
 {{ scriptgen('Devel:Elemental:Teal53') }}
-
