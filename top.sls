@@ -56,5 +56,5 @@ base:
     - jenkins
   'G@roles:libvirt':
     - libvirt
-  'openqa-piworker.qa.suse.de':
+  'openqa-piworker.qe.nue2.suse.org':
     - raspberrypi.external-rtc
