@@ -57,4 +57,4 @@ base:
   'G@roles:libvirt':
     - libvirt
   'openqa-piworker.qe.nue2.suse.org':
-    - raspberrypi.external-rtc
+    - raspberrypi
