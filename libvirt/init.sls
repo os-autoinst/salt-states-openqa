@@ -10,8 +10,10 @@ libvirt.packages:
       - multipath-tools
       {% endif %}
 
+{%- if grains.get('openqa_share_nfs', False) or grains.get('roles', '') in ['worker'] %}
 include:
  - openqa.nfs_share
+{% endif %}
 
 /usr/local/bin/cleanup-openqa-assets:
   file.managed:
