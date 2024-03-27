@@ -1,4 +1,3 @@
-{%- if grains.get('openqa_share_nfs', False) or grains.get('roles', '') in ['worker'] %}
 nfs-client:
   pkg.installed:
     - refresh: False
@@ -52,4 +51,3 @@ static_nfs_hostname:
       - file: /etc/fstab
       - host: static_nfs_hostname
  {%- endif %}
-{%- endif %}

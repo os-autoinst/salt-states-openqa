@@ -15,7 +15,9 @@
 include:
  - openqa.repos
  - openqa.journal
+{%- if grains.get('openqa_share_nfs', False) or grains.get('roles', '') in ['worker'] %}
  - openqa.nfs_share
+{%- endif %}
  - sudo
 
 worker.packages:
