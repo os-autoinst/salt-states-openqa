@@ -8,6 +8,12 @@
           interval = "4h"
           timeout = "5m"
           data_format = "influx"
+        [[inputs.exec]]
+          commands = ["/etc/telegraf/scripts/tools-yam-git-trees/git_trees.py -o os-autoinst -r os-autoinst-distri-opensuse -p schedule/yam/ -t yaml -m qe_yam_schedule_yaml"]
+          timeout = "60s"
+          interval = "4h"
+          data_format = "influx"
+
 
 yam:
   git.latest:
@@ -15,3 +21,10 @@ yam:
     - target: /etc/telegraf/scripts/tools-yam-backlog
     - depth: 1
     - rev: master
+
+trees:
+  git.latest:
+    - name: https://github.com/manfredi/telegraf-git-trees.git
+    - target: /etc/telegraf/scripts/tools-yam-git-trees
+    - depth: 1
+    - rev: main
