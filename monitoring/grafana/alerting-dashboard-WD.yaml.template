@@ -904,7 +904,7 @@ groups:
             reducer: last
             refId: B
             settings:
-                mode: ""
+                mode: dropNN
             type: reduce
         - refId: C
           relativeTimeRange:
