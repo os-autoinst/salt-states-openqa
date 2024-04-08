@@ -952,4 +952,9 @@ groups:
             for details.
         summary: CPU Load too high for a longer time, see https://progress.opensuse.org/issues/150983
       isPaused: false
+      labels:
+        __contacts__: '"osd-admins"'
+        rule_uid: cpu_load_alert_{{ worker }}
+        type: worker
+        hostname: {{ worker }}
 
