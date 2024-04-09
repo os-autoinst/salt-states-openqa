@@ -915,7 +915,7 @@ groups:
             conditions:
                 - evaluator:
                     params:
-                        - 40
+                        - 60
                     type: gt
                   operator:
                     type: and
