@@ -1645,3 +1645,139 @@ groups:
         __contacts__: '"osd-admins"'
         rule_uid: minion_jobs_failed_hook_alert
       isPaused: false
+- orgId: 1
+  name: 'web UI: Too many HTTP response with code 5xx'
+  folder: Salt
+  interval: 5m
+  rules:
+    - uid: d949dbae-8034-4bf4-8418-f148dfcaf89d
+      title: 'web UI: Too many 5xx HTTP responses alert'
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 3600
+            to: 0
+          datasourceUid: "000000001"
+          model:
+            adhocFilters: []
+            alias: $tag_resp_code
+            datasource:
+                type: influxdb
+                uid: "000000001"
+            groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - resp_code
+                  type: tag
+                - params:
+                    - "null"
+                  type: fill
+            intervalMs: 30000
+            limit: ""
+            maxDataPoints: 43200
+            measurement: apache_log
+            orderByTime: ASC
+            policy: default
+            query: ""
+            rawSql: ""
+            refId: A
+            resultFormat: time_series
+            select:
+                - - params:
+                        - request
+                    type: field
+                  - params: []
+                    type: count
+            slimit: ""
+            tags:
+                - key: host
+                  operator: =
+                  value: openqa
+                - condition: AND
+                  key: resp_code::tag
+                  operator: =~
+                  value: /5../
+            tz: ""
+        - refId: B
+          relativeTimeRange:
+            from: 3600
+            to: 0
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 0
+                        - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params: []
+                  reducer:
+                    params: []
+                    type: avg
+                  type: query
+            datasource:
+                name: Expression
+                type: __expr__
+                uid: __expr__
+            expression: A
+            intervalMs: 1000
+            maxDataPoints: 43200
+            reducer: count
+            refId: B
+            settings:
+                mode: dropNN
+            type: reduce
+        - refId: C
+          relativeTimeRange:
+            from: 3600
+            to: 0
+          datasourceUid: __expr__
+          model:
+            conditions:
+                - evaluator:
+                    params:
+                        - 200
+                        - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params: []
+                  reducer:
+                    params: []
+                    type: avg
+                  type: query
+            datasource:
+                name: Expression
+                type: __expr__
+                uid: __expr__
+            expression: B
+            intervalMs: 1000
+            maxDataPoints: 43200
+            refId: C
+            type: threshold
+      dashboardUid: WebuiDb
+      panelId: 80
+      noDataState: OK
+      execErrState: OK
+      for: 20m
+      annotations:
+        __dashboardUid__: WebuiDb
+        __panelId__: "80"
+        description: |-
+            Look into the web proxy or openQA webUI logs to identify which routes trigger this and if there are clear error messages with call traces to identify and fix the faulty procedures.
+
+            For more details see https://progress.opensuse.org/issues/158556
+        runbook_url: ""
+        summary: Too many HTTP responses with code 5xx received
+      labels:
+        "": ""
+        __contacts__: '"osd-admins"'
+        rule_uid: http_response_5xx_alert
+      isPaused: false
