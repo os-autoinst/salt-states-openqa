@@ -386,6 +386,17 @@ sudo -u grafana sqlite3 /var/lib/grafana/grafana.db "
 
 The first `select` is for checking whether the regex matches only intended rows.
 
+## Multi-machine test setup
+All worker hosts are configured according to the
+[networking documentation](https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc)
+of openQA. Only hosts that have the worker class `tap` and share common
+`location-*` worker classes are interconnected via GRE-tunnels, though.
+
+That means you can run test jobs using tap-based networking to verify a
+newly-setup worker by using a worker class like `tap_pooXXX`. You only need to
+avoid scheduling test jobs across multiple workers (but also don't have to worry
+about impacting the production GRE-network yet).
+
 ## Communication
 
 If you have questions, visit us on IRC in [#opensuse-factory](irc://chat.freenode.net/opensuse-factory)
