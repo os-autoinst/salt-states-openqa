@@ -61,7 +61,7 @@
         "type": "influxdb",
         "uid": "000000001"
       },
-      "description": "Availability of openqa.suse.de (compare to google SRE definition, target must not be 100%; purpose: How users/teams/departments can rely on the service; data source: HTTP response code accessing test results; presentation: availability ratio [0:1])\n\nA threshold of 0.99 (99%) corresponds to a downtime of 87h/y. For comparison:\n\n* 2×9s: `99%`: 5250min (87hrs or 3.64days)\n* 3×9s: `99.9%`: 525min (8.7hrs)\n* 4×9s: `99.99%`: 52.5min\n* 5×9s: `99.999%`: 5min <- rule of thumb: `5× 9s -> 5 mins` (per year)\n\nSee\nhttps://stats.openqa-monitor.qa.suse.de/d/WebuiDb/webui-summary for low level details\n\nhttps://progress.opensuse.org/issues/68233",
+      "description": "Availability of openqa.suse.de (compare to google SRE definition, target must not be 100%; purpose: How users/teams/departments can rely on the service; data source: HTTP response code accessing test results within a reasonable response time; presentation: availability ratio [0:1])\n\nA threshold of 0.99 (99%) corresponds to an unavailability of 87h/y. For comparison:\n\n* 2×9s: `99%`: 5250min (87hrs or 3.64days)\n* 3×9s: `99.9%`: 525min (8.7hrs)\n* 4×9s: `99.99%`: 52.5min\n* 5×9s: `99.999%`: 5min <- rule of thumb: `5× 9s -> 5 mins` (per year)\n\nNote that \"unavailability\" can mean that a server might still be reachable but able to respond to requests within a reasonable time which in the worst case would mean a \"downtime\".\n\nSee\nhttps://stats.openqa-monitor.qa.suse.de/d/WebuiDb/webui-summary for low level details\n\nhttps://progress.opensuse.org/issues/68233",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -156,6 +156,12 @@
               "key": "status_code",
               "operator": "!~",
               "value": "/5../"
+            },
+            {
+              "condition": "AND",
+              "key": "response_time::field",
+              "operator": "<",
+              "value": "0.5"
             }
           ]
         },
