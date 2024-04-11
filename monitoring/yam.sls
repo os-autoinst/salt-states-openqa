@@ -2,6 +2,17 @@
   file.managed:
     - makedirs: True
     - contents: |
+        [agent]
+          interval = "10m"
+          round_interval = true
+          metric_batch_size = 1000
+          metric_buffer_limit = 10000
+          collection_jitter = "0s"
+          flush_interval = "10m"
+          flush_jitter = "0s"
+          precision = ""
+          hostname = ""
+          omit_hostname = false
         [[inputs.exec]]
           commands = [ "/etc/telegraf/scripts/backlogger/backlogger.py --output=influxdb /etc/telegraf/scripts/tools-yam-backlog/queries.yaml" ]
           environment = ["REDMINE_API_KEY={{ pillar['credentials']['redmine']['yam_api_key'] }}"]
