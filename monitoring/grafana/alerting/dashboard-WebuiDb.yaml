@@ -1656,7 +1656,7 @@ groups:
       data:
         - refId: A
           relativeTimeRange:
-            from: 3600
+            from: 86400
             to: 0
           datasourceUid: "000000001"
           model:
@@ -1669,12 +1669,6 @@ groups:
                 - params:
                     - $__interval
                   type: time
-                - params:
-                    - resp_code
-                  type: tag
-                - params:
-                    - "null"
-                  type: fill
             intervalMs: 30000
             limit: ""
             maxDataPoints: 43200
@@ -1703,7 +1697,7 @@ groups:
             tz: ""
         - refId: B
           relativeTimeRange:
-            from: 3600
+            from: 86400
             to: 0
           datasourceUid: __expr__
           model:
@@ -1728,14 +1722,14 @@ groups:
             expression: A
             intervalMs: 1000
             maxDataPoints: 43200
-            reducer: count
+            reducer: sum
             refId: B
             settings:
                 mode: dropNN
             type: reduce
         - refId: C
           relativeTimeRange:
-            from: 3600
+            from: 86400
             to: 0
           datasourceUid: __expr__
           model:
@@ -1771,11 +1765,11 @@ groups:
         __dashboardUid__: WebuiDb
         __panelId__: "80"
         description: |-
-            Look into the web proxy or openQA webUI logs to identify which routes trigger this and if there are clear error messages with call traces to identify and fix the faulty procedures.
+            Look into the web proxy or openQA web UI logs to identify which routes trigger this and if there are clear error messages with call traces to identify and fix the faulty procedures.
 
             For more details see https://progress.opensuse.org/issues/158556
         runbook_url: ""
-        summary: Too many HTTP responses with code 5xx received
+        summary: Too many HTTP responses with code 5xx received in the last 24 hours
       labels:
         "": ""
         __contacts__: '"osd-admins"'
