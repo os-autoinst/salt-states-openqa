@@ -1058,7 +1058,7 @@
         "for": "10m",
         "frequency": "1m",
         "handler": 1,
-        "name": "CPU Load alert",
+        "name": "System Load alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -1291,7 +1291,7 @@
           ]
         }
       ],
-      "title": "CPU Load",
+      "title": "System Load",
       "type": "timeseries"
     },
     {
