@@ -24,198 +24,9 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 43,
   "links": [],
   "liveNow": false,
   "panels": [
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "editable": true,
-      "gridPos": {
-        "h": 4,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 1,
-      "links": [],
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "# Home Dashboard for SUSE QA\n\nMonitoring, Alerting, Trending for SUSE QA. Mainly used by the team [SUSE QE Tools](https://progress.opensuse.org/projects/qa/wiki/Tools).\nFind the overall status of the openqa.suse.de (OSD) infrastructure on [OSD status overview](https://stats.openqa-monitor.qa.suse.de/d/4KkGdvvZk/osd-status-overview?orgId=1).\n\nPlease find more information on the [QA Metrics](https://confluence.suse.com/display/qasle/QA+Metrics) page as well.",
-        "mode": "markdown"
-      },
-      "pluginVersion": "10.3.5",
-      "style": {},
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "description": "Availability of openqa.suse.de (compare to google SRE definition, target must not be 100%; purpose: How users/teams/departments can rely on the service; data source: HTTP response code accessing test results within a reasonable response time; presentation: availability ratio [0:1])\n\nA threshold of 0.99 (99%) corresponds to an unavailability of 87h/y. For comparison:\n\n* 2×9s: `99%`: 5250min (87hrs or 3.64days)\n* 3×9s: `99.9%`: 525min (8.7hrs)\n* 4×9s: `99.99%`: 52.5min\n* 5×9s: `99.999%`: 5min <- rule of thumb: `5× 9s -> 5 mins` (per year)\n\nNote that \"unavailability\" can mean that a server might still be reachable but able to respond to requests within a reasonable time which in the worst case would mean a \"downtime\".\n\nSee\nhttps://stats.openqa-monitor.qa.suse.de/d/WebuiDb/webui-summary for low level details\n\nhttps://progress.opensuse.org/issues/68233",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 2,
-          "fieldMinMax": false,
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "dark-green",
-                "value": 96
-              }
-            ]
-          },
-          "unit": "percent",
-          "unitScale": true
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 6,
-        "y": 4
-      },
-      "id": 6,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background_solid",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": true
-        },
-        "showPercentChange": false,
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.3.5",
-      "targets": [
-        {
-          "alias": "response_openqa_not_500",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [],
-          "hide": true,
-          "measurement": "http_response",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT count(\"result_type\") FROM \"http_response\" WHERE (\"host\" = 'openqa' AND \"status_code\" !~ /5../) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_type"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "count"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            },
-            {
-              "condition": "AND",
-              "key": "status_code",
-              "operator": "!~",
-              "value": "/5../"
-            },
-            {
-              "condition": "AND",
-              "key": "response_time::field",
-              "operator": "<",
-              "value": "0.5"
-            }
-          ]
-        },
-        {
-          "alias": "response_openqa",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [],
-          "hide": true,
-          "measurement": "http_response",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "result_type"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "count"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
-          "datasource": {
-            "name": "Expression",
-            "type": "__expr__",
-            "uid": "__expr__"
-          },
-          "expression": "$A*100/$B",
-          "hide": false,
-          "refId": "C",
-          "type": "math"
-        }
-      ],
-      "title": "Availability of openQA webUI",
-      "transparent": true,
-      "type": "stat"
-    },
     {
       "datasource": {
         "type": "influxdb",
@@ -282,11 +93,11 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 10,
-        "y": 4
+        "w": 14,
+        "x": 0,
+        "y": 0
       },
-      "id": 8,
+      "id": 2,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -309,6 +120,10 @@
       "pluginVersion": "10.3.5",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -350,11 +165,37 @@
       "type": "stat"
     },
     {
+      "collapsed": false,
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
       },
-      "description": "## Time to starting of tests on openqa.suse.de \n\nhow long does it take maximum that a test on openqa.suse.de starts; *purpose:* How users/teams/departments can integrate openQA tests into their own processes; *presentation:* time ranges as statistical values, e.g. mean+-std, median, percentiles as numbers as well as graphs for progress.\n\nhttps://progress.opensuse.org/issues/65975",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 39,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Status of all salt monitored machines",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -363,9 +204,31 @@
           "mappings": [
             {
               "options": {
-                "match": "null",
+                "0": {
+                  "index": 0,
+                  "text": "ONLINE"
+                },
+                "1": {
+                  "index": 1,
+                  "text": "OFFLINE"
+                },
+                "2": {
+                  "index": 2,
+                  "text": "OFFLINE"
+                },
+                "": {
+                  "index": 3,
+                  "text": "OFFLINE"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "match": "null+nan",
                 "result": {
-                  "text": "N/A"
+                  "index": 4,
+                  "text": "OFFLINE"
                 }
               },
               "type": "special"
@@ -375,32 +238,31 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-green",
+                "color": "dark-red",
                 "value": null
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 21600
+                "color": "#37872D",
+                "value": 0
               },
               {
-                "color": "#d44a3a",
-                "value": 28800
+                "color": "dark-red",
+                "value": 1
               }
             ]
           },
-          "unit": "dtdurations",
+          "unit": "none",
           "unitScale": true
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 14,
-        "y": 4
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 5
       },
-      "id": 10,
-      "interval": "2m",
+      "id": 46,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -410,7 +272,7 @@
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
@@ -421,8 +283,14 @@
         "wideLayout": true
       },
       "pluginVersion": "10.3.5",
+      "repeat": "all_machines",
+      "repeatDirection": "h",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
           "groupBy": [
             {
               "params": [
@@ -437,72 +305,80 @@
               "type": "fill"
             }
           ],
-          "measurement": "postgresql",
+          "measurement": "ping",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT median(\"job_age_p50\") FROM \"postgresql\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "job_age_p50"
+                  "result_code"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "median"
+                "type": "last"
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "url",
+              "operator": "=~",
+              "value": "/^$all_machines$/"
+            }
+          ]
         }
       ],
-      "title": "Job age (scheduled) (median value of best case machine classes)",
+      "title": "$all_machines",
       "transparent": true,
       "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "gridPos": {
-        "h": 14,
-        "w": 8,
-        "x": 8,
-        "y": 8
-      },
-      "id": 12,
-      "links": [
-        {
-          "targetBlank": true,
-          "title": "Original page",
-          "url": "https://os-autoinst.github.io/qa-tools-backlog-assistant/"
-        }
-      ],
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": " <iframe src=\"https://os-autoinst.github.io/qa-tools-backlog-assistant/\" title=\"\"style=\"background: white; overflow: hidden;scroll: none; width: 100%; height: 100%; margin: 0\"></iframe> ",
-        "mode": "html"
-      },
-      "pluginVersion": "10.3.5",
-      "transparent": true,
-      "type": "text"
     }
   ],
   "refresh": "",
   "schemaVersion": 39,
-  "tags": [],
+  "tags": [
+    "openQA",
+    "overview",
+    "status"
+  ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "000000001"
+        },
+        "definition": "SHOW TAG VALUES FROM \"ping\" WITH KEY = \"url\"",
+        "hide": 0,
+        "includeAll": true,
+        "label": "All salt controlled machines",
+        "multi": true,
+        "name": "all_machines",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM \"ping\" WITH KEY = \"url\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-6M",
@@ -510,7 +386,6 @@
   },
   "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {
-    "hidden": false,
     "refresh_intervals": [
       "5s",
       "10s",
@@ -533,12 +408,11 @@
       "2d",
       "7d",
       "30d"
-    ],
-    "type": "timepicker"
+    ]
   },
-  "timezone": "browser",
-  "title": "Home",
-  "uid": "s52RapOGk",
-  "version": 50,
+  "timezone": "",
+  "title": "OSD status overview",
+  "uid": "4KkGdvvZk",
+  "version": 36,
   "weekStart": ""
 }
