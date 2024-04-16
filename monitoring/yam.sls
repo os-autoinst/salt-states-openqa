@@ -20,9 +20,9 @@
           timeout = "5m"
           data_format = "influx"
         [[inputs.exec]]
-          commands = ["/etc/telegraf/scripts/tools-yam-git-trees/git_trees.py -o os-autoinst -r os-autoinst-distri-opensuse -p schedule/yam/ -t yaml -m qe_yam_schedule_yaml"]
-          timeout = "60s"
+          commands = ["/etc/telegraf/scripts/tools-yam-git-trees/git_trees.sh -o os-autoinst -r os-autoinst-distri-opensuse -p schedule/yam/ -t yaml -m qe_yam_schedule_yaml"]
           interval = "4h"
+          timeout = "5m"
           data_format = "influx"
 
 
