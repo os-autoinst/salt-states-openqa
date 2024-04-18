@@ -17,6 +17,7 @@ server.packages:
       - samba
       - postfix
       - os-autoinst-scripts-deps  # for https://github.com/os-autoinst/scripts
+      - rsync  # for rsyncd
 
 /etc/fstab:
   file.managed:
@@ -398,3 +399,20 @@ cron.service:
     - contents: |
         [Unit]
         RequiresMountsFor=/srv
+
+/etc/rsyncd.conf:
+  file.managed:
+    - source: salt://rsyncd/rsyncd.conf
+    - user: root
+    - group: root
+    - mode: "0644"
+    - require:
+      - pkg: server.packages
+
+{%- if not grains.get('noservices', False) %}
+rsyncd:
+  service.running:
+    - enable: True
+    - watch:
+      - file: /etc/rsyncd.conf
+{%- endif %}
