@@ -126,10 +126,6 @@ openqa-gru:
     - watch:
       - file: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
       - ini: /etc/openqa/openqa.ini
-
-openqa-minion-restart.path:
-  service.running:
-    - enable: True
 {%- endif %}
 
 /etc/openqa/database.ini:
