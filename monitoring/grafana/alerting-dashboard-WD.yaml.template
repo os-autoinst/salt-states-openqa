@@ -943,14 +943,14 @@ groups:
         __dashboardUid__: WD{{ worker }}
         __panelId__: "54694"
         description: |-
-            CPU Load is considered too high for a longer time. Machine possibly overloaded. Especially when there are too many openQA worker instances configured openQA tests would become flaky and showing lost characters or repeated characters in VNC typing.
+            System Load is considered too high for a longer time. Machine possibly overloaded. Especially when there are too many openQA worker instances configured openQA tests would become flaky and showing lost characters or repeated characters in VNC typing.
 
             Take a look which processes make the machine busy and look for corresponding openQA tests failing due to this situation and handle accordingly, e.g. retrigger the openQA tests after mitigating the root cause.
 
             See
             https://progress.opensuse.org/issues/150983
             for details.
-        summary: CPU Load too high for a longer time, see https://progress.opensuse.org/issues/150983
+        summary: System Load too high for a longer time, see https://progress.opensuse.org/issues/150983
       isPaused: false
       labels:
         __contacts__: '"osd-admins"'

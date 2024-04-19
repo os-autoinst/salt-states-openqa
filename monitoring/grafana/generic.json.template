@@ -696,7 +696,7 @@
           "tags": []
         }
       ],
-      "title": "CPU Load",
+      "title": "System Load",
       "type": "timeseries"
     },
     {

@@ -310,7 +310,7 @@ groups:
     uid: dZ025mf4z
 - folder: Salt
   interval: 1m
-  name: CPU Load alert
+  name: System Load alert
   orgId: 1
   rules:
   - annotations:
@@ -387,7 +387,7 @@ groups:
       rule_uid: Ji0h5mfVz
     noDataState: OK
     panelId: 25
-    title: CPU Load alert
+    title: System Load alert
     uid: Ji0h5mfVz
 - folder: Salt
   interval: 10s
