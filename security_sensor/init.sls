@@ -1,12 +1,15 @@
 {%- if not grains.get('noservices', False) %}
-## Unconditionally enable and use the security sensor for the development
-## version to participate in the alpha-testing
-## See https://progress.opensuse.org/issues/155179
+## Unconditionally enable and use the security sensor
+## using an internal repo as requested on
+## https://confluence.suse.com/display/CS/Sensor+-+Linux+Endpoint+Protection+Agent
+## and
+## https://gitlab.suse.de/linux-security-sensor/suse-client-deployment
+## See https://progress.opensuse.org/issues/159060
 {%    from 'openqa/repo_config.sls' import repo %}
 security-sensor.repo:
   pkgrepo.managed:
     - humanname: Server Monitoring Software
-    - baseurl: https://download.opensuse.org/repositories/security:/sensor/{{ repo }}
+    - baseurl: http://download.suse.de/ibs/SUSE:/Velociraptor/{{ repo }}
     - gpgautoimport: True
     - refresh: True
     - priority: 90
