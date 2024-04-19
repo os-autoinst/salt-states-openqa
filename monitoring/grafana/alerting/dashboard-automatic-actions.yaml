@@ -42,7 +42,7 @@ groups:
         tags:
         - key: url
           operator: =
-          value: openqaworker-arm-1.suse.de
+          value: openqaworker-arm-1.qe.nue2.suse.org
       refId: A
       relativeTimeRange:
         from: 300
@@ -110,7 +110,7 @@ groups:
         tags:
         - key: url
           operator: =
-          value: openqaworker-arm-1.suse.de
+          value: openqaworker-arm-1.qe.nue2.suse.org
       refId: A
       relativeTimeRange:
         from: 300

@@ -189,7 +189,7 @@
             {
               "key": "url",
               "operator": "=",
-              "value": "openqaworker-arm-1.suse.de"
+              "value": "openqaworker-arm-1.qe.nue2.suse.org"
             }
           ]
         }
@@ -357,7 +357,7 @@
             {
               "key": "url",
               "operator": "=",
-              "value": "openqaworker-arm-1.suse.de"
+              "value": "openqaworker-arm-1.qe.nue2.suse.org"
             }
           ]
         }
