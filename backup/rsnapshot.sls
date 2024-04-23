@@ -51,7 +51,6 @@ rsnapshot-{{ backup_type }}.timer:
           HostName openqa.suse.de
           IdentityFile /root/.ssh/id_ed25519.backup_osd
         Host openqa.opensuse.org o3 ariel
-            HostName proxy-opensuse.suse.de
-            Port 2215
+            Hostname ariel.dmz-prg2.suse.org
 
 {%- endif %}
