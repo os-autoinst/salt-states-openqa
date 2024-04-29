@@ -15,7 +15,6 @@ salt-minion:
     - repl: 'server_id_use_crc: adler32'
     - append_if_not_found: True
 
-
 # speed up salt a lot, see https://github.com/saltstack/salt/issues/48773#issuecomment-443599880
 speedup_minion:
   file.serialize:
@@ -28,3 +27,12 @@ speedup_minion:
         disable_modules:
           - vsphere
         grains_cache: True
+
+# workaround https://github.com/saltstack/salt/issues/59141
+workaround_minion_race:
+  file.serialize:
+    - name: /etc/salt/minion
+    - serializer: yaml
+    - merge_if_exists: True
+    - dataset:
+        multiprocessing: False
