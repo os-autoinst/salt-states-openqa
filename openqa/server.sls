@@ -352,8 +352,8 @@ vsftpd:
 
 {%- if not grains.get('noservices', False) %}
 apache2:
-  service.running:
-    - enable: True
+  service.dead:
+    - enable: False
     - watch:
       - file: /etc/apache2/vhosts.d/openqa.conf
 {%- endif %}
