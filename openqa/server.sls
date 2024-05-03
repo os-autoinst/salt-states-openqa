@@ -11,6 +11,7 @@ server.packages:
     - pkgs:
       - openQA
       - apache2
+      - nginx
       - perl-Mojo-RabbitMQ-Client
       - perl-IPC-System-Simple
       - vsftpd
@@ -42,6 +43,7 @@ server.packages:
           download_domains: {{ pillar['server']['download_domains'] }}
           recognized_referers: {{ pillar['server']['recognized_referers'] }}
           max_rss_limit: 250000
+          service_port_delta: 0
         amqp:
           url: {{ pillar['server']['amqp_url'] }}
           topic_prefix: suse
@@ -159,6 +161,30 @@ webserver_grain:
   grains.present:
     - name: webserver
     - value: apache2
+
+/etc/nginx/nginx.conf:
+  file.managed:
+    - source: salt://nginx/nginx.conf
+    - user: root
+    - group: root
+    - require:
+      - pkg: server.packages
+
+/etc/nginx/vhosts.d/openqa.conf:
+  file.managed:
+    - source: salt://nginx/openqa.conf
+    - user: root
+    - group: root
+    - require:
+      - pkg: server.packages
+
+/etc/nginx/conf.d/dehydrated.inc:
+  file.managed:
+    - source: salt://nginx/dehydrated.inc
+    - user: root
+    - group: root
+    - require:
+      - pkg: server.packages
 
 # ext_pillar is not available with master-less mode so using "noservices"
 # check as workaround to disable the following in our test environment
@@ -322,6 +348,14 @@ apache2:
     - enable: True
     - watch:
       - file: /etc/apache2/vhosts.d/openqa.conf
+{%- endif %}
+
+{%- if not grains.get('noservices', False) %}
+nginx:
+  service.running:
+    - enable: True
+    - watch:
+      - file: /etc/nginx/vhosts.d/openqa.conf
 {%- endif %}
 
 {%- if not grains.get('noservices', False) %}
