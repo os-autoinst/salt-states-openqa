@@ -97,8 +97,8 @@ groups:
                 maxDataPoints: 43200
                 refId: C
                 type: threshold
-          noDataState: NoData
-          execErrState: Error
+          noDataState: OK
+          execErrState: OK
           for: 5m
           annotations:
             description: An HTTP endpoint we need for proper operation delivers an http status code which indicates an issue with the service or its reachability.
