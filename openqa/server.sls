@@ -178,6 +178,14 @@ webserver_grain:
     - require:
       - pkg: server.packages
 
+/etc/nginx/vhosts.d/openqa-locations.inc:
+  file.managed:
+    - source: salt://nginx/openqa-locations.inc
+    - user: root
+    - group: root
+    - require:
+      - pkg: server.packages
+
 /etc/nginx/conf.d/dehydrated.inc:
   file.managed:
     - source: salt://nginx/dehydrated.inc
