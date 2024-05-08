@@ -44,6 +44,7 @@ server.packages:
           recognized_referers: {{ pillar['server']['recognized_referers'] }}
           max_rss_limit: 250000
           service_port_delta: 0
+          access_control_allow_origin_header: http://container-dashboard.qe.suse.de
         amqp:
           url: {{ pillar['server']['amqp_url'] }}
           topic_prefix: suse
