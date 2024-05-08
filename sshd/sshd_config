@@ -122,7 +122,7 @@ UsePrivilegeSeparation sandbox		# Default for new installations.
 #ClientAliveCountMax 3
 #UseDNS yes
 #PidFile /run/sshd.pid
-#MaxStartups 10:30:100
+MaxStartups 100
 #PermitTunnel no
 #ChrootDirectory none
 #VersionAddendum none
