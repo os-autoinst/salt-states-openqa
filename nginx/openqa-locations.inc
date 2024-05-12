@@ -16,9 +16,6 @@ location /assets {
     tcp_nopush         on;
     sendfile           on;
     sendfile_max_chunk 1m;
-    if ($remote_addr !~ "^192\.168\.112\.|^195\.135\.221\.150|^10\.150\.1\.") {
-      rewrite ^/assets/.*/[wW]in.*$ https://www.microsoft.com/software-download/windows10ISO last;
-    }
 }
 
 # Optional faster image downloads for large deployments
@@ -59,7 +56,4 @@ location / {
     proxy_set_header X-Forwarded-Server $host;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
-    if ($remote_addr !~ "^192\.168\.112\.|^195\.135\.221\.150|^10\.150\.1\.") {
-      rewrite ^/tests/.*/asset/.*/[wW]in.*$ https://www.microsoft.com/software-download/windows10ISO last;
-    }
 }
