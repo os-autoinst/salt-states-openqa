@@ -195,6 +195,16 @@ webserver_grain:
     - require:
       - pkg: server.packages
 
+/etc/nginx/conf.d/worker_rlimit_nofile.conf:
+  file.managed:
+    - user: root
+    - group: root
+    - contents: |
+        # https://progress.opensuse.org/issues/160239
+        worker_rlimit_nofile 4096;
+    - require:
+      - pkg: server.packages
+
 # ext_pillar is not available with master-less mode so using "noservices"
 # check as workaround to disable the following in our test environment
 {%- if not grains.get('noservices', False) %}
