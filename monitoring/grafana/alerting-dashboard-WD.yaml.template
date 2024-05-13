@@ -534,13 +534,13 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: qa_network_infra_ping_time_alert_{{ worker }}
+      rule_uid: qa_network_infra_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
     noDataState: OK
     panelId: 65099
     title: '{{ worker }}: QA network infrastructure Ping time alert'
-    uid: qa_network_infra_ping_time_alert_{{ worker }}
+    uid: qa_network_infra_alert_{{ worker }}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: Too many Minion job failures alert'
@@ -652,13 +652,13 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: too_many_minion_job_failures_alert_{{ worker }}
+      rule_uid: too_many_minion_alert_{{ worker }}
       type: worker
       hostname: {{ worker }}
     noDataState: OK
     panelId: 65104
     title: '{{ worker }}: Too many Minion job failures alert'
-    uid: too_many_minion_job_failures_alert_{{ worker }}
+    uid: too_many_minion_alert_{{ worker }}
 - folder: openQA
   interval: 5m
   name: '{{ worker }}: host up alert'
