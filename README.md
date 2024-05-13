@@ -353,11 +353,12 @@ alert with the rule UID `saltmaster_service_alert`.
    file was removed.
 3. If it is really a stale alert, remove it manually from the database:
    ```
+   RULE_UID=saltmaster_service_alert
    sudo -u grafana sqlite3 /var/lib/grafana/grafana.db "
-     delete from alert_rule where uid = 'saltmaster_service_alert';
-     delete from alert_rule_version where rule_uid = 'saltmaster_service_alert';
-     delete from provenance_type where record_key = 'saltmaster_service_alert';
-     delete from annotation where text like '%saltmaster_service_alert%';
+     delete from alert_rule where uid = '${RULE_UID}';
+     delete from alert_rule_version where rule_uid = '${RULE_UID}';
+     delete from provenance_type where record_key = '${RULE_UID}';
+     delete from annotation where text like '%${RULE_UID}%';
     "
    ```
 4. Check whether the alert is gone for good:
