@@ -56,5 +56,7 @@ base:
     - jenkins
   'G@roles:libvirt':
     - libvirt
+  'G@roles:external_openqa_hypervisor':
+    - openqa.kvm_firewall
   'openqa-piworker.qe.nue2.suse.org':
     - raspberrypi
