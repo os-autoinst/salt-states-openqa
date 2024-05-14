@@ -8,7 +8,7 @@ if [ "$2" = start ] && [ "$3" = begin ]; then
     DOMID=$(echo $XML | xmlstarlet select -t -v 'domain/@id')
     nft "add table netdev filtermacvtap" #should not do anything if table is already present
     nft "add chain netdev filtermacvtap filterin_${DOMID} { type filter hook ingress device $IFACE priority filter; policy accept; }"
-    nft "add rule netdev filtermacvtap filterin_${DOMID} ip saddr != { {{", ".join(pillar["kvm_firewall"]["allowed_networks"]["v4"])}} } tcp dport { {{", ".join(pillar["kvm_firewall"]["blocked_ports"])}} } reject comment \"reject global SUT access to specific ports\""
-    nft "add rule netdev filtermacvtap filterin_${DOMID} ip6 saddr != { {{", ".join(pillar["kvm_firewall"]["allowed_networks"]["v6"])}} } tcp dport { {{", ".join(pillar["kvm_firewall"]["blocked_ports"])}} } reject"
+    nft "add rule netdev filtermacvtap filterin_${DOMID} ip saddr != { {{ pillar["kvm_firewall"]["allowed_networks"]["v4"] | join(", ") }} } tcp dport { {{ pillar["kvm_firewall"]["blocked_ports"] | join(", ") }} } reject comment \"reject global SUT access to specific ports\""
+    nft "add rule netdev filtermacvtap filterin_${DOMID} ip6 saddr != { {{ pillar["kvm_firewall"]["allowed_networks"]["v6"] | join(", ") }} } tcp dport { {{ pillar["kvm_firewall"]["blocked_ports"] | join(", ") }} } reject"
     #nft add rule netdev filtermacvtap filterin_${DOMID} log # helpful for debugging, messages can be found in `journalctl -ft kernel`
 fi
