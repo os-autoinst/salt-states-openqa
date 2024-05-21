@@ -16,7 +16,6 @@ base:
     - rebootmgr
     - etc.zypper
     - ca-certificates
-    - debug_poo133469
   'not G@roles:webui and not G@roles:worker':
     - auto-upgrade
   'G@roles:webui':
