@@ -13,7 +13,6 @@ if_modified_since before;
 # Optional faster assets downloads for large deployments
 location /assets {
     alias /var/lib/openqa/share/factory/;
-    limit_req zone=defaultlimit;
     autoindex          on;
     tcp_nopush         on;
     sendfile           on;
@@ -23,14 +22,12 @@ location /assets {
 # Optional faster image downloads for large deployments
 location /image {
     alias /var/lib/openqa/images/;
-    limit_req zone=defaultlimit;
     tcp_nopush         on;
     sendfile           on;
     sendfile_max_chunk 1m;
 }
 
 location /api/v1/ws/ {
-    limit_req zone=defaultlimit burst=20;
     proxy_pass http://websocket;
     proxy_http_version 1.1;
     proxy_read_timeout 3600;
@@ -41,7 +38,6 @@ location /api/v1/ws/ {
 }
 
 location /liveviewhandler/ {
-    limit_req zone=defaultlimit burst=20;
     proxy_pass http://livehandler;
     proxy_http_version 1.1;
     proxy_read_timeout 3600;
@@ -52,7 +48,6 @@ location /liveviewhandler/ {
 }
 
 location / {
-    limit_req zone=defaultlimit burst=20;
     proxy_pass "http://webui";
     tcp_nodelay        on;
     proxy_read_timeout 900;
