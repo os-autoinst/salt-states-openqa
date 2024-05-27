@@ -4787,7 +4787,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -4919,7 +4919,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -4957,7 +4957,7 @@
           {
             "evaluator": {
               "params": [
-                300000
+                0.3
               ],
               "type": "gt"
             },
@@ -4966,7 +4966,7 @@
             },
             "query": {
               "params": [
-                "min_apache_response",
+                "min_nginx_response",
                 "30m",
                 "now"
               ]
@@ -4982,8 +4982,8 @@
         "for": "30m",
         "frequency": "1m",
         "handler": 1,
-        "message": "The apache response time exceeded the alert threshold.\n\n* Check the load of the web UI host\n* Consider restarting the openQA web UI service and/or apache\n\nAlso see https://progress.opensuse.org/issues/73633",
-        "name": "Apache Response Time alert",
+        "message": "The nginx response time exceeded the alert threshold.\n\n* Check the load of the web UI host\n* Consider restarting the openQA web UI service and/or nginx\n\nAlso see https://progress.opensuse.org/issues/73633",
+        "name": "Nginx Response Time alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -4995,7 +4995,7 @@
         "type": "influxdb",
         "uid": "000000001"
       },
-      "description": "Response time measured by the apache proxy for requests with exclusion of some known routes which are allowed to run for much longer.",
+      "description": "Response time measured by the nginx proxy for requests with exclusion of some known routes which are allowed to run for much longer.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5045,11 +5045,11 @@
               },
               {
                 "color": "red",
-                "value": 300000
+                "value": 0.3
               }
             ]
           },
-          "unit": "µs",
+          "unit": "s",
           "unitScale": true
         },
         "overrides": [
@@ -5175,18 +5175,18 @@
             }
           ],
           "hide": false,
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT min(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT min(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
-          "refId": "min_apache_response",
+          "refId": "min_nginx_response",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "response_time_us"
+                  "response_time_s"
                 ],
                 "type": "field"
               },
@@ -5231,18 +5231,18 @@
             }
           ],
           "hide": false,
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
-          "refId": "max_apache_response",
+          "refId": "max_nginx_response",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "response_time_us"
+                  "response_time_s"
                 ],
                 "type": "field"
               },
@@ -5287,18 +5287,18 @@
             }
           ],
           "hide": false,
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
-          "refId": "mean_apache_response",
+          "refId": "mean_nginx_response",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "response_time_us"
+                  "response_time_s"
                 ],
                 "type": "field"
               },
@@ -5323,7 +5323,7 @@
           ]
         }
       ],
-      "title": "Apache Response Time",
+      "title": "Nginx Response Time",
       "type": "timeseries"
     },
     {
