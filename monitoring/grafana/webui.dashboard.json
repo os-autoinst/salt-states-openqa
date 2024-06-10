@@ -4678,7 +4678,7 @@
       },
       "id": 10,
       "panels": [],
-      "title": "Apache",
+      "title": "Nginx",
       "type": "row"
     },
     {
@@ -4787,7 +4787,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -4919,7 +4919,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -4957,7 +4957,7 @@
           {
             "evaluator": {
               "params": [
-                300000
+                0.3
               ],
               "type": "gt"
             },
@@ -4966,7 +4966,7 @@
             },
             "query": {
               "params": [
-                "min_apache_response",
+                "min_nginx_response",
                 "30m",
                 "now"
               ]
@@ -4982,8 +4982,8 @@
         "for": "30m",
         "frequency": "1m",
         "handler": 1,
-        "message": "The apache response time exceeded the alert threshold.\n\n* Check the load of the web UI host\n* Consider restarting the openQA web UI service and/or apache\n\nAlso see https://progress.opensuse.org/issues/73633",
-        "name": "Apache Response Time alert",
+        "message": "The nginx response time exceeded the alert threshold.\n\n* Check the load of the web UI host\n* Consider restarting the openQA web UI service and/or nginx\n\nAlso see https://progress.opensuse.org/issues/73633",
+        "name": "Nginx Response Time alert",
         "noDataState": "keep_state",
         "notifications": [
           {
@@ -4995,7 +4995,7 @@
         "type": "influxdb",
         "uid": "000000001"
       },
-      "description": "Response time measured by the apache proxy for requests with exclusion of some known routes which are allowed to run for much longer.",
+      "description": "Response time measured by the nginx proxy for requests with exclusion of some known routes which are allowed to run for much longer.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5045,11 +5045,11 @@
               },
               {
                 "color": "red",
-                "value": 300000
+                "value": 0.3
               }
             ]
           },
-          "unit": "µs",
+          "unit": "s",
           "unitScale": true
         },
         "overrides": [
@@ -5175,18 +5175,18 @@
             }
           ],
           "hide": false,
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT min(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT min(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
-          "refId": "min_apache_response",
+          "refId": "min_nginx_response",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "response_time_us"
+                  "response_time_s"
                 ],
                 "type": "field"
               },
@@ -5231,18 +5231,18 @@
             }
           ],
           "hide": false,
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
-          "refId": "max_apache_response",
+          "refId": "max_nginx_response",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "response_time_us"
+                  "response_time_s"
                 ],
                 "type": "field"
               },
@@ -5287,18 +5287,18 @@
             }
           ],
           "hide": false,
-          "measurement": "apache_log",
+          "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"response_time_us\") FROM \"apache_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
-          "refId": "mean_apache_response",
+          "refId": "mean_nginx_response",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "response_time_us"
+                  "response_time_s"
                 ],
                 "type": "field"
               },
@@ -5323,52 +5323,52 @@
           ]
         }
       ],
-      "title": "Apache Response Time",
+      "title": "Nginx Response Time",
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
+        "uid": "000000001",
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
           "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
             "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
             "fillOpacity": 10,
             "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
+            "spanNulls": false,
             "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
+            "showPoints": "never",
             "pointSize": 5,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "axisBorderShow": false,
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
+            "axisCenteredZero": false,
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
             },
             "thresholdsStyle": {
               "mode": "off"
             }
           },
-          "links": [],
+          "unitScale": true,
+          "color": {
+            "mode": "palette-classic"
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -5383,8 +5383,8 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "links": [],
+          "unit": "short"
         },
         "overrides": []
       },
@@ -5397,35 +5397,26 @@
       "id": 88,
       "interval": "20s",
       "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
         "tooltip": {
           "mode": "multi",
           "sort": "none"
+        },
+        "legend": {
+          "showLegend": false,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
         }
       },
       "pluginVersion": "10.1.5",
       "targets": [
         {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [],
+          "measurement": "nginx",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -5433,14 +5424,16 @@
           "select": [
             [
               {
+                "type": "field",
                 "params": [
-                  "ReqPerSec"
-                ],
-                "type": "field"
+                  "requests"
+                ]
               },
               {
-                "params": [],
-                "type": "mean"
+                "type": "non_negative_derivative",
+                "params": [
+                  "1s"
+                ]
               }
             ]
           ],
@@ -5457,88 +5450,48 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                10
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "Too few apache workers idle",
-        "name": "Apache Workers alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
+        "uid": "000000001",
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
           "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
             "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
             "fillOpacity": 10,
             "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
+            "spanNulls": true,
             "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
+            "showPoints": "never",
             "pointSize": 5,
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            },
+            "axisPlacement": "auto",
+            "axisLabel": "",
+            "axisColorMode": "text",
+            "axisBorderShow": false,
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
+            "axisCenteredZero": false,
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
             },
             "thresholdsStyle": {
               "mode": "line+area"
             }
           },
-          "links": [],
+          "unitScale": true,
+          "color": {
+            "mode": "palette-classic"
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -5553,8 +5506,8 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "links": [],
+          "unit": "short"
         },
         "overrides": []
       },
@@ -5567,37 +5520,41 @@
       "id": 15,
       "links": [],
       "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
         "tooltip": {
           "mode": "multi",
           "sort": "none"
+        },
+        "legend": {
+          "showLegend": false,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
         }
       },
       "pluginVersion": "10.1.5",
       "targets": [
         {
-          "alias": "Busy",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "alias": "Active connections",
           "dsType": "influxdb",
           "groupBy": [
             {
+              "type": "time",
               "params": [
                 "$interval"
-              ],
-              "type": "time"
+              ]
             },
             {
+              "type": "fill",
               "params": [
                 "null"
-              ],
-              "type": "fill"
+              ]
             }
           ],
-          "measurement": "apache",
+          "measurement": "nginx",
           "orderByTime": "ASC",
           "policy": "autogen",
           "refId": "A",
@@ -5605,14 +5562,14 @@
           "select": [
             [
               {
+                "type": "field",
                 "params": [
-                  "BusyWorkers"
-                ],
-                "type": "field"
+                  "active"
+                ]
               },
               {
-                "params": [],
-                "type": "mean"
+                "type": "mean",
+                "params": []
               }
             ]
           ],
@@ -5625,566 +5582,42 @@
           ]
         },
         {
-          "alias": "Idle",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "IdleWorkers"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        }
-      ],
-      "title": "Apache Workers",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
           },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short",
-          "unitScale": true
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 16,
-        "y": 132
-      },
-      "id": 14,
-      "links": [],
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.1.5",
-      "targets": [
-        {
-          "alias": "Closing",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scboard_closing"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
-          "alias": "DNS",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scboard_dnslookup"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
-          "alias": "Finishing",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scboard_finishing"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
-          "alias": "Idle Cleanup",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "D",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scboard_idle_cleanup"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
-          "alias": "Keepalive",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "E",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scboard_keepalive"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
-          "alias": "Logging",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "F",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scboard_logging"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
-          "alias": "Reading",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "H",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scboard_reading"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
-          "alias": "Sending",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "I",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scboard_sending"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
-          "alias": "Starting",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "apache",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "J",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "scboard_starting"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "openqa"
-            }
-          ]
-        },
-        {
           "alias": "Waiting",
           "dsType": "influxdb",
           "groupBy": [
             {
+              "type": "time",
               "params": [
                 "$interval"
-              ],
-              "type": "time"
+              ]
             },
             {
+              "type": "fill",
               "params": [
                 "null"
-              ],
-              "type": "fill"
+              ]
             }
           ],
-          "measurement": "apache",
+          "measurement": "nginx",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "K",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
+                "type": "field",
                 "params": [
-                  "scboard_waiting"
-                ],
-                "type": "field"
+                  "waiting"
+                ]
               },
               {
-                "params": [],
-                "type": "mean"
+                "type": "mean",
+                "params": []
               }
             ]
           ],
@@ -6197,8 +5630,9 @@
           ]
         }
       ],
-      "title": "Scoreboard",
-      "type": "timeseries"
+      "title": "Nginx Connections",
+      "type": "timeseries",
+      "description": "Active connections: The current number of active client connections including Waiting connections; Waiting: The current number of idle client connections waiting for a request."
     },
     {
       "collapsed": false,

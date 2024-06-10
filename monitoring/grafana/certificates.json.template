@@ -251,7 +251,7 @@
         "for": "1h",
         "frequency": "1h",
         "handler": 1,
-        "message": "One of the SAN endpoints on {{ host }} is nearing expiration.\nThe most likely issue is that the service serving this SAN (e.g. apache2) on the host {{ host }} was not restarted/reloaded after a new certificate got fetched.\n\nAs a short term solution you can manually restart the service but please also open a ticket because it indicates that our salt automation does not cover all service restarts.",
+        "message": "One of the SAN endpoints on {{ host }} is nearing expiration.\nThe most likely issue is that the service serving this SAN (e.g. nginx) on the host {{ host }} was not restarted/reloaded after a new certificate got fetched.\n\nAs a short term solution you can manually restart the service but please also open a ticket because it indicates that our salt automation does not cover all service restarts.",
         "name": "{{ host }} - SAN validity",
         "noDataState": "keep_state",
         "notifications": [

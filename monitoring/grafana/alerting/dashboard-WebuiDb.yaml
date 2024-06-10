@@ -3,7 +3,7 @@ apiVersion: 1
 groups:
 - folder: Salt
   interval: 1m
-  name: Apache Response Time alert
+  name: Web proxy Response Time alert
   orgId: 1
   rules:
   - annotations:
@@ -11,10 +11,10 @@ groups:
       __dashboardUid__: WebuiDb
       __panelId__: '84'
       message: |-
-        The apache response time exceeded the alert threshold.
+        The nginx response time exceeded the alert threshold.
 
         * Check the load of the web UI host
-        * Consider restarting the openQA web UI service and/or apache
+        * Consider restarting the openQA web UI service and/or nginx
 
         Also see https://progress.opensuse.org/issues/73633
     condition: A
@@ -25,13 +25,13 @@ groups:
         conditions:
         - evaluator:
             params:
-            - 300000
+            - 0.3
             type: gt
           operator:
             type: and
           query:
             params:
-            - min_apache_response
+            - min_nginx_response
           reducer:
             type: median
         refId: A
@@ -48,18 +48,18 @@ groups:
           - 'null'
           type: fill
         interval: 12s
-        measurement: apache_log
+        measurement: nginx_log
         orderByTime: ASC
         policy: default
-        query: SELECT min("response_time_us") FROM "apache_log" WHERE ("host" = 'openqa'
+        query: SELECT min("response_time_s") FROM "nginx_log" WHERE ("host" = 'openqa'
           AND "request" !~ /\/api\/v1\/ws/) AND $timeFilter GROUP BY time($__interval)
           fill(0)
         rawQuery: false
-        refId: min_apache_response
+        refId: min_nginx_response
         resultFormat: time_series
         select:
         - - params:
-            - response_time_us
+            - response_time_s
             type: field
           - params: []
             type: min
@@ -71,7 +71,7 @@ groups:
           key: request
           operator: '!~'
           value: /\/api\/v1\/ws/
-      refId: min_apache_response
+      refId: min_nginx_response
       relativeTimeRange:
         from: 1800
         to: 0
@@ -80,81 +80,11 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: zZAh5mf4k
+      rule_uid: IeChie2He
     noDataState: OK
     panelId: 84
-    title: Apache Response Time alert
-    uid: zZAh5mf4k
-- folder: Salt
-  interval: 1m
-  name: Apache Workers alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '308'
-      __dashboardUid__: WebuiDb
-      __panelId__: '15'
-      message: Too few apache workers idle
-    condition: A
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 10
-            type: lt
-          operator:
-            type: and
-          query:
-            params:
-            - B
-          reducer:
-            type: avg
-        refId: A
-        type: classic_conditions
-      refId: A
-    - datasourceUid: '000000001'
-      model:
-        alias: Idle
-        dsType: influxdb
-        groupBy:
-        - params:
-          - $interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        measurement: apache
-        orderByTime: ASC
-        policy: default
-        refId: B
-        resultFormat: time_series
-        select:
-        - - params:
-            - IdleWorkers
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-      refId: B
-      relativeTimeRange:
-        from: 300
-        to: 0
-    execErrState: OK
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: MW025mB4z
-    noDataState: OK
-    panelId: 15
-    title: Apache Workers alert
-    uid: MW025mB4z
+    title: Web proxy Response Time alert
+    uid: IeChie2He
 - folder: Salt
   interval: 1m
   name: Average Ping time (ms) alert
@@ -1672,7 +1602,7 @@ groups:
             intervalMs: 30000
             limit: ""
             maxDataPoints: 43200
-            measurement: apache_log
+            measurement: nginx_log
             orderByTime: ASC
             policy: default
             query: ""
