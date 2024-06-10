@@ -50,6 +50,11 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLFO:Main:Staging:' + i) }}
 {% endfor %}
 
+{% for i in ['A','B','C','D','E','F','G','H','S','V','Y'] %}
+{{ scriptgen('SUSE:ALP:Source:Standard:1.0:Staging:' + i) }}
+{% endfor %}
+
+
 {{ scriptgen('SUSE:SLE-12-SP5:Update:Products:SLERT') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP5:Update:WSL') }}
