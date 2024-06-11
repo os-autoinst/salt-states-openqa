@@ -5468,7 +5468,7 @@
             "showPoints": "never",
             "pointSize": 5,
             "stacking": {
-              "mode": "normal",
+              "mode": "none",
               "group": "A"
             },
             "axisPlacement": "auto",
@@ -5497,12 +5497,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
-              },
-              {
                 "color": "transparent",
-                "value": 10
+                "value": null
               }
             ]
           },
