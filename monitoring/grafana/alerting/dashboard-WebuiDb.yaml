@@ -1666,7 +1666,7 @@ groups:
             conditions:
                 - evaluator:
                     params:
-                        - 200
+                        - 2000 # high number because restarts of openqa-webui.service can cause many 5xx responses
                         - 0
                     type: gt
                   operator:
