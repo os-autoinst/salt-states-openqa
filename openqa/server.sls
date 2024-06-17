@@ -439,6 +439,14 @@ cron.service:
         [Unit]
         RequiresMountsFor=/srv
 
+/etc/systemd/system/openqa-webui.service.d/storage.conf:
+  file.managed:
+    - mode: "0644"
+    - makedirs: true
+    - contents: |
+        [Unit]
+        RequiresMountsFor=/var/lib/openqa /var/lib/openqa/archive /var/lib/openqa/share /var/lib/openqa/share/factory/hdd/fixed /var/lib/openqa/share/factory/iso/fixed
+
 /etc/rsyncd.conf:
   file.managed:
     - source: salt://rsyncd/rsyncd.conf
