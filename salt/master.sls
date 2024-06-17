@@ -13,13 +13,17 @@ salt-master:
 
 # Prevent slow machines to run into timeout in their response
 # https://progress.opensuse.org/issues/58956
-# and ext_pillar
+# also enable:
+#  - ext_pillar
+#  - ipv6
 master_config:
   file.serialize:
     - name: /etc/salt/master
     - serializer: yaml
     - merge_if_exists: True
     - dataset:
+        interface: "::"
+        ipv6: True
         timeout: 90
         ext_pillar:
           - file_tree:
