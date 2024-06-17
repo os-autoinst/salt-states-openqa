@@ -242,23 +242,10 @@ openqa_user_ssh:
     - require:
       - file: /etc/fstab
 
-/var/lib/openqa/archive:
-  mount.mounted:
-    - device: /space-slow/archive
-    - fstype: none
-    - opts: bind,x-systemd.automount,x-systemd.requires=/var/lib/openqa
-    - extra_mount_invisible_options:
-      - x-systemd.automount
-    - extra_mount_invisible_keys:
-      - x-systemd.requires
-    - require:
-      - file: /space-slow/archive
-
+# requires the mount point as defined in "fstab"
 /var/lib/openqa/archive/testresults:
   file.directory:
     - user: geekotest
-    - require:
-      - mount: /var/lib/openqa/archive
 {%- endif %}
 
 /etc/telegraf/telegraf.d/telegraf-webui.conf:

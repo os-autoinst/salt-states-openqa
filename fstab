@@ -32,5 +32,6 @@ UUID=b5377fcf-6273-4f38-a471-cefff08c60b7 /results xfs defaults,logbsize=256k,no
 UUID=0b735e2d-b300-4a37-b39b-65fdc41d1ad1 /space-slow xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 2
 /space-slow/assets/factory/iso/fixed /var/lib/openqa/share/factory/iso/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind,nofail 0 0
 /space-slow/assets/factory/hdd/fixed /var/lib/openqa/share/factory/hdd/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind,nofail 0 0
+/space-slow/archive /var/lib/openqa/archive none x-systemd.requires=/var/lib/openqa,x-systemd.automount,bind,nofail 0 0
 
 /srv/homes.img /home ext4 defaults,nofail 1 1
