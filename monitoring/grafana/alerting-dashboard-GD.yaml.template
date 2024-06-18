@@ -99,7 +99,7 @@ groups:
     noDataState: OK
     panelId: 56720
     title: '{{ generic_host }}: Disk I/O time alert'
-    uid: disk_io_time_alert_{{ generic_host }}
+    uid: {{ (('disk_io_time_alert_' + generic_host ) | sha512[:40] }}
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: Memory usage alert'
@@ -176,7 +176,7 @@ groups:
     noDataState: OK
     panelId: 12054
     title: '{{ generic_host }}: Memory usage alert'
-    uid: memory_usage_alert_{{ generic_host }}
+    uid: {{ (('memory_usage_alert_' + generic_host ) | sha512[:40] }}
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: NTP offset alert'
@@ -255,7 +255,7 @@ groups:
     noDataState: OK
     panelId: 65102
     title: '{{ generic_host }}: NTP offset alert'
-    uid: ntp_offset_alert_{{ generic_host }}
+    uid: {{ (('ntp_offset_alert_' + generic_host ) | sha512[:40] }}
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: Ping time alert'
@@ -326,7 +326,7 @@ groups:
     noDataState: OK
     panelId: 65098
     title: '{{ generic_host }}: Ping time alert'
-    uid: ping_time_alert_{{ generic_host }}
+    uid: {{ (('ping_time_alert_' + generic_host ) | sha512[:40] }}
 - folder: Generic
   interval: 5m
   name: '{{ generic_host }}: host up alert'
@@ -401,7 +401,7 @@ groups:
     noDataState: OK
     panelId: 65105
     title: '{{ generic_host }}: host up alert'
-    uid: host_up_alert_{{ generic_host }}
+    uid: {{ (('host_up_alert_' + generic_host ) | sha512[:40] }}
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: partitions usage (%) alert'
@@ -493,4 +493,4 @@ groups:
     noDataState: OK
     panelId: 65090
     title: '{{ generic_host }}: partitions usage (%) alert'
-    uid: partitions_usage_alert_{{ generic_host }}
+    uid: {{ (('partitions_usage_alert_' + generic_host ) | sha512[:40] }}
