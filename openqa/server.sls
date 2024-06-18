@@ -426,6 +426,8 @@ cron.service:
         [Unit]
         RequiresMountsFor=/srv
 
+# Explicitly mention our required mount points to avoid a non-booting machine
+# See https://progress.opensuse.org/issues/162356 for details
 /etc/systemd/system/openqa-webui.service.d/storage.conf:
   file.managed:
     - mode: "0644"
@@ -433,6 +435,14 @@ cron.service:
     - contents: |
         [Unit]
         RequiresMountsFor=/var/lib/openqa /var/lib/openqa/archive /var/lib/openqa/share /var/lib/openqa/share/factory/hdd/fixed /var/lib/openqa/share/factory/iso/fixed
+
+/etc/systemd/system/auditd.service.d/storage.conf:
+  file.managed:
+    - mode: "0644"
+    - makedirs: true
+    - contents: |
+        [Unit]
+        RequiresMountsFor=/srv
 
 /etc/rsyncd.conf:
   file.managed:
