@@ -26,7 +26,6 @@ speedup_minion:
           - esxi
         disable_modules:
           - vsphere
-        grains_cache: True
 
 # workaround https://github.com/saltstack/salt/issues/59141
 workaround_minion_race:
