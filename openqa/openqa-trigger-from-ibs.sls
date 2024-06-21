@@ -50,7 +50,7 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLFO:Main:Staging:' + i) }}
 {% endfor %}
 
-{% for i in ['A','B','C','D','E','F','G','H','S','V','Y'] %}
+{% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'] %}
 {{ scriptgen('SUSE:ALP:Source:Standard:1.0:Staging:' + i) }}
 {% endfor %}
 
