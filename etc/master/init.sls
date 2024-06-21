@@ -4,12 +4,23 @@ cronie:
     - retry:
         attempts: 5
 
+/etc/systemd/system/nfs-server.service.d/require-mount.conf:
+  file.managed:
+    - mode: "0644"
+    - makedirs: true
+    - contents: |
+        # Prevent NFS server to serve the unmounted empty directory in case of
+        # temporary disablement of mount entries in /etc/fstab
+        [Unit]
+        ConditionPathIsMountPoint=/var/lib/openqa/share
+
 {%- if not grains.get('noservices', False) %}
 nfs-server:
   service.running:
     - enable: True
     - restart: True
     - watch:
+      - file: /etc/systemd/system/nfs-server.service.d/require-mount.conf
       - file: /etc/exports
 {%- endif %}
 
