@@ -35,9 +35,17 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 
 {% macro scriptgen(prj) -%}
 {{ prj }}:
+  file.directory:
+    - name: {{ dir }}{{ prj }}
+    - user: geekotest
+
   cmd.run:
-    - name: su geekotest -c 'mkdir -p {{ prj }} && python3 script/scriptgen.py {{ prj }}'
+    - name: su geekotest -c 'python3 script/scriptgen.py {{ prj }}'
     - cwd: {{ dir }}
+    - onchanges_any:
+      - file: {{ dir }}{{ prj }}
+      - git: https://github.com/os-autoinst/openqa-trigger-from-obs
+      - git: https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin
 {%- endmacro %}
 
 {{ scriptgen('SUSE:SLE-15-SP6:GA:TEST') }}
