@@ -14,22 +14,22 @@ tmpfs   /run              tmpfs   noauto          0 0
 
 # 40c5b7dd-487f-442b-ba95-b6186b18f3a7 -> vdb
 # ssd storage "expensive+fast"
-UUID=40c5b7dd-487f-442b-ba95-b6186b18f3a7 /srv xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 2
+UUID=40c5b7dd-487f-442b-ba95-b6186b18f3a7 /srv xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 0
 /srv/PSQL /var/lib/pgsql none bind,nofail 0 0
 
 # 37972261-7411-44eb-bae9-90d1cc1c9a38 -> vdc
 # rotating disk "cheap+slow"
-UUID=37972261-7411-44eb-bae9-90d1cc1c9a38 /assets xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 2
+UUID=37972261-7411-44eb-bae9-90d1cc1c9a38 /assets xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 0
 /assets /var/lib/openqa/share none x-systemd.requires=/var/lib/openqa,x-systemd.automount,bind,nofail 0 0
 
 # b5377fcf-6273-4f38-a471-cefff08c60b7 -> vdd
 # ssd storage "expensive+fast"
-UUID=b5377fcf-6273-4f38-a471-cefff08c60b7 /results xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 2
+UUID=b5377fcf-6273-4f38-a471-cefff08c60b7 /results xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 0
 /results /var/lib/openqa none bind,nofail 0 0
 
 # 0b735e2d-b300-4a37-b39b-65fdc41d1ad1 -> vde
 # rotating disk "cheap+slow"
-UUID=0b735e2d-b300-4a37-b39b-65fdc41d1ad1 /space-slow xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 2
+UUID=0b735e2d-b300-4a37-b39b-65fdc41d1ad1 /space-slow xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 0
 /space-slow/assets/factory/iso/fixed /var/lib/openqa/share/factory/iso/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind,nofail 0 0
 /space-slow/assets/factory/hdd/fixed /var/lib/openqa/share/factory/hdd/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind,nofail 0 0
 /space-slow/archive /var/lib/openqa/archive none x-systemd.requires=/var/lib/openqa,x-systemd.automount,bind,nofail 0 0
