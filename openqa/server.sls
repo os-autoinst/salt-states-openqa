@@ -460,3 +460,9 @@ rsyncd:
     - watch:
       - file: /etc/rsyncd.conf
 {%- endif %}
+
+/etc/cron.d/dump-openqa:
+  file.managed:
+    - mode: "0644"
+    - contents: |
+		40 23 * * * postgres backup_dir="/var/lib/openqa/backup"; date=$(date -Idate); bf="$backup_dir/$date.dump"; test -e "$bf" || ionice -c3 nice -n19 pg_dump -Fc openqa -f "$bf"; find $backup_dir/ -mtime +7 -print0 | xargs -0 rm -v
