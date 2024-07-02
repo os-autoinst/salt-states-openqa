@@ -827,12 +827,12 @@ groups:
     title: '{{ worker }}: partitions usage (%) alert'
     uid: partitions_usage_alert_{{ worker }}
 - orgId: 1
-  name: '{{ worker }}: CPU load alert'
+  name: '{{ worker }}: System load alert'
   folder: openQA
   interval: 5m
   rules:
-    - uid: cpu_load_alert_{{ worker }}
-      title: '{{ worker }}: CPU load alert'
+    - uid: system_load_alert_{{ worker }}
+      title: '{{ worker }}: System load alert'
       condition: C
       data:
         - refId: A
@@ -954,7 +954,7 @@ groups:
       isPaused: false
       labels:
         __contacts__: '"osd-admins"'
-        rule_uid: cpu_load_alert_{{ worker }}
+        rule_uid: system_load_alert_{{ worker }}
         type: worker
         hostname: {{ worker }}
 
