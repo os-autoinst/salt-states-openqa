@@ -51,4 +51,14 @@ static_nfs_hostname:
       - pkg: nfs-client
       - file: /etc/fstab
       - host: static_nfs_hostname
+
+/etc/systemd/system/automount-restarter@.service:
+  file.managed:
+    - source: salt://openqa/nfs-automount-restarter.conf
+    - makedirs: True
+
+/etc/systemd/system/var-lib-openqa-share.automount.d/restart-on-failure.conf:
+  file.managed:
+    - source: salt://openqa/nfs-automount-restart-on-failure.conf
+    - makedirs: True
  {%- endif %}
