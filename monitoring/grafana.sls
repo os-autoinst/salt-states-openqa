@@ -213,6 +213,11 @@ alert-cleanup:
     - clean: True
 {% endif %}
 
+# remove alerts explicitly mentioned by a deletionRule
+/etc/grafana/provisioning/alerting/alerts_to_delete.yaml:
+  file.managed:
+    - source: salt://monitoring/grafana/alerts_to_delete.yaml
+
 {%- if not grains.get('noservices', False) %}
 grafana-server:
   service.running:

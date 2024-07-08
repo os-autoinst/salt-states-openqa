@@ -99,7 +99,7 @@ groups:
     noDataState: OK
     panelId: 56720
     title: '{{ worker }}: Disk I/O time alert'
-    uid: disk_io_time_alert_{{ worker }}
+    uid: {{ (('disk_io_time_alert_' + worker ) | sha512[:40] }}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: Download rate alert'
@@ -228,7 +228,7 @@ groups:
     noDataState: OK
     panelId: 65109
     title: '{{ worker }}: Download rate alert'
-    uid: download_rate_alert_{{ worker }}
+    uid: {{ (('download_rate_alert_' + worker ) | sha512[:40] }}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: Memory usage alert'
@@ -315,7 +315,7 @@ groups:
     noDataState: OK
     panelId: 12054
     title: '{{ worker }}: Memory usage alert'
-    uid: memory_usage_alert_{{ worker }}
+    uid: {{ (('memory_usage_alert_' + worker ) | sha512[:40] }}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: NTP offset alert'
@@ -394,7 +394,7 @@ groups:
     noDataState: OK
     panelId: 65102
     title: '{{ worker }}: NTP offset alert'
-    uid: ntp_offset_alert_{{ worker }}
+    uid: {{ (('ntp_offset_alert_' + worker ) | sha512[:40] }}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: OpenQA Ping time alert'
@@ -465,7 +465,7 @@ groups:
     noDataState: OK
     panelId: 65098
     title: '{{ worker }}: OpenQA Ping time alert'
-    uid: openqa_ping_time_alert_{{ worker }}
+    uid: {{ (('openqa_ping_time_alert_' + worker ) | sha512[:40] }}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: QA network infrastructure Ping time alert'
@@ -540,7 +540,7 @@ groups:
     noDataState: OK
     panelId: 65099
     title: '{{ worker }}: QA network infrastructure Ping time alert'
-    uid: ping_alert_{{ worker }}
+    uid: {{ (('ping_alert_' + worker ) | sha512[:40] }}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: Too many Minion job failures alert'
@@ -658,7 +658,7 @@ groups:
     noDataState: OK
     panelId: 65104
     title: '{{ worker }}: Too many Minion job failures alert'
-    uid: minion_alerts_{{ worker }}
+    uid: {{ (('minion_alerts_' + worker ) | sha512[:40] }}
 - folder: openQA
   interval: 5m
   name: '{{ worker }}: host up alert'
@@ -733,7 +733,7 @@ groups:
     noDataState: OK
     panelId: 65105
     title: '{{ worker }}: host up alert'
-    uid: host_up_alert_{{ worker }}
+    uid: {{ (('host_up_alert_' + worker ) | sha512[:40] }}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: partitions usage (%) alert'
@@ -825,13 +825,13 @@ groups:
     noDataState: OK
     panelId: 65090
     title: '{{ worker }}: partitions usage (%) alert'
-    uid: partitions_usage_alert_{{ worker }}
+    uid: {{ (('partitions_usage_alert_' + worker ) | sha512[:40] }}
 - orgId: 1
   name: '{{ worker }}: System load alert'
   folder: openQA
   interval: 5m
   rules:
-    - uid: system_load_alert_{{ worker }}
+    - uid: {{ (('system_load_alert_' + worker ) | sha512[:40] }}
       title: '{{ worker }}: System load alert'
       condition: C
       data:
