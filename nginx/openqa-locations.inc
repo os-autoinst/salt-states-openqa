@@ -57,6 +57,7 @@ location / {
     proxy_set_header X-Forwarded-Server $host;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Build-Tx-Time $unix_timestamp;
     # Increased buffer sizes for large API requests
     proxy_buffer_size 16k;
     proxy_buffers 32 16k;
