@@ -48,10 +48,10 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
       - git: https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin
 {%- endmacro %}
 
-{{ scriptgen('SUSE:SLE-15-SP6:GA:TEST') }}
+{{ scriptgen('SUSE:SLE-15-SP7:GA:TEST') }}
 
 {% for i in ['A','B','C','D','E','F','G','H','S','Y','V'] %}
-{{ scriptgen('SUSE:SLE-15-SP6:GA:Staging:' + i) }}
+{{ scriptgen('SUSE:SLE-15-SP7:GA:Staging:' + i) }}
 {% endfor %}
 
 {% for i in ['A','B','C','D','E','F','G','H','S','V','Y'] %}
