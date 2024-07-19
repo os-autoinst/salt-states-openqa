@@ -44,6 +44,7 @@ base:
   'G@roles:monitor':
     - monitoring.maintenance_queue
     - monitoring.sap_perf
+    - monitoring.sleperf
     - monitoring.slo
     - monitoring.yam
     - monitoring.grafana
