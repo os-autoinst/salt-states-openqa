@@ -16,3 +16,4 @@ sleperf.packages:
 /etc/telegraf/scripts/collect_sleperf_test.py:
   file.managed:
     - source: salt://monitoring/sleperf/scripts/collect_sleperf_test.py
+    - mode: "0755"
