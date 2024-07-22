@@ -45,6 +45,8 @@ server.packages:
           max_rss_limit: 250000
           service_port_delta: 0
           access_control_allow_origin_header: http://container-dashboard.qe.suse.de
+          # Workaround for missing uploads due to "timestamp mismatch", see https://progress.opensuse.org/issues/164296
+          auto_clone_regex: '^(cache failure: |terminated prematurely: |api failure: Failed to register .* 503|backend died: .*VNC.*(timeout|timed out|refused)|QEMU terminated: Failed to allocate KVM HPT of order 25.* Cannot allocate memory|api failure: 403 response: timestamp mismatch.*)'
         amqp:
           url: {{ pillar['server']['amqp_url'] }}
           topic_prefix: suse
