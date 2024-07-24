@@ -94,7 +94,7 @@ server.packages:
           ssh_key_file: /var/lib/openqa/.ssh/id_ed25519
 
         job_settings_ui:
-          keys_to_render_as_links: YAML_SCHEDULE,YAML_TEST_DATA,AUTOYAST
+          keys_to_render_as_links: YAML_SCHEDULE,YAML_SCHEDULE_DEFAULT,YAML_TEST_DATA,AUTOYAST
         hooks:
           # Some groups excluded that have too many expected failing jobs or special review workflows
           # BCI tests disabled: poo#134915
