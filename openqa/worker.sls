@@ -248,6 +248,13 @@ firewalld_zones:
         - source: salt://etc/firewalld/zones/trusted.xml
     - require:
       - pkg: worker.packages
+
+# ensures the bridge_iface is only present in our own zone if
+# e.g. the installer put it into a different one
+move_interface:
+  cmd.run:
+    - unless: test $(firewall-cmd --get-zone-of-interface={{ pillar['workerconf'][grains['host']]['bridge_iface'] }}) == "trusted"
+    - name: sed -i '/name="{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}"/d' /etc/firewalld/zones/*.xml; firewall-cmd --reload; firewall-cmd --zone=trusted --change-interface={{ pillar['workerconf'][grains['host']]['bridge_iface'] }} --permanent
 {% endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
