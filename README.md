@@ -400,7 +400,7 @@ about impacting the production GRE-network yet).
 
 ## Communication
 
-If you have questions, visit us on IRC in [#opensuse-factory](irc://chat.freenode.net/opensuse-factory)
+If you have questions, visit us on Matrix in https://matrix.to/#/#openqa:opensuse.org
 
 
 ## Contribute
