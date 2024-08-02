@@ -118,7 +118,7 @@ groups:
         conditions:
         - evaluator:
             params:
-            - 0.1
+            - 0.06
             type: lt
           operator:
             type: and
