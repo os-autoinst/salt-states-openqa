@@ -118,7 +118,7 @@ server.packages:
 openqa-webui:
   service.running:
     - enable: True
-    - restart: True
+    - reload: True
     - watch:
       - ini: /etc/openqa/openqa.ini
 
@@ -315,7 +315,7 @@ postgresql-work_mem:
 postgresql.service:
   service.running:
     - enable: True
-    - restart: True
+    - reload: True
     - watch:
       - file: /srv/PSQL/data/postgresql.conf
       - file: /srv/PSQL/data/pg_hba.conf
