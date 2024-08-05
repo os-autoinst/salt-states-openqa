@@ -34,7 +34,6 @@
 {% for service in ('ovsdb-server.service', 'ovs-vswitchd.service', 'os-autoinst-openvswitch.service') %}
 {{ service }}:
   service.running:
-    - restart: True
     - watch:
       - file: /etc/sysconfig/openvswitch
       - file: /etc/openvswitch
