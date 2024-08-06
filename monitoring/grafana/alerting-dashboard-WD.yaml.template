@@ -318,6 +318,83 @@ groups:
     uid: {{ (('memory_usage_alert_' + worker ) | sha512)[:40] }}
 - folder: openQA
   interval: 1m
+  name: '{{ worker }}: Memory usage alert'
+  orgId: 1
+  rules:
+  - annotations:
+      __alertId__: '572'
+      __dashboardUid__: WD{{ worker }}
+      __panelId__: '12054'
+      message: ''
+    condition: A
+    dashboardUid: WD{{ worker }}
+    data:
+    - datasourceUid: __expr__
+      model:
+        conditions:
+        - evaluator:
+            params:
+             5.368709e+08
+            type: lt
+          operator:
+            type: and
+          query:
+            params:
+            - Available
+          reducer:
+            type: avg
+        refId: A
+        type: classic_conditions
+      refId: A
+    - datasourceUid: '000000001'
+      model:
+        alias: available_total
+        dsType: influxdb
+        function: mean
+        groupBy:
+        - interval: auto
+          params:
+          - auto
+          type: time
+        - key: host
+          params:
+          - tag
+          type: tag
+        interval: 1m
+        measurement: mem_inactive
+        orderByTime: ASC
+        policy: default
+        query: SELECT mean(available) mean(swap_free) as available_total FROM "mem" WHERE
+          host = '{{ worker }}' AND $timeFilter GROUP BY time($interval), host ORDER
+          BY asc
+        rawQuery: true
+        refId: Available_total
+        resultFormat: time_series
+        select:
+        - - params:
+            - value
+            type: field
+          - params: []
+            type: mean
+        tags: []
+      refId: Available_total
+      relativeTimeRange:
+        from: 300
+        to: 0
+    execErrState: OK
+    for: 20m
+    isPaused: false
+    labels:
+      __contacts__: '"osd-admins"'
+      rule_uid: memory_usage_alert_{{ worker }}
+      type: worker
+      hostname: {{ worker }}
+    noDataState: OK
+    panelId: 12054
+    title: '{{ worker }}: Memory usage absolute alert'
+    uid: {{ (('memory_usage_absolute_alert_' + worker ) | sha512)[:40] }}
+- folder: openQA
+  interval: 1m
   name: '{{ worker }}: NTP offset alert'
   orgId: 1
   rules:
