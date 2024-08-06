@@ -79,7 +79,7 @@ server.packages:
           result_storage_duration: 21
           important_result_storage_duration: 0
         no_group_limits:
-          log_storage_duration: 10
+          log_storage_duration: 5
           important_log_storage_duration: 25
           result_storage_duration: 15
           important_result_storage_duration: 50
