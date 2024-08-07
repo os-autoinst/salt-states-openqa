@@ -44,3 +44,18 @@ devel_openQA_Modules:
     - require:
       - pkgrepo: devel_openQA_Modules
 {% endif %}
+
+## Special OVMF assets needed for secureboot testing of SLFO and SLE 15SP7
+## https://progress.opensuse.org/issues/164150
+{%- if grains.get('roles', '') in ['worker'] and grains['osarch'] == 'x86_64' %}
+home_favogt_stagingovmf_repo:
+  pkgrepo.managed:
+    - humanname: home_favogt_stagingovmf
+    - baseurl: https://download.suse.de/ibs/home:/favogt:/stagingovmf/{{ repo }}/
+    - gpgautoimport: True
+    - refresh: True
+    - priority: 85
+    - keeppackages: True
+    - retry:
+        attempts: 5
+{% endif %}
