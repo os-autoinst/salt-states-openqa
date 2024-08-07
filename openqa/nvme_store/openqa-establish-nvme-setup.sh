@@ -1,6 +1,23 @@
 #!/bin/bash
 set -euo pipefail
 
+# ensure all devices which are already part of an assembled array are unused
+function ensure_devices_are_free {
+    local devices="$1"
+    local device # explicitly defined to not spill out of function
+    for device in $devices; do
+        device_name=$(basename "$device")
+        mdstat_line=$(grep "$device_name" /proc/mdstat ||:)
+        if [[ ! -z $mdstat_line ]]; then
+            array_device=/dev/$(echo $mdstat_line | awk '{ print $1 }')
+            echo "$nvme already in assembled array $array_device"
+            mdadm --stop "$array_device" ||: # might have been previously disassembled already
+	    echo "$device free now"
+        fi
+    done
+}
+
+
 echo 'Current mount points (printed for debugging purposes):'
 mount
 
@@ -43,6 +60,8 @@ for (( attempt=1; attempt <= "$attempts"; ++attempt )); do
 
     # fallback to using the 3rd partition on the first NVMe
     device=${device:-/dev/nvme0n1p3}
+
+    ensure_devices_are_free "$device"
 
     # make arguments for mdadm invocation
     echo 'Creating RAID0 "/dev/md/openqa" on:' $device
