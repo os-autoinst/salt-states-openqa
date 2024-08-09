@@ -47,7 +47,9 @@ worker.packages:
       - qemu-ovmf-x86_64 # for UEFI
       {% endif %}
       - os-autoinst-swtpm
-      {% if grains['osarch'] == 'ppc64le' %}
+      ## allow to emulate ppc on x86_64 as well
+      ## https://progress.opensuse.org/issues/163451
+      {% if grains['osarch'] == 'ppc64le' or grains['osarch'] == 'x86_64' %}
       - qemu-ppc
       - qemu-ipxe
       - qemu-vgabios
