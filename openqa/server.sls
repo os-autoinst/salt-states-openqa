@@ -464,12 +464,14 @@ rsyncd:
     - watch:
       - file: /etc/rsyncd.conf
 
+{% for type in ['service', 'timer'] %}
 # Prevent server unresponsiveness due to TRIM which is also debatable anyway
 # on virtual machines
 # https://progress.opensuse.org/issues/164427
-fstrim:
+fstrim.{{ type }}:
   service.dead:
     - enable: False
+{% endfor %}
 {%- endif %}
 
 /etc/cron.d/dump-openqa:
