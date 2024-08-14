@@ -1624,6 +1624,10 @@ groups:
                   key: resp_code::tag
                   operator: =~
                   value: /5../
+                - condition: AND
+                  key: request::field
+                  operator: '!~'
+                  value: /\/(ws|liveviewhandler)\//
             tz: ""
         - refId: B
           relativeTimeRange:
