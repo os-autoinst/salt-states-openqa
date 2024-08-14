@@ -305,7 +305,7 @@ groups:
         from: 300
         to: 0
     execErrState: OK
-    for: 20m
+    for: 1h
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
@@ -364,7 +364,7 @@ groups:
         measurement: mem_inactive
         orderByTime: ASC
         policy: default
-        query: SELECT mean(available) mean(swap_free) as available_total FROM "mem" WHERE
+        query: SELECT mean(available) + mean(swap_free) as available_total FROM "mem" WHERE
           host = '{{ worker }}' AND $timeFilter GROUP BY time($interval), host ORDER
           BY asc
         rawQuery: true

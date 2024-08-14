@@ -392,7 +392,7 @@
           ],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -428,56 +428,9 @@
           "measurement": "mem_inactive",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(total) as total, mean(used) as used, mean(cached) as cached, mean(buffered) as buffered  FROM \"mem\" WHERE host = '{{ worker }}' AND $timeFilter GROUP BY time($interval), host ORDER BY asc",
+          "query": "SELECT mean(total) as total, mean(used) as used, mean(cached) as cached, mean(buffered) as buffered, mean(available) as available, mean(available) + mean(swap_free) as available_total FROM \"mem\" WHERE host = '{{ worker }}' AND $timeFilter GROUP BY time($interval), host ORDER BY asc",
           "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "$col",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "mem_inactive",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(available) as available  FROM \"mem\" WHERE host = '{{ worker }}' AND $timeFilter GROUP BY time($interval), host ORDER BY asc",
-          "rawQuery": true,
-          "refId": "B",
+          "refId": "Absolute figures",
           "resultFormat": "time_series",
           "select": [
             [
