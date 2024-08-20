@@ -217,6 +217,7 @@ alert-cleanup:
 /etc/grafana/provisioning/alerting/alerts_to_delete.yaml:
   file.managed:
     - source: salt://monitoring/grafana/alerts_to_delete.yaml
+    - mode: "0644"
 
 {%- if not grains.get('noservices', False) %}
 grafana-server:
