@@ -187,6 +187,7 @@ dashboard-cleanup:
 {{ "/".join([dashboard_template_folder, "generic-" + genericname + ".json"]) }}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/generic.json.template
+    - mode: "0644"
     - template: jinja
     - generic_host: {{ genericname }}
     - host_interface: {{ host_interface }}
@@ -194,6 +195,7 @@ dashboard-cleanup:
 /etc/grafana/provisioning/alerting/dashboard-GD{{ genericname }}.yaml:
   file.managed:
     - source: salt://monitoring/grafana/alerting-dashboard-GD.yaml.template
+    - mode: "0644"
     - template: jinja
     - generic_host: {{ genericname }}
     - host_interface: {{ host_interface }}
