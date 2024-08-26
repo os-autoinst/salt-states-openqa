@@ -1,144 +1,144 @@
 ---
 apiVersion: 1
 groups:
-- folder: Salt
-  interval: 10s
-  name: Failed systemd services alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '198'
-      __dashboardUid__: KToPYLEWz
-      __panelId__: '2'
-      message: ''
-    condition: B
-    dashboardUid: KToPYLEWz
-    data:
-    - datasourceUid: '000000001'
-      model:
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        measurement: systemd_failed
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - failed
-            type: field
-          - params: []
-            type: sum
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 0
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: avg
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 3m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: UzAhcmBVk
-    noDataState: OK
-    panelId: 2
-    title: Failed systemd services alert
-    uid: UzAhcmBVk
-- folder: Salt
-  interval: 1m
-  name: Failed systemd services alert (except openqa.suse.de)
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '199'
-      __dashboardUid__: KToPYLEWz
-      __panelId__: '6'
-      message: |-
-        Check failed systemd services on hosts with `systemctl --failed`.
+  - folder: Salt
+    interval: 10s
+    name: Failed systemd services alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '198'
+          __dashboardUid__: KToPYLEWz
+          __panelId__: '2'
+          message: ''
+        condition: B
+        dashboardUid: KToPYLEWz
+        data:
+          - datasourceUid: '000000001'
+            model:
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              measurement: systemd_failed
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - failed
+                    type: field
+                  - params: []
+                    type: sum
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+            refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: avg
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 3m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: UzAhcmBVk
+        noDataState: OK
+        panelId: 2
+        title: Failed systemd services alert
+        uid: UzAhcmBVk
+  - folder: Salt
+    interval: 1m
+    name: Failed systemd services alert (except openqa.suse.de)
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '199'
+          __dashboardUid__: KToPYLEWz
+          __panelId__: '6'
+          message: |-
+            Check failed systemd services on hosts with `systemctl --failed`.
 
-        Hint: Go to parent dashboard https://stats.openqa-monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.
-    condition: B
-    dashboardUid: KToPYLEWz
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: Sum of failed systemd services
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 1m
-        measurement: systemd_failed
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - failed
-            type: field
-          - params: []
-            type: sum
-        tags:
-        - key: host
-          operator: '!='
-          value: openqa
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 0
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: max
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 15m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: Uk02cifVkz
-    noDataState: OK
-    panelId: 6
-    title: Failed systemd services alert (except openqa.suse.de)
-    uid: Uk02cifVkz
+            Hint: Go to parent dashboard https://stats.openqa-monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.
+        condition: B
+        dashboardUid: KToPYLEWz
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: Sum of failed systemd services
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 1m
+              measurement: systemd_failed
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - failed
+                    type: field
+                  - params: []
+                    type: sum
+              tags:
+                - key: host
+                  operator: '!='
+                  value: openqa
+            refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: max
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 15m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: Uk02cifVkz
+        noDataState: OK
+        panelId: 6
+        title: Failed systemd services alert (except openqa.suse.de)
+        uid: Uk02cifVkz

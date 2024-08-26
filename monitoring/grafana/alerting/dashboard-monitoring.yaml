@@ -1,147 +1,147 @@
 ---
 apiVersion: 1
 groups:
-- folder: Salt
-  interval: 10s
-  name: InfluxDB not reachable
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '312'
-      __dashboardUid__: EML0bpuGk
-      __panelId__: '2'
-      message: InfluxDB not reachable for too long. The means the rest of the monitoring
-        is currently broken. Check `systemctl status influxdb.service` on the monitoring
-        host. InfluxDB is supposed to respond to HTTP requests on port 8086, use e.g.
-        `curl http://localhost:8086/query` on the monitoring host to verify whether
-        it responds.
-    condition: A
-    dashboardUid: EML0bpuGk
-    data:
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 0
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - no-data-query
-          reducer:
-            type: last
-        refId: A
-        type: classic_conditions
-      refId: A
-    - datasourceUid: '000000001'
-      model:
-        groupBy: []
-        measurement: non-existant
-        orderByTime: ASC
-        policy: default
-        refId: no-data-query
-        resultFormat: time_series
-        select:
-        - - params:
-            - failed
-            type: field
-        tags: []
-      refId: no-data-query
-      relativeTimeRange:
-        from: 10
-        to: 0
-    execErrState: Alerting
-    for: 20m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: 2WA2cmfVzz
-    noDataState: OK
-    panelId: 2
-    title: InfluxDB not reachable
-    uid: 2WA2cmfVzz
-- folder: Salt
-  interval: 1m
-  name: Packet loss between worker hosts and other hosts alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '519'
-      __dashboardUid__: EML0bpuGk
-      __panelId__: '4'
-      message: |-
-        At least one host listed under `required_external_networks` in `workerconf.sls` in the pillars repository is not pingable from at least one openQA worker host.
+  - folder: Salt
+    interval: 10s
+    name: InfluxDB not reachable
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '312'
+          __dashboardUid__: EML0bpuGk
+          __panelId__: '2'
+          message: InfluxDB not reachable for too long. The means the rest of the monitoring
+            is currently broken. Check `systemctl status influxdb.service` on the monitoring
+            host. InfluxDB is supposed to respond to HTTP requests on port 8086, use e.g.
+            `curl http://localhost:8086/query` on the monitoring host to verify whether
+            it responds.
+        condition: A
+        dashboardUid: EML0bpuGk
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - no-data-query
+                  reducer:
+                    type: last
+              refId: A
+              type: classic_conditions
+            refId: A
+          - datasourceUid: '000000001'
+            model:
+              groupBy: []
+              measurement: non-existant
+              orderByTime: ASC
+              policy: default
+              refId: no-data-query
+              resultFormat: time_series
+              select:
+                - - params:
+                      - failed
+                    type: field
+              tags: []
+            refId: no-data-query
+            relativeTimeRange:
+              from: 10
+              to: 0
+        execErrState: Alerting
+        for: 20m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: 2WA2cmfVzz
+        noDataState: OK
+        panelId: 2
+        title: InfluxDB not reachable
+        uid: 2WA2cmfVzz
+  - folder: Salt
+    interval: 1m
+    name: Packet loss between worker hosts and other hosts alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '519'
+          __dashboardUid__: EML0bpuGk
+          __panelId__: '4'
+          message: |-
+            At least one host listed under `required_external_networks` in `workerconf.sls` in the pillars repository is not pingable from at least one openQA worker host.
 
-        Check the panel associated with the alert. The legend table on the right shows the problematic hosts on top.
-    condition: B
-    dashboardUid: EML0bpuGk
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: $tag_host - $tag_url
-        datasource:
-          type: influxdb
-          uid: '000000001'
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - url
-          type: tag
-        - params:
-          - host
-          type: tag
-        - params:
-          - 'null'
-          type: fill
-        measurement: ping
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("percent_packet_loss") FROM "ping" WHERE ("network"::tag = 'external') AND $timeFilter GROUP BY time($__interval), "url"::tag, "host"::tag fill(null)
-        rawQuery: false
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - percent_packet_loss
-            type: field
-          - params: []
-            type: mean
-        tags:
-          - key: network::tag
-            operator: '='
-            value: external
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 50
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: avg
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 4h
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: 2Z025iB4km
-    noDataState: OK
-    panelId: 4
-    title: Packet loss between worker hosts and other hosts alert
-    uid: 2Z025iB4km
+            Check the panel associated with the alert. The legend table on the right shows the problematic hosts on top.
+        condition: B
+        dashboardUid: EML0bpuGk
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: $tag_host - $tag_url
+              datasource:
+                type: influxdb
+                uid: '000000001'
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - url
+                  type: tag
+                - params:
+                    - host
+                  type: tag
+                - params:
+                    - 'null'
+                  type: fill
+              measurement: ping
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("percent_packet_loss") FROM "ping" WHERE ("network"::tag = 'external') AND $timeFilter GROUP BY time($__interval), "url"::tag, "host"::tag fill(null)
+              rawQuery: false
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - percent_packet_loss
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: network::tag
+                  operator: =
+                  value: external
+            refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 50
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: avg
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 4h
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: 2Z025iB4km
+        noDataState: OK
+        panelId: 4
+        title: Packet loss between worker hosts and other hosts alert
+        uid: 2Z025iB4km

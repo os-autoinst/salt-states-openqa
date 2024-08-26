@@ -1,1286 +1,1286 @@
 ---
 apiVersion: 1
 groups:
-- folder: Salt
-  interval: 1m
-  name: Web proxy Response Time alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '307'
-      __dashboardUid__: WebuiDb
-      __panelId__: '84'
-      message: |-
-        The nginx response time exceeded the alert threshold.
+  - folder: Salt
+    interval: 1m
+    name: Web proxy Response Time alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '307'
+          __dashboardUid__: WebuiDb
+          __panelId__: '84'
+          message: |-
+            The nginx response time exceeded the alert threshold.
 
-        * Check the load of the web UI host
-        * Consider restarting the openQA web UI service and/or nginx
+            * Check the load of the web UI host
+            * Consider restarting the openQA web UI service and/or nginx
 
-        Also see https://progress.opensuse.org/issues/73633
-    condition: A
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 0.3
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - min_nginx_response
-          reducer:
-            type: median
-        refId: A
-        type: classic_conditions
-      refId: A
-    - datasourceUid: '000000001'
-      model:
-        alias: Min
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 12s
-        measurement: nginx_log
-        orderByTime: ASC
-        policy: default
-        query: SELECT min("response_time_s") FROM "nginx_log" WHERE ("host" = 'openqa'
-          AND "request" !~ /\/api\/v1\/ws/) AND $timeFilter GROUP BY time($__interval)
-          fill(0)
-        rawQuery: false
-        refId: min_nginx_response
-        resultFormat: time_series
-        select:
-        - - params:
-            - response_time_s
-            type: field
-          - params: []
-            type: min
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-        - condition: AND
-          key: request
-          operator: '!~'
-          value: /\/api\/v1\/ws/
-      refId: min_nginx_response
-      relativeTimeRange:
-        from: 1800
-        to: 0
-    execErrState: OK
-    for: 30m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: IeChie2He
-    noDataState: OK
-    panelId: 84
-    title: Web proxy Response Time alert
-    uid: IeChie2He
-- folder: Salt
-  interval: 1m
-  name: Average Ping time (ms) alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '293'
-      __dashboardUid__: WebuiDb
-      __panelId__: '76'
-      message: |-
-        The following machines were not pingable for several minutes:
-        {{ range $k, $v := $values -}}
-        {{ if (match "B[0-9]*" $k) -}}
-        * {{ $v.Labels }}{{ end }}
-        {{ end }}
+            Also see https://progress.opensuse.org/issues/73633
+        condition: A
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.3
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - min_nginx_response
+                  reducer:
+                    type: median
+              refId: A
+              type: classic_conditions
+            refId: A
+          - datasourceUid: '000000001'
+            model:
+              alias: Min
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 12s
+              measurement: nginx_log
+              orderByTime: ASC
+              policy: default
+              query: SELECT min("response_time_s") FROM "nginx_log" WHERE ("host" = 'openqa'
+                AND "request" !~ /\/api\/v1\/ws/) AND $timeFilter GROUP BY time($__interval)
+                fill(0)
+              rawQuery: false
+              refId: min_nginx_response
+              resultFormat: time_series
+              select:
+                - - params:
+                      - response_time_s
+                    type: field
+                  - params: []
+                    type: min
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+                - condition: AND
+                  key: request
+                  operator: '!~'
+                  value: /\/api\/v1\/ws/
+            refId: min_nginx_response
+            relativeTimeRange:
+              from: 1800
+              to: 0
+        execErrState: OK
+        for: 30m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: IeChie2He
+        noDataState: OK
+        panelId: 84
+        title: Web proxy Response Time alert
+        uid: IeChie2He
+  - folder: Salt
+    interval: 1m
+    name: Average Ping time (ms) alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '293'
+          __dashboardUid__: WebuiDb
+          __panelId__: '76'
+          message: |-
+            The following machines were not pingable for several minutes:
+            {{ range $k, $v := $values -}}
+            {{ if (match "B[0-9]*" $k) -}}
+            * {{ $v.Labels }}{{ end }}
+            {{ end }}
 
-        Suggested actions:
-        * Check if *you* can ping the machine (network connection within the infrastructure might be disrupted)
-        * Login over ssh if possible, otherwise use a management interface, e.g. IPMI (machine could be stuck in boot process)
-    condition: B
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: $tag_url
-        datasource:
-          type: influxdb
-          uid: '000000001'
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - url
-          type: tag
-        - params:
-          - 'null'
-          type: fill
-        interval: 20s
-        measurement: ping
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("average_response_ms") FROM "ping" WHERE ("host" = 'openqa')
-          AND $timeFilter GROUP BY time($__interval), "url" fill(null)
-        rawQuery: false
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - average_response_ms
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 200
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: avg
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: Fm02cmf4z
-    noDataState: OK
-    panelId: 76
-    title: Average Ping time (ms) alert
-    uid: Fm02cmf4z
-- folder: Salt
-  interval: 1m
-  name: Broken workers alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '311'
-      __dashboardUid__: WebuiDb
-      __panelId__: '96'
-      message: There is at least one broken worker for more than 15 minutes. Have
-        a look at https://openqa.suse.de/admin/workers to find out which one it is
-        (click the help icon to view the concrete error message).
-    condition: B
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: Number of broken workers
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        measurement: postgresql
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - broken_workers
-            type: field
-          - params: []
-            type: mean
-        tags: []
-      refId: A
-      relativeTimeRange:
-        from: 900
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 1
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: min
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 15m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: dZ025mf4z
-    noDataState: OK
-    panelId: 96
-    title: Broken workers alert
-    uid: dZ025mf4z
-- folder: Salt
-  interval: 1m
-  name: System Load alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '296'
-      __dashboardUid__: WebuiDb
-      __panelId__: '25'
-      message: ''
-    condition: A
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 200
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - B
-          reducer:
-            type: avg
-        - evaluator:
-            params:
-            - 50
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - B
-          reducer:
-            type: avg
-        refId: A
-        type: classic_conditions
-      refId: A
-    - datasourceUid: '000000001'
-      model:
-        alias: 5 Minutes Average
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 10s
-        measurement: system
-        orderByTime: ASC
-        policy: default
-        refId: B
-        resultFormat: time_series
-        select:
-        - - params:
-            - load5
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-      refId: B
-      relativeTimeRange:
-        from: 300
-        to: 0
-    execErrState: OK
-    for: 10m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: Ji0h5mfVz
-    noDataState: OK
-    panelId: 25
-    title: System Load alert
-    uid: Ji0h5mfVz
-- folder: Salt
-  interval: 10s
-  name: CPU usage alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '295'
-      __dashboardUid__: WebuiDb
-      __panelId__: '23'
-      message: |-
-        IOwait too high
+            Suggested actions:
+            * Check if *you* can ping the machine (network connection within the infrastructure might be disrupted)
+            * Login over ssh if possible, otherwise use a management interface, e.g. IPMI (machine could be stuck in boot process)
+        condition: B
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: $tag_url
+              datasource:
+                type: influxdb
+                uid: '000000001'
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - url
+                  type: tag
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 20s
+              measurement: ping
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("average_response_ms") FROM "ping" WHERE ("host" = 'openqa')
+                AND $timeFilter GROUP BY time($__interval), "url" fill(null)
+              rawQuery: false
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - average_response_ms
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+            refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 200
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: avg
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 5m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: Fm02cmf4z
+        noDataState: OK
+        panelId: 76
+        title: Average Ping time (ms) alert
+        uid: Fm02cmf4z
+  - folder: Salt
+    interval: 1m
+    name: Broken workers alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '311'
+          __dashboardUid__: WebuiDb
+          __panelId__: '96'
+          message: There is at least one broken worker for more than 15 minutes. Have
+            a look at https://openqa.suse.de/admin/workers to find out which one it is
+            (click the help icon to view the concrete error message).
+        condition: B
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: Number of broken workers
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+              measurement: postgresql
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - broken_workers
+                    type: field
+                  - params: []
+                    type: mean
+              tags: []
+            refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 1
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: min
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 15m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: dZ025mf4z
+        noDataState: OK
+        panelId: 96
+        title: Broken workers alert
+        uid: dZ025mf4z
+  - folder: Salt
+    interval: 1m
+    name: System Load alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '296'
+          __dashboardUid__: WebuiDb
+          __panelId__: '25'
+          message: ''
+        condition: A
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 200
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    type: avg
+                - evaluator:
+                    params:
+                      - 50
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    type: avg
+              refId: A
+              type: classic_conditions
+            refId: A
+          - datasourceUid: '000000001'
+            model:
+              alias: 5 Minutes Average
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 10s
+              measurement: system
+              orderByTime: ASC
+              policy: default
+              refId: B
+              resultFormat: time_series
+              select:
+                - - params:
+                      - load5
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+            refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+        execErrState: OK
+        for: 10m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: Ji0h5mfVz
+        noDataState: OK
+        panelId: 25
+        title: System Load alert
+        uid: Ji0h5mfVz
+  - folder: Salt
+    interval: 10s
+    name: CPU usage alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '295'
+          __dashboardUid__: WebuiDb
+          __panelId__: '23'
+          message: |-
+            IOwait too high
 
-        Check system journal on the host at the time of alert to see if there are any unexpected events coinciding with the alert.
+            Check system journal on the host at the time of alert to see if there are any unexpected events coinciding with the alert.
 
-        https://progress.opensuse.org/issues/69664 describes that a higher IO usage could be related to recent changes to openQA to load more test modules in parallel.
-    condition: C
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: iowait
-        dsType: influxdb
-        groupBy:
-        - params:
-          - $interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 20s
-        measurement: cpu
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - usage_iowait
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: cpu
-          operator: =
-          value: cpu-total
-        - condition: AND
-          key: host
-          operator: =
-          value: openqa
-      refId: A
-      relativeTimeRange:
-        from: 3600
-        to: 0
-    - datasourceUid: '000000001'
-      model:
-        alias: iowait
-        dsType: influxdb
-        groupBy:
-        - params:
-          - $interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 20s
-        measurement: cpu
-        orderByTime: ASC
-        policy: default
-        refId: B
-        resultFormat: time_series
-        select:
-        - - params:
-            - usage_iowait
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: cpu
-          operator: =
-          value: cpu-total
-        - condition: AND
-          key: host
-          operator: =
-          value: openqa
-      refId: B
-      relativeTimeRange:
-        from: 1500
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 500
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: avg
-        - evaluator:
-            params:
-            - 50
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - B
-          reducer:
-            type: median
-        refId: C
-        type: classic_conditions
-      refId: C
-    execErrState: OK
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: om0h5mB4k
-    noDataState: OK
-    panelId: 23
-    title: CPU usage alert
-    uid: om0h5mB4k
-- folder: Salt
-  interval: 1m
-  name: File systems alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '297'
-      __dashboardUid__: WebuiDb
-      __panelId__: '74'
-      message: One of the file systems is too full
-    condition: F
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: '/assets: Used Percentage'
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 10s
-        measurement: disk
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
-          "path" = '/assets') AND $timeFilter GROUP BY time($__interval) fill(null)
-        rawQuery: true
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - used_percent
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-        - condition: AND
-          key: path
-          operator: =
-          value: /assets
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: '000000001'
-      model:
-        alias: '/: Used Percentage'
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 10s
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
-          "path" = '/') AND $timeFilter GROUP BY time($__interval) fill(null)
-        rawQuery: true
-        refId: B
-        resultFormat: time_series
-        select:
-        - - params:
-            - value
-            type: field
-          - params: []
-            type: mean
-        tags: []
-      refId: B
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: '000000001'
-      model:
-        alias: '/results: Used Percentage'
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 10s
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
-          "path" = '/results') AND $timeFilter GROUP BY time($__interval) fill(null)
-        rawQuery: true
-        refId: C
-        resultFormat: time_series
-        select:
-        - - params:
-            - value
-            type: field
-          - params: []
-            type: mean
-        tags: []
-      refId: C
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: '000000001'
-      model:
-        alias: '/srv: Used Percentage'
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 10s
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
-          "path" = '/srv') AND $timeFilter GROUP BY time($__interval) fill(null)
-        rawQuery: true
-        refId: D
-        resultFormat: time_series
-        select:
-        - - params:
-            - value
-            type: field
-          - params: []
-            type: mean
-        tags: []
-      refId: D
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: '000000001'
-      model:
-        alias: '/space-slow: Used Percentage'
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 10s
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
-          "path" = '/space-slow') AND $timeFilter GROUP BY time($__interval) fill(null)
-        rawQuery: true
-        refId: E
-        resultFormat: time_series
-        select:
-        - - params:
-            - value
-            type: field
-          - params: []
-            type: mean
-        tags: []
-      refId: E
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 90
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - A
-          reducer:
-            type: avg
-        - evaluator:
-            params:
-            - 90
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - B
-          reducer:
-            type: avg
-        - evaluator:
-            params:
-            - 90
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - C
-          reducer:
-            type: avg
-        - evaluator:
-            params:
-            - 90
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - D
-          reducer:
-            type: avg
-        - evaluator:
-            params:
-            - 90
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - E
-          reducer:
-            type: avg
-        refId: F
-        type: classic_conditions
-      refId: F
-    execErrState: OK
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: ai0h5ifVk
-    noDataState: OK
-    panelId: 74
-    title: File systems alert
-    uid: ai0h5ifVk
-- folder: Salt
-  interval: 1m
-  name: HTTP Response alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '294'
-      __dashboardUid__: WebuiDb
-      __panelId__: '78'
-      message: ''
-    condition: B
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: Response of /tests
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 65s
-        measurement: http_response
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - response_time
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-        - condition: AND
-          key: server
-          operator: =
-          value: https://openqa.suse.de/tests
-      refId: A
-      relativeTimeRange:
-        from: 720
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 6
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: avg
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: tm0h5mf4k
-    noDataState: OK
-    panelId: 78
-    title: HTTP Response alert
-    uid: tm0h5mf4k
-- folder: Salt
-  interval: 1m
-  name: Memory usage alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '300'
-      __dashboardUid__: WebuiDb
-      __panelId__: '68'
-      message: ''
-    condition: A
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 2
-            type: lt
-          operator:
-            type: and
-          query:
-            params:
-            - B
-          reducer:
-            type: avg
-        - evaluator:
-            params:
-            - 1e+09
-            type: lt
-          operator:
-            type: or
-          query:
-            params:
-            - B
-          reducer:
-            type: avg
-        refId: A
-        type: classic_conditions
-      refId: A
-    - datasourceUid: '000000001'
-      model:
-        alias: available
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 10s
-        measurement: mem
-        orderByTime: ASC
-        policy: default
-        refId: B
-        resultFormat: time_series
-        select:
-        - - params:
-            - available
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-      refId: B
-      relativeTimeRange:
-        from: 300
-        to: 0
-    execErrState: OK
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: Ci0h5mfVz
-    noDataState: OK
-    panelId: 68
-    title: Memory usage alert
-    uid: Ci0h5mfVz
-- folder: Salt
-  interval: 1m
-  name: NTP offset alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '301'
-      __dashboardUid__: WebuiDb
-      __panelId__: '86'
-      message: ''
-    condition: B
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: Stratum $tag_stratum
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - stratum
-          type: tag
-        - params:
-          - 'null'
-          type: fill
-        interval: 20s
-        measurement: chrony
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - rms_offset
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-      refId: A
-      relativeTimeRange:
-        from: 900
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 6000
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: min
-        - evaluator:
-            params:
-            - -6000
-            type: lt
-          operator:
-            type: or
-          query:
-            params:
-            - A
-          reducer:
-            type: max
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: em025mfVz
-    noDataState: OK
-    panelId: 86
-    title: NTP offset alert
-    uid: em025mfVz
-- folder: Salt
-  interval: 1m
-  name: Open database connections by user alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '309'
-      __dashboardUid__: WebuiDb
-      __panelId__: '2'
-      message: |-
-        90% of postgresql connections reached or connections are already not possible any more. Check on OSD what query is blocking with e.g.:
+            https://progress.opensuse.org/issues/69664 describes that a higher IO usage could be related to recent changes to openQA to load more test modules in parallel.
+        condition: C
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: iowait
+              dsType: influxdb
+              groupBy:
+                - params:
+                    - $interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 20s
+              measurement: cpu
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - usage_iowait
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: cpu
+                  operator: =
+                  value: cpu-total
+                - condition: AND
+                  key: host
+                  operator: =
+                  value: openqa
+            refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+          - datasourceUid: '000000001'
+            model:
+              alias: iowait
+              dsType: influxdb
+              groupBy:
+                - params:
+                    - $interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 20s
+              measurement: cpu
+              orderByTime: ASC
+              policy: default
+              refId: B
+              resultFormat: time_series
+              select:
+                - - params:
+                      - usage_iowait
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: cpu
+                  operator: =
+                  value: cpu-total
+                - condition: AND
+                  key: host
+                  operator: =
+                  value: openqa
+            refId: B
+            relativeTimeRange:
+              from: 1500
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 500
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: avg
+                - evaluator:
+                    params:
+                      - 50
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    type: median
+              refId: C
+              type: classic_conditions
+            refId: C
+        execErrState: OK
+        for: 5m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: om0h5mB4k
+        noDataState: OK
+        panelId: 23
+        title: CPU usage alert
+        uid: om0h5mB4k
+  - folder: Salt
+    interval: 1m
+    name: File systems alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '297'
+          __dashboardUid__: WebuiDb
+          __panelId__: '74'
+          message: One of the file systems is too full
+        condition: F
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: '/assets: Used Percentage'
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 10s
+              measurement: disk
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
+                "path" = '/assets') AND $timeFilter GROUP BY time($__interval) fill(null)
+              rawQuery: true
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - used_percent
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+                - condition: AND
+                  key: path
+                  operator: =
+                  value: /assets
+            refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: '000000001'
+            model:
+              alias: '/: Used Percentage'
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 10s
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
+                "path" = '/') AND $timeFilter GROUP BY time($__interval) fill(null)
+              rawQuery: true
+              refId: B
+              resultFormat: time_series
+              select:
+                - - params:
+                      - value
+                    type: field
+                  - params: []
+                    type: mean
+              tags: []
+            refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: '000000001'
+            model:
+              alias: '/results: Used Percentage'
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 10s
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
+                "path" = '/results') AND $timeFilter GROUP BY time($__interval) fill(null)
+              rawQuery: true
+              refId: C
+              resultFormat: time_series
+              select:
+                - - params:
+                      - value
+                    type: field
+                  - params: []
+                    type: mean
+              tags: []
+            refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: '000000001'
+            model:
+              alias: '/srv: Used Percentage'
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 10s
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
+                "path" = '/srv') AND $timeFilter GROUP BY time($__interval) fill(null)
+              rawQuery: true
+              refId: D
+              resultFormat: time_series
+              select:
+                - - params:
+                      - value
+                    type: field
+                  - params: []
+                    type: mean
+              tags: []
+            refId: D
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: '000000001'
+            model:
+              alias: '/space-slow: Used Percentage'
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 10s
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("used_percent") FROM "disk" WHERE ("host" = 'openqa' AND
+                "path" = '/space-slow') AND $timeFilter GROUP BY time($__interval) fill(null)
+              rawQuery: true
+              refId: E
+              resultFormat: time_series
+              select:
+                - - params:
+                      - value
+                    type: field
+                  - params: []
+                    type: mean
+              tags: []
+            refId: E
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 90
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: avg
+                - evaluator:
+                    params:
+                      - 90
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    type: avg
+                - evaluator:
+                    params:
+                      - 90
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    type: avg
+                - evaluator:
+                    params:
+                      - 90
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - D
+                  reducer:
+                    type: avg
+                - evaluator:
+                    params:
+                      - 90
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - E
+                  reducer:
+                    type: avg
+              refId: F
+              type: classic_conditions
+            refId: F
+        execErrState: OK
+        for: 5m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: ai0h5ifVk
+        noDataState: OK
+        panelId: 74
+        title: File systems alert
+        uid: ai0h5ifVk
+  - folder: Salt
+    interval: 1m
+    name: HTTP Response alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '294'
+          __dashboardUid__: WebuiDb
+          __panelId__: '78'
+          message: ''
+        condition: B
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: Response of /tests
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 65s
+              measurement: http_response
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - response_time
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+                - condition: AND
+                  key: server
+                  operator: =
+                  value: https://openqa.suse.de/tests
+            refId: A
+            relativeTimeRange:
+              from: 720
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 6
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: avg
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 5m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: tm0h5mf4k
+        noDataState: OK
+        panelId: 78
+        title: HTTP Response alert
+        uid: tm0h5mf4k
+  - folder: Salt
+    interval: 1m
+    name: Memory usage alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '300'
+          __dashboardUid__: WebuiDb
+          __panelId__: '68'
+          message: ''
+        condition: A
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 2
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    type: avg
+                - evaluator:
+                    params:
+                      - 1e+09
+                    type: lt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    type: avg
+              refId: A
+              type: classic_conditions
+            refId: A
+          - datasourceUid: '000000001'
+            model:
+              alias: available
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 10s
+              measurement: mem
+              orderByTime: ASC
+              policy: default
+              refId: B
+              resultFormat: time_series
+              select:
+                - - params:
+                      - available
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+            refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+        execErrState: OK
+        for: 5m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: Ci0h5mfVz
+        noDataState: OK
+        panelId: 68
+        title: Memory usage alert
+        uid: Ci0h5mfVz
+  - folder: Salt
+    interval: 1m
+    name: NTP offset alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '301'
+          __dashboardUid__: WebuiDb
+          __panelId__: '86'
+          message: ''
+        condition: B
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: Stratum $tag_stratum
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - stratum
+                  type: tag
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 20s
+              measurement: chrony
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - rms_offset
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+            refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 6000
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: min
+                - evaluator:
+                    params:
+                      - -6000
+                    type: lt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: max
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 5m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: em025mfVz
+        noDataState: OK
+        panelId: 86
+        title: NTP offset alert
+        uid: em025mfVz
+  - folder: Salt
+    interval: 1m
+    name: Open database connections by user alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '309'
+          __dashboardUid__: WebuiDb
+          __panelId__: '2'
+          message: |-
+            90% of postgresql connections reached or connections are already not possible any more. Check on OSD what query is blocking with e.g.:
 
-        ```
-        SELECT datid, datname, pid, usesysid, usename, query_start, state, query FROM pg_stat_activity WHERE state = 'active' ORDER BY query_start LIMIT 10;
-        ```
-    condition: A
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 90
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - D
-          reducer:
-            type: avg
-        refId: A
-        type: classic_conditions
-      refId: A
-    - datasourceUid: '000000001'
-      model:
-        alias: TOTAL
-        groupBy:
-        - params:
-          - 10s
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        measurement: postgresql
-        orderByTime: ASC
-        policy: default
-        query: SELECT sum("open_connections") FROM "postgresql" WHERE $timeFilter
-          GROUP BY time(10s) fill(null)
-        rawQuery: false
-        refId: D
-        resultFormat: time_series
-        select:
-        - - params:
-            - open_connections
-            type: field
-          - params: []
-            type: sum
-        tags: []
-      refId: D
-      relativeTimeRange:
-        from: 300
-        to: 0
-    execErrState: OK
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: SW025iB4k
-    noDataState: OK
-    panelId: 2
-    title: Open database connections by user alert
-    uid: SW025iB4k
-- folder: Salt
-  interval: 1h
-  name: SSL expiration alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '360'
-      __dashboardUid__: WebuiDb
-      __panelId__: '98'
-      message: |-
-        The SSL certificate for the openQA webUI is nearing expiration.
+            ```
+            SELECT datid, datname, pid, usesysid, usename, query_start, state, query FROM pg_stat_activity WHERE state = 'active' ORDER BY query_start LIMIT 10;
+            ```
+        condition: A
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 90
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - D
+                  reducer:
+                    type: avg
+              refId: A
+              type: classic_conditions
+            refId: A
+          - datasourceUid: '000000001'
+            model:
+              alias: TOTAL
+              groupBy:
+                - params:
+                    - 10s
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              measurement: postgresql
+              orderByTime: ASC
+              policy: default
+              query: SELECT sum("open_connections") FROM "postgresql" WHERE $timeFilter
+                GROUP BY time(10s) fill(null)
+              rawQuery: false
+              refId: D
+              resultFormat: time_series
+              select:
+                - - params:
+                      - open_connections
+                    type: field
+                  - params: []
+                    type: sum
+              tags: []
+            refId: D
+            relativeTimeRange:
+              from: 300
+              to: 0
+        execErrState: OK
+        for: 5m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: SW025iB4k
+        noDataState: OK
+        panelId: 2
+        title: Open database connections by user alert
+        uid: SW025iB4k
+  - folder: Salt
+    interval: 1h
+    name: SSL expiration alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '360'
+          __dashboardUid__: WebuiDb
+          __panelId__: '98'
+          message: |-
+            The SSL certificate for the openQA webUI is nearing expiration.
 
-        Related progress issue: https://progress.opensuse.org/issues/103149
-    condition: B
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: SSL expiration
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - common_name
-          type: tag
-        - params:
-          - 'null'
-          type: fill
-        interval: 1h
-        measurement: x509_cert
-        orderByTime: ASC
-        policy: default
-        query: SELECT (bottom(expiry,common_name,1)/60/60/24) as exp,common_name FROM
-          "x509_cert" WHERE time >= now() - 1h
-        rawQuery: false
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - expiry
-            type: field
-          - params: []
-            type: last
-        tags:
-        - key: common_name
-          operator: =
-          value: openqa.suse.de
-      refId: A
-      relativeTimeRange:
-        from: 3600
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 604800
-            type: lt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: avg
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 1h
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: FZ0hciBVz
-    noDataState: OK
-    panelId: 98
-    title: SSL expiration alert
-    uid: FZ0hciBVz
-- folder: Salt
-  interval: 1m
-  name: 'web UI: Minion workers alert'
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '298'
-      __dashboardUid__: WebuiDb
-      __panelId__: '17'
-      message: |-
-        No Minion workers on openqa.suse.de are online. There is one worker *expected* to be online, visible under https://openqa.suse.de/minion/workers.
+            Related progress issue: https://progress.opensuse.org/issues/103149
+        condition: B
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: SSL expiration
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - common_name
+                  type: tag
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 1h
+              measurement: x509_cert
+              orderByTime: ASC
+              policy: default
+              query: SELECT (bottom(expiry,common_name,1)/60/60/24) as exp,common_name FROM
+                "x509_cert" WHERE time >= now() - 1h
+              rawQuery: false
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - expiry
+                    type: field
+                  - params: []
+                    type: last
+              tags:
+                - key: common_name
+                  operator: =
+                  value: openqa.suse.de
+            refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 604800
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: avg
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 1h
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: FZ0hciBVz
+        noDataState: OK
+        panelId: 98
+        title: SSL expiration alert
+        uid: FZ0hciBVz
+  - folder: Salt
+    interval: 1m
+    name: 'web UI: Minion workers alert'
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '298'
+          __dashboardUid__: WebuiDb
+          __panelId__: '17'
+          message: |-
+            No Minion workers on openqa.suse.de are online. There is one worker *expected* to be online, visible under https://openqa.suse.de/minion/workers.
 
-        If this alert triggers, openQA is unable to perform background tasks. Check the status of `openqa-gru.service` on openqa.suse.de to investigate. It may help to restart that service. For logs, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru`.
-    condition: A
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 1
-            type: lt
-          operator:
-            type: or
-          query:
-            params:
-            - online_workers
-          reducer:
-            type: avg
-        refId: A
-        type: classic_conditions
-      refId: A
-    - datasourceUid: '000000001'
-      model:
-        alias: ''
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 2m
-        orderByTime: ASC
-        policy: default
-        query: SELECT max(active) + max(inactive) FROM "openqa_minion_workers" WHERE
-          ("host" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(previous)
-        rawQuery: true
-        refId: online_workers
-        resultFormat: time_series
-        select:
-        - - params:
-            - value
-            type: field
-          - params: []
-            type: mean
-        tags: []
-      refId: online_workers
-      relativeTimeRange:
-        from: 600
-        to: 60
-    execErrState: OK
-    for: 10m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: 8i02cmB4z
-    noDataState: OK
-    panelId: 17
-    title: 'web UI: Minion workers alert'
-    uid: 8i02cmB4z
-- folder: Salt
-  interval: 1m
-  name: 'web UI: Too many Minion job failures alert'
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '299'
-      __dashboardUid__: WebuiDb
-      __panelId__: '19'
-      message: |-
-        Too many Minion jobs have failed on openqa.suse.de
+            If this alert triggers, openQA is unable to perform background tasks. Check the status of `openqa-gru.service` on openqa.suse.de to investigate. It may help to restart that service. For logs, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru`.
+        condition: A
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 1
+                    type: lt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - online_workers
+                  reducer:
+                    type: avg
+              refId: A
+              type: classic_conditions
+            refId: A
+          - datasourceUid: '000000001'
+            model:
+              alias: ''
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 2m
+              orderByTime: ASC
+              policy: default
+              query: SELECT max(active) + max(inactive) FROM "openqa_minion_workers" WHERE
+                ("host" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(previous)
+              rawQuery: true
+              refId: online_workers
+              resultFormat: time_series
+              select:
+                - - params:
+                      - value
+                    type: field
+                  - params: []
+                    type: mean
+              tags: []
+            refId: online_workers
+            relativeTimeRange:
+              from: 600
+              to: 60
+        execErrState: OK
+        for: 10m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: 8i02cmB4z
+        noDataState: OK
+        panelId: 17
+        title: 'web UI: Minion workers alert'
+        uid: 8i02cmB4z
+  - folder: Salt
+    interval: 1m
+    name: 'web UI: Too many Minion job failures alert'
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '299'
+          __dashboardUid__: WebuiDb
+          __panelId__: '19'
+          message: |-
+            Too many Minion jobs have failed on openqa.suse.de
 
-        Review the failed jobs on https://openqa.suse.de/minion/jobs?state=failed and create a ticket if there's not already one (see https://progress.opensuse.org/issues/96263 and related tickets) and the failed jobs aren't just a symptom of a bigger problem (e.g. database outage). After investigation remove the failed jobs (possibly keeping one instance of a failure kind around). For the general log of the Minion job queue, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru` on openqa.suse.de.
-    condition: B
-    dashboardUid: WebuiDb
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: Active
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - previous
-          type: fill
-        measurement: openqa_minion_jobs
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - active
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 2000
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: last
-        - evaluator:
-            params:
-            - 20
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - C
-          reducer:
-            type: avg
-        refId: B
-        type: classic_conditions
-      refId: B
-    - datasourceUid: '000000001'
-      model:
-        alias: Failed
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - previous
-          type: fill
-        measurement: openqa_minion_jobs
-        orderByTime: ASC
-        policy: default
-        refId: C
-        resultFormat: time_series
-        select:
-        - - params:
-            - failed
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: host
-          operator: =
-          value: openqa
-      refId: C
-      relativeTimeRange:
-        from: 300
-        to: 0
-    execErrState: OK
-    for: 5m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: liA25iB4k
-    noDataState: OK
-    panelId: 19
-    title: 'web UI: Too many Minion job failures alert'
-    uid: liA25iB4k
-- folder: Salt
-  interval: 1m
-  name: 'web UI: Disk I O time alert'
-  orgId: 1
-  rules:
-    - uid: d471ecd1-2d5c-418b-bd03-2b6b206fd27a
-      title: Disk I/O time for $host_disks
-      condition: C
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 3600
-            to: 0
-          datasourceUid: "000000001"
-          model:
-            adhocFilters: []
-            alias: '$tag_name: $col'
-            datasource:
+            Review the failed jobs on https://openqa.suse.de/minion/jobs?state=failed and create a ticket if there's not already one (see https://progress.opensuse.org/issues/96263 and related tickets) and the failed jobs aren't just a symptom of a bigger problem (e.g. database outage). After investigation remove the failed jobs (possibly keeping one instance of a failure kind around). For the general log of the Minion job queue, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru` on openqa.suse.de.
+        condition: B
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: Active
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - previous
+                  type: fill
+              measurement: openqa_minion_jobs
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - active
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+            refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 2000
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+                - evaluator:
+                    params:
+                      - 20
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    type: avg
+              refId: B
+              type: classic_conditions
+            refId: B
+          - datasourceUid: '000000001'
+            model:
+              alias: Failed
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - previous
+                  type: fill
+              measurement: openqa_minion_jobs
+              orderByTime: ASC
+              policy: default
+              refId: C
+              resultFormat: time_series
+              select:
+                - - params:
+                      - failed
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+            refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+        execErrState: OK
+        for: 5m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: liA25iB4k
+        noDataState: OK
+        panelId: 19
+        title: 'web UI: Too many Minion job failures alert'
+        uid: liA25iB4k
+  - folder: Salt
+    interval: 1m
+    name: 'web UI: Disk I O time alert'
+    orgId: 1
+    rules:
+      - uid: d471ecd1-2d5c-418b-bd03-2b6b206fd27a
+        title: Disk I/O time for $host_disks
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              adhocFilters: []
+              alias: '$tag_name: $col'
+              datasource:
                 type: influxdb
                 uid: "000000001"
-            dsType: influxdb
-            function: mean
-            groupBy:
+              dsType: influxdb
+              function: mean
+              groupBy:
                 - interval: auto
                   params:
                     - auto
@@ -1293,32 +1293,32 @@ groups:
                   params:
                     - tag
                   type: tag
-            intervalMs: 1000
-            limit: ""
-            maxDataPoints: 43200
-            measurement: io_reads
-            orderByTime: ASC
-            policy: default
-            query: SELECT non_negative_derivative(mean("io_time"),1s) FROM "diskio" WHERE  ("host" = 'openqa' AND "name" =~ /vd[a-z]$/)  AND $timeFilter GROUP BY time($interval), "name"::tag, *
-            rawQuery: true
-            refId: A
-            resultFormat: time_series
-            select:
+              intervalMs: 1000
+              limit: ""
+              maxDataPoints: 43200
+              measurement: io_reads
+              orderByTime: ASC
+              policy: default
+              query: SELECT non_negative_derivative(mean("io_time"),1s) FROM "diskio" WHERE  ("host" = 'openqa' AND "name" =~ /vd[a-z]$/)  AND $timeFilter GROUP BY time($interval), "name"::tag, *
+              rawQuery: true
+              refId: A
+              resultFormat: time_series
+              select:
                 - - params:
-                        - value
+                      - value
                     type: field
                   - params: []
                     type: mean
-            slimit: ""
-            tags: []
-            tz: ""
-        - refId: B
-          relativeTimeRange:
-            from: 3600
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              slimit: ""
+              tags: []
+              tz: ""
+          - refId: B
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params: []
                     type: gt
@@ -1326,115 +1326,115 @@ groups:
                     type: and
                   query:
                     params:
-                        - C
+                      - C
                   reducer:
                     params: []
                     type: last
                   type: query
-            datasource:
+              datasource:
                 type: __expr__
                 uid: __expr__
-            expression: A
-            hide: false
-            intervalMs: 1000
-            maxDataPoints: 43200
-            reducer: max
-            refId: B
-            type: reduce
-        - refId: C
-          relativeTimeRange:
-            from: 3600
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              expression: A
+              hide: false
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: max
+              refId: B
+              type: reduce
+          - refId: C
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 20000
+                      - 20000
                     type: gt
                   operator:
                     type: and
                   query:
                     params:
-                        - D
+                      - D
                   reducer:
                     params: []
                     type: last
                   type: query
-            datasource:
+              datasource:
                 type: __expr__
                 uid: __expr__
-            expression: B
-            hide: false
-            intervalMs: 1000
-            maxDataPoints: 43200
-            refId: C
-            type: threshold
-      dashboardUid: WebuiDb
-      panelId: 158
-      noDataState: OK
-      execErrState: OK
-      for: 5m
-      annotations:
-        __dashboardUid__: WebuiDb
-        __panelId__: "158"
-      isPaused: false
-- orgId: 1
-  name: PostgreSQL "returned rows" alert
-  folder: openQA
-  interval: 5m
-  rules:
-    - uid: a171549e-d862-43c1-8ad7-92496045a8d4
-      title: PostgreSQL "returned rows" alert
-      condition: Threshold for returned rows
-      data:
-        - refId: Returned rows
-          relativeTimeRange:
-            from: 300
-            to: 0
-          datasourceUid: "000000001"
-          model:
-            adhocFilters: []
-            alias: returned
-            datasource:
+              expression: B
+              hide: false
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        dashboardUid: WebuiDb
+        panelId: 158
+        noDataState: OK
+        execErrState: OK
+        for: 5m
+        annotations:
+          __dashboardUid__: WebuiDb
+          __panelId__: "158"
+        isPaused: false
+  - orgId: 1
+    name: PostgreSQL "returned rows" alert
+    folder: openQA
+    interval: 5m
+    rules:
+      - uid: a171549e-d862-43c1-8ad7-92496045a8d4
+        title: PostgreSQL "returned rows" alert
+        condition: Threshold for returned rows
+        data:
+          - refId: Returned rows
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              adhocFilters: []
+              alias: returned
+              datasource:
                 type: influxdb
                 uid: "000000001"
-            dsType: influxdb
-            groupBy:
+              dsType: influxdb
+              groupBy:
                 - params:
                     - 10s
                   type: time
                 - params:
                     - "null"
                   type: fill
-            intervalMs: 1000
-            limit: ""
-            maxDataPoints: 43200
-            measurement: postgresql
-            orderByTime: ASC
-            policy: default
-            query: ""
-            refId: Returned rows
-            resultFormat: time_series
-            select:
+              intervalMs: 1000
+              limit: ""
+              maxDataPoints: 43200
+              measurement: postgresql
+              orderByTime: ASC
+              policy: default
+              query: ""
+              refId: Returned rows
+              resultFormat: time_series
+              select:
                 - - params:
-                        - tup_returned
+                      - tup_returned
                     type: field
                   - params: []
                     type: mean
                   - params:
-                        - 1s
+                      - 1s
                     type: non_negative_derivative
-            slimit: ""
-            tags: []
-            tz: ""
-        - refId: Last number of returned rows
-          relativeTimeRange:
-            from: 300
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              slimit: ""
+              tags: []
+              tz: ""
+          - refId: Last number of returned rows
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params: []
                     type: gt
@@ -1442,181 +1442,181 @@ groups:
                     type: and
                   query:
                     params:
-                        - F
+                      - F
                   reducer:
                     params: []
                     type: last
                   type: query
-            datasource:
+              datasource:
                 type: __expr__
                 uid: __expr__
-            expression: Returned rows
-            hide: false
-            intervalMs: 1000
-            maxDataPoints: 43200
-            reducer: last
-            refId: Last number of returned rows
-            type: reduce
-        - refId: Threshold for returned rows
-          relativeTimeRange:
-            from: 300
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              expression: Returned rows
+              hide: false
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: last
+              refId: Last number of returned rows
+              type: reduce
+          - refId: Threshold for returned rows
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 5e+07
+                      - 5e+07
                     type: gt
                   operator:
                     type: and
                   query:
                     params:
-                        - G
+                      - G
                   reducer:
                     params: []
                     type: last
                   type: query
-            datasource:
+              datasource:
                 type: __expr__
                 uid: __expr__
-            expression: Last number of returned rows
-            hide: false
-            intervalMs: 1000
-            maxDataPoints: 43200
-            refId: Threshold for returned rows
-            type: threshold
-      dashboardUid: WebuiDb
-      panelId: 89
-      noDataState: OK
-      execErrState: OK
-      for: 3h
-      annotations:
-        __dashboardUid__: WebuiDb
-        __panelId__: "89"
-        description: The PostgreSQL database has been returning an unusually high number of rows. This might indicate indexes are not utilized correctly. Checkout https://open.qa/docs/#_working_on_database_related_performance_problems for debugging this.
-      labels:
-        __contacts__: '"osd-admins"'
-        rule_uid: postgres_returned_rows
-      isPaused: false
-- orgId: 1
-  name: 'web UI: Too many Minion jobs with failed hooks'
-  folder: Salt
-  interval: 1h
-  rules:
-    - uid: e06a9f3f-205f-4733-b63b-4a84dfea1535
-      title: 'web UI: Minion jobs failed hook alert'
-      condition: A
-      data:
-        - refId: minion_jobs_failed_hook_script
-          relativeTimeRange:
-            from: 86400
-            to: 0
-          datasourceUid: "000000001"
-          model:
-            alias: ""
-            groupBy:
+              expression: Last number of returned rows
+              hide: false
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: Threshold for returned rows
+              type: threshold
+        dashboardUid: WebuiDb
+        panelId: 89
+        noDataState: OK
+        execErrState: OK
+        for: 3h
+        annotations:
+          __dashboardUid__: WebuiDb
+          __panelId__: "89"
+          description: The PostgreSQL database has been returning an unusually high number of rows. This might indicate indexes are not utilized correctly. Checkout https://open.qa/docs/#_working_on_database_related_performance_problems for debugging this.
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: postgres_returned_rows
+        isPaused: false
+  - orgId: 1
+    name: 'web UI: Too many Minion jobs with failed hooks'
+    folder: Salt
+    interval: 1h
+    rules:
+      - uid: e06a9f3f-205f-4733-b63b-4a84dfea1535
+        title: 'web UI: Minion jobs failed hook alert'
+        condition: A
+        data:
+          - refId: minion_jobs_failed_hook_script
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              alias: ""
+              groupBy:
                 - params:
                     - 1h
                   type: time
                 - params:
                     - "0"
                   type: fill
-            interval: 2m
-            intervalMs: 1000
-            maxDataPoints: 43200
-            measurement: openqa_minion_jobs_hook_rc_failed
-            orderByTime: ASC
-            policy: default
-            query: SELECT sum("rc_failed_per_10min") FROM "default"."openqa_minion_jobs_hook_rc_failed" WHERE $timeFilter GROUP BY time(1h) fill(0)
-            rawQuery: false
-            refId: minion_jobs_failed_hook_script
-            resultFormat: time_series
-            select:
+              interval: 2m
+              intervalMs: 1000
+              maxDataPoints: 43200
+              measurement: openqa_minion_jobs_hook_rc_failed
+              orderByTime: ASC
+              policy: default
+              query: SELECT sum("rc_failed_per_10min") FROM "default"."openqa_minion_jobs_hook_rc_failed" WHERE $timeFilter GROUP BY time(1h) fill(0)
+              rawQuery: false
+              refId: minion_jobs_failed_hook_script
+              resultFormat: time_series
+              select:
                 - - params:
-                        - rc_failed_per_10min
+                      - rc_failed_per_10min
                     type: field
                   - params: []
                     type: sum
-            tags: []
-        - refId: A
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              tags: []
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 20
+                      - 20
                     type: gt
                   operator:
                     type: or
                   query:
                     params:
-                        - minion_jobs_failed_hook_script
+                      - minion_jobs_failed_hook_script
                   reducer:
                     params: []
                     type: last
-            intervalMs: 1000
-            maxDataPoints: 43200
-            refId: A
-            type: classic_conditions
-      dashboardUid: WebuiDb
-      panelId: 201
-      noDataState: OK
-      execErrState: OK
-      for: 0s
-      annotations:
-        __dashboardUid__: WebuiDb
-        __panelId__: "201"
-        message: Too many minion jobs with failed hook scripts.
-      labels:
-        __contacts__: '"osd-admins"'
-        rule_uid: minion_jobs_failed_hook_alert
-      isPaused: false
-- orgId: 1
-  name: 'web UI: Too many HTTP response with code 5xx'
-  folder: Salt
-  interval: 5m
-  rules:
-    - uid: d949dbae-8034-4bf4-8418-f148dfcaf89d
-      title: 'web UI: Too many 5xx HTTP responses alert'
-      condition: C
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 86400
-            to: 0
-          datasourceUid: "000000001"
-          model:
-            adhocFilters: []
-            alias: $tag_resp_code
-            datasource:
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: A
+              type: classic_conditions
+        dashboardUid: WebuiDb
+        panelId: 201
+        noDataState: OK
+        execErrState: OK
+        for: 0s
+        annotations:
+          __dashboardUid__: WebuiDb
+          __panelId__: "201"
+          message: Too many minion jobs with failed hook scripts.
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: minion_jobs_failed_hook_alert
+        isPaused: false
+  - orgId: 1
+    name: 'web UI: Too many HTTP response with code 5xx'
+    folder: Salt
+    interval: 5m
+    rules:
+      - uid: d949dbae-8034-4bf4-8418-f148dfcaf89d
+        title: 'web UI: Too many 5xx HTTP responses alert'
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              adhocFilters: []
+              alias: $tag_resp_code
+              datasource:
                 type: influxdb
                 uid: "000000001"
-            groupBy:
+              groupBy:
                 - params:
                     - $__interval
                   type: time
-            intervalMs: 30000
-            limit: ""
-            maxDataPoints: 43200
-            measurement: nginx_log
-            orderByTime: ASC
-            policy: default
-            query: ""
-            rawSql: ""
-            refId: A
-            resultFormat: time_series
-            select:
+              intervalMs: 30000
+              limit: ""
+              maxDataPoints: 43200
+              measurement: nginx_log
+              orderByTime: ASC
+              policy: default
+              query: ""
+              rawSql: ""
+              refId: A
+              resultFormat: time_series
+              select:
                 - - params:
-                        - request
+                      - request
                     type: field
                   - params: []
                     type: count
-            slimit: ""
-            tags:
+              slimit: ""
+              tags:
                 - key: host
                   operator: =
                   value: openqa
@@ -1628,18 +1628,18 @@ groups:
                   key: request::field
                   operator: '!~'
                   value: /\/(ws|liveviewhandler)\//
-            tz: ""
-        - refId: B
-          relativeTimeRange:
-            from: 86400
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              tz: ""
+          - refId: B
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 0
-                        - 0
+                      - 0
+                      - 0
                     type: gt
                   operator:
                     type: and
@@ -1649,29 +1649,29 @@ groups:
                     params: []
                     type: avg
                   type: query
-            datasource:
+              datasource:
                 name: Expression
                 type: __expr__
                 uid: __expr__
-            expression: A
-            intervalMs: 1000
-            maxDataPoints: 43200
-            reducer: sum
-            refId: B
-            settings:
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: sum
+              refId: B
+              settings:
                 mode: dropNN
-            type: reduce
-        - refId: C
-          relativeTimeRange:
-            from: 86400
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              type: reduce
+          - refId: C
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 2000 # high number because restarts of openqa-webui.service can cause many 5xx responses
-                        - 0
+                      - 2000  # high number because restarts of openqa-webui.service can cause many 5xx responses
+                      - 0
                     type: gt
                   operator:
                     type: and
@@ -1681,31 +1681,31 @@ groups:
                     params: []
                     type: avg
                   type: query
-            datasource:
+              datasource:
                 name: Expression
                 type: __expr__
                 uid: __expr__
-            expression: B
-            intervalMs: 1000
-            maxDataPoints: 43200
-            refId: C
-            type: threshold
-      dashboardUid: WebuiDb
-      panelId: 80
-      noDataState: OK
-      execErrState: OK
-      for: 20m
-      annotations:
-        __dashboardUid__: WebuiDb
-        __panelId__: "80"
-        description: |-
+              expression: B
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        dashboardUid: WebuiDb
+        panelId: 80
+        noDataState: OK
+        execErrState: OK
+        for: 20m
+        annotations:
+          __dashboardUid__: WebuiDb
+          __panelId__: "80"
+          description: |-
             Look into the web proxy or openQA web UI logs to identify which routes trigger this and if there are clear error messages with call traces to identify and fix the faulty procedures.
 
             For more details see https://progress.opensuse.org/issues/158556
-        runbook_url: ""
-        summary: Too many HTTP responses with code 5xx received in the last 24 hours
-      labels:
-        "": ""
-        __contacts__: '"osd-admins"'
-        rule_uid: http_response_5xx_alert
-      isPaused: false
+          runbook_url: ""
+          summary: Too many HTTP responses with code 5xx received in the last 24 hours
+        labels:
+          "": ""
+          __contacts__: '"osd-admins"'
+          rule_uid: http_response_5xx_alert
+        isPaused: false

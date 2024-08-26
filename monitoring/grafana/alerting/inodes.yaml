@@ -1,77 +1,77 @@
 ---
 apiVersion: 1
 groups:
-- orgId: 1
-  name: inodes
-  folder: Salt
-  interval: 1m
-  rules:
-    - uid: d74e764d-6097-4d14-b77c-76c8d1da6ff0
-      title: Inode utilization
-      condition: C
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 300
-            to: 0
-          datasourceUid: "000000001"
-          model:
-            adhocFilters: []
-            alias: '$tag_host: $tag_path'
-            datasource:
+  - orgId: 1
+    name: inodes
+    folder: Salt
+    interval: 1m
+    rules:
+      - uid: d74e764d-6097-4d14-b77c-76c8d1da6ff0
+        title: Inode utilization
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              adhocFilters: []
+              alias: '$tag_host: $tag_path'
+              datasource:
                 type: influxdb
                 uid: "000000001"
-            intervalMs: 1000
-            limit: ""
-            maxDataPoints: 43200
-            measurement: ""
-            policy: ""
-            query: SELECT mean("inodes_used")/mean("inodes_total") FROM "autogen"."disk" WHERE $timeFilter AND ("origin"::tag = 'salt') GROUP BY time($__interval), "path"::tag, "host"::tag fill(null)
-            rawQuery: true
-            refId: A
-            resultFormat: time_series
-            slimit: ""
-            tz: ""
-        - refId: C
-          relativeTimeRange:
-            from: 300
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              intervalMs: 1000
+              limit: ""
+              maxDataPoints: 43200
+              measurement: ""
+              policy: ""
+              query: SELECT mean("inodes_used")/mean("inodes_total") FROM "autogen"."disk" WHERE $timeFilter AND ("origin"::tag = 'salt') GROUP BY time($__interval), "path"::tag, "host"::tag fill(null)
+              rawQuery: true
+              refId: A
+              resultFormat: time_series
+              slimit: ""
+              tz: ""
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 0.5
+                      - 0.5
                     type: gt
                   operator:
                     type: and
                   query:
                     params:
-                        - C
+                      - C
                   reducer:
                     params: []
                     type: last
                   type: query
-            datasource:
+              datasource:
                 type: __expr__
                 uid: __expr__
-            expression: B
-            hide: false
-            intervalMs: 1000
-            maxDataPoints: 43200
-            refId: C
-            type: threshold
-        - refId: B
-          relativeTimeRange:
-            from: 300
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              expression: B
+              hide: false
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 0
-                        - 0
+                      - 0
+                      - 0
                     type: gt
                   operator:
                     type: and
@@ -81,23 +81,23 @@ groups:
                     params: []
                     type: avg
                   type: query
-            datasource:
+              datasource:
                 name: Expression
                 type: __expr__
                 uid: __expr__
-            expression: A
-            intervalMs: 1000
-            maxDataPoints: 43200
-            reducer: last
-            refId: B
-            settings:
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: last
+              refId: B
+              settings:
                 mode: dropNN
-            type: reduce
-      noDataState: OK
-      execErrState: OK
-      for: 5m
-      annotations:
-        description: Inode utilization inside the OSD infrastructure is too high. Check affected hosts and consider removing (temporary) files.
-      labels:
-        __contacts__: '"osd-admins"'
-      isPaused: false
+              type: reduce
+        noDataState: OK
+        execErrState: OK
+        for: 5m
+        annotations:
+          description: Inode utilization inside the OSD infrastructure is too high. Check affected hosts and consider removing (temporary) files.
+        labels:
+          __contacts__: '"osd-admins"'
+        isPaused: false

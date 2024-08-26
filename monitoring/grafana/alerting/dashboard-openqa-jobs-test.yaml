@@ -18,12 +18,12 @@ groups:
       model:
         alias: Incompletes (not restarted) of last 24h
         groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
+          - params:
+              - $__interval
+            type: time
+          - params:
+              - 'null'
+            type: fill
         interval: ''
         measurement: postgresql
         orderByTime: ASC
@@ -31,11 +31,11 @@ groups:
         refId: A
         resultFormat: time_series
         select:
-        - - params:
-            - incompletes_not_restarted_last_24h
-            type: field
-          - params: []
-            type: distinct
+          - - params:
+                - incompletes_not_restarted_last_24h
+              type: field
+            - params: []
+              type: distinct
         tags: []
       refId: A
       relativeTimeRange:
@@ -44,17 +44,17 @@ groups:
     - datasourceUid: __expr__
       model:
         conditions:
-        - evaluator:
-            params:
-            - 300
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: last
+          - evaluator:
+              params:
+                - 300
+              type: gt
+            operator:
+              type: and
+            query:
+              params:
+                - A
+            reducer:
+              type: last
         refId: B
         type: classic_conditions
       refId: B
@@ -85,9 +85,9 @@ groups:
       model:
         alias: New incompletes
         groupBy:
-        - params:
-          - $__interval
-          type: time
+          - params:
+              - $__interval
+            type: time
         interval: ''
         measurement: postgresql
         orderByTime: ASC
@@ -95,13 +95,13 @@ groups:
         refId: A
         resultFormat: time_series
         select:
-        - - params:
-            - incompletes_last_24h
-            type: field
-          - params: []
-            type: distinct
-          - params: []
-            type: non_negative_difference
+          - - params:
+                - incompletes_last_24h
+              type: field
+            - params: []
+              type: distinct
+            - params: []
+              type: non_negative_difference
         tags: []
       refId: A
       relativeTimeRange:
@@ -110,17 +110,17 @@ groups:
     - datasourceUid: __expr__
       model:
         conditions:
-        - evaluator:
-            params:
-            - 200
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: max
+          - evaluator:
+              params:
+                - 200
+              type: gt
+            operator:
+              type: and
+            query:
+              params:
+                - A
+            reducer:
+              type: max
         refId: B
         type: classic_conditions
       refId: B
@@ -171,12 +171,12 @@ groups:
       model:
         alias: Scheduled+Blocked
         groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
+          - params:
+              - $__interval
+            type: time
+          - params:
+              - 'null'
+            type: fill
         interval: 40s
         measurement: openqa_jobs
         orderByTime: ASC
@@ -187,13 +187,13 @@ groups:
         refId: A
         resultFormat: time_series
         select:
-        - - params:
-            - scheduled
-            type: field
+          - - params:
+                - scheduled
+              type: field
         tags:
-        - key: url
-          operator: =
-          value: https://openqa.suse.de
+          - key: url
+            operator: =
+            value: https://openqa.suse.de
       refId: A
       relativeTimeRange:
         from: 43200
@@ -202,12 +202,12 @@ groups:
       model:
         alias: Scheduled+Blocked
         groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
+          - params:
+              - $__interval
+            type: time
+          - params:
+              - 'null'
+            type: fill
         interval: 40s
         measurement: openqa_jobs
         orderByTime: ASC
@@ -218,13 +218,13 @@ groups:
         refId: B
         resultFormat: time_series
         select:
-        - - params:
-            - scheduled
-            type: field
+          - - params:
+                - scheduled
+              type: field
         tags:
-        - key: url
-          operator: =
-          value: https://openqa.suse.de
+          - key: url
+            operator: =
+            value: https://openqa.suse.de
       refId: B
       relativeTimeRange:
         from: 60
@@ -232,50 +232,50 @@ groups:
     - datasourceUid: __expr__
       model:
         conditions:
-        - evaluator:
-            params:
-            - 8000
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - running
-          reducer:
-            type: last
-        - evaluator:
-            params:
-            - 12000
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - blocked
-          reducer:
-            type: last
-        - evaluator:
-            params:
-            - 14000
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - B
-          reducer:
-            type: last
-        - evaluator:
-            params:
-            - 10000
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: last
+          - evaluator:
+              params:
+                - 8000
+              type: gt
+            operator:
+              type: and
+            query:
+              params:
+                - running
+            reducer:
+              type: last
+          - evaluator:
+              params:
+                - 12000
+              type: gt
+            operator:
+              type: or
+            query:
+              params:
+                - blocked
+            reducer:
+              type: last
+          - evaluator:
+              params:
+                - 14000
+              type: gt
+            operator:
+              type: or
+            query:
+              params:
+                - B
+            reducer:
+              type: last
+          - evaluator:
+              params:
+                - 10000
+              type: gt
+            operator:
+              type: and
+            query:
+              params:
+                - A
+            reducer:
+              type: last
         refId: C
         type: classic_conditions
       refId: C
@@ -283,12 +283,12 @@ groups:
       model:
         alias: Blocked
         groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
+          - params:
+              - $__interval
+            type: time
+          - params:
+              - 'null'
+            type: fill
         interval: 40s
         measurement: openqa_jobs
         orderByTime: ASC
@@ -299,15 +299,15 @@ groups:
         refId: blocked
         resultFormat: time_series
         select:
-        - - params:
-            - blocked
-            type: field
-          - params: []
-            type: mean
+          - - params:
+                - blocked
+              type: field
+            - params: []
+              type: mean
         tags:
-        - key: url
-          operator: =
-          value: https://openqa.suse.de
+          - key: url
+            operator: =
+            value: https://openqa.suse.de
       refId: blocked
       relativeTimeRange:
         from: 60
@@ -316,12 +316,12 @@ groups:
       model:
         alias: Running
         groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
+          - params:
+              - $__interval
+            type: time
+          - params:
+              - 'null'
+            type: fill
         interval: 40s
         measurement: openqa_jobs
         orderByTime: ASC
@@ -329,15 +329,15 @@ groups:
         refId: running
         resultFormat: time_series
         select:
-        - - params:
-            - running
-            type: field
-          - params: []
-            type: mean
+          - - params:
+                - running
+              type: field
+            - params: []
+              type: mean
         tags:
-        - key: url
-          operator: =
-          value: https://openqa.suse.de
+          - key: url
+            operator: =
+            value: https://openqa.suse.de
       refId: running
       relativeTimeRange:
         from: 60
@@ -375,17 +375,17 @@ groups:
     - datasourceUid: __expr__
       model:
         conditions:
-        - evaluator:
-            params:
-            - 30
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - ratio_mm_failed
-          reducer:
-            type: last
+          - evaluator:
+              params:
+                - 30
+              type: gt
+            operator:
+              type: and
+            query:
+              params:
+                - ratio_mm_failed
+            reducer:
+              type: last
         refId: A
         type: classic_conditions
       refId: A
@@ -393,15 +393,15 @@ groups:
       model:
         alias: ratio_mm_failed
         groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - result
-          type: tag
-        - params:
-          - 'null'
-          type: fill
+          - params:
+              - $__interval
+            type: time
+          - params:
+              - result
+            type: tag
+          - params:
+              - 'null'
+            type: fill
         interval: 2m
         measurement: postgresql
         orderByTime: ASC
@@ -409,15 +409,15 @@ groups:
         refId: ratio_mm_failed
         resultFormat: time_series
         select:
-        - - params:
-            - ratio_mm
-            type: field
-          - params: []
-            type: last
+          - - params:
+                - ratio_mm
+              type: field
+            - params: []
+              type: last
         tags:
-        - key: result
-          operator: =
-          value: failed
+          - key: result
+            operator: =
+            value: failed
       refId: ratio_mm_failed
       relativeTimeRange:
         from: 120
@@ -449,15 +449,15 @@ groups:
           model:
             alias: Ratio of failed MM tests
             groupBy:
-                - params:
-                    - $__interval
-                  type: time
-                - params:
-                    - result
-                  type: tag
-                - params:
-                    - "null"
-                  type: fill
+              - params:
+                  - $__interval
+                type: time
+              - params:
+                  - result
+                type: tag
+              - params:
+                  - "null"
+                type: fill
             interval: 2m
             intervalMs: 1000
             maxDataPoints: 43200
@@ -467,15 +467,15 @@ groups:
             refId: ratio_mm_failed
             resultFormat: time_series
             select:
-                - - params:
-                        - ratio_mm
-                    type: field
-                  - params: []
-                    type: last
+              - - params:
+                    - ratio_mm
+                  type: field
+                - params: []
+                  type: last
             tags:
-                - key: result
-                  operator: =
-                  value: failed
+              - key: result
+                operator: =
+                value: failed
         - refId: A
           relativeTimeRange:
             from: 600
@@ -483,18 +483,18 @@ groups:
           datasourceUid: __expr__
           model:
             conditions:
-                - evaluator:
-                    params:
-                        - 20
-                    type: gt
-                  operator:
-                    type: and
-                  query:
-                    params:
-                        - ratio_mm_failed
-                  reducer:
-                    params: []
-                    type: avg
+              - evaluator:
+                  params:
+                    - 20
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params:
+                    - ratio_mm_failed
+                reducer:
+                  params: []
+                  type: avg
             intervalMs: 1000
             maxDataPoints: 43200
             refId: A
@@ -538,17 +538,17 @@ groups:
     - datasourceUid: __expr__
       model:
         conditions:
-        - evaluator:
-            params:
-            - 20
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - ratio_failed_p
-          reducer:
-            type: avg
+          - evaluator:
+              params:
+                - 20
+              type: gt
+            operator:
+              type: and
+            query:
+              params:
+                - ratio_failed_p
+            reducer:
+              type: avg
         refId: A
         type: classic_conditions
       refId: A
@@ -556,12 +556,12 @@ groups:
       model:
         alias: ratio of failed openQA jobs
         groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - previous
-          type: fill
+          - params:
+              - $__interval
+            type: time
+          - params:
+              - previous
+            type: fill
         interval: 2m
         measurement: postgresql
         orderByTime: ASC
@@ -569,11 +569,11 @@ groups:
         refId: ratio_failed_p
         resultFormat: time_series
         select:
-        - - params:
-            - ratio_failed_p
-            type: field
-          - params: []
-            type: last
+          - - params:
+                - ratio_failed_p
+              type: field
+            - params: []
+              type: last
         tags: []
       refId: ratio_failed_p
       relativeTimeRange:
@@ -606,15 +606,15 @@ groups:
           model:
             alias: running
             datasource:
-                type: influxdb
-                uid: "000000001"
+              type: influxdb
+              uid: "000000001"
             groupBy:
-                - params:
-                    - 1m
-                  type: time
-                - params:
-                    - "null"
-                  type: fill
+              - params:
+                  - 1m
+                type: time
+              - params:
+                  - 'null'
+                type: fill
             intervalMs: 1000
             maxDataPoints: 43200
             measurement: openqa_jobs
@@ -623,15 +623,15 @@ groups:
             refId: A
             resultFormat: time_series
             select:
-                - - params:
-                        - running
-                    type: field
-                  - params: []
-                    type: mean
+              - - params:
+                    - running
+                  type: field
+                - params: []
+                  type: mean
             tags:
-                - key: url::tag
-                  operator: =
-                  value: https://openqa.suse.de
+              - key: url::tag
+                operator: =
+                value: https://openqa.suse.de
         - refId: B
           relativeTimeRange:
             from: 900
@@ -640,15 +640,15 @@ groups:
           model:
             alias: scheduled
             datasource:
-                type: influxdb
-                uid: "000000001"
+              type: influxdb
+              uid: "000000001"
             groupBy:
-                - params:
-                    - 1m
-                  type: time
-                - params:
-                    - "null"
-                  type: fill
+              - params:
+                  - 1m
+                type: time
+              - params:
+                  - "null"
+                type: fill
             intervalMs: 1000
             maxDataPoints: 43200
             measurement: openqa_jobs
@@ -657,15 +657,15 @@ groups:
             refId: B
             resultFormat: time_series
             select:
-                - - params:
-                        - scheduled
-                    type: field
-                  - params: []
-                    type: mean
+              - - params:
+                    - scheduled
+                  type: field
+                - params: []
+                  type: mean
             tags:
-                - key: url::tag
-                  operator: =
-                  value: https://openqa.suse.de
+              - key: url::tag
+                operator: =
+                value: https://openqa.suse.de
         - refId: C
           relativeTimeRange:
             from: 900
@@ -673,30 +673,30 @@ groups:
           datasourceUid: __expr__
           model:
             conditions:
-                - evaluator:
-                    params:
-                        - 0
-                        - 0
-                    type: gt
-                  operator:
-                    type: and
-                  query:
-                    params: []
-                  reducer:
-                    params: []
-                    type: avg
-                  type: query
+              - evaluator:
+                  params:
+                    - 0
+                    - 0
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: []
+                reducer:
+                  params: []
+                  type: avg
+                type: query
             datasource:
-                name: Expression
-                type: __expr__
-                uid: __expr__
+              name: Expression
+              type: __expr__
+              uid: __expr__
             expression: A
             intervalMs: 1000
             maxDataPoints: 43200
             reducer: last
             refId: C
             settings:
-                mode: dropNN
+              mode: dropNN
             type: reduce
         - refId: D
           relativeTimeRange:
@@ -705,30 +705,30 @@ groups:
           datasourceUid: __expr__
           model:
             conditions:
-                - evaluator:
-                    params:
-                        - 0
-                        - 0
-                    type: gt
-                  operator:
-                    type: and
-                  query:
-                    params: []
-                  reducer:
-                    params: []
-                    type: avg
-                  type: query
+              - evaluator:
+                  params:
+                    - 0
+                    - 0
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: []
+                reducer:
+                  params: []
+                  type: avg
+                type: query
             datasource:
-                name: Expression
-                type: __expr__
-                uid: __expr__
+              name: Expression
+              type: __expr__
+              uid: __expr__
             expression: B
             intervalMs: 1000
             maxDataPoints: 43200
             reducer: last
             refId: D
             settings:
-                mode: dropNN
+              mode: dropNN
             type: reduce
         - refId: E
           relativeTimeRange:
@@ -737,38 +737,38 @@ groups:
           datasourceUid: __expr__
           model:
             conditions:
-                - evaluator:
-                    params:
-                        - 5
-                        - 0
-                    type: lt
-                  operator:
-                    type: and
-                  query:
-                    params:
-                        - A
-                  reducer:
-                    params: []
-                    type: last
-                  type: query
-                - evaluator:
-                    params:
-                        - 100
-                        - 0
-                    type: gt
-                  operator:
-                    type: and
-                  query:
-                    params:
-                        - B
-                  reducer:
-                    params: []
-                    type: last
-                  type: query
+              - evaluator:
+                  params:
+                    - 5
+                    - 0
+                  type: lt
+                operator:
+                  type: and
+                query:
+                  params:
+                    - A
+                reducer:
+                  params: []
+                  type: last
+                type: query
+              - evaluator:
+                  params:
+                    - 100
+                    - 0
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params:
+                    - B
+                reducer:
+                  params: []
+                  type: last
+                type: query
             datasource:
-                name: Expression
-                type: __expr__
-                uid: __expr__
+              name: Expression
+              type: __expr__
+              uid: __expr__
             expression: ""
             intervalMs: 1000
             maxDataPoints: 43200

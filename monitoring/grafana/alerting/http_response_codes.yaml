@@ -1,106 +1,106 @@
 apiVersion: 1
 groups:
-    - orgId: 1
-      name: http_response_codes
-      folder: Salt
-      interval: 5m
-      rules:
-        - uid: b3a53df8-b7ee-48dd-9325-8a541187737f
-          title: External http responses
-          condition: C
-          data:
-            - refId: A
-              relativeTimeRange:
-                from: 600
-                to: 0
-              datasourceUid: "000000001"
-              model:
-                alias: $tag_server
-                groupBy:
-                    - params:
-                        - $__interval
-                      type: time
-                    - params:
-                        - server::tag
-                      type: tag
-                    - params:
-                        - "null"
-                      type: fill
-                intervalMs: 1000
-                maxDataPoints: 43200
-                measurement: http_response
-                orderByTime: ASC
-                policy: default
-                refId: A
-                resultFormat: time_series
-                select:
-                    - - params:
-                            - http_response_code
-                        type: field
-                      - params: []
-                        type: distinct
-                tags: []
-            - refId: B
-              relativeTimeRange:
-                from: 600
-                to: 0
-              datasourceUid: __expr__
-              model:
-                conditions:
-                    - evaluator:
-                        params: []
-                        type: gt
-                      operator:
-                        type: and
-                      query:
-                        params:
-                            - B
-                      reducer:
-                        params: []
-                        type: last
-                      type: query
-                datasource:
-                    type: __expr__
-                    uid: __expr__
-                expression: A
-                intervalMs: 1000
-                maxDataPoints: 43200
-                reducer: last
-                refId: B
-                type: reduce
-            - refId: C
-              relativeTimeRange:
-                from: 600
-                to: 0
-              datasourceUid: __expr__
-              model:
-                conditions:
-                    - evaluator:
-                        params:
-                            - 200
-                            - 299
-                        type: outside_range
-                      operator:
-                        type: and
-                      query:
-                        params:
-                            - C
-                      reducer:
-                        params: []
-                        type: last
-                      type: query
-                datasource:
-                    type: __expr__
-                    uid: __expr__
-                expression: B
-                intervalMs: 1000
-                maxDataPoints: 43200
-                refId: C
-                type: threshold
-          noDataState: OK
-          execErrState: OK
-          for: 5m
-          annotations:
-            description: An HTTP endpoint we need for proper operation delivers an http status code which indicates an issue with the service or its reachability.
-            summary: HTTP endpoint does not properly work
-          isPaused: false
+  - orgId: 1
+    name: http_response_codes
+    folder: Salt
+    interval: 5m
+    rules:
+      - uid: b3a53df8-b7ee-48dd-9325-8a541187737f
+        title: External http responses
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              alias: $tag_server
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - server::tag
+                  type: tag
+                - params:
+                    - "null"
+                  type: fill
+              intervalMs: 1000
+              maxDataPoints: 43200
+              measurement: http_response
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - http_response_code
+                    type: field
+                  - params: []
+                    type: distinct
+              tags: []
+          - refId: B
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params: []
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: last
+              refId: B
+              type: reduce
+          - refId: C
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 200
+                      - 299
+                    type: outside_range
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: B
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        noDataState: OK
+        execErrState: OK
+        for: 5m
+        annotations:
+          description: An HTTP endpoint we need for proper operation delivers an http status code which indicates an issue with the service or its reachability.
+          summary: HTTP endpoint does not properly work
+        isPaused: false
