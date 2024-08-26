@@ -13,7 +13,7 @@ variables:
   # make sure to apply workaround for
   # https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
   # within script sections as salt calls can take long
-  salt_call: "salt-call --local -l debug state.apply"
+  salt_call: salt-call --local -l debug state.apply
 
 .test_setup: &test_setup
   stage: test
@@ -158,5 +158,5 @@ test-libvirt:
 
 
 include:
-  - 'test-static.yml'
-  - 'deploy.yml'
+  - test-static.yml
+  - deploy.yml

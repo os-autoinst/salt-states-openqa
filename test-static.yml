@@ -1,12 +1,22 @@
 ---
 # yamllint disable rule:line-length
 
-# test CI files so far
 test-yaml:
   stage: test-static
   image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:yamllint
   script:
-    - yamllint $(if command -v git >/dev/null; then git ls-files "*.yml" "*.yaml"; else find -name '*.yml' -or -name "*.yaml"; fi)
+    # Check plain yaml files
+    - >-
+      if command -v git >/dev/null; then \
+        git ls-files -z "*.yml" "*.yaml"; else \
+        find -name "*.yml" -or -name "*.yaml" -print0; fi | \
+        xargs -0 yamllint
+    # Check sls files without jinja delimiters
+    - >-
+      if command -v git >/dev/null; then \
+        git ls-files -z "*.sls" | xargs -0r -- grep -LZF -e '{{' -e '{%' -e '{#'; else \
+        find -name '*.sls' ! -exec grep -qF -e '{{' -e '{%' -e '{#' {} \; -print0; fi | \
+        xargs -0 yamllint
 
 test-salt-lint:
   stage: test-static
