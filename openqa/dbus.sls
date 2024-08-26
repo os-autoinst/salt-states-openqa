@@ -5,4 +5,4 @@
 /etc/dbus-1/system.d/system-local.conf:
   file.managed:
     - contents:
-      - '<busconfig><limit name="max_connections_per_user">512</limit></busconfig>'
+        - '<busconfig><limit name="max_connections_per_user">512</limit></busconfig>'

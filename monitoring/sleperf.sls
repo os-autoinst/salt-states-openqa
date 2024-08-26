@@ -5,7 +5,7 @@ sleperf.packages:
     - retry:
         attempts: 5
     - pkgs:
-      - python3-requests
+        - python3-requests
 
 
 /etc/telegraf/telegraf.d/sleperf.conf:

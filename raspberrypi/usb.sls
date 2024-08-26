@@ -15,8 +15,8 @@ _openqa-worker:
   user.present:
     - remove_groups: False
     - groups:
-      - dialout
-      - video
+        - dialout
+        - video
 
 apparmor:
   service.masked

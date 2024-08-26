@@ -5,7 +5,7 @@ maintenance_queue.packages:
     - retry:
         attempts: 5
     - pkgs:
-      - python3-pandas
+        - python3-pandas
 
 
 /etc/telegraf/telegraf.d/maintenance_queue.conf:

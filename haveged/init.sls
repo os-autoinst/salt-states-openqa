@@ -5,4 +5,4 @@
   module.run:
     - name: service.systemctl_reload
     - onchanges:
-      - file: /etc/systemd/system/haveged.service.d/override.conf
+        - file: /etc/systemd/system/haveged.service.d/override.conf
