@@ -1,6 +1,6 @@
 utilities.packages:
   pkg.installed:
-    - refresh: False
+    - refresh: false
     - retry:
         attempts: 5
     - pkgs:

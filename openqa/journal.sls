@@ -2,7 +2,7 @@
 # vanishing/stuck workers
 /var/log/journal:
   file.directory:
-    - makedirs: True
+    - makedirs: true
 
 rsyslog:
   pkg.purged

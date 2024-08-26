@@ -1,16 +1,16 @@
 bluez:
   pkg.installed:
-    - refresh: False
+    - refresh: false
     - retry:
         attempts: 5
 
 bluetooth.service:
   service.running:
-    - enable: True
+    - enable: true
 
 /etc/systemd/system/bluetooth-config.service:
   file.managed:
-    - create: True
+    - create: true
     - contents: |
         [Unit]
         Description=Configure bluetooth
@@ -30,4 +30,4 @@ bluetooth.service:
 
 bluetooth-config.service:
   service.running:
-    - enable: True
+    - enable: true

@@ -1,6 +1,6 @@
 /boot/efi/extraconfig.txt:
   file.managed:
-    - create: True
+    - create: true
     - contents: |
         dtparam=i2c_arm=on
         device_tree=bcm2711-rpi-4-b.dtb

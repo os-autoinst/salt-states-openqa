@@ -2,4 +2,4 @@
   mount.mounted:
     - device: tmpfs
     - fstype: tmpfs
-    - mount: True
+    - mount: true
