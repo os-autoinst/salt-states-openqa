@@ -1,7 +1,6 @@
 ---
-
 extends: default
 
 rules:
-  indentation: disable
+  document-start: disable
   line-length: disable

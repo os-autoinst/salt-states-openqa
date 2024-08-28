@@ -1,6 +1,6 @@
 salt-master:
   pkg.installed:
-    - refresh: False
+    - refresh: false
     - retry:
         attempts: 5
 
@@ -9,7 +9,7 @@ salt-master:
   file.replace:
     - pattern: '^(server_id_use_crc: )(.*)$'
     - repl: 'server_id_use_crc: adler32'
-    - append_if_not_found: True
+    - append_if_not_found: true
 
 # Prevent slow machines to run into timeout in their response
 # https://progress.opensuse.org/issues/58956
@@ -20,10 +20,10 @@ master_config:
   file.serialize:
     - name: /etc/salt/master
     - serializer: yaml
-    - merge_if_exists: True
+    - merge_if_exists: true
     - dataset:
         interface: "::"
-        ipv6: True
+        ipv6: true
         timeout: 90
         ext_pillar:
           - file_tree:

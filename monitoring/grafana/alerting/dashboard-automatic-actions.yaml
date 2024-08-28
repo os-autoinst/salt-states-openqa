@@ -1,144 +1,144 @@
 ---
 apiVersion: 1
 groups:
-- folder: Salt
-  interval: 15m
-  name: '[openqa] openqaworker-arm-1 online (long-time) alert'
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '204'
-      __dashboardUid__: 1bNU0StZz
-      __panelId__: '5'
-      message: |-
-        The IPMI management interface for this machine is inaccessible (again). The machine itself is also not reachable over ping.
+  - folder: Salt
+    interval: 15m
+    name: '[openqa] openqaworker-arm-1 online (long-time) alert'
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '204'
+          __dashboardUid__: 1bNU0StZz
+          __panelId__: '5'
+          message: |-
+            The IPMI management interface for this machine is inaccessible (again). The machine itself is also not reachable over ping.
 
-        Suggested action: Reset the machine including the management interface.
+            Suggested action: Reset the machine including the management interface.
 
-        Similar issues were handled in https://infra.nue.suse.com/SelfService/Update.html?id=174650 and https://infra.nue.suse.com/SelfService/Display.html?id=166330 and https://infra.nue.suse.com/SelfService/Display.html?id=164419 and https://infra.nue.suse.com/SelfService/Display.html?id=153124 for the same machine
-    condition: B
-    dashboardUid: 1bNU0StZz
-    data:
-    - datasourceUid: '000000001'
-      model:
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        measurement: ping
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - packets_received
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: url
-          operator: =
-          value: openqaworker-arm-1.qe.nue2.suse.org
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 1
-            type: lt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: last
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 1h
-    isPaused: false
-    labels:
-      rule_uid: Nk0h5mB4z
-    noDataState: NoData
-    panelId: 5
-    title: '[openqa] openqaworker-arm-1 online (long-time) alert'
-    uid: Nk0h5mB4z
-- folder: Salt
-  interval: 1m
-  name: openqaworker-arm-1 offline
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '183'
-      __dashboardUid__: 1bNU0StZz
-      __panelId__: '2'
-      message: Triggering reboot of openqaworker-arm-1 - see https://gitlab.suse.de/openqa/grafana-webhook-actions/-/jobs
-        for details, status and history
-    condition: B
-    dashboardUid: 1bNU0StZz
-    data:
-    - datasourceUid: '000000001'
-      model:
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        measurement: ping
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - packets_received
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: url
-          operator: =
-          value: openqaworker-arm-1.qe.nue2.suse.org
-      refId: A
-      relativeTimeRange:
-        from: 300
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 1
-            type: lt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: last
-        refId: B
-        type: classic_conditions
-      refId: B
-    execErrState: OK
-    for: 6m
-    isPaused: false
-    labels:
-      __contacts__: '"Trigger reboot of openqaworker-arm-1"'
-      rule_uid: VkA25mf4k
-    noDataState: NoData
-    panelId: 2
-    title: openqaworker-arm-1 offline
-    uid: VkA25mf4k
+            Similar issues were handled in https://infra.nue.suse.com/SelfService/Update.html?id=174650 and https://infra.nue.suse.com/SelfService/Display.html?id=166330 and https://infra.nue.suse.com/SelfService/Display.html?id=164419 and https://infra.nue.suse.com/SelfService/Display.html?id=153124 for the same machine
+        condition: B
+        dashboardUid: 1bNU0StZz
+        data:
+          - datasourceUid: '000000001'
+            model:
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              measurement: ping
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - packets_received
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: url
+                  operator: =
+                  value: openqaworker-arm-1.qe.nue2.suse.org
+            refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 1
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 1h
+        isPaused: false
+        labels:
+          rule_uid: Nk0h5mB4z
+        noDataState: NoData
+        panelId: 5
+        title: '[openqa] openqaworker-arm-1 online (long-time) alert'
+        uid: Nk0h5mB4z
+  - folder: Salt
+    interval: 1m
+    name: openqaworker-arm-1 offline
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '183'
+          __dashboardUid__: 1bNU0StZz
+          __panelId__: '2'
+          message: Triggering reboot of openqaworker-arm-1 - see https://gitlab.suse.de/openqa/grafana-webhook-actions/-/jobs
+            for details, status and history
+        condition: B
+        dashboardUid: 1bNU0StZz
+        data:
+          - datasourceUid: '000000001'
+            model:
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              measurement: ping
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - packets_received
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: url
+                  operator: =
+                  value: openqaworker-arm-1.qe.nue2.suse.org
+            refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 1
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+            refId: B
+        execErrState: OK
+        for: 6m
+        isPaused: false
+        labels:
+          __contacts__: '"Trigger reboot of openqaworker-arm-1"'
+          rule_uid: VkA25mf4k
+        noDataState: NoData
+        panelId: 2
+        title: openqaworker-arm-1 offline
+        uid: VkA25mf4k

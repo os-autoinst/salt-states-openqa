@@ -213,6 +213,23 @@ Changes provided in merge requests are tested with GitLab CI tests. These tests
 are using a set of test pillars found within this repository's subdirectory
 `t/pillar`.
 
+## Linting
+
+Run `make check` to check YAML files (e.g. for duplicate keys).
+
+> `make check` runs *yamllint* against sls files. If the sls includes some
+> templating, it is recommended to exclude this file from the checks.
+> This should occur automatically if Jinja templating delimiters are detected
+> inside the sls file. Otherwise, you might do that manually by editing
+> .yamllint configuration file.
+>
+> ```
+> ignore: |
+>   myfile.sls
+> ```
+
+You can also run `make tidy` to automatically format the YAML files.
+
 ## Remarks about the systemd-units used to start workers
 The salt states achieve a setup which allows stopping/restarting workers without
 interrupting currently running jobs following the corresponding [upstream

@@ -1,11 +1,11 @@
 utilities.packages:
   pkg.installed:
-    - refresh: False
+    - refresh: false
     - retry:
         attempts: 5
     - pkgs:
-      - git-core # not present on machines of all roles anyways
-      - smartmontools # to check SMART values of disks
+        - git-core  # not present on machines of all roles anyways
+        - smartmontools  # to check SMART values of disks
 
 /opt/retry:
   git.latest:

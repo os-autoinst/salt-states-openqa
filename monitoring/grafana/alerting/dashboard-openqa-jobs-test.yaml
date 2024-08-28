@@ -1,454 +1,454 @@
 ---
 apiVersion: 1
 groups:
-- folder: Salt
-  interval: 1m
-  name: Incomplete jobs (not restarted) of last 24h alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '203'
-      __dashboardUid__: nRDab3Jiz
-      __panelId__: '17'
-      message: ''
-    condition: B
-    dashboardUid: nRDab3Jiz
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: Incompletes (not restarted) of last 24h
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: ''
-        measurement: postgresql
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - incompletes_not_restarted_last_24h
-            type: field
-          - params: []
-            type: distinct
-        tags: []
-      refId: A
-      relativeTimeRange:
-        from: 60
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 300
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: last
-        refId: B
-        type: classic_conditions
-      refId: B
-    noDataState: OK
-    execErrState: OK
-    for: 10m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: cXo2cmBVk
-    panelId: 17
-    title: Incomplete jobs (not restarted) of last 24h alert
-    uid: cXo2cmBVk
-- folder: Salt
-  interval: 10s
-  name: New incompletes alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '200'
-      __dashboardUid__: nRDab3Jiz
-      __panelId__: '16'
-      message: ''
-    condition: B
-    dashboardUid: nRDab3Jiz
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: New incompletes
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        interval: ''
-        measurement: postgresql
-        orderByTime: ASC
-        policy: default
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - incompletes_last_24h
-            type: field
-          - params: []
-            type: distinct
-          - params: []
-            type: non_negative_difference
-        tags: []
-      refId: A
-      relativeTimeRange:
-        from: 60
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 200
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: max
-        refId: B
-        type: classic_conditions
-      refId: B
-    noDataState: OK
-    execErrState: OK
-    for: 30s
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: dXThcmf4k
-    panelId: 16
-    title: New incompletes alert
-    uid: dXThcmf4k
-- folder: Salt
-  interval: 10s
-  name: 'Queue: State (SUSE) alert'
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '201'
-      __dashboardUid__: nRDab3Jiz
-      __panelId__: '9'
-      message: "If thresholds are exceeded investigate the following:\n* Are our workers
-        actually working on a reasonable amount of jobs (e.g. running is not near-zero
-        while there are many scheduled jobs)\n* What component/user/system triggers
-        jobs, see https://openqa.suse.de/admin/productlog\n* Find out if there any
-        obvious problems visible on https://openqa.suse.de/tests\n* Calculate the
-        ratio of cloned scheduled jobs to find out if there is a high number of unexpected
-        clones (by users or systems or due to crashing workers, etc.), e.g. using
-        the following SQL query:\n\n```\nselect round ((select count(j1.id) from jobs
-        as j1 where state = 'scheduled' and (select j2.id from jobs as j2 where j1.id
-        = j2.clone_id limit 1) is not null) * 100. / (select count(id) from jobs where
-        state = 'scheduled'), 2) as \"percentage of clones in all scheduled jobs\";\n
-        percentage of clones in all scheduled jobs \n--------------------------------------------\n
-        \                                     10.11\n(1 row)\n```\n\n* Find out if
-        most jobs come from particular products, flavors, build, e.g. using something
-        like the following SQL query example for build matching \"livepatch\" or \"kgraft\"
-        in a certain timespan (keep in mind that the database timestamps are in UTC):\n\n```\nselect
-        count(id) from jobs where t_created >= '2021-09-14 17:00' and t_created <=
-        '2021-09-14 18:00' and (build like '%livepatch%' or build like '%kgraft%');\n```\n\n*
-        Especially for SUSE QA maintenance tests look into the incident scheduling
-        pipelines in https://gitlab.suse.de/qa-maintenance/bot-ng/-/pipelines\n\nAlso
-        see https://progress.opensuse.org/issues/98667 for details."
-    condition: C
-    dashboardUid: nRDab3Jiz
-    data:
-    - datasourceUid: '000000001'
-      model:
-        alias: Scheduled+Blocked
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 40s
-        measurement: openqa_jobs
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("scheduled")+mean("blocked") FROM "openqa_jobs" WHERE ("url"
-          = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval) fill(null)
-        rawQuery: true
-        refId: A
-        resultFormat: time_series
-        select:
-        - - params:
-            - scheduled
-            type: field
-        tags:
-        - key: url
-          operator: =
-          value: https://openqa.suse.de
-      refId: A
-      relativeTimeRange:
-        from: 43200
-        to: 0
-    - datasourceUid: '000000001'
-      model:
-        alias: Scheduled+Blocked
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 40s
-        measurement: openqa_jobs
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("scheduled")+mean("blocked") FROM "openqa_jobs" WHERE ("url"
-          = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval) fill(null)
-        rawQuery: true
-        refId: B
-        resultFormat: time_series
-        select:
-        - - params:
-            - scheduled
-            type: field
-        tags:
-        - key: url
-          operator: =
-          value: https://openqa.suse.de
-      refId: B
-      relativeTimeRange:
-        from: 60
-        to: 0
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 8000
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - running
-          reducer:
-            type: last
-        - evaluator:
-            params:
-            - 12000
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - blocked
-          reducer:
-            type: last
-        - evaluator:
-            params:
-            - 14000
-            type: gt
-          operator:
-            type: or
-          query:
-            params:
-            - B
-          reducer:
-            type: last
-        - evaluator:
-            params:
-            - 10000
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - A
-          reducer:
-            type: last
-        refId: C
-        type: classic_conditions
-      refId: C
-    - datasourceUid: '000000001'
-      model:
-        alias: Blocked
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 40s
-        measurement: openqa_jobs
-        orderByTime: ASC
-        policy: default
-        query: SELECT mean("blocked") FROM "openqa_jobs" WHERE ("url" = 'https://openqa.suse.de')
-          AND $timeFilter GROUP BY time($__interval) fill(null)
-        rawQuery: false
-        refId: blocked
-        resultFormat: time_series
-        select:
-        - - params:
-            - blocked
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: url
-          operator: =
-          value: https://openqa.suse.de
-      refId: blocked
-      relativeTimeRange:
-        from: 60
-        to: 0
-    - datasourceUid: '000000001'
-      model:
-        alias: Running
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - 'null'
-          type: fill
-        interval: 40s
-        measurement: openqa_jobs
-        orderByTime: ASC
-        policy: default
-        refId: running
-        resultFormat: time_series
-        select:
-        - - params:
-            - running
-            type: field
-          - params: []
-            type: mean
-        tags:
-        - key: url
-          operator: =
-          value: https://openqa.suse.de
-      refId: running
-      relativeTimeRange:
-        from: 60
-        to: 0
-    noDataState: OK
-    execErrState: OK
-    for: 1m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: FuT2cmf4k
-    panelId: 9
-    title: 'Queue: State (SUSE) alert'
-    uid: FuT2cmf4k
-- folder: Salt
-  interval: 2m
-  name: Ratio of not restarted multi-machine tests by result alert (short spike)
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '358'
-      __dashboardUid__: nRDab3Jiz
-      __panelId__: '24'
-      message: |-
-        Investigation hints:
-        * Investigate what caused the ratio to change that significantly
-        * Check https://openqa.suse.de/tests?resultfilter=Failed and look for a correlation
-        * Follow https://progress.opensuse.org/projects/openqatests/wiki/Wiki#Statistical-investigation
-        * Check if the amount of failed jobs stays high for longer or if this was just caused by a single scenario failing as a whole
+  - folder: Salt
+    interval: 1m
+    name: Incomplete jobs (not restarted) of last 24h alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '203'
+          __dashboardUid__: nRDab3Jiz
+          __panelId__: '17'
+          message: ''
+        condition: B
+        dashboardUid: nRDab3Jiz
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: Incompletes (not restarted) of last 24h
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: ''
+              measurement: postgresql
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - incompletes_not_restarted_last_24h
+                    type: field
+                  - params: []
+                    type: distinct
+              tags: []
+            refId: A
+            relativeTimeRange:
+              from: 60
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 300
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: B
+              type: classic_conditions
+            refId: B
+        noDataState: OK
+        execErrState: OK
+        for: 10m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: cXo2cmBVk
+        panelId: 17
+        title: Incomplete jobs (not restarted) of last 24h alert
+        uid: cXo2cmBVk
+  - folder: Salt
+    interval: 10s
+    name: New incompletes alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '200'
+          __dashboardUid__: nRDab3Jiz
+          __panelId__: '16'
+          message: ''
+        condition: B
+        dashboardUid: nRDab3Jiz
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: New incompletes
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+              interval: ''
+              measurement: postgresql
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - incompletes_last_24h
+                    type: field
+                  - params: []
+                    type: distinct
+                  - params: []
+                    type: non_negative_difference
+              tags: []
+            refId: A
+            relativeTimeRange:
+              from: 60
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 200
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: max
+              refId: B
+              type: classic_conditions
+            refId: B
+        noDataState: OK
+        execErrState: OK
+        for: 30s
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: dXThcmf4k
+        panelId: 16
+        title: New incompletes alert
+        uid: dXThcmf4k
+  - folder: Salt
+    interval: 10s
+    name: 'Queue: State (SUSE) alert'
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '201'
+          __dashboardUid__: nRDab3Jiz
+          __panelId__: '9'
+          message: "If thresholds are exceeded investigate the following:\n* Are our workers
+            actually working on a reasonable amount of jobs (e.g. running is not near-zero
+            while there are many scheduled jobs)\n* What component/user/system triggers
+            jobs, see https://openqa.suse.de/admin/productlog\n* Find out if there any
+            obvious problems visible on https://openqa.suse.de/tests\n* Calculate the
+            ratio of cloned scheduled jobs to find out if there is a high number of unexpected
+            clones (by users or systems or due to crashing workers, etc.), e.g. using
+            the following SQL query:\n\n```\nselect round ((select count(j1.id) from jobs
+            as j1 where state = 'scheduled' and (select j2.id from jobs as j2 where j1.id
+            = j2.clone_id limit 1) is not null) * 100. / (select count(id) from jobs where
+            state = 'scheduled'), 2) as \"percentage of clones in all scheduled jobs\";\n
+            percentage of clones in all scheduled jobs \n--------------------------------------------\n
+            \                                     10.11\n(1 row)\n```\n\n* Find out if
+            most jobs come from particular products, flavors, build, e.g. using something
+            like the following SQL query example for build matching \"livepatch\" or \"kgraft\"
+            in a certain timespan (keep in mind that the database timestamps are in UTC):\n\n```\nselect
+            count(id) from jobs where t_created >= '2021-09-14 17:00' and t_created <=
+            '2021-09-14 18:00' and (build like '%livepatch%' or build like '%kgraft%');\n```\n\n*
+            Especially for SUSE QA maintenance tests look into the incident scheduling
+            pipelines in https://gitlab.suse.de/qa-maintenance/bot-ng/-/pipelines\n\nAlso
+            see https://progress.opensuse.org/issues/98667 for details."
+        condition: C
+        dashboardUid: nRDab3Jiz
+        data:
+          - datasourceUid: '000000001'
+            model:
+              alias: Scheduled+Blocked
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 40s
+              measurement: openqa_jobs
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("scheduled")+mean("blocked") FROM "openqa_jobs" WHERE ("url"
+                = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval) fill(null)
+              rawQuery: true
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - scheduled
+                    type: field
+              tags:
+                - key: url
+                  operator: =
+                  value: https://openqa.suse.de
+            refId: A
+            relativeTimeRange:
+              from: 43200
+              to: 0
+          - datasourceUid: '000000001'
+            model:
+              alias: Scheduled+Blocked
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 40s
+              measurement: openqa_jobs
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("scheduled")+mean("blocked") FROM "openqa_jobs" WHERE ("url"
+                = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval) fill(null)
+              rawQuery: true
+              refId: B
+              resultFormat: time_series
+              select:
+                - - params:
+                      - scheduled
+                    type: field
+              tags:
+                - key: url
+                  operator: =
+                  value: https://openqa.suse.de
+            refId: B
+            relativeTimeRange:
+              from: 60
+              to: 0
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 8000
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - running
+                  reducer:
+                    type: last
+                - evaluator:
+                    params:
+                      - 12000
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - blocked
+                  reducer:
+                    type: last
+                - evaluator:
+                    params:
+                      - 14000
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    type: last
+                - evaluator:
+                    params:
+                      - 10000
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: last
+              refId: C
+              type: classic_conditions
+            refId: C
+          - datasourceUid: '000000001'
+            model:
+              alias: Blocked
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 40s
+              measurement: openqa_jobs
+              orderByTime: ASC
+              policy: default
+              query: SELECT mean("blocked") FROM "openqa_jobs" WHERE ("url" = 'https://openqa.suse.de')
+                AND $timeFilter GROUP BY time($__interval) fill(null)
+              rawQuery: false
+              refId: blocked
+              resultFormat: time_series
+              select:
+                - - params:
+                      - blocked
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: url
+                  operator: =
+                  value: https://openqa.suse.de
+            refId: blocked
+            relativeTimeRange:
+              from: 60
+              to: 0
+          - datasourceUid: '000000001'
+            model:
+              alias: Running
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 40s
+              measurement: openqa_jobs
+              orderByTime: ASC
+              policy: default
+              refId: running
+              resultFormat: time_series
+              select:
+                - - params:
+                      - running
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: url
+                  operator: =
+                  value: https://openqa.suse.de
+            refId: running
+            relativeTimeRange:
+              from: 60
+              to: 0
+        noDataState: OK
+        execErrState: OK
+        for: 1m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: FuT2cmf4k
+        panelId: 9
+        title: 'Queue: State (SUSE) alert'
+        uid: FuT2cmf4k
+  - folder: Salt
+    interval: 2m
+    name: Ratio of not restarted multi-machine tests by result alert (short spike)
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '358'
+          __dashboardUid__: nRDab3Jiz
+          __panelId__: '24'
+          message: |-
+            Investigation hints:
+            * Investigate what caused the ratio to change that significantly
+            * Check https://openqa.suse.de/tests?resultfilter=Failed and look for a correlation
+            * Follow https://progress.opensuse.org/projects/openqatests/wiki/Wiki#Statistical-investigation
+            * Check if the amount of failed jobs stays high for longer or if this was just caused by a single scenario failing as a whole
 
-        See https://progress.opensuse.org/issues/96191 for details
-    condition: A
-    dashboardUid: nRDab3Jiz
-    data:
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 30
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - ratio_mm_failed
-          reducer:
-            type: last
-        refId: A
-        type: classic_conditions
-      refId: A
-    - datasourceUid: '000000001'
-      model:
-        alias: ratio_mm_failed
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - result
-          type: tag
-        - params:
-          - 'null'
-          type: fill
-        interval: 2m
-        measurement: postgresql
-        orderByTime: ASC
-        policy: default
-        refId: ratio_mm_failed
-        resultFormat: time_series
-        select:
-        - - params:
-            - ratio_mm
-            type: field
-          - params: []
-            type: last
-        tags:
-        - key: result
-          operator: =
-          value: failed
-      refId: ratio_mm_failed
-      relativeTimeRange:
-        from: 120
-        to: 0
-    noDataState: OK
-    execErrState: OK
-    for: 6m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: 0XohcmfVk
-    panelId: 24
-    title: Ratio of not restarted multi-machine tests by result alert
-    uid: 0XohcmfVk
-- orgId: 1
-  name: Ratio of not restarted multi-machine tests by result alert (longterm)
-  folder: Salt
-  interval: 30m
-  rules:
-    - uid: e0912f8b-36e8-40d4-939d-8e8e16a08178
-      title: Ratio of not restarted multi-machine tests by result alert (longterm)
-      condition: ratio_mm_failed
-      data:
-        - refId: ratio_mm_failed
-          relativeTimeRange:
-            from: 3600
-            to: 0
-          datasourceUid: "000000001"
-          model:
-            alias: Ratio of failed MM tests
-            groupBy:
+            See https://progress.opensuse.org/issues/96191 for details
+        condition: A
+        dashboardUid: nRDab3Jiz
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 30
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - ratio_mm_failed
+                  reducer:
+                    type: last
+              refId: A
+              type: classic_conditions
+            refId: A
+          - datasourceUid: '000000001'
+            model:
+              alias: ratio_mm_failed
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - result
+                  type: tag
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 2m
+              measurement: postgresql
+              orderByTime: ASC
+              policy: default
+              refId: ratio_mm_failed
+              resultFormat: time_series
+              select:
+                - - params:
+                      - ratio_mm
+                    type: field
+                  - params: []
+                    type: last
+              tags:
+                - key: result
+                  operator: =
+                  value: failed
+            refId: ratio_mm_failed
+            relativeTimeRange:
+              from: 120
+              to: 0
+        noDataState: OK
+        execErrState: OK
+        for: 6m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: 0XohcmfVk
+        panelId: 24
+        title: Ratio of not restarted multi-machine tests by result alert
+        uid: 0XohcmfVk
+  - orgId: 1
+    name: Ratio of not restarted multi-machine tests by result alert (longterm)
+    folder: Salt
+    interval: 30m
+    rules:
+      - uid: e0912f8b-36e8-40d4-939d-8e8e16a08178
+        title: Ratio of not restarted multi-machine tests by result alert (longterm)
+        condition: ratio_mm_failed
+        data:
+          - refId: ratio_mm_failed
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              alias: Ratio of failed MM tests
+              groupBy:
                 - params:
                     - $__interval
                   type: time
@@ -458,225 +458,225 @@ groups:
                 - params:
                     - "null"
                   type: fill
-            interval: 2m
-            intervalMs: 1000
-            maxDataPoints: 43200
-            measurement: postgresql
-            orderByTime: ASC
-            policy: default
-            refId: ratio_mm_failed
-            resultFormat: time_series
-            select:
+              interval: 2m
+              intervalMs: 1000
+              maxDataPoints: 43200
+              measurement: postgresql
+              orderByTime: ASC
+              policy: default
+              refId: ratio_mm_failed
+              resultFormat: time_series
+              select:
                 - - params:
-                        - ratio_mm
+                      - ratio_mm
                     type: field
                   - params: []
                     type: last
-            tags:
+              tags:
                 - key: result
                   operator: =
                   value: failed
-        - refId: A
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 20
+                      - 20
                     type: gt
                   operator:
                     type: and
                   query:
                     params:
-                        - ratio_mm_failed
+                      - ratio_mm_failed
                   reducer:
                     params: []
                     type: avg
-            intervalMs: 1000
-            maxDataPoints: 43200
-            refId: A
-            type: classic_conditions
-      dashboardUid: nRDab3Jiz
-      panelId: 24
-      noDataState: OK
-      execErrState: OK
-      for: 6h
-      annotations:
-        __alertId__: "358"
-        __dashboardUid__: nRDab3Jiz
-        __panelId__: "24"
-        message: |-
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: A
+              type: classic_conditions
+        dashboardUid: nRDab3Jiz
+        panelId: 24
+        noDataState: OK
+        execErrState: OK
+        for: 6h
+        annotations:
+          __alertId__: "358"
+          __dashboardUid__: nRDab3Jiz
+          __panelId__: "24"
+          message: |-
             Investigation hints:
             * Investigate what caused the ratio to change that significantly
             * Check https://openqa.suse.de/tests?resultfilter=Failed and look for a correlation
             * Follow https://progress.opensuse.org/projects/openqatests/wiki/Wiki#Statistical-investigation
 
             See https://progress.opensuse.org/issues/96191 for details
-      labels:
-        __contacts__: '"osd-admins"'
-        rule_uid: 0XohcmfVk
-      isPaused: false
-- folder: Salt
-  interval: 2m
-  name: openQA job fail ratio alert
-  orgId: 1
-  rules:
-  - annotations:
-      __alertId__: '357'
-      __dashboardUid__: nRDab3Jiz
-      __panelId__: '21'
-      message: |-
-        Ratio of failed vs. all jobs over time exceeds threshold. Check for general problems causing unexpected false-positive test failures
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: 0XohcmfVk
+        isPaused: false
+  - folder: Salt
+    interval: 2m
+    name: openQA job fail ratio alert
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '357'
+          __dashboardUid__: nRDab3Jiz
+          __panelId__: '21'
+          message: |-
+            Ratio of failed vs. all jobs over time exceeds threshold. Check for general problems causing unexpected false-positive test failures
 
-        https://progress.opensuse.org/issues/96191
-    condition: A
-    dashboardUid: nRDab3Jiz
-    data:
-    - datasourceUid: __expr__
-      model:
-        conditions:
-        - evaluator:
-            params:
-            - 20
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - ratio_failed_p
-          reducer:
-            type: avg
-        refId: A
-        type: classic_conditions
-      refId: A
-    - datasourceUid: '000000001'
-      model:
-        alias: ratio of failed openQA jobs
-        groupBy:
-        - params:
-          - $__interval
-          type: time
-        - params:
-          - previous
-          type: fill
-        interval: 2m
-        measurement: postgresql
-        orderByTime: ASC
-        policy: default
-        refId: ratio_failed_p
-        resultFormat: time_series
-        select:
-        - - params:
-            - ratio_failed_p
-            type: field
-          - params: []
-            type: last
-        tags: []
-      refId: ratio_failed_p
-      relativeTimeRange:
-        from: 120
-        to: 0
-    noDataState: OK
-    execErrState: OK
-    for: 2m
-    isPaused: false
-    labels:
-      __contacts__: '"osd-admins"'
-      rule_uid: hXT2cif4z
-    panelId: 21
-    title: openQA job fail ratio alert
-    uid: hXT2cif4z
-- folder: Salt
-  orgId: 1
-  name: "Queue: State (SUSE) - too few jobs executed alert"
-  interval: 10m
-  rules:
-    - uid: ad8b5de6-d5ca-43e0-b734-6289739bc2d8
-      title: 'Queue: State (SUSE) - too few jobs executed alert'
-      condition: E
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 900
-            to: 0
-          datasourceUid: "000000001"
-          model:
-            alias: running
-            datasource:
-                type: influxdb
-                uid: "000000001"
-            groupBy:
-                - params:
-                    - 1m
-                  type: time
-                - params:
-                    - "null"
-                  type: fill
-            intervalMs: 1000
-            maxDataPoints: 43200
-            measurement: openqa_jobs
-            orderByTime: ASC
-            policy: autogen
+            https://progress.opensuse.org/issues/96191
+        condition: A
+        dashboardUid: nRDab3Jiz
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 20
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - ratio_failed_p
+                  reducer:
+                    type: avg
+              refId: A
+              type: classic_conditions
             refId: A
-            resultFormat: time_series
-            select:
+          - datasourceUid: '000000001'
+            model:
+              alias: ratio of failed openQA jobs
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - previous
+                  type: fill
+              interval: 2m
+              measurement: postgresql
+              orderByTime: ASC
+              policy: default
+              refId: ratio_failed_p
+              resultFormat: time_series
+              select:
                 - - params:
-                        - running
+                      - ratio_failed_p
+                    type: field
+                  - params: []
+                    type: last
+              tags: []
+            refId: ratio_failed_p
+            relativeTimeRange:
+              from: 120
+              to: 0
+        noDataState: OK
+        execErrState: OK
+        for: 2m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: hXT2cif4z
+        panelId: 21
+        title: openQA job fail ratio alert
+        uid: hXT2cif4z
+  - folder: Salt
+    orgId: 1
+    name: "Queue: State (SUSE) - too few jobs executed alert"
+    interval: 10m
+    rules:
+      - uid: ad8b5de6-d5ca-43e0-b734-6289739bc2d8
+        title: 'Queue: State (SUSE) - too few jobs executed alert'
+        condition: E
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              alias: running
+              datasource:
+                type: influxdb
+                uid: "000000001"
+              groupBy:
+                - params:
+                    - 1m
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              intervalMs: 1000
+              maxDataPoints: 43200
+              measurement: openqa_jobs
+              orderByTime: ASC
+              policy: autogen
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - running
                     type: field
                   - params: []
                     type: mean
-            tags:
+              tags:
                 - key: url::tag
                   operator: =
                   value: https://openqa.suse.de
-        - refId: B
-          relativeTimeRange:
-            from: 900
-            to: 0
-          datasourceUid: "000000001"
-          model:
-            alias: scheduled
-            datasource:
+          - refId: B
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              alias: scheduled
+              datasource:
                 type: influxdb
                 uid: "000000001"
-            groupBy:
+              groupBy:
                 - params:
                     - 1m
                   type: time
                 - params:
                     - "null"
                   type: fill
-            intervalMs: 1000
-            maxDataPoints: 43200
-            measurement: openqa_jobs
-            orderByTime: ASC
-            policy: autogen
-            refId: B
-            resultFormat: time_series
-            select:
+              intervalMs: 1000
+              maxDataPoints: 43200
+              measurement: openqa_jobs
+              orderByTime: ASC
+              policy: autogen
+              refId: B
+              resultFormat: time_series
+              select:
                 - - params:
-                        - scheduled
+                      - scheduled
                     type: field
                   - params: []
                     type: mean
-            tags:
+              tags:
                 - key: url::tag
                   operator: =
                   value: https://openqa.suse.de
-        - refId: C
-          relativeTimeRange:
-            from: 900
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+          - refId: C
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 0
-                        - 0
+                      - 0
+                      - 0
                     type: gt
                   operator:
                     type: and
@@ -686,29 +686,29 @@ groups:
                     params: []
                     type: avg
                   type: query
-            datasource:
+              datasource:
                 name: Expression
                 type: __expr__
                 uid: __expr__
-            expression: A
-            intervalMs: 1000
-            maxDataPoints: 43200
-            reducer: last
-            refId: C
-            settings:
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: last
+              refId: C
+              settings:
                 mode: dropNN
-            type: reduce
-        - refId: D
-          relativeTimeRange:
-            from: 900
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              type: reduce
+          - refId: D
+            relativeTimeRange:
+              from: 900
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 0
-                        - 0
+                      - 0
+                      - 0
                     type: gt
                   operator:
                     type: and
@@ -718,75 +718,75 @@ groups:
                     params: []
                     type: avg
                   type: query
-            datasource:
+              datasource:
                 name: Expression
                 type: __expr__
                 uid: __expr__
-            expression: B
-            intervalMs: 1000
-            maxDataPoints: 43200
-            reducer: last
-            refId: D
-            settings:
+              expression: B
+              intervalMs: 1000
+              maxDataPoints: 43200
+              reducer: last
+              refId: D
+              settings:
                 mode: dropNN
-            type: reduce
-        - refId: E
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: __expr__
-          model:
-            conditions:
+              type: reduce
+          - refId: E
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: __expr__
+            model:
+              conditions:
                 - evaluator:
                     params:
-                        - 5
-                        - 0
+                      - 5
+                      - 0
                     type: lt
                   operator:
                     type: and
                   query:
                     params:
-                        - A
+                      - A
                   reducer:
                     params: []
                     type: last
                   type: query
                 - evaluator:
                     params:
-                        - 100
-                        - 0
+                      - 100
+                      - 0
                     type: gt
                   operator:
                     type: and
                   query:
                     params:
-                        - B
+                      - B
                   reducer:
                     params: []
                     type: last
                   type: query
-            datasource:
+              datasource:
                 name: Expression
                 type: __expr__
                 uid: __expr__
-            expression: ""
-            intervalMs: 1000
-            maxDataPoints: 43200
-            refId: E
-            type: classic_conditions
-      dashboardUid: nRDab3Jiz
-      panelId: 9
-      noDataState: OK
-      execErrState: OK
-      for: 10m
-      annotations:
-        __dashboardUid__: nRDab3Jiz
-        __panelId__: "9"
-        description: |-
+              expression: ""
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: E
+              type: classic_conditions
+        dashboardUid: nRDab3Jiz
+        panelId: 9
+        noDataState: OK
+        execErrState: OK
+        for: 10m
+        annotations:
+          __dashboardUid__: nRDab3Jiz
+          __panelId__: "9"
+          description: |-
             Not enough openQA jobs are assigned to workers and executed while many scheduled jobs exist in the scheduled state.
 
             see https://progress.opensuse.org/issues/135122 for details
-        summary: Too few openQA jobs are executed
-      labels:
-        __contacts__: '"osd-admins"'
-      isPaused: false
+          summary: Too few openQA jobs are executed
+        labels:
+          __contacts__: '"osd-admins"'
+        isPaused: false

@@ -1,5 +1,5 @@
 .PHONY: all
-all: test
+all: check test
 
 .PHONY: prepare
 prepare:
@@ -15,3 +15,23 @@ test: prepare
 	/usr/sbin/gitlab-runner exec docker 'test-worker'
 	/usr/sbin/gitlab-runner exec docker 'test-monitor'
 	/usr/sbin/gitlab-runner exec docker 'test-storage'
+
+.PHONY: tidy
+tidy:
+	if command -v git >/dev/null; then \
+			git ls-files -z "*.yml" "*.yaml"; else \
+			find -name "*.yml" -or -name "*.yaml" -print0; fi | \
+			xargs -0 yamltidy -i
+
+.PHONY: check
+check:
+	# Check plain yaml files
+	if command -v git >/dev/null; then \
+			git ls-files -z "*.yml" "*.yaml"; else \
+			find -name "*.yml" -or -name "*.yaml" -print0; fi | \
+			xargs -0 yamllint -s
+	# Check sls files without Jinja delimiters
+	if command -v git >/dev/null; then \
+			git ls-files -z "*.sls" | xargs -0r -- grep -LZF -e '{{' -e '{%' -e '{#'; else \
+			find -name '*.sls' ! -exec grep -qF -e '{{' -e '{%' -e '{#' {} \; -print0; fi | \
+			xargs -0 yamllint -s

@@ -1,6 +1,6 @@
 workerconf:
   required_external_networks:
-  - host: foo.bar
+    - host: foo.bar
 
   available_webuis:
     webui.test:
