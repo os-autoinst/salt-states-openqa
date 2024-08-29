@@ -9,7 +9,7 @@ test-yaml:
     - >-
       if command -v git >/dev/null; then \
         git ls-files -z "*.yml" "*.yaml"; else \
-        find -name "*.yml" -or -name "*.yaml" -print0; fi | \
+        find \( -name "*.yml" -or -name "*.yaml" \) -print0; fi | \
         xargs -tr0 yamllint
     # Check sls files without jinja delimiters
     - >-
