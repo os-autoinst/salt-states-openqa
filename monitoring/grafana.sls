@@ -86,6 +86,8 @@ reverse-proxy-group:
           disable_sanitize_html: true
         unified_alerting:
           enabled: true
+        date_formats:
+          default_timezone: 'UTC'
 
 /etc/grafana/ldap.toml:
   file.managed:
