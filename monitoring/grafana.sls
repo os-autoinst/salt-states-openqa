@@ -168,6 +168,7 @@ dashboard-cleanup:
 {{ "/".join([dashboard_template_folder, "worker-" + workername + ".json"]) }}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/worker.json.template
+    - mode: "0644"
     - template: jinja
     - worker: {{ workername }}
     - host_interface: {{ host_interface }}
@@ -175,6 +176,7 @@ dashboard-cleanup:
 /etc/grafana/provisioning/alerting/dashboard-WD{{ workername }}.yaml:
   file.managed:
     - source: salt://monitoring/grafana/alerting-dashboard-WD.yaml.template
+    - mode: "0644"
     - template: jinja
     - worker: {{ workername }}
     - host_interface: {{ host_interface }}
