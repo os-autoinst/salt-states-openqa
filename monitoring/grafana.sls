@@ -88,22 +88,9 @@ reverse-proxy-group:
           enabled: true
 
 /etc/grafana/ldap.toml:
-  ini.options_present:
-    - separator: '='
-    - strict: True
-    - sections:
-        '[servers]':
-          host: '"ldap.suse.de"'
-          port: 389
-          use_ssl: 'true'
-          start_tls: 'true'
-          ssl_skip_verify: 'false'
-          search_filter: '"(&(uid=%s)(objectClass=account))"'
-          search_base_dns: '["dc=suse,dc=de"]'
-        servers.attributes:
-          name: '"cn"'
-          username: '"uid"'
-          email: '""'
+  file.managed:
+    - source: salt://monitoring/grafana/ldap.toml
+    - mode: "0644"
 
 /etc/grafana/provisioning/dashboards/salt.yaml:
   file.managed:
