@@ -1915,7 +1915,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#e24d42",
+                  "fixedColor": "#fdd4d2",
                   "mode": "fixed"
                 }
               }
@@ -2966,6 +2966,6 @@
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 64,
+  "version": 65,
   "weekStart": ""
 }
