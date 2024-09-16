@@ -1,0 +1,17 @@
+/var/log/zypper.log {
+    compress
+    compresscmd /usr/bin/xz
+    uncompresscmd /usr/bin/xzdec
+
+    daily
+    dateext
+
+    notifempty
+    missingok
+    copytruncate
+
+    maxage 30
+    rotate 20
+    minsize 10M
+}
+

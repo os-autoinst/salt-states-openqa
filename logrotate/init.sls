@@ -24,6 +24,11 @@ logrotate:
     - source:
       - salt://logrotate/openqa-apache
 
+/etc/logrotate.d/zypper:
+  file.managed:
+    - source:
+      - salt://logrotate/zypper
+
 {%- if not grains.get('noservices', False) %}
 logrotate-openqa.timer:
   service.running:
