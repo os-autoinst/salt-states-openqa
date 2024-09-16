@@ -7,5 +7,3 @@ StartLimitBurst=12
 [Service]
 Type=simple
 ExecStart=/usr/local/bin/auto-update
-Restart=on-failure
-RestartSec=300
