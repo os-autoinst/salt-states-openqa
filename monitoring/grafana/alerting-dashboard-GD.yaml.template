@@ -179,7 +179,7 @@ groups:
     uid: {{ (('memory_usage_alert_' + generic_host ) | sha512)[:40] }}
 - folder: Generic
   interval: 1m
-  name: '{{ generic_host }}: Memory usage alert'
+  name: '{{ generic_host }}: Memory usage absolute alert'
   orgId: 1
   rules:
   - annotations:

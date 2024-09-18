@@ -318,7 +318,7 @@ groups:
     uid: {{ (('memory_usage_alert_' + worker ) | sha512)[:40] }}
 - folder: openQA
   interval: 1m
-  name: '{{ worker }}: Memory usage alert'
+  name: '{{ worker }}: Memory usage absolute alert'
   orgId: 1
   rules:
   - annotations:
