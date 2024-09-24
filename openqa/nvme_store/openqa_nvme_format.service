@@ -1,6 +1,7 @@
 [Unit]
 Description=Setup NVMe before mounting it
 Before=var-lib-openqa.mount
+After=systemd-udev-settle.service
 RequiresMountsFor=/usr/local/bin
 DefaultDependencies=no
 
