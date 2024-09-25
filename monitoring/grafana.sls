@@ -37,6 +37,16 @@ monitoring-software.repo:
     - onchanges:
       - file: /etc/tmpfiles.d/grafana.conf
 
+/usr/local/bin/reload-grafana.sh:
+  file.managed:
+    - source: salt://monitoring/grafana/reload_grafana.sh
+    - mode: "0755"
+
+/etc/systemd/system/grafana-server.service.d:
+  file.managed:
+    - source: salt://monitoring/grafana/00-enable-reload.conf
+    - mode: "0644"
+
 include:
  - monitoring.nginx
 
@@ -216,6 +226,7 @@ alert-cleanup:
 grafana-server:
   service.running:
     - enable: True
+    - reload: True
     - watch:
 {% for plugin in grafana_plugins %}
       - cmd: install_{{ plugin }}
