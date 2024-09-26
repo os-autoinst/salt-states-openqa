@@ -256,12 +256,19 @@ firewalld_zones:
     - require:
       - pkg: worker.packages
 
-# ensures the bridge_iface is only present in our own zone if
-# e.g. the installer put it into a different one
-move_interface:
+# ensures the bridge_iface and br1 are only present in our own zone if
+# e.g. the installer put them into a different one
+{%- set trusted_interfaces = [pillar['workerconf'][grains['host']]['bridge_iface'], "br1"] %}
+{%- for interface in trusted_interfaces -%}
+move_interface_permanent_{{ interface }}:
   cmd.run:
-    - unless: test $(firewall-cmd --get-zone-of-interface={{ pillar['workerconf'][grains['host']]['bridge_iface'] }}) == "trusted"
-    - name: sed -i '/name="{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}"/d' /etc/firewalld/zones/*.xml; firewall-cmd --reload; firewall-cmd --zone=trusted --change-interface={{ pillar['workerconf'][grains['host']]['bridge_iface'] }} --permanent
+    - unless: test $(firewall-cmd --permanent --get-zone-of-interface={{ interface }}) == "trusted"
+    - name: sed -i '/name="{{ interface }}"/d' /etc/firewalld/zones/*.xml; firewall-cmd --reload; firewall-cmd --zone=trusted --change-interface={{ interface }} --permanent
+move_interface_runtime_{{ interface }}:
+  cmd.run:
+    - unless: test $(firewall-cmd --get-zone-of-interface={{ interface }}) == "trusted"
+    - name: firewall-cmd --zone=trusted --change-interface={{ interface }}
+{% endfor -%}
 {% endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
