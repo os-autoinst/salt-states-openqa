@@ -286,6 +286,35 @@ systemctl unmask openqa-worker-auto-restart@{20,21}.service openqa-reload-worker
 systemctl start openqa-worker-auto-restart@{20,21}.service openqa-reload-worker-auto-restart@{20,21}.path
 ```
 
+## Testing specific template rendering locally
+First, make sure you have the correct role set in `/etc/salt/grains`, e.g. if
+you want to render a worker-specific template this file needs to contain
+`roles: worker`. You may also add additional values like `host: worker37` to
+test specific branches within the template.
+
+You will need values from pillars. It might be sufficient to specify the
+directory `t/pillar` contained by this repository. However, you can also point
+it to your production pillar repository as it is done in the subsequent
+examples. The subsequent commands need to be executed at the root of a checkout
+of this repository and expect a checkout of the production pillars next to it.
+
+To test whether pillar data can be loaded correctly for the role you want to
+test with, use the following command:
+
+```
+sudo salt-call --pillar-root=../salt-pillars-openqa --local pillar.sls
+```
+
+You can use a command like the following to render a template and see whether
+it is valid YAML:
+
+```
+sudo salt-call --out=json --pillar-root=../salt-pillars-openqa --local slsutil.renderer "$PWD/openqa/worker.sls" default_renderer=jinja | jq -r .local | yq
+```
+
+The section "Test alert provisioning locally" below contains another example
+which shows how to add additional variables to the command-line.
+
 ## Hints about using Grafana
 
 ### Updating alert rules with the help of the Grafana web UI
@@ -361,9 +390,8 @@ sudo bash -c "salt-call --out=json \\
   | jq -r '.local' > /etc/grafana/provisioning/alerting/test-alert.yaml"
 ```
 
-This example assumes pillars are checked out locally as well, next to the states
-repository. You could of course also specify a different path, e.g. `t/pillar` for
-pillars included in the states repository for test purposes.
+Checkout the section "Testing specific template rendering locally" above for
+further details.
 
 In any case you need to restart Grafana (e.g.
 `sudo systemctl restart grafana-server.service`) for any changes to have effect.
