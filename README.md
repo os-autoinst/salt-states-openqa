@@ -230,6 +230,16 @@ Run `make check` to check YAML files (e.g. for duplicate keys).
 
 You can also run `make tidy` to automatically format the YAML files.
 
+## Take out worker slots from production temporarily
+**The easiest** way to take out worker slots temporarily is to keep them running
+and just remove any production worker classes from `/etc/openqa/workers.ini`.
+You need to stop Salt via `systemctl stop salt-minion.service` so it will not
+change the config back. Otherwise, you don't have to invoke any systemd commands
+because the workers will apply the config change automatically.
+
+If you really want to stop the worker slots, read the next section for how to do
+it correctly.
+
 ## Remarks about the systemd-units used to start workers
 The salt states achieve a setup which allows stopping/restarting workers without
 interrupting currently running jobs following the corresponding [upstream
@@ -248,9 +258,9 @@ any of those two names for systemd commands. Please note, the service will
 still list itself under its real name, i.e.
 `openqa-worker-auto-restart@.service`.
 
-Note that for taking out particular worker slots, masking services is generally
-needed (and disabling/stopping the services not sufficient) because otherwise
-salt will automatically enable/start the services again.
+To take out worker slots temporarily, checkout the section above. If you want to
+keep Salt running and disable the slots completely, you can mask the services
+instead. This will also prevent Salt from starting/enabling them again.
 
 ### Examples
 Take out particular worker slots:
