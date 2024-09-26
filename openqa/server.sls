@@ -168,7 +168,7 @@ webserver_config:
 webserver_grain:
   grains.present:
     - name: webserver
-    - value: apache2
+    - value: nginx
 
 /etc/nginx/nginx.conf:
   file.managed:
