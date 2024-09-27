@@ -302,7 +302,7 @@ To test whether pillar data can be loaded correctly for the role you want to
 test with, use the following command:
 
 ```
-sudo salt-call --pillar-root=../salt-pillars-openqa --local pillar.sls
+sudo salt-call --pillar-root=../salt-pillars-openqa --local pillar.ls
 ```
 
 You can use a command like the following to render a template and see whether
