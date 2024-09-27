@@ -1,4 +1,17 @@
 #!/usr/bin/env python
+#
+# If you need to debug this module you can fetch some example data with e.g.:
+# `ssh root@openqa.suse.de -- salt mania.qe.nue2.suse.org pillar.get workerconf --out=json > /tmp/workerconf.json`
+# And load this json into the compute function to debug what it would output:
+# ```
+# import json
+# from gre_peers import compute
+# with open("/tmp/workerconf.json", "r") as fd:
+#     data = fd.read()
+# wdata = json.loads(data)
+# compute("mania", wdata["mania.qe.nue2.suse.org"])
+# ```
+#
 
 mm_classes = {"tap"}
 location_prefix = "location-"
