@@ -57,7 +57,6 @@ ovs-vsctl set int br1 mtu_request=1460:
   file.managed:
     - user: root
     - group: root
-    - mode: "0644"
     - contents:
       - BOOTPROTO='static'
       - IPADDR='10.0.2.2/15'
@@ -79,7 +78,6 @@ ovs-vsctl set int br1 mtu_request=1460:
   file.managed:
     - user: root
     - group: root
-    - mode: "0644"
     - contents:
       - BOOTPROTO='none'
       - IPADDR=''
@@ -89,6 +87,7 @@ ovs-vsctl set int br1 mtu_request=1460:
       - TUNNEL='tap'
       - TUNNEL_SET_GROUP='kvm'
       - TUNNEL_SET_OWNER='_openqa-worker'
+      - ZONE=trusted
     - require:
       - pkg: worker.packages
 {% endfor %}
