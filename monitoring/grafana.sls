@@ -42,7 +42,7 @@ monitoring-software.repo:
     - source: salt://monitoring/grafana/reload_grafana.sh
     - mode: "0755"
 
-/etc/systemd/system/grafana-server.service.d:
+/etc/systemd/system/grafana-server.service.d/00-enable-reload.conf:
   file.managed:
     - source: salt://monitoring/grafana/00-enable-reload.conf
     - mode: "0644"
