@@ -45,6 +45,7 @@ monitoring-software.repo:
 /etc/systemd/system/grafana-server.service.d/00-enable-reload.conf:
   file.managed:
     - source: salt://monitoring/grafana/00-enable-reload.conf
+    - template: jinja
     - mode: "0644"
 
 include:
