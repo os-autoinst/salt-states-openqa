@@ -1,0 +1,6 @@
+[Unit]
+Description=Service to send a mail in case grafana fails to start
+
+[Service]
+Type=oneshot
+ExecStart=bash -c "echo \"To: osd-admins@suse.de\nFrom: root <root@monitor.qa.suse.de>\nSubject: Grafana failed to start - act immediately!\nContent-Transfer-Encoding: 8bit\nContent-Type: text/plain; charset=UTF-8\n\ngrafana-server.service on host monitor.qe.nue2.suse.org failed to start\nplease ssh into the host and check systemctl status grafana-server.service for potential reasons\n\" | sendmail -t"
