@@ -42,11 +42,29 @@ monitoring-software.repo:
     - source: salt://monitoring/grafana/reload_grafana.sh
     - mode: "0755"
 
-/etc/systemd/system/grafana-server.service.d/00-enable-reload.conf:
+{%- if not grains.get('noservices', False) %}
+{% for grafana_overwrite in ['00-enable-reload', '01-service-fail-mail'] %}
+/etc/systemd/system/grafana-server.service.d/{{ grafana_overwrite }}.conf:
   file.managed:
-    - source: salt://monitoring/grafana/00-enable-reload.conf
+    - source: salt://monitoring/grafana/{{ grafana_overwrite }}.conf
     - template: jinja
     - mode: "0644"
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+      - file: /etc/systemd/system/grafana-server.service.d/{{ grafana_overwrite }}.conf
+{% endfor %}
+
+error_mail_service:
+  file.managed:
+    - name: /etc/systemd/system/grafana-error-mail.service
+    - source: salt://monitoring/grafana/grafana-error-mail.service
+    - mode: "0644"
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+      - file: error_mail_service
+{%- endif %}
 
 include:
  - monitoring.nginx
