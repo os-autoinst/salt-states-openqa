@@ -1,7 +1,5 @@
-#!/bin/sh -e
-echo "--- cronjob start ---"
+#!/bin/bash -e
+
 if [[ $(df | grep "/var/lib/libvirt/images" | awk '{print $5}' | sed "s/\%//") -gt 70 ]] ; then
-    echo "--- entering if ---";
-    find /var/lib/libvirt/images/*.qcow2 ! -exec fuser -s "{}" 2>/dev/null \; -exec rm -f {} \; -print
+    find /var/lib/libvirt/images/*.qcow2 ! -exec fuser -s "{}" \; -exec rm -f {} \; -print
 fi
-echo "--- cronjob end ---"
