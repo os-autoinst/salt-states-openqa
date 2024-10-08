@@ -14,9 +14,12 @@
 .defaults:
   image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core-ssh
   timeout: 2h
-  only:
-    - master@openqa/salt-pillars-openqa
-    - master@openqa/salt-states-openqa
+  rules:
+    - if: $CI_PROJECT_NAMESPACE != "openqa"
+      when: never
+    - if: >-
+          $CI_PIPELINE_SOURCE == "push" &&
+          $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
   artifacts:
     when: always
     paths:
