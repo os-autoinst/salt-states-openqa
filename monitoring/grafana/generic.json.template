@@ -858,6 +858,7 @@
       "title": "Processes",
       "type": "timeseries"
     },
+{% if host_interface %}
     {
       "alert": {
         "alertRuleTags": {},
@@ -1198,6 +1199,7 @@
       "title": "Host up",
       "type": "timeseries"
     },
+{% endif %}
     {
       "collapsed": false,
       "datasource": {
