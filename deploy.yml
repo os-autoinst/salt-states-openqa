@@ -14,9 +14,12 @@
 .defaults:
   image: registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core-ssh
   timeout: 2h
-  only:
-    - master@openqa/salt-pillars-openqa
-    - master@openqa/salt-states-openqa
+  rules:
+    - if: $CI_PROJECT_NAMESPACE != "openqa"
+      when: never
+    - if: >-
+          $CI_PIPELINE_SOURCE == "push" &&
+          $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
   artifacts:
     when: always
     paths:
@@ -80,3 +83,9 @@ telegraf:
   script:
     - *setup_script
     - ssh $TARGET "salt --hide-timeout \* cmd.run 'sudo timeout -v --kill-after=1m 5m telegraf --test --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d/ 2>&1 | grep \" E\! \" && echo \"telegraf errors\" || echo \"telegraf is fine\"'" | tee salt_post_deploy_checks.log; ! grep ' E! ' salt_post_deploy_checks.log
+  # telegraf is very prone for network issues so we really just want to
+  # run it if a MR changes files affecting its configuration.
+  # https://progress.opensuse.org/issues/167051
+  rules:
+    - changes:
+        - "monitoring/telegraf/*"
