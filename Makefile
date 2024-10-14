@@ -9,7 +9,7 @@ prepare:
 .PHONY: test
 test: prepare
 	yamllint .gitlab-ci.yml
-	gitlab-ci-linter --gitlab-url https://gitlab.nue.suse.com
+	gitlab-ci-linter --gitlab-url https://gitlab.suse.de
 	/usr/sbin/gitlab-runner exec docker 'test-general'
 	/usr/sbin/gitlab-runner exec docker 'test-webui'
 	/usr/sbin/gitlab-runner exec docker 'test-worker'
