@@ -333,6 +333,7 @@ groups:
     panelId: 65102
     title: '{{ generic_host }}: NTP offset alert'
     uid: {{ (('ntp_offset_alert_' + generic_host ) | sha512)[:40] }}
+{% if host_interface %}
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: Ping time alert'
@@ -479,6 +480,7 @@ groups:
     panelId: 65105
     title: '{{ generic_host }}: host up alert'
     uid: {{ (('host_up_alert_' + generic_host ) | sha512)[:40] }}
+{% endif %}
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: partitions usage (%) alert'

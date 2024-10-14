@@ -182,7 +182,7 @@ dashboard-cleanup:
 #create dashboards and alerts for each worker contained in the mine
 #iterating over worker_dashboardnames would be cleaner but we need the workername itself for the template
 {% for workername in workernames -%}
-{% set host_interface = salt['mine.get']("nodename:" + workername, 'network.interfaces', 'grain').keys()|first %}
+{% set host_interface = salt['mine.get']("nodename:" + workername, 'network.interfaces', 'grain').keys()|first|default() %}
 {{ "/".join([dashboard_template_folder, "worker-" + workername + ".json"]) }}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/worker.json.template
@@ -203,7 +203,7 @@ dashboard-cleanup:
 
 #create dashboards for each generic host contained in the mine
 {% for genericname in genericnames -%}
-{% set host_interface = salt['mine.get']("nodename:" + genericname, 'network.interfaces', 'grain').keys()|first %}
+{% set host_interface = salt['mine.get']("nodename:" + genericname, 'network.interfaces', 'grain').keys()|first|default() %}
 {{ "/".join([dashboard_template_folder, "generic-" + genericname + ".json"]) }}: #same as for manual dashboards too
   file.managed:
     - source: salt://monitoring/grafana/generic.json.template

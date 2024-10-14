@@ -472,6 +472,7 @@ groups:
     panelId: 65102
     title: '{{ worker }}: NTP offset alert'
     uid: {{ (('ntp_offset_alert_' + worker ) | sha512)[:40] }}
+{% if host_interface %}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: OpenQA Ping time alert'
@@ -543,6 +544,7 @@ groups:
     panelId: 65098
     title: '{{ worker }}: OpenQA Ping time alert'
     uid: {{ (('openqa_ping_time_alert_' + worker ) | sha512)[:40] }}
+{% endif %}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: QA network infrastructure Ping time alert'
@@ -736,6 +738,7 @@ groups:
     panelId: 65104
     title: '{{ worker }}: Too many Minion job failures alert'
     uid: {{ (('minion_alerts_' + worker ) | sha512)[:40] }}
+{% if host_interface %}
 - folder: openQA
   interval: 5m
   name: '{{ worker }}: host up alert'
@@ -811,6 +814,7 @@ groups:
     panelId: 65105
     title: '{{ worker }}: host up alert'
     uid: {{ (('host_up_alert_' + worker ) | sha512)[:40] }}
+{% endif %}
 - folder: openQA
   interval: 1m
   name: '{{ worker }}: partitions usage (%) alert'
