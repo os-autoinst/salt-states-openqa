@@ -9,8 +9,11 @@ SLE Performance and Virtualization Performance team.
 import requests
 import time
 import math
+import sys
 from socket import getfqdn
 from collections import OrderedDict
+from requests.exceptions import ConnectTimeout, ConnectionError
+from json.decoder import JSONDecodeError
 
 BASE_URL = "http://dashboard.qa2.suse.asia"
 BASE_API_URL = f"{BASE_URL}:8889"
@@ -21,9 +24,22 @@ def to_nanos(time_stamp: float) -> float:
 
 def fetch_from(url):
     "Fetch json data util function"
-    data = requests.get(url, timeout=30)
-    data = data.json()
-    return data
+    try:
+        request = requests.get(url, timeout=30)
+        data = request.json()
+        return data
+    except ConnectTimeout as e:
+        print(f"[sleperf error] Connect Timeout to {url}", file=sys.stderr)
+        raise e
+    except ConnectionError as e:
+        print(f"[sleperf error] Failed to establish connection to {url}", file=sys.stderr)
+        raise e
+    except JSONDecodeError as e:
+        print(f"[sleperf error] File not found or data invalid for {url}", file=sys.stderr)
+        raise e
+    except Exception as e:
+        print(f"[sleperf error] Exception occurred in request to {url}", file=sys.stderr)
+        raise e
 
 def fetch_product():
     "Fetch product data from QE performance dashboard server"
@@ -92,6 +108,9 @@ def fetch_test_status(role, product):
             time_stamp = int(to_nanos(time.time()))
             print(f'{role}-{release}-{build},machine={hostname} milestone="{release}-{build}",total-run-times={total_no},pass-times={pass_no},fail-times={fail_no} {time_stamp}')
 
-product_data = fetch_product()
-for role, product in product_data.items():
-    fetch_test_status(role, product)
+try:
+    product_data = fetch_product()
+    for role, product in product_data.items():
+        fetch_test_status(role, product)
+except (ConnectTimeout, ConnectionError, JSONDecodeError) as e:
+    print(e, file=sys.stderr)
