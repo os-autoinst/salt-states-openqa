@@ -63,7 +63,6 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {% endfor %}
 
 
-{{ scriptgen('SUSE:SLE-12-SP5:Update:Products:SLERT') }}
 {{ scriptgen('SUSE:SLE-15-SP5:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP6:Update:WSL') }}
 {{ scriptgen('SUSE:SLFO:Products:SL-Micro:6.1:ToTest') }}
