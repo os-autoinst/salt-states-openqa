@@ -125,6 +125,7 @@ for i in range(0, 100):
             on_review.add(rr.node.requestId)
             testing.remove(rr.node.requestId)
         if (rr.node.requestId in on_review and
+                rev_groups['qam-sle']['user'] in rev_users and
                 'reviewedAt' in rev_users[rev_groups['qam-sle']['user']]):
             on_review.remove(rr.node.requestId)
             sle_over.add(rr.node.requestId)
