@@ -63,10 +63,6 @@ worker.packages:
       - qemu-arm
       - qemu-uefi-aarch64 # Replaces ovmf from linaro
       {% endif %}
-      {% if grains['osarch'] == 'aarch64' or grains['osarch'] == 'x86_64' %}
-      - vagrant
-      - vagrant-libvirt
-      {% endif %}
       - os-autoinst-distri-opensuse-deps
 
 ## setup workers.ini based on info in workerconf pillar

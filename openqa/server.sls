@@ -60,6 +60,7 @@ UTC:
           update_remote: 'origin'
           update_branch: 'origin/master'
           do_push: 'yes'
+          git_auto_update: 'yes'
         openid:
           httpsonly: 1
         archiving:
@@ -466,6 +467,10 @@ rsyncd:
     - enable: True
     - watch:
       - file: /etc/rsyncd.conf
+
+openqa-enqueue-git-auto-update.timer:
+  service.running:
+    - enable: True
 
 {% for type in ['service', 'timer'] %}
 # Prevent server unresponsiveness due to TRIM which is also debatable anyway
