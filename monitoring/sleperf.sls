@@ -8,9 +8,10 @@ sleperf.packages:
         - python3-requests
 
 
-# Currently not used due to https://progress.opensuse.org/issues/166235
 /etc/telegraf/telegraf.d/sleperf.conf:
-  file.absent
+  file.managed:
+    - source: salt://monitoring/sleperf/sleperf.conf
+    - makedirs: true
 
 /etc/telegraf/scripts/collect_sleperf_test.py:
   file.managed:
