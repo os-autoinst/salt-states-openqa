@@ -28,7 +28,7 @@
           url: http://open.qa
           description: » More information regarding openQA
         2:
-          url: https://stats.openqa-monitor.qa.suse.de
+          url: https://monitor.qa.suse.de
           description: » Current openQA monitoring status
         3:
           url: https://wiki.suse.net/index.php/OpenQA

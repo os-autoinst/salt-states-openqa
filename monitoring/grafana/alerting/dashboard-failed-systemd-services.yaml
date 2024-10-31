@@ -81,7 +81,7 @@ groups:
           message: |-
             Check failed systemd services on hosts with `systemctl --failed`.
 
-            Hint: Go to parent dashboard https://stats.openqa-monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.
+            Hint: Go to parent dashboard https://monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.
         condition: B
         dashboardUid: KToPYLEWz
         data:

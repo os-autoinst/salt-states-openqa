@@ -72,8 +72,8 @@ reverse-proxy-group:
     - sections:
         server:
           protocol: socket
-          domain: 'stats.openqa-monitor.qa.suse.de'
-          root_url: 'http://stats.openqa-monitor.qa.suse.de'
+          domain: 'monitor.qa.suse.de'
+          root_url: 'http://monitor.qa.suse.de'
           socket: '/var/run/grafana/grafana.socket'
         analytics:
           reporting_enabled: false

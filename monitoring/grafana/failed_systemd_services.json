@@ -380,7 +380,7 @@
         "for": "15m",
         "frequency": "1m",
         "handler": 1,
-        "message": "Check failed systemd services on hosts with `systemctl --failed`.\n\nHint: Go to parent dashboard https://stats.openqa-monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.",
+        "message": "Check failed systemd services on hosts with `systemctl --failed`.\n\nHint: Go to parent dashboard https://monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.",
         "name": "Failed systemd services alert (except openqa.suse.de)",
         "noDataState": "keep_state",
         "notifications": [

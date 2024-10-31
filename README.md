@@ -335,12 +335,12 @@ which shows how to add additional variables to the command-line.
     * In section 5: Remove the label "osd-admins". This avoids notification mails
       to the team.
 4. Save the alert.
-5. Create an API key under https://stats.openqa-monitor.qa.suse.de/org/apikeys if
+5. Create an API key under https://monitor.qa.suse.de/org/apikeys if
    you don't already have one. The role needs to be "Admin".
 6. Determine the alert's ID via the title entered in step 3. and get its YAML
    representation:
    ```
-   url=https://stats.openqa-monitor.qa.suse.de/api/v1/provisioning/alert-rules
+   url=https://monitor.qa.suse.de/api/v1/provisioning/alert-rules
    key=… # the API key from step 5.
    uid=$(curl -H "Authorization: Bearer $key" "$url" | jq -r '.[] | select(.title == "Testrule") | .uid')
    yaml=$(curl -H "Authorization: Bearer $key" "$url/$uid/export")
