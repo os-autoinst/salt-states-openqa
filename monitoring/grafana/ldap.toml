@@ -1,8 +1,8 @@
 [[servers]]
 host = "ldap.suse.de"
-port = 389
+port = 636
 use_ssl = true
-start_tls = true
+start_tls = false
 ssl_skip_verify = false
 search_filter = "(&(uid=%s)(objectClass=account))"
 search_base_dns = ["dc=suse,dc=de"]
