@@ -62,6 +62,9 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:ALP:Source:Standard:1.0:Staging:' + i) }}
 {% endfor %}
 
+{% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'] %}
+{{ scriptgen('SUSE:SLFO:Kernel:1.0:Staging:' + i) }}
+{% endfor %}
 
 {{ scriptgen('SUSE:SLE-15-SP5:Update:WSL') }}
 {{ scriptgen('SUSE:SLE-15-SP6:Update:WSL') }}
@@ -75,3 +78,4 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP4:Update:Products:SLERT') }}
 {{ scriptgen('SUSE:ALP:Products:Marble:6.0') }}
 {{ scriptgen('Devel:YaST:Agama:Head') }}
+
