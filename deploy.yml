@@ -87,5 +87,12 @@ telegraf:
   # run it if a MR changes files affecting its configuration.
   # https://progress.opensuse.org/issues/167051
   rules:
-    - changes:
+    # extends does not deep-merge lists so we have to add our additional "changes" here
+    # also see https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#merge-details for details
+    - if: $CI_PROJECT_NAMESPACE != "openqa"
+      when: never
+    - if: >-
+          $CI_PIPELINE_SOURCE == "push" &&
+          $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      changes:
         - "monitoring/telegraf/*"
