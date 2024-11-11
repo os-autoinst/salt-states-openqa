@@ -16,6 +16,7 @@ base:
     - rebootmgr
     - etc.zypper
     - ca-certificates
+    - wireguard
   'not G@roles:webui and not G@roles:worker':
     - auto-upgrade
   'G@roles:webui':
