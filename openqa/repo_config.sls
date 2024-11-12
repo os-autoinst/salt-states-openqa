@@ -9,3 +9,4 @@
 {% elif 'SP3' in grains['oscodename'] %}
 {% set repo = "SLE_12_SP3" %}
 {% endif %}
+{% set mirror = 'mirror.nue2.suse.org' if 'nue2.org' in grains.get('domain') else 'download.suse.de' %}
