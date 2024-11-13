@@ -13,7 +13,7 @@ sleperf.packages:
     - source: salt://monitoring/sleperf/sleperf.conf
     - makedirs: true
 
-/etc/telegraf/scripts/collect_sleperf_test.py:
+/etc/telegraf/scripts/collect_sleperf.py:
   file.managed:
     - source: salt://monitoring/sleperf/scripts/collect_sleperf.py
     - mode: "0755"
