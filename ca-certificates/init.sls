@@ -1,8 +1,8 @@
-{% from 'openqa/repo_config.sls' import mirror, repo %}
+{% from 'openqa/repo_config.sls' import repo %}
 SUSE_CA:
   pkgrepo.managed:
     - humanname: SUSE_CA
-    - baseurl: http://{{ mirror }}/ibs/SUSE:/CA/{{ repo }}/
+    - baseurl: https://download.opensuse.org/repositories/SUSE:/CA/{{ repo }}/
     - gpgautoimport: True
     - refresh: True
     - priority: 110

@@ -1,4 +1,4 @@
-{% from 'openqa/repo_config.sls' import repo, mirror %}
+{% from 'openqa/repo_config.sls' import repo %}
 {% if 'Leap' in grains['oscodename'] %}
 {% set openqamodulesrepo = "Leap:/$releasever" %}
 {% elif 'SP3' in grains['oscodename'] %}
@@ -51,7 +51,7 @@ devel_openQA_Modules:
 home_favogt_stagingovmf_repo:
   pkgrepo.managed:
     - humanname: home_favogt_stagingovmf
-    - baseurl: https://{{ mirror }}/ibs/home:/favogt:/stagingovmf/{{ repo }}/
+    - baseurl: https://download.opensuse.org/repositories/home:/favogt:/stagingovmf/{{ repo }}/
     - gpgautoimport: True
     - refresh: True
     - priority: 85
