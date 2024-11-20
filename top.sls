@@ -48,6 +48,7 @@ base:
     - monitoring.slo
     - monitoring.yam
     - monitoring.grafana
+    - monitoring.loki
     - monitoring.influxdb
     - certificates.dehydrated
   'G@roles:storage':
