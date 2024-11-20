@@ -47,6 +47,7 @@ base:
     - monitoring.sleperf
     - monitoring.slo
     - monitoring.yam
+    - monitoring.monitoring-software-repo
     - monitoring.grafana
     - monitoring.loki
     - monitoring.influxdb
