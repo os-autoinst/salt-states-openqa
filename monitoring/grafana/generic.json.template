@@ -1461,7 +1461,7 @@
               "condition": "AND",
               "key": "fstype::tag",
               "operator": "!~",
-              "value": "/^(nfs|udf)/"
+              "value": "/^(nfs|udf|iso9660)/"
             }
           ]
         }
