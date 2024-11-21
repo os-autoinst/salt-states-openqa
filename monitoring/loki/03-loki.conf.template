@@ -1,3 +1,4 @@
+{%- set server_name = "loki.qa.suse.de" -%}
 map $http_upgrade $connection_upgrade {
   default upgrade;
   ''      close;
@@ -6,7 +7,7 @@ map $http_upgrade $connection_upgrade {
 server {
   listen 80;
   listen [::]:80;
-  server_name loki.monitor.qa.suse.de;
+  server_name {{ server_name }};
 
   include "acme-challenge";
   location / {
@@ -17,10 +18,10 @@ server {
 server {
   listen 443 http2 ssl;
   listen [::]:443 http2 ssl;
-  server_name loki.monitor.qa.suse.de;
+  server_name {{ server_name }};
 
-  ssl_certificate /etc/dehydrated/certs/loki.monitor.qa.suse.de/fullchain.pem;
-  ssl_certificate_key /etc/dehydrated/certs/loki.monitor.qa.suse.de/privkey.pem;
+  ssl_certificate /etc/dehydrated/certs/{{ server_name }}/fullchain.pem;
+  ssl_certificate_key /etc/dehydrated/certs/{{ server_name }}/privkey.pem;
 
   root /usr/share/nginx/www;
   index index.html index.htm;

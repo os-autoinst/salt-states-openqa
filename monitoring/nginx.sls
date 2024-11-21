@@ -16,7 +16,8 @@ nginx:
 
 /etc/nginx/vhosts.d/03-loki.conf:
   file.managed:
-    - source: salt://monitoring/loki/03-loki.conf
+    - source: salt://monitoring/loki/03-loki.conf.template
+    - template: jinja
 
 /etc/nginx/auth/loki:
   file.managed:
