@@ -879,7 +879,7 @@ groups:
         orderByTime: ASC
         policy: default
         query: SELECT mean("used_percent") AS "used_percent" FROM "disk" WHERE ("host"
-          = '{{ worker }}' AND fstype !~ /^nfs/ AND fstype != 'udf') AND $timeFilter GROUP BY time($interval),
+          = '{{ worker }}' AND fstype !~ /^nfs|udf|iso9660/) AND $timeFilter GROUP BY time($interval),
           "device", "fstype" fill(null)
         rawQuery: true
         refId: B
