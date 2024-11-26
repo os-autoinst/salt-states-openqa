@@ -27,7 +27,12 @@ dehydrated.packages:
     - source: salt://etc/master/dehydrated/config.d/{{ pillar['dehydrated']['config_script'] }}
 /etc/dehydrated/domains.txt:
   file.managed:
-    - contents: {{ pillar['dehydrated']['hosts.txt'].get(grains['fqdn'], [grains['fqdn']]) | join("\n") }}
+{%- if grains['fqdn'] in pillar['dehydrated']['hosts.txt'] %}
+    - contents_pillar: dehydrated:hosts.txt:{{ grains['fqdn'] }}
+{% elif grains['fqdn'] %}
+    - contents_grains: "fqdn"
+{%- endif %}
+    - allow_empty: True
 
 /etc/dehydrated/postrun-hooks.d/reload-webserver.sh:
   file.managed:
