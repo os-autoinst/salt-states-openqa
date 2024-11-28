@@ -453,6 +453,17 @@ newly-setup worker by using a worker class like `tap_pooXXX`. You only need to
 avoid scheduling test jobs across multiple workers (but also don't have to worry
 about impacting the production GRE-network yet).
 
+## Wireguard
+The required package and SSH key for Eng-Infra to connect are configured
+automatically on relevant hosts. Checkout `wireguard/init.sls` for details. The
+first line in that file can be modified to change the definition of "relevant
+hosts".
+
+Not all Wireguard-related configuration is contained by this Salt repository.
+Checkout the
+[Wiki page](https://gitlab.suse.de/suse/wiki/-/blob/main/qe_infrastructure.md#wireguard)
+about our internal infrastructure for details.
+
 ## Communication
 
 If you have questions, visit us on Matrix in https://matrix.to/#/#openqa:opensuse.org
