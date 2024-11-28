@@ -41,18 +41,13 @@ def ip_addrs(interface=None, include_loopback=False, cidr=None, type=None):
 def default_interface():
     """Return the default network interface name from a machine based on its IPv4 configuration."""
     grains = {'default_interface': None}
-    # Use first IP which matches the SUSE internal network
-    try:
-        internalip = ip_addrs(cidr='10.160.0.0/13')[0]
-    except IndexError:
-        return grains
-    interfaces = salt.utils.network.interfaces()
-
-    # Iterate over all interfaces and see which one contains the IP from above first
-    for interface, data in interfaces.items():
-        ips = [ip_data.get('address') for ip_data in data.get('inet', {})]
-        if internalip in ips:
-            grains['default_interface'] = interface
+    # based on https://stackoverflow.com/a/6556951
+    with open("/proc/net/route") as fh:
+        for line in fh:
+            fields = line.strip().split()
+            if fields[1] != '00000000' or not int(fields[3], 16) & 0x2:
+                # If not default route or not RTF_GATEWAY, skip it
+                continue
+            grains['default_interface'] = fields[0]
             break
-
     return grains
