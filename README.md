@@ -112,6 +112,7 @@ An example for such an entry can be found [here](https://gitlab.suse.de/openqa/s
 Our states will [ensure](https://gitlab.suse.de/openqa/salt-states-openqa/-/blob/master/openqa/auto-update.sh) this lock is in place and will take care of e.g. locking subsequent patches which would conflict with this salt managed lock.
 
 ## Testing
+
 ### Local test deployment
 
 In a virtual or physical machine one can enable the use of the repository or
@@ -125,7 +126,7 @@ working copy of states and/or pillars into the container:
 podman run --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core
 ```
 
-here assuming that the pillars repo can be found in a directory named
+Here assuming that the pillars repo can be found in a directory named
 "salt-pillars-openqa" in a directory next to the states repo.
 
 To test out all in a single call, e.g. that a file is generated correctly on a
@@ -137,6 +138,7 @@ podman run --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar
 
 To test out a single state, e.g. that `workers.ini` is generated correctly for a
 specific worker instance, use a command like:
+
 ```sh
 podman run --hostname=worker8 --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core sh -c 'echo -e "roles: worker\ncpu_flags:" "\n  - "{cx16,lahf_lm,popcnt,sse4_1,sse4_2,ssse3} >> /etc/salt/grains && salt-call -ldebug --local saltutil.sync_all && mkdir /etc/openqa && salt-call -l debug --local state.sls_id '/etc/openqa/workers.ini' openqa.worker && cat /etc/openqa/workers.ini'
 ```
