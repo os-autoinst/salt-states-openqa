@@ -1,4 +1,4 @@
-{%- set server_name = "loki.qa.suse.de" -%}
+{%- set server_name = "loki.monitor.qa.suse.de" -%}
 map $http_upgrade $connection_upgrade {
   default upgrade;
   ''      close;
