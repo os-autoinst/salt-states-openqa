@@ -12,19 +12,8 @@
 {% set services_for_templated_dashboards = 'sshd openqa-gru openqa-webui openqa-livehandler openqa-scheduler openqa-websockets smb vsftpd telegraf salt-master salt-minion rsyncd postgresql postfix cron nginx' %}
 {% set provisioned_alerts = ['dashboard-automatic-actions.yaml', 'dashboard-failed-systemd-services.yaml', 'dashboard-job-age.yaml', 'dashboard-monitoring.yaml', 'dashboard-openqa-jobs-test.yaml', 'dashboard-WebuiDb.yaml', 'inodes.yaml', 'http_response_codes.yaml'] %}
 
-{% from 'openqa/repo_config.sls' import repo %}
-monitoring-software.repo:
-  pkgrepo.managed:
-    - humanname: Server Monitoring Software
-    - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/monitoring/{{ repo }}
-    - gpgautoimport: True
-    - refresh: True
-    - priority: 90
-    - require_in:
-      - pkg: grafana
-
+grafana:
   pkg.latest:
-    - name: grafana
     - refresh: False
 
 /etc/tmpfiles.d/grafana.conf:
