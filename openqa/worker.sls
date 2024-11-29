@@ -392,8 +392,9 @@ kernel.softlockup_panic:
 {%- endif %}
 
 {%- if grains.get('default_interface', None) %}
-net.ipv6.conf.{{ grains['default_interface'] }}.accept_ra:
+{{ grains["fqdn"] }} {{ grains["default_interface"] }} accept_ra sysctl:
   sysctl.present:
+    - name: net.ipv6.conf.{{ grains['default_interface'] }}.accept_ra
     - value: 2
 {%- endif %}
 
