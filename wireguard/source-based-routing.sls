@@ -26,3 +26,14 @@ configure-source-based-routing service reload:
     - watch:
       - file: /etc/systemd/system/configure-source-based-routing@.service
 {% endif %}
+
+# PROTO needs to be set correctly otherwise the POST_UP_SCRIPT/unit
+# will not get executed. On hosts with wireguard we know that we have
+# DHCP for IPv4 and SLAAC for IPv6.
+/etc/sysconfig/network/ifcfg-{{ grains["default_interface"] }}:
+  file.keyvalue:
+    - append_if_not_found: True
+    - separator: '='
+    - key_values:
+        BOOTPROTO: "'dhcp4+auto6'"
+        POST_UP_SCRIPT: "'systemd:configure-source-based-routing@.service'"
