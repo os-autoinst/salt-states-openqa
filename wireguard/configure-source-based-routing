@@ -1,0 +1,26 @@
+#!/bin/bash
+# Configure a new routing table which is not aware of any wireguard routes but only the default one from the interface.
+# This ensures answers into the CC network are **not** routed over the wg tunnel
+set -euo pipefail
+
+IFACE=$1
+for PROTO in 4 6; do
+  ipcmd="ip -$PROTO"
+
+  # if wicked handles dhcp we can easily read all variables from that file
+  if [ -f /run/wicked/leaseinfo.${IFACE}.*.ipv${PROTO} ]; then
+    eval $(cat /run/wicked/leaseinfo.${IFACE}.*.ipv${PROTO}) # we only need IPADDR which consists of IP/subnet
+  else
+    if [[ $PROTO == 6 ]]; then
+      IPADDR=$(ip -6 -j addr show dynamic mngtmpaddr dev ${IFACE} | jq -r "(.[0].addr_info[] | select(.family==\"inet6\")) | \"\(.local)/\(.prefixlen)\"") # get IP/subnet from SLAAC
+    else
+      echo "IPv4 without wicked dhcp is not supported, skipping"
+      continue
+    fi
+  fi
+
+  if $ipcmd route show table nowg | grep -q "$IFACE"; then echo "${IFACE} for IPv${PROTO} already configured, doing nothing"; continue; fi
+  GATEWAY_IP=$($ipcmd -j r s default dev ${IFACE} | jq -r ".[].gateway")
+  $ipcmd route add default via ${GATEWAY_IP} dev ${IFACE} table nowg
+  $ipcmd rule add from ${IPADDR} table nowg prio 1
+done
