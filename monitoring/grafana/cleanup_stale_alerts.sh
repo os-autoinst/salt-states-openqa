@@ -4,7 +4,7 @@
 # Stale alerts are determined by comparing present alert UIDs via the grafana api with provisioned alerts present in the filesystem of our alert provisioning.
 # To execute these changes, a privileged grafana instance admin account is needed and can be supplied via arguments.
 
-GRAFANA_URL="https://stats.openqa-monitor.qa.suse.de"
+GRAFANA_URL="https://monitor.qa.suse.de"
 GRAFANA_USERNAME="$1"
 GRAFANA_PASSWORD="$2"
 
