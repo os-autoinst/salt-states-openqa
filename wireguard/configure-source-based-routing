@@ -19,7 +19,7 @@ for PROTO in 4 6; do
     fi
   fi
 
-  if $ipcmd route show table nowg | grep -q "$IFACE"; then echo "${IFACE} for IPv${PROTO} already configured, doing nothing"; continue; fi
+  if $ipcmd route show table nowg 2>/dev/null | grep -q "$IFACE"; then echo "${IFACE} for IPv${PROTO} already configured, doing nothing"; continue; fi
   GATEWAY_IP=$($ipcmd -j r s default dev ${IFACE} | jq -r ".[].gateway")
   $ipcmd route add default via ${GATEWAY_IP} dev ${IFACE} table nowg
   $ipcmd rule add from ${IPADDR} table nowg prio 1
