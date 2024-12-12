@@ -71,7 +71,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 24,
         "x": 0,
         "y": 0
@@ -104,13 +104,26 @@
             "type": "influxdb",
             "uid": "000000001"
           },
-          "query": "SELECT last(\"milestone\"),\"total-run-times\",\"pass-times\",\"fail-times\" FROM \"autogen\"./performance.*/ WHERE time > now() - 12h",
+          "query": "SELECT \"milestone\",\"total-run-times\",\"pass-times\",\"fail-times\" FROM \"autogen\".sle_perf_status WHERE \"role\" = 'performance' and time > now() - 5m",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table"
         }
       ],
       "title": "SLE-Performance milestone testing metrics",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Time"
+              }
+            ]
+          }
+        }
+      ],
       "type": "barchart"
     },
     {
@@ -162,10 +175,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 9
       },
       "id": 2,
       "options": {
@@ -195,14 +208,177 @@
             "type": "influxdb",
             "uid": "000000001"
           },
-          "query": "SELECT last(\"milestone\"),\"total-run-times\",\"pass-times\",\"fail-times\" FROM \"autogen\"./Virt-Performance.*/ WHERE time > now() - 12h",
+          "query": "SELECT \"milestone\",\"total-run-times\",\"pass-times\",\"fail-times\" FROM \"autogen\".sle_perf_status WHERE \"role\"='Virt-Performance'  and time > now() - 5m",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table"
         }
       ],
       "title": "Virtualization-Performance milestone testing metrics",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Time"
+              }
+            ]
+          }
+        }
+      ],
       "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 0,
+        "y": 18
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "query": "SELECT sum(\"commits\") FROM \"autogen\".SLEPerf WHERE $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "SLEPerf Gitlab Total Commits",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 20,
+        "x": 4,
+        "y": 18
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.3.0",
+      "targets": [
+        {
+          "query": "SELECT \"commits\" FROM \"autogen\".SLEPerf WHERE $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "SLEPerf Gitlab Commits",
+      "type": "timeseries"
     }
   ],
   "refresh": "",
@@ -213,7 +389,7 @@
     "list": []
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-1y",
     "to": "now"
   },
   "timepicker": {},

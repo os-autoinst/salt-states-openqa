@@ -11,16 +11,23 @@ import time
 import math
 import sys
 from socket import getfqdn
-from collections import OrderedDict
+from collections import OrderedDict, Counter
 from requests.exceptions import ConnectTimeout, ConnectionError
 from json.decoder import JSONDecodeError
+from datetime import datetime
 
 BASE_URL = "http://dashboard.qa2.suse.asia"
 BASE_API_URL = f"{BASE_URL}:8889"
+GITLAB_API_URL = "https://gitlab.suse.de/api/v4"
+GITLAB_PROJECTS = {"SLEPerf": 6354}
 hostname = getfqdn()
 
 def to_nanos(time_stamp: float) -> float:
     return time_stamp * 1E9
+
+def to_timestamp(source_date: str) -> float:
+    "Convert date with format YYYY-mm-dd to nanosecond"
+    return int(datetime.strptime(source_date, "%Y-%m-%d").timestamp() * 1E9)
 
 def fetch_from(url):
     "Fetch json data util function"
@@ -43,7 +50,7 @@ def fetch_from(url):
 
 def fetch_product():
     "Fetch product data from QE performance dashboard server"
-    url = f"{BASE_URL}/sleperf_metrics/product.json"
+    url = f"{BASE_URL}/sleperf_metrics/productV2.json"
     data = fetch_from(url)
     return data
 
@@ -106,11 +113,53 @@ def fetch_test_status(role, product):
         total_no = pass_no + fail_no
         if total_no > 0:
             time_stamp = int(to_nanos(time.time()))
-            print(f'{role}-{release}-{build},machine={hostname} milestone="{release}-{build}",total-run-times={total_no},pass-times={pass_no},fail-times={fail_no} {time_stamp}')
+            print(f'sle_perf_status,machine={hostname} role="{role}",milestone="{release}-{build}",total-run-times={total_no},pass-times={pass_no},fail-times={fail_no} {time_stamp}')
+
+def fetch_gitlab_session(endpoint):
+    session = requests.Session()
+    current_page = 0
+    try:
+        # Telegraf script timeout would avoid the infinite loop if there is large data
+        while True:
+            url = f"{endpoint}?page={current_page}"
+            current_page += 1
+            data = session.get(url, timeout=30)
+            for entry in data.json():
+                yield entry
+            if data.headers['X-Next-Page'] == '':
+                break
+    except ConnectionError as e:
+        print(f"[sleperf error] Failed to establish connection to {url}", file=sys.stderr)
+        raise e
+
+def fetch_gitlab_commits():
+    "Fetch project commits data from Gitlab"
+    for prj_name, prj_id in GITLAB_PROJECTS.items():
+        url = f"{GITLAB_API_URL}/projects/{prj_id}/repository/commits"
+        commits = Counter()
+        for entry in fetch_gitlab_session(url):
+            day = entry['committed_date'][:10]
+            commits[day] += 1
+        for date, value in commits.items():
+            print(f"{prj_name},machine={hostname} commits={value} {to_timestamp(date)}")
+
+def print_help():
+    print(f"[sleperf error] Usage: {sys.argv[0]} <TEST | COMMITS>", file=sys.stderr)
+    sys.exit(0)
+
+if len(sys.argv) != 2:
+    print_help()
+param = sys.argv[1]
 
 try:
-    product_data = fetch_product()
-    for role, product in product_data.items():
-        fetch_test_status(role, product)
+    if param == "TEST":
+        product_data = fetch_product()
+        for role, products in product_data.items():
+            for product in products:
+                fetch_test_status(role, product)
+    elif param == "COMMITS":
+        fetch_gitlab_commits()
+    else:
+        print_help()
 except (ConnectTimeout, ConnectionError, JSONDecodeError) as e:
     print(e, file=sys.stderr)
