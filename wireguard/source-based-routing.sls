@@ -1,3 +1,11 @@
+source-based-routing.packages:
+  pkg.installed:
+    - refresh: False
+    - retry:  # some packages can change rapidly in our repos needing a retry as zypper does not do that
+        attempts: 5
+    - pkgs:
+      - jq
+
 /etc/iproute2/rt_tables:
   file.append:
     - text: '240     nowg'
