@@ -104,7 +104,7 @@
             "type": "influxdb",
             "uid": "000000001"
           },
-          "query": "SELECT \"milestone\",\"total-run-times\",\"pass-times\",\"fail-times\" FROM \"autogen\".sle_perf_status WHERE \"role\" = 'performance' and time > now() - 5m",
+          "query": "SELECT \"milestone\",\"total-run-times\",\"pass-times\",\"fail-times\" FROM \"autogen\".sle_perf_status WHERE \"role\" = 'performance' and time > now() - 12h",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table"
@@ -208,7 +208,7 @@
             "type": "influxdb",
             "uid": "000000001"
           },
-          "query": "SELECT \"milestone\",\"total-run-times\",\"pass-times\",\"fail-times\" FROM \"autogen\".sle_perf_status WHERE \"role\"='Virt-Performance'  and time > now() - 5m",
+          "query": "SELECT \"milestone\",\"total-run-times\",\"pass-times\",\"fail-times\" FROM \"autogen\".sle_perf_status WHERE \"role\"='Virt-Performance'  and time > now() - 12h",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table"
