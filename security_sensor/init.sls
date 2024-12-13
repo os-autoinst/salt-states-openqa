@@ -13,6 +13,9 @@ security-sensor.repo:
     - gpgautoimport: True
     - refresh: True
     - priority: 90
+{%- if 'nue2.suse.org' in grains.get('domain') and not salt['file.file_exists']('/etc/wireguard/prg2wg.conf') %}
+    - enabled: False
+{%- endif %}
     - require_in:
       - pkg: velociraptor-client
 
