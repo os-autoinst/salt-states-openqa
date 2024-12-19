@@ -22,5 +22,10 @@ for PROTO in 4 6; do
   if $ipcmd route show table nowg 2>/dev/null | grep -q "$IFACE"; then echo "${IFACE} for IPv${PROTO} already configured, doing nothing"; continue; fi
   GATEWAY_IP=$($ipcmd -j r s default dev ${IFACE} | jq -r ".[].gateway")
   $ipcmd route add default via ${GATEWAY_IP} dev ${IFACE} table nowg
+  if [[ $PROTO == 4 ]]; then
+    # Don't send IPv4 packets with destination within the same layer2 network to the default gw.
+    # For some reason this doesn't affect IPv6.
+    $ipcmd route add ${NETWORK}/${PREFIXLEN} scope link dev ${IFACE} table nowg
+  fi
   $ipcmd rule add from ${IPADDR} table nowg prio 1
 done
