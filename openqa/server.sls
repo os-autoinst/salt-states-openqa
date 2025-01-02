@@ -380,18 +380,6 @@ salt-master.service:
   file.managed:
     - source: salt://postfix/sysconfig/postfix
 
-https://github.com/os-autoinst/sync-and-trigger.git:
-  git.cloned:
-    - target: /opt/openqa-scripts
-
-openqa_scripts_config:
-  # allow deployment to checked out branch from
-  # https://gitlab.suse.de/openqa/scripts/blob/master/.gitlab-ci.yml
-  git.config_set:
-    - name: receive.denyCurrentBranch
-    - value: ignore
-    - repo: /opt/openqa-scripts
-
 /opt/os-autoinst-scripts/:
   file.directory:
     - user: geekotest
