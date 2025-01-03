@@ -380,21 +380,16 @@ salt-master.service:
   file.managed:
     - source: salt://postfix/sysconfig/postfix
 
-https://github.com/os-autoinst/sync-and-trigger.git:
-  git.cloned:
-    - target: /opt/openqa-scripts
-
-openqa_scripts_config:
-  # allow deployment to checked out branch from
-  # https://gitlab.suse.de/openqa/scripts/blob/master/.gitlab-ci.yml
-  git.config_set:
-    - name: receive.denyCurrentBranch
-    - value: ignore
-    - repo: /opt/openqa-scripts
-
 /opt/os-autoinst-scripts/:
   file.directory:
     - user: geekotest
+
+# workaround for salt not being able to find git in test environment
+gitconfig:
+  git.config_unset:
+    - name: foo
+    - global: True
+    - all: False
 
 # workaround for git.cloned not being able to clone into existing directory
 # owned by correct user
