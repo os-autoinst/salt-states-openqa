@@ -384,6 +384,13 @@ salt-master.service:
   file.directory:
     - user: geekotest
 
+# workaround for salt not being able to find git in test environment
+gitconfig:
+  git.config_unset:
+    - name: foo
+    - global: True
+    - all: False
+
 # workaround for git.cloned not being able to clone into existing directory
 # owned by correct user
 # https://github.com/saltstack/salt/issues/55926
