@@ -1,0 +1,18 @@
+#!/usr/sbin/nft -f
+
+# dump with "nft --stateless list ruleset"
+
+flush ruleset
+
+{% if grains.get('host') in pillar.get('workerconf').keys() %}
+table ip nat {
+    chain postrouting {
+        type nat hook postrouting priority 100; policy accept;
+        {%- if 'bridge_iface' in pillar['workerconf'][grains['host']].keys()%}
+        oifname "{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}" masquerade
+        {%- endif %}
+        oifname "br1" masquerade
+        oifname "ovs-system" masquerade
+    }
+}
+{% endif %}

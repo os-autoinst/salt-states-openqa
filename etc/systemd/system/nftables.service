@@ -1,0 +1,14 @@
+[Unit]
+Description=Apply firewall rules from /etc/firewall.nft
+After=network-online.target
+Wants=network-online.target
+Conflicts=firewalld.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/sbin/nft -f /etc/firewall.nft
+ExecStop=/usr/sbin/nft flush ruleset
