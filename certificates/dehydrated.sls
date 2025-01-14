@@ -76,5 +76,5 @@ dehydrated.timer:
       - file: /etc/dehydrated/config.d/{{ pillar['dehydrated']['config_script'] }}
       - file: /etc/dehydrated/domains.txt
     - require:
-       - webserver_config
+       - webserver_running
 {%- endif %}

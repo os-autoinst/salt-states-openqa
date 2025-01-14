@@ -1,8 +1,11 @@
 nginx:
   pkg.latest:
     - refresh: False
+
 {%- if not grains.get('noservices', False) %}
+webserver_running:
   service.running:
+    - name: nginx
     - enable: True
     - watch:
       - file: /etc/nginx/vhosts.d/02-grafana.conf
