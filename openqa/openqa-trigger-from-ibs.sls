@@ -83,5 +83,6 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP7:Update:BCI') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:Products:SLERT') }}
 {{ scriptgen('SUSE:ALP:Products:Marble:6.0') }}
+{{ scriptgen('SUSE:SLFO:Products:SL-Micro:6.1:Increments') }}
 {{ scriptgen('Devel:YaST:Agama:Head') }}
 
