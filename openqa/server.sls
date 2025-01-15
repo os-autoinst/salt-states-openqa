@@ -156,9 +156,8 @@ openqa-gru:
     - require:
       - pkg: server.packages
 
-webserver_config:
+/etc/apache2/vhosts.d/openqa.conf:
   file.managed:
-    - name: /etc/apache2/vhosts.d/openqa.conf
     - source: salt://apache2/vhosts.d/openqa.conf
     - template: jinja
     - user: root
@@ -355,8 +354,9 @@ apache2:
 {%- endif %}
 
 {%- if not grains.get('noservices', False) %}
-nginx:
+webserver_running:
   service.running:
+    - name: nginx
     - enable: True
     - watch:
       - file: /etc/nginx/vhosts.d/openqa.conf
