@@ -31,6 +31,16 @@ static_nfs_hostname:
     - names:
       - {{ nfs_hostname }}
 
+# If automount suspended the mount, we only have a "systemd-1 type autofs"-
+# mount. This causes salt to assume the (correct) mount is gone and remount
+# it. If the mount was recently accessed, /proc/self/mountinfo contains the
+# correct entry and salt moves on. So here we just quickly wake up the
+# automounter to "prepare" the system for the `mount.mounted`-state later.
+wakeup_automount:
+  cmd.run:
+    - name: ls -d /var/lib/openqa/share/.
+    - unless: bash -c 'mount | grep "/var/lib/openqa/share.*nfs"'
+
 # Ensure NFS share is mounted and setup on boot
 # Additional options to prevent failed mount attempts after bootup. Remote
 # filesystem mounts wait for network-online.target which apparently is not
