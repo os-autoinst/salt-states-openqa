@@ -18,6 +18,8 @@ security-sensor.repo:
 {%- endif %}
     - require_in:
       - pkg: velociraptor-client
+    - retry:
+        attempts: 5
 
   pkg.latest:
     - name: velociraptor-client
