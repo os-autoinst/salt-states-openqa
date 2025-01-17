@@ -50,7 +50,7 @@ wakeup_automount:
   mount.mounted:
     - device: {{ pillar['commonconf']['nfspath'] }}
     - fstype: nfs
-    - opts: ro,noauto,nofail,retry=30,x-systemd.mount-timeout=30m,x-systemd.automount,nolock
+    - opts: ro,nofail,retry=30,x-systemd.mount-timeout=30m,x-systemd.automount,nolock
     # according to https://docs.saltproject.io/en/latest/ref/states/all/salt.states.mount.html#salt.states.mount.mounted we need to specify "extra mount options/keys" that we need to specify to prevent constent remounting because these options would not show up in /proc/self/mountinfo
     - extra_mount_invisible_options:
       - noauto
