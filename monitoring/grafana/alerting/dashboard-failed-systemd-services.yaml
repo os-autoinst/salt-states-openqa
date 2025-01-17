@@ -40,7 +40,7 @@ groups:
                   value: openqa
             refId: A
             relativeTimeRange:
-              from: 300
+              from: 60
               to: 0
           - datasourceUid: __expr__
             model:
@@ -55,7 +55,7 @@ groups:
                     params:
                       - A
                   reducer:
-                    type: avg
+                    type: last
               refId: B
               type: classic_conditions
             refId: B
@@ -113,7 +113,7 @@ groups:
                   value: openqa
             refId: A
             relativeTimeRange:
-              from: 300
+              from: 60
               to: 0
           - datasourceUid: __expr__
             model:
@@ -128,7 +128,7 @@ groups:
                     params:
                       - A
                   reducer:
-                    type: max
+                    type: last
               refId: B
               type: classic_conditions
             refId: B
