@@ -27,9 +27,9 @@ firewalld:
    service.running:
      - enable: True
      - watch_any:
-      - file: /etc/firewalld/firewalld.conf
+       - file: /etc/firewalld/firewalld.conf
 {% if grains.get('host') in pillar.get('workerconf').keys() %}
-      - file: /etc/firewalld/zones/trusted.xml
+       - file: /etc/firewalld/zones/trusted.xml
 {% endif %}
 {% endif %}
 
