@@ -44,7 +44,6 @@ worker.packages:
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT and TAP support
-      - firewalld # For TAP support and for other good reasons
       - ffmpeg-4 # For VP9/AV-1 support in os-autoinst
       - qemu: '>=2.3'
       {% if grains['osarch'] == 'x86_64' %}
@@ -221,51 +220,13 @@ stop_and_disable_all_not_configured_workers:
     - unless: test $(systemctl list-units --legend=false --all 'openqa-worker-auto-restart@*.service' | wc -l) -eq {{ worker_slot_count }}
 {%- endif %}
 
-# Configure firewalld: os-autoinst needs to upload logs to rather random ports and ovs needs configuration
-{%- if not grains.get('noservices', False) %}
-firewalld:
-  service.running:
-    - enable: True
-    - watch_any:
-      - file: /etc/firewalld/firewalld.conf
-{% if grains.get('host') in pillar.get('workerconf').keys() %}
-      - file: /etc/firewalld/zones/trusted.xml
-{% endif %}
-    - require:
-      - pkg: worker.packages
+# Configure firewall
+include:
+{%- if grains.get('firewall', 'nftables') == 'firewalld' %}
+    - firewall.firewalld
+{%- else %}
+    - firewall.nftables
 {%- endif %}
-firewalld_config:
-  file.replace:
-    - name: /etc/firewalld/firewalld.conf
-    - pattern: '^DefaultZone=.*$'
-    - repl: 'DefaultZone=trusted'
-    - append_if_not_found: True
-    - require:
-      - pkg: worker.packages
-{% if grains.get('host') in pillar.get('workerconf').keys() %}
-firewalld_zones:
-  file.managed:
-    - template: jinja
-    - names:
-      - /etc/firewalld/zones/trusted.xml:
-        - source: salt://etc/firewalld/zones/trusted.xml
-    - require:
-      - pkg: worker.packages
-
-# ensures the bridge_iface and br1 are only present in our own zone if
-# e.g. the installer put them into a different one
-{%- set trusted_interfaces = [pillar['workerconf'][grains['host']]['bridge_iface'], "br1"] %}
-{%- for interface in trusted_interfaces -%}
-move_interface_permanent_{{ interface }}:
-  cmd.run:
-    - unless: test $(firewall-cmd --permanent --get-zone-of-interface={{ interface }}) == "trusted"
-    - name: sed -i '/name="{{ interface }}"/d' /etc/firewalld/zones/*.xml; firewall-cmd --reload; firewall-cmd --zone=trusted --change-interface={{ interface }} --permanent
-move_interface_runtime_{{ interface }}:
-  cmd.run:
-    - unless: test $(firewall-cmd --get-zone-of-interface={{ interface }}) == "trusted"
-    - name: firewall-cmd --zone=trusted --change-interface={{ interface }}
-{% endfor -%}
-{% endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
 /dev/raw1394:
