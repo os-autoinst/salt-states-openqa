@@ -14,8 +14,8 @@ nftables_config:
     - names:
       - /etc/firewall.nft:
         - source: salt://etc/firewall.nft
-      - /etc/systemd/system/firewall.service:
-        - source: salt://etc/systemd/system/firewall.service
+      - /etc/systemd/system/nftables.service:
+        - source: salt://etc/systemd/system/nftables.service
 
 {%- if not grains.get('noservices', False) %}
 firewalld:

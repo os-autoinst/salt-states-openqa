@@ -13,12 +13,17 @@
 {% endif %}
 
 include:
- - openqa.repos
- - openqa.journal
+  - sudo
+  - openqa.repos
+  - openqa.journal
 {%- if grains.get('openqa_share_nfs', False) or grains.get('roles', '') in ['worker'] %}
- - openqa.nfs_share
+  - openqa.nfs_share
 {%- endif %}
- - sudo
+{%- if grains.get('firewall', 'nftables') == 'firewalld' %}
+  - firewall.firewalld
+{%- else %}
+  - firewall.nftables
+{%- endif %}
 
 {%- if not grains.get('noservices', False) %}
 UTC:
@@ -218,14 +223,6 @@ stop_and_disable_all_not_configured_workers:
   cmd.run:
     - name: services=$(systemctl list-units --all 'openqa-worker-auto-restart@*.service' | sed -e '/.*openqa-worker-auto-restart@.*\.service.*/!d' -e 's|.*openqa-worker-auto-restart@\(.*\)\.service.*|\1|' | awk '{ if($0 > {{ worker_slot_count }}) print "openqa-worker-auto-restart@" $0 ".service openqa-reload-worker-auto-restart@" $0 ".path" }' | tr '\n' ' '); [ -z "$services" ] || systemctl disable --now $services
     - unless: test $(systemctl list-units --legend=false --all 'openqa-worker-auto-restart@*.service' | wc -l) -eq {{ worker_slot_count }}
-{%- endif %}
-
-# Configure firewall
-include:
-{%- if grains.get('firewall', 'nftables') == 'firewalld' %}
-    - firewall.firewalld
-{%- else %}
-    - firewall.nftables
 {%- endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
