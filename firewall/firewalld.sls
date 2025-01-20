@@ -8,6 +8,15 @@ firewalld.packages:
     - pkgs:
       - firewalld # For TAP support and for other good reasons
 
+firewalld_config:
+  file.replace:
+    - name: /etc/firewalld/firewalld.conf
+    - pattern: '^DefaultZone=.*$'
+    - repl: 'DefaultZone=trusted'
+    - append_if_not_found: True
+    - require:
+      - pkg: worker.packages
+
 {%- if not grains.get('noservices', False) %}
 # disable our own nftables
 firewall:
@@ -22,18 +31,9 @@ firewalld:
 {% if grains.get('host') in pillar.get('workerconf').keys() %}
       - file: /etc/firewalld/zones/trusted.xml
 {% endif %}
-
+{% endif %}
 
 {% if grains.get('host') in pillar.get('workerconf').keys() %}
-firewalld_config:
-  file.replace:
-    - name: /etc/firewalld/firewalld.conf
-    - pattern: '^DefaultZone=.*$'
-    - repl: 'DefaultZone=trusted'
-    - append_if_not_found: True
-    - require:
-      - pkg: worker.packages
-
 firewalld_zones:
   file.managed:
     - template: jinja
