@@ -25,11 +25,13 @@ nfs-client:
 {%- endif %}
 # Define static dns entries in /etc/hosts for our nfs server to ensure
 # reachability even in early boot steps.
+{%- if ip_list|length > 0 %}
 static_nfs_hostname:
   host.present:
     - ip: {{ ip_list }}
     - names:
       - {{ nfs_hostname }}
+{%- endif %}
 
 # If automount suspended the mount, we only have a "systemd-1 type autofs"-
 # mount. This causes salt to assume the (correct) mount is gone and remount
