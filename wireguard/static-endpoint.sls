@@ -11,8 +11,10 @@
 {% do ip_list.extend(ipv6) %}
 {%- endif %}
 
+{%- if ip_list|length > 0 %}
 static_wg_hostname:
   host.present:
     - ip: {{ ip_list }}
     - names:
       - {{ wg_endpoint }}
+{%- endif %}
