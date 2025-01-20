@@ -1,4 +1,4 @@
-{% set wg_endpoint = grains.get('wg_endpoint', False) %}
+{% set wg_endpoint = pillar.get('wg_endpoint', '.') %}
 {% set ipv4 = salt["dnsutil.A"](wg_endpoint) %}
 {% set ipv6 = salt["dnsutil.AAAA"](wg_endpoint) %}
 {% set ip_list = [] %}
