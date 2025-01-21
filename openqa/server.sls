@@ -31,9 +31,6 @@ server.packages:
   cmd.run:
     - onchanges:
       - file: /etc/fstab
-
-UTC:
-  timezone.system
 {%- endif %}
 
 /etc/openqa/openqa.ini:
