@@ -17,6 +17,7 @@ base:
     - etc.zypper
     - ca-certificates
     - wireguard
+    - timezone_utc
   'not G@roles:webui and not G@roles:worker':
     - auto-upgrade
   'G@roles:webui':

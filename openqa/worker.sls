@@ -25,11 +25,6 @@ include:
   - firewall.nftables
 {%- endif %}
 
-{%- if not grains.get('noservices', False) %}
-UTC:
-  timezone.system
-{%- endif %}
-
 worker.packages:
   pkg.installed:
     - refresh: False
