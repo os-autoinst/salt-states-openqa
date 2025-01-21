@@ -1103,7 +1103,7 @@ groups:
                     params:
                       - online_workers
                   reducer:
-                    type: avg
+                    type: last
               refId: A
               type: classic_conditions
             refId: A
