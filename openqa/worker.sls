@@ -16,7 +16,7 @@ include:
   - sudo
   - openqa.repos
   - openqa.journal
-{%- if grains.get('openqa_share_nfs', False) or grains.get('roles', '') in ['worker'] %}
+{%- if grains.get('openqa_share_nfs', grains.get('roles', '') in ['worker']) %}
   - openqa.nfs_share
 {%- endif %}
 {%- if grains.get('firewall', 'nftables') == 'firewalld' %}
