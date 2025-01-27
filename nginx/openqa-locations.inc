@@ -13,7 +13,7 @@ if_modified_since before;
 # Optional faster assets downloads for large deployments
 location /assets {
     alias /var/lib/openqa/share/factory/;
-    auth_request /api/v1/auth;
+    #auth_request /api/v1/auth;
     autoindex          on;
     tcp_nopush         on;
     sendfile           on;
