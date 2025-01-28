@@ -11,13 +11,18 @@ client_body_buffer_size 2m;
 if_modified_since before;
 
 # Optional faster assets downloads for large deployments
+# note: There is a distinct location for repo/iso assets to allow unauthorized access
+# despite generally requiring authorization. The unauthorized access is required by
+# many tests and authorization is also not necassary as those assets do not contain
+# embargoed data.
+location ~ ^/assets/((repo|iso)(/.*)?)$ {
+    alias /var/lib/openqa/share/factory/$1;
+    include conf.d/openqa-asset-config.inc;
+}
 location /assets {
     alias /var/lib/openqa/share/factory/;
+    include conf.d/openqa-asset-config.inc;
     #auth_request /api/v1/auth;
-    autoindex          on;
-    tcp_nopush         on;
-    sendfile           on;
-    sendfile_max_chunk 1m;
 }
 
 # Optional to make use of auth_request to require authentication for asset downloads

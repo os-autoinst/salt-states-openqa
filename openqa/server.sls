@@ -201,6 +201,14 @@ webserver_grain:
     - require:
       - pkg: server.packages
 
+/etc/nginx/conf.d/openqa-asset-config.inc:
+  file.managed:
+    - source: salt://nginx/openqa-asset-config.inc
+    - user: root
+    - group: root
+    - require:
+      - pkg: server.packages
+
 # ext_pillar is not available with master-less mode so using "noservices"
 # check as workaround to disable the following in our test environment
 {%- if not grains.get('noservices', False) %}
