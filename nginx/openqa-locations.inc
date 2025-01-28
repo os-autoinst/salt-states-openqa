@@ -22,7 +22,7 @@ location ~ ^/assets/((repo|iso)(/.*)?)$ {
 location /assets {
     alias /var/lib/openqa/share/factory/;
     include conf.d/openqa-asset-config.inc;
-    #auth_request /api/v1/auth;
+    auth_request /api/v1/auth;
 }
 
 # Optional to make use of auth_request to require authentication for asset downloads
