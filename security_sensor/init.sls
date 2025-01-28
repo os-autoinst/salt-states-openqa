@@ -6,7 +6,7 @@
 ## https://gitlab.suse.de/linux-security-sensor/suse-client-deployment
 ## See https://progress.opensuse.org/issues/159060
 {%    from 'openqa/repo_config.sls' import mirror, repo %}
-security-sensor.repo:
+security-sensor:
   pkgrepo.managed:
     - humanname: Server Monitoring Software
     - baseurl: http://{{ mirror }}/ibs/SUSE:/Velociraptor/{{ repo }}
