@@ -174,6 +174,7 @@ webserver_grain:
     - source: salt://nginx/nginx.conf
     - user: root
     - group: root
+    - mode: "0644"
     - require:
       - pkg: server.packages
 
@@ -182,6 +183,7 @@ webserver_grain:
     - source: salt://nginx/openqa.conf
     - user: root
     - group: root
+    - mode: "0644"
     - require:
       - pkg: server.packages
 
@@ -190,6 +192,7 @@ webserver_grain:
     - source: salt://nginx/openqa-locations.inc
     - user: root
     - group: root
+    - mode: "0644"
     - require:
       - pkg: server.packages
 
@@ -198,6 +201,7 @@ webserver_grain:
     - source: salt://nginx/dehydrated.inc
     - user: root
     - group: root
+    - mode: "0644"
     - require:
       - pkg: server.packages
 
@@ -206,6 +210,7 @@ webserver_grain:
     - source: salt://nginx/openqa-asset-config.inc
     - user: root
     - group: root
+    - mode: "0644"
     - require:
       - pkg: server.packages
 
