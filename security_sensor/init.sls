@@ -24,6 +24,8 @@ security-sensor:
   pkg.latest:
     - name: velociraptor-client
     - refresh: False
+    - retry:
+        attempts: 5
 
 /etc/sysconfig/velociraptor-client:
   file.replace:
