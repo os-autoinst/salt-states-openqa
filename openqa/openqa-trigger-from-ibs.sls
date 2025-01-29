@@ -54,18 +54,22 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP7:GA:Staging:' + i) }}
 {% endfor %}
 
+# SLE 16 Stagings
 {% for i in ['A','B','C','D','E','F','G','H','S','V','Y'] %}
 {{ scriptgen('SUSE:SLFO:Main:Staging:' + i) }}
 {% endfor %}
 
+# SL Micro 6.0 Staging Updates (Maintenance)
 {% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'] %}
 {{ scriptgen('SUSE:ALP:Source:Standard:1.0:Staging:' + i) }}
 {% endfor %}
 
+# SL Micro 6.1 Staging Updates (Maintenance)
 {% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'] %}
 {{ scriptgen('SUSE:SLFO:1.1:Staging:' + i) }}
 {% endfor %}
 
+# SLFO Kernel Staging Updates (Maintenance)
 {% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'] %}
 {{ scriptgen('SUSE:SLFO:Kernel:1.0:Staging:' + i) }}
 {% endfor %}
@@ -82,7 +86,9 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP6:Update:BCI') }}
 {{ scriptgen('SUSE:SLE-15-SP7:Update:BCI') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:Products:SLERT') }}
-{{ scriptgen('SUSE:ALP:Products:Marble:6.0') }}
-{{ scriptgen('SUSE:SLFO:Products:SL-Micro:6.1:Increments') }}
+# SL Micro 6.0 Increments
+{{ scriptgen('SUSE:ALP:Products:Marble:6.0:ToTest:product') }}
+# SL Micro 6.1 Increments
+{{ scriptgen('SUSE:SLFO:Products:SL-Micro:6.1:ToTest:product:iso') }}
 {{ scriptgen('Devel:YaST:Agama:Head') }}
 
