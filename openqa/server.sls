@@ -51,7 +51,7 @@ server.packages:
           # https://progress.opensuse.org/issues/162038
           api_hmac_time_tolerance: 600
         auth:
-          require_for_assets: 0
+          require_for_assets: 1
         amqp:
           url: {{ pillar['server']['amqp_url'] }}
           topic_prefix: suse
