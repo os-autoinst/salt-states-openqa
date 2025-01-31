@@ -217,7 +217,7 @@ openqa-worker-cacheservice-minion:
 stop_and_disable_all_not_configured_workers:
   cmd.run:
     - name: services=$(systemctl list-units --all 'openqa-worker-auto-restart@*.service' | sed -e '/.*openqa-worker-auto-restart@.*\.service.*/!d' -e 's|.*openqa-worker-auto-restart@\(.*\)\.service.*|\1|' | awk '{ if($0 > {{ worker_slot_count }}) print "openqa-worker-auto-restart@" $0 ".service openqa-reload-worker-auto-restart@" $0 ".path" }' | tr '\n' ' '); [ -z "$services" ] || systemctl disable --now $services
-    - unless: test $(systemctl list-units --legend=false 'openqa-worker-auto-restart@*.service' | wc -l) -eq {{ worker_slot_count }}
+    - unless: test $(systemctl list-units --legend=false 'openqa-worker-auto-restart@*.service' | wc -l) -le {{ worker_slot_count }}
 {%- endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
