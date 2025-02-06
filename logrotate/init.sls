@@ -10,7 +10,7 @@ logrotate:
     - makedirs: True
 
 /etc/systemd/system/logrotate.timer.d/override.conf:
-   file.absent
+  file.absent
 
 {% for type in ['service', 'timer'] %}
 /etc/systemd/system/logrotate-openqa.{{ type }}:
