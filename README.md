@@ -270,11 +270,26 @@ Take out particular worker slots:
 systemctl mask --now openqa-worker-auto-restart@{20,21}.service openqa-reload-worker-auto-restart@{20,21}.{service,path}
 ```
 
+To avoid spelling out the service names manually one can use the helper script
+`openqa-worker-services`. So the following example is equivalent to the previous
+one:
+```
+systemctl mask --now $(openqa-worker-services --masking 20 21)
+```
+
+This helper script returns all worker slots if no arguments are provided. So one
+can for instance restart all slots easily like this (without explicitly
+specifying the number of slots):
+```
+systemctl restart $(openqa-worker-services)
+```
+
+
 Take out particular worker slots without interrupting ongoing jobs:
 ```
-systemctl mask --now openqa-reload-worker-auto-restart@{20,21}.{service,path}
-systemctl mask openqa-worker-auto-restart@{20,21}.service
-systemctl kill --kill-who=main --signal HUP openqa-worker-auto-restart@{20,21}.service
+systemctl mask --now $(openqa-worker-services --masking --reload-only 20 21)
+systemctl mask $(openqa-worker-services 20 21)
+systemctl kill --kill-who=main --signal HUP $(openqa-worker-services 20 21)
 ```
 
 Find currently masked units:
@@ -284,8 +299,8 @@ systemctl list-unit-files --state=masked
 
 Bring back particular worker slots:
 ```
-systemctl unmask openqa-worker-auto-restart@{20,21}.service openqa-reload-worker-auto-restart@{20,21}.{service,path}
-systemctl start openqa-worker-auto-restart@{20,21}.service openqa-reload-worker-auto-restart@{20,21}.path
+systemctl unmask $(openqa-worker-services --masking 20 21)
+systemctl start $(openqa-worker-services --starting 20 21)
 ```
 
 ## Testing specific template rendering locally

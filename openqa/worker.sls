@@ -359,3 +359,8 @@ kernel.softlockup_panic:
   cmd.run:
     - onchanges:
       - file: /etc/sysctl.d/50-vm-bytes.conf
+
+/usr/local/bin/openqa-worker-services:
+  file.managed:
+    - source: salt://openqa/openqa-worker-services.sh
+    - mode: "0755"
