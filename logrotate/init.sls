@@ -12,6 +12,13 @@ logrotate:
 /etc/systemd/system/logrotate.timer.d/override.conf:
   file.absent
 
+/etc/logrotate.d/zypper.lr:
+  file.line:
+    - mode: ensure
+    - after: size \d+M
+    - content: minage 1
+    - create: False
+
 {% for type in ['service', 'timer'] %}
 /etc/systemd/system/logrotate-openqa.{{ type }}:
   file.managed:
