@@ -70,7 +70,7 @@ groups:
             refId: B
         execErrState: OK
         for: 3h
-        isPaused: true
+        isPaused: false
         labels:
           __contacts__: '"osd-admins"'
           rule_uid: XzAh5mfVz
@@ -150,7 +150,7 @@ groups:
             refId: B
         execErrState: OK
         for: 3h
-        isPaused: true
+        isPaused: false
         labels:
           __contacts__: '"osd-admins"'
           rule_uid: QkA25iBVk
