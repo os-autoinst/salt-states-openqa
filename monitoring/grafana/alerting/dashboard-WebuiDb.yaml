@@ -182,7 +182,7 @@ groups:
           __alertId__: '311'
           __dashboardUid__: WebuiDb
           __panelId__: '96'
-          message: There is at least one broken worker for more than 15 minutes. Have
+          message: There is at least one broken worker for more than 30 minutes. Have
             a look at https://openqa.suse.de/admin/workers to find out which one it is
             (click the help icon to view the concrete error message).
         condition: B
@@ -209,7 +209,7 @@ groups:
               tags: []
             refId: A
             relativeTimeRange:
-              from: 900
+              from: 1800
               to: 0
           - datasourceUid: __expr__
             model:

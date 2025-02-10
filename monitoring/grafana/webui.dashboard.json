@@ -6750,7 +6750,7 @@
             "query": {
               "params": [
                 "A",
-                "15m",
+                "30m",
                 "now"
               ]
             },
@@ -6765,7 +6765,7 @@
         "for": "15m",
         "frequency": "1m",
         "handler": 1,
-        "message": "There is at least one broken worker for more than 15 minutes. Have a look at https://openqa.suse.de/admin/workers to find out which one it is (click the help icon to view the concrete error message).",
+        "message": "There is at least one broken worker for more than 30 minutes. Have a look at https://openqa.suse.de/admin/workers to find out which one it is (click the help icon to view the concrete error message).",
         "name": "Broken workers alert",
         "noDataState": "keep_state",
         "notifications": [
