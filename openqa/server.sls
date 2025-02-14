@@ -429,7 +429,7 @@ cron.service:
     - contents: |
         [Journal]
         SystemMaxUse=80G
-        SystemKeepFree=20%
+        SystemKeepFree=16G
         SystemMaxFileSize=1G
         SystemMaxFiles=200
 
