@@ -1,26 +1,5 @@
 {%- if not grains.get('noservices', False) %}
-## Unconditionally enable and use the security sensor
-## using an internal repo as requested on
-## https://confluence.suse.com/display/CS/Sensor+-+Linux+Endpoint+Protection+Agent
-## and
-## https://gitlab.suse.de/linux-security-sensor/suse-client-deployment
-## See https://progress.opensuse.org/issues/159060
-{%    from 'openqa/repo_config.sls' import mirror, repo %}
 security-sensor:
-  pkgrepo.managed:
-    - humanname: Server Monitoring Software
-    - baseurl: http://{{ mirror }}/ibs/SUSE:/Velociraptor/{{ repo }}
-    - gpgautoimport: True
-    - refresh: True
-    - priority: 90
-{%- if 'nue2.suse.org' in grains.get('domain') and not salt['file.file_exists']('/etc/wireguard/prg2wg.conf') %}
-    - enabled: False
-{%- endif %}
-    - require_in:
-      - pkg: velociraptor-client
-    - retry:
-        attempts: 5
-
   pkg.latest:
     - name: velociraptor-client
     - refresh: False
