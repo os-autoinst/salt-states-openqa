@@ -5941,7 +5941,7 @@
         "type": "influxdb",
         "uid": "000000001"
       },
-      "description": "Worker slots which are able to connect to the web UI but report that they're broken.\n\nThis corresponds to the workers shown as \"broken\" on the web UI which also contains the reason the worker is broken: https://openqa.suse.de/admin/workers",
+      "description": "Worker slots which are able to connect to the web UI but report that they're broken.\n\nThis corresponds to the workers shown as \"unavailable\" on the web UI which also contains the reason the worker is broken: https://openqa.suse.de/admin/workers\n\nLimited workers are reported as \"Offline (limited)\", this might mean there are too many workers registered, see https://progress.opensuse.org/issues/157690 for more details.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5954,6 +5954,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -5985,7 +5986,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -5993,8 +5995,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -6013,11 +6014,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "alias": "Number of broken workers",
@@ -6049,9 +6051,45 @@
             ]
           ],
           "tags": []
+        },
+        {
+          "alias": "Number of limited workers",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "postgresql",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "limited_workers"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
-      "title": "Broken workers",
+      "title": "Broken and limited workers",
       "type": "timeseries"
     },
     {
