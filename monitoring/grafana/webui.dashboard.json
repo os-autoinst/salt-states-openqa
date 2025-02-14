@@ -6778,7 +6778,7 @@
         "type": "influxdb",
         "uid": "000000001"
       },
-      "description": "Worker slots which are able to connect to the web UI but report that they're broken.\n\nThis corresponds to the workers shown as \"broken\" on the web UI which also contains the reason the worker is broken: https://openqa.suse.de/admin/workers",
+      "description": "Worker slots which are able to connect to the web UI but report that they're broken.\n\nThis corresponds to the workers shown as \"unavailable\" on the web UI which also contains the reason the worker is broken: https://openqa.suse.de/admin/workers",
       "fieldConfig": {
         "defaults": {
           "color": {
