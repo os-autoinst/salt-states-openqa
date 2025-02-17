@@ -35,17 +35,14 @@ AAAAC3NzaC1lZDI1NTE5AAAAIODlqAE/HJh5EvjIioaHbfUY0JC6Rk5MK0FVM1hKBRmx:
 
 {% for username, details in pillar.get('users', {}).items() %}
 {{ username }}:
-
-  user:
-    - present
+  user.present:
     - fullname: {{ details.get('fullname','') }}
     - name: {{ username }}
     - shell: /bin/bash
     - home: /home/{{ username }}
 
   {% if 'pub_ssh_keys' in details %}
-  ssh_auth:
-    - present
+  ssh_auth.present:
     - user: {{ username }}
     - names:
     {% for pub_ssh_key in details.get('pub_ssh_keys', []) %}
