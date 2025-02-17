@@ -1,11 +1,14 @@
 include:
  - sudo
 
-openssh:
+openssh.packages:
   pkg.installed:
     - refresh: False
     - retry:
         attempts: 5
+    - pkgs:
+      - openssh
+      - shadow
 
 /etc/ssh/sshd_config:
   file.managed:
