@@ -15,6 +15,8 @@
 grafana:
   pkg.latest:
     - refresh: False
+    - retry:  # some packages can change rapidly in our repos needing a retry as zypper does not do that
+        attempts: 5
 
 /etc/tmpfiles.d/grafana.conf:
   file.managed:
