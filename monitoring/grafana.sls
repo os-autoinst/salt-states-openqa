@@ -73,7 +73,7 @@ reverse-proxy-group:
         server:
           protocol: socket
           domain: 'monitor.qa.suse.de'
-          root_url: 'http://monitor.qa.suse.de'
+          root_url: 'https://monitor.qa.suse.de'
           socket: '/var/run/grafana/grafana.socket'
         analytics:
           reporting_enabled: false
