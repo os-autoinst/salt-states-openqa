@@ -24,15 +24,11 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
+  "id": 58,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -45,46 +41,6 @@
       "type": "row"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                200
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "The machine ${tag_url} was not pingable for several minutes.\n\nSuggested actions:\n* Check if *you* can ping the machine (network connection within the infrastructure might be disrupted)\n* Login over ssh if possible, otherwise use a management interface, e.g. IPMI (machine could be stuck in boot process)",
-        "name": "Average Ping time (ms) alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -101,6 +57,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -141,8 +98,7 @@
               }
             ]
           },
-          "unit": "ms",
-          "unitScale": true
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -162,11 +118,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "alias": "$tag_url",
@@ -228,45 +185,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                4
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "HTTP Response alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -283,6 +201,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -323,8 +242,7 @@
               }
             ]
           },
-          "unit": "s",
-          "unitScale": true
+          "unit": "s"
         },
         "overrides": []
       },
@@ -344,11 +262,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "alias": "Response of /tests",
@@ -405,10 +324,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -421,69 +336,6 @@
       "type": "row"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                500
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "D",
-                "1h",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                50
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "D",
-                "25m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "median"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "15s",
-        "handler": 1,
-        "message": "IOwait too high\n\nCheck system journal on the host at the time of alert to see if there are any unexpected events coinciding with the alert.\n\nhttps://progress.opensuse.org/issues/69664 describes that a higher IO usage could be related to recent changes to openQA to load more test modules in parallel.",
-        "name": "CPU usage alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -500,6 +352,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 100,
             "gradientMode": "none",
@@ -542,8 +395,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": [
           {
@@ -586,7 +438,6 @@
       },
       "id": 23,
       "interval": "20s",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -599,11 +450,12 @@
           "showLegend": false
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "alias": "system",
@@ -1010,68 +862,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                200
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                50
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "10m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "System Load alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -1088,6 +878,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1128,8 +919,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": [
           {
@@ -1154,7 +944,6 @@
       },
       "id": 25,
       "interval": "10s",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -1163,11 +952,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "alias": "1 Minute Average",
@@ -1318,8 +1108,7 @@
             "scaleDistribution": {
               "type": "linear"
             }
-          },
-          "unitScale": true
+          }
         },
         "overrides": []
       },
@@ -1369,7 +1158,7 @@
           "reverse": false
         }
       },
-      "pluginVersion": "10.3.5",
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "alias": "[[tag_process_name]]",
@@ -1423,10 +1212,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1439,138 +1224,6 @@
       "type": "row"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                90
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                90
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                90
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "C",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                90
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "D",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                90
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "E",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "One of the file systems is too full",
-        "name": "File systems alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -1619,8 +1272,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "red",
@@ -1912,8 +1564,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1983,10 +1634,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1999,46 +1646,6 @@
       "type": "row"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                1
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "online_workers",
-                "10m",
-                "now-1m"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "10m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "No Minion workers on openqa.suse.de are online. There is one worker *expected* to be online, visible under https://openqa.suse.de/minion/workers.\n\nIf this alert triggers, openQA is unable to perform background tasks. Check the status of `openqa-gru.service` on openqa.suse.de to investigate. It may help to restart that service. For logs, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru`.",
-        "name": "web UI: Minion workers alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -2087,8 +1694,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
+                "color": "red"
               },
               {
                 "color": "transparent",
@@ -2140,7 +1746,6 @@
       },
       "id": 17,
       "interval": "2m",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -2290,69 +1895,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                2000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                20
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "C",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "Too many Minion jobs have failed on openqa.suse.de\n\nReview the failed jobs on https://openqa.suse.de/minion/jobs?state=failed and create a ticket if there's not already one (see https://progress.opensuse.org/issues/96263 and related tickets) and the failed jobs aren't just a symptom of a bigger problem (e.g. database outage). After investigation remove the failed jobs (possibly keeping one instance of a failure kind around). For the general log of the Minion job queue, checkout `journalctl -fu openqa-gru.service` and `/var/log/openqa_gru` on openqa.suse.de.",
-        "name": "web UI: Too many Minion job failures alert",
-        "noDataState": "alerting",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -2401,8 +1943,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "red",
@@ -2438,7 +1979,6 @@
         "y": 39
       },
       "id": 19,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -2679,8 +2219,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2716,7 +2255,6 @@
         "y": 39
       },
       "id": 201,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -2785,10 +2323,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2801,68 +2335,6 @@
       "type": "row"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                2
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                1000000000
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "Memory usage alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -2911,8 +2383,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
+                "color": "red"
               },
               {
                 "color": "transparent",
@@ -2957,7 +2428,6 @@
       },
       "id": 68,
       "interval": "10s",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -3188,10 +2658,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3204,68 +2670,6 @@
       "type": "row"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                6000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "15m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "min"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                -6000
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "A",
-                "15m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "max"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "NTP offset alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -3313,8 +2717,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "red",
@@ -3450,8 +2853,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3484,8 +2886,6 @@
         "y": 72
       },
       "id": 55,
-      "interval": "",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -3656,8 +3056,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3690,8 +3089,6 @@
         "y": 72
       },
       "id": 50,
-      "interval": "",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -3816,10 +3213,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3859,8 +3252,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3943,6 +3335,7 @@
           "tags": []
         }
       ],
+      "title": "",
       "transparent": true,
       "type": "stat"
     },
@@ -3994,8 +3387,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4205,8 +3597,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4369,91 +3760,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                10000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                1000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                1000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "6m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "Disk I/O time for /dev/vda (/) alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -4501,8 +3807,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "red",
@@ -4666,10 +3971,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -4729,8 +4030,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4867,8 +4167,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4951,46 +4250,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                0.3
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "min_nginx_response",
-                "30m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "median"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "30m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "The nginx response time exceeded the alert threshold.\n\n* Check the load of the web UI host\n* Consider restarting the openQA web UI service and/or nginx\n\nAlso see https://progress.opensuse.org/issues/73633",
-        "name": "Nginx Response Time alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -5040,8 +4299,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "red",
@@ -5328,54 +4586,53 @@
     },
     {
       "datasource": {
-        "uid": "000000001",
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "000000001"
       },
       "fieldConfig": {
         "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
             "barAlignment": 0,
-            "lineWidth": 1,
+            "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
-            "spanNulls": false,
-            "insertNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
             },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "axisBorderShow": false,
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
-            "axisCenteredZero": false,
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
             }
           },
-          "unitScale": true,
-          "color": {
-            "mode": "palette-classic"
-          },
+          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -5383,8 +4640,8 @@
               }
             ]
           },
-          "links": [],
-          "unit": "short"
+          "unit": "short",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -5397,15 +4654,15 @@
       "id": 88,
       "interval": "20s",
       "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
         "tooltip": {
           "mode": "multi",
           "sort": "none"
-        },
-        "legend": {
-          "showLegend": false,
-          "displayMode": "list",
-          "placement": "bottom",
-          "calcs": []
         }
       },
       "pluginVersion": "10.1.5",
@@ -5424,16 +4681,16 @@
           "select": [
             [
               {
-                "type": "field",
                 "params": [
                   "requests"
-                ]
+                ],
+                "type": "field"
               },
               {
-                "type": "non_negative_derivative",
                 "params": [
                   "1s"
-                ]
+                ],
+                "type": "non_negative_derivative"
               }
             ]
           ],
@@ -5451,59 +4708,59 @@
     },
     {
       "datasource": {
-        "uid": "000000001",
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "000000001"
       },
+      "description": "Active connections: The current number of active client connections including Waiting connections; Waiting: The current number of idle client connections waiting for a request.",
       "fieldConfig": {
         "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
             "barAlignment": 0,
-            "lineWidth": 1,
+            "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
-            "spanNulls": true,
-            "insertNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
             },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "axisBorderShow": false,
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
-            "axisCenteredZero": false,
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "line+area"
             }
           },
-          "unitScale": true,
-          "color": {
-            "mode": "palette-classic"
-          },
+          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               }
             ]
           },
-          "links": [],
-          "unit": "short"
+          "unit": "short",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -5514,40 +4771,39 @@
         "y": 132
       },
       "id": 15,
-      "links": [],
       "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
         "tooltip": {
           "mode": "multi",
           "sort": "none"
-        },
-        "legend": {
-          "showLegend": false,
-          "displayMode": "list",
-          "placement": "bottom",
-          "calcs": []
         }
       },
       "pluginVersion": "10.1.5",
       "targets": [
         {
+          "alias": "Active connections",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
           },
-          "alias": "Active connections",
           "dsType": "influxdb",
           "groupBy": [
             {
-              "type": "time",
               "params": [
                 "$interval"
-              ]
+              ],
+              "type": "time"
             },
             {
-              "type": "fill",
               "params": [
                 "null"
-              ]
+              ],
+              "type": "fill"
             }
           ],
           "measurement": "nginx",
@@ -5558,14 +4814,14 @@
           "select": [
             [
               {
-                "type": "field",
                 "params": [
                   "active"
-                ]
+                ],
+                "type": "field"
               },
               {
-                "type": "mean",
-                "params": []
+                "params": [],
+                "type": "mean"
               }
             ]
           ],
@@ -5578,24 +4834,24 @@
           ]
         },
         {
+          "alias": "Waiting",
           "datasource": {
             "type": "influxdb",
             "uid": "000000001"
           },
-          "alias": "Waiting",
           "dsType": "influxdb",
           "groupBy": [
             {
-              "type": "time",
               "params": [
                 "$interval"
-              ]
+              ],
+              "type": "time"
             },
             {
-              "type": "fill",
               "params": [
                 "null"
-              ]
+              ],
+              "type": "fill"
             }
           ],
           "measurement": "nginx",
@@ -5606,14 +4862,14 @@
           "select": [
             [
               {
-                "type": "field",
                 "params": [
                   "waiting"
-                ]
+                ],
+                "type": "field"
               },
               {
-                "type": "mean",
-                "params": []
+                "params": [],
+                "type": "mean"
               }
             ]
           ],
@@ -5627,15 +4883,10 @@
         }
       ],
       "title": "Nginx Connections",
-      "type": "timeseries",
-      "description": "Active connections: The current number of active client connections including Waiting connections; Waiting: The current number of idle client connections waiting for a request."
+      "type": "timeseries"
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -5648,46 +4899,6 @@
       "type": "row"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                90
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "D",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "90% of postgresql connections reached or connections are already not possible any more. Check on OSD what query is blocking with e.g.:\n\n```\nSELECT datid, datname, pid, usesysid, usename, query_start, state, query FROM pg_stat_activity WHERE state = 'active' ORDER BY query_start LIMIT 10;\n```",
-        "name": "Open database connections by user alert",
-        "noDataState": "alerting",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -5735,8 +4946,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "red",
@@ -5817,7 +5027,6 @@
         "y": 139
       },
       "id": 2,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -5970,8 +5179,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -5991,7 +5199,6 @@
         "y": 146
       },
       "id": 89,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -6283,8 +5490,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -6325,7 +5531,6 @@
         "y": 153
       },
       "id": 4,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -6609,8 +5814,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -6630,7 +5834,6 @@
         "y": 153
       },
       "id": 6,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -6734,51 +5937,11 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                1
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "30m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "min"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "15m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "There is at least one broken worker for more than 30 minutes. Have a look at https://openqa.suse.de/admin/workers to find out which one it is (click the help icon to view the concrete error message).",
-        "name": "Broken workers alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
       },
-      "description": "Worker slots which are able to connect to the web UI but report that they're broken.\n\nThis corresponds to the workers shown as \"broken\" on the web UI which also contains the reason the worker is broken: https://openqa.suse.de/admin/workers",
+      "description": "Worker slots which are able to connect to the web UI but report that they're broken.\n\nThis corresponds to the workers shown as \"unavailable\" on the web UI which also contains the reason the worker is broken: https://openqa.suse.de/admin/workers\n\nLimited workers are reported as \"Offline (limited)\", this might mean there are too many workers registered, see https://progress.opensuse.org/issues/157690 for more details.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -6791,6 +5954,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -6831,8 +5995,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -6851,11 +6014,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.1",
       "targets": [
         {
           "alias": "Number of broken workers",
@@ -6887,52 +6051,48 @@
             ]
           ],
           "tags": []
+        },
+        {
+          "alias": "Number of limited workers",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "000000001"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "postgresql",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "limited_workers"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
-      "title": "Broken workers",
+      "title": "Broken and limited workers",
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                604800
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "1h",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "1h",
-        "frequency": "1h",
-        "handler": 1,
-        "message": "The SSL certificate for the openQA webUI is nearing expiration.\n\nRelated progress issue: https://progress.opensuse.org/issues/103149",
-        "name": "SSL expiration alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -6981,8 +6141,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
+                "color": "red"
               },
               {
                 "color": "transparent",
@@ -7002,7 +6161,6 @@
         "y": 167
       },
       "id": 98,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -7083,9 +6241,9 @@
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": false,
-  "revision": 1,
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [
     "openQA",
     "webui"
@@ -7097,12 +6255,11 @@
         "label": "Only for reusing",
         "name": "host",
         "query": "openqa",
-        "skipUrlSync": false,
+        "skipUrlSync": true,
         "type": "constant"
       },
       {
         "current": {
-          "selected": true,
           "text": [
             "All"
           ],
@@ -7116,7 +6273,6 @@
         },
         "definition": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"name\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /vd[a-z]$/",
         "description": "Variable containing all host disks (e.g. vda, vdb, etc.) to populate disk IO query rows",
-        "hide": 0,
         "includeAll": true,
         "label": "Disks",
         "multi": true,
@@ -7125,8 +6281,6 @@
         "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"name\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /vd[a-z]$/ and \"DESCRIPTION\"::tag <> ''",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       }
     ]
@@ -7135,35 +6289,10 @@
     "from": "now-1h",
     "to": "now"
   },
-  "timeRangeUpdatedDuringEditOrView": false,
-  "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
-    ]
-  },
+  "timepicker": {},
   "timezone": "",
   "title": "Webui Summary",
   "uid": "WebuiDb",
-  "version": 62,
+  "version": 67,
   "weekStart": ""
 }

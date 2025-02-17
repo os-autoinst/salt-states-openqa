@@ -240,6 +240,73 @@ groups:
         uid: dZ025mf4z
   - folder: Salt
     interval: 1m
+    name: Limited workers alert
+    orgId: 1
+    rules:
+      - uid: dZ025nf4z
+        title: Limited workers alert
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 1800
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              alias: Number of limited workers
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+              intervalMs: 1000
+              maxDataPoints: 43200
+              measurement: postgresql
+              orderByTime: ASC
+              policy: default
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - limited_workers
+                    type: field
+                  - params: []
+                    type: mean
+              tags: []
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 1
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    type: min
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: classic_conditions
+        dashboardUid: WebuiDb
+        panelId: 96
+        noDataState: OK
+        execErrState: OK
+        for: 15m
+        annotations:
+          __alertId__: "312"
+          __dashboardUid__: WebuiDb
+          __panelId__: "96"
+          message: There is at least one limited worker for more than 30 minutes. Have a look at https://openqa.suse.de/admin/workers to find out which one it is.
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: dZ025nf4z
+        isPaused: false
+  - folder: Salt
+    interval: 1m
     name: System Load alert
     orgId: 1
     rules:
