@@ -30,3 +30,14 @@ include:
     - contents:
       - 'options kvm nested=1'
 {% endif %}
+
+/etc/systemd/system/libvirtd.service.d/asset-mount-requirement.conf:
+  file.managed:
+    - source: salt://libvirt/libvirtd.service.conf
+    - makedirs: true
+{%- if not grains.get('noservices', False) %}
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+        - file: /etc/systemd/system/libvirtd.service.d/asset-mount-requirement.conf
+{%- endif %}
