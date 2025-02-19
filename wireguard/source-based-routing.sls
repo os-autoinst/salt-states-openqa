@@ -15,6 +15,7 @@ source-based-routing.packages:
     - mode: "0755"
     - source: salt://wireguard/configure-source-based-routing
     - makedirs: true
+    - template: jinja
 
 /etc/systemd/system/configure-source-based-routing@.service:
   file.managed:
