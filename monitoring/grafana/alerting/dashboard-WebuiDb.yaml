@@ -243,7 +243,7 @@ groups:
     name: Limited workers alert
     orgId: 1
     rules:
-      - uid: dZ025nf4z
+      - uid: aedmka6w7yn0gf
         title: Limited workers alert
         condition: B
         data:
@@ -297,13 +297,13 @@ groups:
         execErrState: OK
         for: 15m
         annotations:
-          __alertId__: "312"
+          __alertId__: "311"
           __dashboardUid__: WebuiDb
           __panelId__: "96"
           message: There is at least one limited worker for more than 30 minutes. Have a look at https://openqa.suse.de/admin/workers to find out which one it is.
         labels:
           __contacts__: '"osd-admins"'
-          rule_uid: dZ025nf4z
+          rule_uid: dZ025mf4z
         isPaused: false
   - folder: Salt
     interval: 1m
