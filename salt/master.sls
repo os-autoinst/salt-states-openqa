@@ -24,7 +24,7 @@ master_config:
     - dataset:
         interface: "::"
         ipv6: true
-        timeout: 3600
+        timeout: 90
         ext_pillar:
           - file_tree:
               root_dir: /srv/pillar
