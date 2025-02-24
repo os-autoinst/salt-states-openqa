@@ -314,16 +314,6 @@ setcap cap_net_admin=ep /usr/bin/qemu-system-{{ qemu_arch }}:
     - require:
       - pkg: worker.packages
 
-
-# TAPSCRIPT requires _openqa-worker to be able to sudo
-/etc/sudoers.d/_openqa-worker:
-  file.managed:
-    - mode: "0600"
-    - contents:
-      - '_openqa-worker ALL=(ALL) NOPASSWD: ALL'
-    - require:
-      - sudo
-
 /etc/telegraf/telegraf.d/telegraf-worker.conf:
   file.managed:
     - template: jinja
