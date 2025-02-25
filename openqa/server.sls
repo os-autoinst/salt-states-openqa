@@ -59,7 +59,6 @@ server.packages:
           update_remote: 'origin'
           update_branch: 'origin/master'
           do_push: 'yes'
-          git_auto_update: 'yes'
         openid:
           httpsonly: 1
         archiving:
