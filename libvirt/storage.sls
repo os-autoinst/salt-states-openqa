@@ -12,11 +12,15 @@
 # Mask all sockets to avoid accidental activation. According to a comment in libvirtd.service,
 # this is the expected way to go back to "a traditional non-activation deployment setup".
 {%- for socket_service in ["libvirtd-admin", "libvirtd", "libvirtd-ro"] %}
-mask_libvirtd_socket_{{ socket_service }}}:
+mask_libvirtd_socket_{{ socket_service }}:
   service.masked:
-    - name: {{ socket_service }}
+    - name: {{ socket_service }}.socket
     - runtime: True
 {%- endfor %}
+
+libvirtd:
+  service.running:
+    - enable: True
 {%- endif %}
 
 /var/lib/libvirt/images:
@@ -25,5 +29,3 @@ mask_libvirtd_socket_{{ socket_service }}}:
     - fstype: ext4
     - opts: rw,nobarrier,data=writeback
     - pass_num: 0
-    - require:
-      - file: /etc/fstab
