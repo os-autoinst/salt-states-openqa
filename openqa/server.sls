@@ -20,9 +20,10 @@ server.packages:
       - os-autoinst-scripts-deps  # for https://github.com/os-autoinst/scripts
       - rsync  # for rsyncd
 
-/etc/fstab:
+osd_fstab:
   file.managed:
-    - source: salt://fstab
+    - name: /etc/fstab
+    - source: salt://etc/fstab/osd_fstab
     - user: root
     - group: root
 
