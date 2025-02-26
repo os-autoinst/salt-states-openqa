@@ -61,6 +61,7 @@ base:
   'G@roles:libvirt':
     - libvirt
   'G@roles:external_openqa_hypervisor':
+    - libvirt.storage
     - openqa.kvm_firewall
   'openqa-piworker.qe.nue2.suse.org':
     - raspberrypi
