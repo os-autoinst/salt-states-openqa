@@ -1,5 +1,6 @@
 base:
   '*':
+    - etc.fstab
     - system.packages.locks
     - network
     - network.accept_ra
