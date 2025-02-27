@@ -285,7 +285,7 @@ grub-conf-cmdline:
   file.replace:
     - name: /etc/default/grub
     - pattern: '^GRUB_CMDLINE_LINUX_DEFAULT=.*$'
-    - repl: 'GRUB_CMDLINE_LINUX_DEFAULT="{{ ttyconsolearg }} nospec kvm.nested=1 kvm_intel.nested=1 kvm_amd.nested=1 kvm-arm.nested=1 {{ additional_linux_cmdline_args }}"'
+    - repl: 'GRUB_CMDLINE_LINUX_DEFAULT="{{ ttyconsolearg }} nospec kvm.nested=1 kvm_intel.nested=1 kvm_amd.nested=1 kvm-arm.nested=1 nvme-core.multipath=0 {{ additional_linux_cmdline_args }}"'
     - append_if_not_found: True
 
 grub-conf-serial-cmd:
