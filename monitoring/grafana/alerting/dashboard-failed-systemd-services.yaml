@@ -18,7 +18,7 @@ groups:
             model:
               groupBy:
                 - params:
-                    - $__interval
+                    - '70s'
                   type: time
                 - params:
                     - 'null'
@@ -40,7 +40,7 @@ groups:
                   value: openqa
             refId: A
             relativeTimeRange:
-              from: 60
+              from: 70
               to: 0
           - datasourceUid: __expr__
             model:
@@ -82,6 +82,9 @@ groups:
             Check failed systemd services on hosts with `systemctl --failed`.
 
             Hint: Go to parent dashboard https://monitor.qa.suse.de/d/KToPYLEWz/failed-systemd-services to see a list of affected hosts.
+
+            Note: The time grouping of 70 seconds was chosen because each host is expected to report one data point per minute. By choosing
+            a slightly higher interval the sum each grouped data point represents is therefore expected include a figure from each host.
         condition: B
         dashboardUid: KToPYLEWz
         data:
@@ -90,7 +93,7 @@ groups:
               alias: Sum of failed systemd services
               groupBy:
                 - params:
-                    - $__interval
+                    - '70s'
                   type: time
                 - params:
                     - 'null'
@@ -113,7 +116,7 @@ groups:
                   value: openqa
             refId: A
             relativeTimeRange:
-              from: 60
+              from: 70
               to: 0
           - datasourceUid: __expr__
             model:
