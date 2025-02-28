@@ -63,7 +63,7 @@ refresh:
     # Traceback error in output
     # https://progress.opensuse.org/issues/137984
     # https://github.com/saltstack/salt/issues/42814
-    - timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_syncupdate.log; salt --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,, | (! ack --passthru --color Traceback)"
+    - timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_syncupdate.log; salt -t 300 --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,, | (! ack --passthru --color Traceback)"
 
 deploy:
   extends: .defaults
