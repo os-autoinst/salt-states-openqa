@@ -21,7 +21,7 @@ tidy:
 	if command -v git >/dev/null; then \
 			git ls-files -z "*.yml" "*.yaml"; else \
 			find -name "*.yml" -or -name "*.yaml" -print0; fi | \
-			xargs -0 yamltidy -i
+			xargs -n1 -0 yamltidy -i
 
 .PHONY: check
 check:
