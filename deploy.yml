@@ -72,7 +72,7 @@ deploy:
     - refresh
   script:
     - *setup_script
-    - timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_highstate.log; salt -t 3600 --log-file=salt_highstate.log --log-file-level=debug --state-output=changes \* state.highstate queue=True | awk '/Result..Clean[- ]*Started/ {print > \"salt_profiling.log\"; next} 1'"
+    - retry --retries=2 --sleep=0 -- timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_highstate.log; salt -t 3600 --log-file=salt_highstate.log --log-file-level=debug --state-output=changes \* state.highstate queue=True | awk '/Result..Clean[- ]*Started/ {print > \"salt_profiling.log\"; next} 1'"
   after_script:
     - *setup_script
     - scp $TARGET:salt_\*.log .
