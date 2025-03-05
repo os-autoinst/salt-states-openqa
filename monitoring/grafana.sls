@@ -10,7 +10,7 @@
 {% set grafana_plugins = ['grafana-image-renderer', 'blackmirror1-singlestat-math-panel'] %}
 {% set preserved_dashboards = worker_dashboardnames + generic_dashboardnames + templated_dashboardnames + manual_dashboardnames %}
 {% set services_for_templated_dashboards = 'sshd openqa-gru openqa-webui openqa-livehandler openqa-scheduler openqa-websockets smb vsftpd telegraf salt-master salt-minion rsyncd postgresql postfix cron nginx' %}
-{% set provisioned_alerts = ['dashboard-automatic-actions.yaml', 'dashboard-failed-systemd-services.yaml', 'dashboard-job-age.yaml', 'dashboard-monitoring.yaml', 'dashboard-openqa-jobs-test.yaml', 'dashboard-WebuiDb.yaml', 'inodes.yaml', 'http_response_codes.yaml'] %}
+{% set provisioned_alerts = ['dashboard-automatic-actions.yaml', 'failed-systemd-services.yaml', 'dashboard-job-age.yaml', 'dashboard-monitoring.yaml', 'dashboard-openqa-jobs-test.yaml', 'dashboard-WebuiDb.yaml', 'inodes.yaml', 'http_response_codes.yaml'] %}
 
 grafana:
   pkg.latest:
