@@ -18,8 +18,8 @@
     - if: $CI_PROJECT_NAMESPACE != "openqa"
       when: never
     - if: >-
-          $CI_PIPELINE_SOURCE == "push" &&
-          $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+        $CI_PIPELINE_SOURCE == "push" &&
+        $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
   artifacts:
     when: always
     paths:
@@ -40,16 +40,16 @@ clone:
   script:
     - *setup_script
     - ssh $TARGET "(
-       set -x; cd /srv &&
-       mkdir -p ${DIR:-$REPO} &&
-       chown root:salt ${DIR:-$REPO} &&
-       cd ${DIR:-$REPO} &&
-       git status || git clone --depth 3 https://osd_deployment_ci:$TOKEN@gitlab.suse.de/openqa/salt-$REPO-openqa.git . &&
-       git fetch origin &&
-       git reset --hard origin/master &&
-       git checkout -f master &&
-       git pull
-       )"
+      set -x; cd /srv &&
+      mkdir -p ${DIR:-$REPO} &&
+      chown root:salt ${DIR:-$REPO} &&
+      cd ${DIR:-$REPO} &&
+      git status || git clone --depth 3 https://osd_deployment_ci:$TOKEN@gitlab.suse.de/openqa/salt-$REPO-openqa.git . &&
+      git fetch origin &&
+      git reset --hard origin/master &&
+      git checkout -f master &&
+      git pull
+      )"
 
 refresh:
   extends: .defaults
@@ -92,7 +92,7 @@ telegraf:
     - if: $CI_PROJECT_NAMESPACE != "openqa"
       when: never
     - if: >-
-          $CI_PIPELINE_SOURCE == "push" &&
-          $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+        $CI_PIPELINE_SOURCE == "push" &&
+        $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
       changes:
-        - "monitoring/telegraf/*"
+        - monitoring/telegraf/*
