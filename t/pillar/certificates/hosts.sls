@@ -6,3 +6,6 @@ dehydrated:
   hosts.txt:
     foo.host:
       - foo.host foo.bar.host
+
+  external_certificates:
+    - foo.external.host
