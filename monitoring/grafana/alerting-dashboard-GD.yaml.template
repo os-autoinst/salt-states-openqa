@@ -99,7 +99,7 @@ groups:
     noDataState: OK
     panelId: 56720
     title: '{{ generic_host }}: Disk I/O time alert'
-    uid: {{ (('disk_io_time_alert_' + generic_host ) | sha512)[:40] }}
+    uid: '{{ (("disk_io_time_alert_" + generic_host ) | sha512)[:40] }}'
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: Memory usage alert'
@@ -176,7 +176,7 @@ groups:
     noDataState: OK
     panelId: 12054
     title: '{{ generic_host }}: Memory usage alert'
-    uid: {{ (('memory_usage_alert_' + generic_host ) | sha512)[:40] }}
+    uid: '{{ (("memory_usage_alert_" + generic_host ) | sha512)[:40] }}'
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: Memory usage absolute alert'
@@ -253,7 +253,7 @@ groups:
     noDataState: OK
     panelId: 12054
     title: '{{ generic_host }}: Memory usage absolute alert'
-    uid: {{ (('memory_usage_absolute_alert_' + generic_host ) | sha512)[:40] }}
+    uid: '{{ (("memory_usage_absolute_alert_" + generic_host ) | sha512)[:40] }}'
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: NTP offset alert'
@@ -332,8 +332,8 @@ groups:
     noDataState: OK
     panelId: 65102
     title: '{{ generic_host }}: NTP offset alert'
-    uid: {{ (('ntp_offset_alert_' + generic_host ) | sha512)[:40] }}
-{% if host_interface %}
+    uid: '{{ (("ntp_offset_alert_" + generic_host ) | sha512)[:40] }}'
+#{% if host_interface %}
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: Ping time alert'
@@ -404,7 +404,7 @@ groups:
     noDataState: OK
     panelId: 65098
     title: '{{ generic_host }}: Ping time alert'
-    uid: {{ (('ping_time_alert_' + generic_host ) | sha512)[:40] }}
+    uid: '{{ (("ping_time_alert_" + generic_host ) | sha512)[:40] }}'
 - folder: Generic
   interval: 5m
   name: '{{ generic_host }}: host up alert'
@@ -479,8 +479,8 @@ groups:
     noDataState: OK
     panelId: 65105
     title: '{{ generic_host }}: host up alert'
-    uid: {{ (('host_up_alert_' + generic_host ) | sha512)[:40] }}
-{% endif %}
+    uid: '{{ (("host_up_alert_" + generic_host ) | sha512)[:40] }}'
+#{% endif %}
 - folder: Generic
   interval: 1m
   name: '{{ generic_host }}: partitions usage (%) alert'
@@ -510,7 +510,7 @@ groups:
             type: avg
         - evaluator:
             params:
-            - {{ pillar.get('commonconf', {}).get(generic_host, {}).get('partitions_usage_alert_threshold', '85') }}
+            - '{{ pillar.get("commonconf", {}).get(generic_host, {}).get("partitions_usage_alert_threshold", "85") }}'
             type: gt
           operator:
             type: or
@@ -572,4 +572,4 @@ groups:
     noDataState: OK
     panelId: 65090
     title: '{{ generic_host }}: partitions usage (%) alert'
-    uid: {{ (('partitions_usage_alert_' + generic_host ) | sha512)[:40] }}
+    uid: '{{ (("partitions_usage_alert_" + generic_host ) | sha512)[:40] }}'
