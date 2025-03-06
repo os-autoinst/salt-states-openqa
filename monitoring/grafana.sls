@@ -164,7 +164,7 @@ dashboard-cleanup:
 {% set provisioned_alert = templated_dashboardname | replace(".json", ".yaml") %}
 /etc/grafana/provisioning/alerting/dashboard-{{ provisioned_alert }}:
   file.managed:
-    - source: salt://monitoring/grafana/alerting-dashboard-{{ provisioned_alert }}.template
+    - source: salt://monitoring/grafana/alerting/templates/{{ provisioned_alert }}.template
     - template: jinja
     - services: {{ services_for_templated_dashboards }}
 {% do provisioned_alerts.append('dashboard-' + provisioned_alert) %}
@@ -184,7 +184,7 @@ dashboard-cleanup:
 
 /etc/grafana/provisioning/alerting/dashboard-WD{{ workername }}.yaml:
   file.managed:
-    - source: salt://monitoring/grafana/alerting-dashboard-WD.yaml.template
+    - source: salt://monitoring/grafana/alerting/templates/worker-alerts.yaml.template
     - mode: "0644"
     - template: jinja
     - worker: {{ workername }}
@@ -205,7 +205,7 @@ dashboard-cleanup:
 
 /etc/grafana/provisioning/alerting/dashboard-GD{{ genericname }}.yaml:
   file.managed:
-    - source: salt://monitoring/grafana/alerting-dashboard-GD.yaml.template
+    - source: salt://monitoring/grafana/alerting/templates/generic-machine-alerts.yaml.template
     - mode: "0644"
     - template: jinja
     - generic_host: {{ genericname }}
@@ -229,7 +229,7 @@ alert-cleanup:
 # remove alerts explicitly mentioned by a deletionRule
 /etc/grafana/provisioning/alerting/alerts_to_delete.yaml:
   file.managed:
-    - source: salt://monitoring/grafana/alerts_to_delete.yaml
+    - source: salt://monitoring/grafana/alerting/alerts_to_delete.yaml
     - mode: "0644"
 
 {%- if not grains.get('noservices', False) %}
