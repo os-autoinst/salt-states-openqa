@@ -1,3 +1,4 @@
+---
 apiVersion: 1
 groups:
   - orgId: 1
@@ -15,6 +16,7 @@ groups:
               to: 0
             datasourceUid: "000000001"
             model:
+              alias: $tag_machine
               groupBy:
                 - params:
                     - machine::tag
@@ -31,7 +33,7 @@ groups:
               measurement: systemd_failed
               orderByTime: ASC
               policy: default
-              query: SELECT "failed" FROM "systemd_failed" WHERE $timeFilter GROUP BY "machine"::tag, "unit_1"::tag, "unit_2"::tag, "unit_3"::tag, "unit_4"::tag, "unit_5"::tag
+              query: SELECT "failed" FROM "systemd_failed" WHERE $timeFilter GROUP BY "machine"::tag
               rawQuery: true
               refId: failed systemd units per machine
               resultFormat: time_series
@@ -99,12 +101,11 @@ groups:
         execErrState: KeepLast
         for: 5m
         annotations:
-          __alertId__: "199"
           __dashboardUid__: KToPYLEWz
           __panelId__: "6"
           description: This alert collects `systemctl --failed` and notifies about any machine having more than zero failed units.
           runbook_url: https://progress.opensuse.org/projects/qa/wiki/Tools#Alert-handling
         labels:
           __contacts__: '"osd-admins"'
-          rule_uid: Uk02cifVkz
+          rule_uid: beefj548t0a2oc
         isPaused: false
