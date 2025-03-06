@@ -1,7 +1,7 @@
 ---
 apiVersion: 1
 groups:
-{% for host in pillar['dehydrated']['hosts.txt'] %}
+{% for host in pillar['dehydrated']['hosts.txt'].keys() | list %}
 - folder: Salt
   interval: 1h
   name: '{{ host }} - SSL expiration'
@@ -89,6 +89,10 @@ groups:
     panelId: {{ loop.index*3+1 }}
     title: {{ host }} - SSL expiration
     uid: ssl_expiration_alert_{{ host }}
+{% endfor %}
+{#- extract list of main certificate domains -#}
+{%- set certificates = pillar['dehydrated']['hosts.txt'].values() | flatten | map('regex_replace', '\s.*', '') | list -%}
+{% for host in certificates + pillar['dehydrated']['external_certificates'] %}
 - folder: Salt
   interval: 1h
   name: '{{ host }}: SAN validity'
