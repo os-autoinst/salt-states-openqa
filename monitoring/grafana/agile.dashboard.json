@@ -421,6 +421,7 @@
         "type": "influxdb",
         "uid": "000000001"
       },
+      "description": "- Lead time measures the total time from when a task is created until it is completed, this is our overall responsiveness.\n- Cycle time starts when work begins on a task and ends when it is finished, this is our efficiency.\n\nA short lead time means faster response to new task, while a lower cycle time indicates smooth task execution. Longer times may signal bottlenecks or complex work.\n\nMore details: [team wiki](https://progress.opensuse.org/projects/qa/wiki/Tools#How-we-work-on-our-backlog)",
       "fieldConfig": {
         "defaults": {
           "color": {
