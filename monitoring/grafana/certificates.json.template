@@ -28,7 +28,7 @@
   "links": [],
   "liveNow": false,
   "panels": [
-{% for host in pillar['dehydrated']['hosts.txt'] %}
+{% for host in pillar['dehydrated']['hosts.txt'].keys() | list %}
     {
       "alert": {
         "alertRuleTags": {},
@@ -219,6 +219,10 @@
       "transparent": true,
       "type": "timeseries"
     },
+{% endfor %}
+{#- extract list of main certificate domains -#}
+{%- set certificates = pillar['dehydrated']['hosts.txt'].values() | flatten | map('regex_replace', '\s.*', '') | list -%}
+{% for host in certificates + pillar['dehydrated']['external_certificates'] %}
     {
       "alert": {
         "alertRuleTags": {},

@@ -54,6 +54,7 @@ base:
     - monitoring.grafana
     - monitoring.loki
     - monitoring.influxdb
+    - monitoring.certificates
     - certificates.dehydrated
   'G@roles:storage':
     - backup.rsnapshot
