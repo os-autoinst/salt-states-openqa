@@ -121,7 +121,7 @@ ovs-vsctl set int br1 mtu_request=1460:
      {%-             set remote_ip = remote_interfaces[0][remote_bridge_interface][0] -%}
      {%-         endif -%}
      {%-     endif -%}
-     {% if remote_ip is defined and remote_ip|length %}
+     {% if remote_ip is defined and remote_ip|is_ip %}
       - 'ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }} # {{ remote }}'
      {%- else -%}
      {% do salt.log.warning("remote: \"" + remote + "\" found in workerconf.sls but not in salt mine, host currently offline?") %}
