@@ -82,13 +82,13 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: ssl_expiration_alert_{{ host }}
+      rule_uid: {{ (('ssl_expiration_alert_' + host ) | sha512)[:40] }}
       type: tls
       hostname: {{ host }}
     noDataState: OK
     panelId: {{ loop.index*3+1 }}
     title: {{ host }} - SSL expiration
-    uid: ssl_expiration_alert_{{ host }}
+    uid: {{ (('ssl_expiration_alert_' + host ) | sha512)[:40] }}
 {% endfor %}
 {#- extract list of main certificate domains -#}
 {%- set certificates = pillar['dehydrated']['hosts.txt'].values() | flatten | map('regex_replace', '\s.*', '') | list -%}
@@ -172,11 +172,11 @@ groups:
     isPaused: false
     labels:
       __contacts__: '"osd-admins"'
-      rule_uid: san_validity_alert_{{ host }}
+      rule_uid: {{ (('san_validity_alert_' + host ) | sha512)[:40] }}
       type: tls
       hostname: {{ host }}
     noDataState: OK
     panelId: {{ loop.index*3+2 }}
     title: '{{ host }}: SAN validity'
-    uid: san_validity_alert_{{ host }}
+    uid: {{ (('san_validity_alert_' + host ) | sha512)[:40] }}
 {% endfor %}
