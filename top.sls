@@ -62,6 +62,8 @@ base:
     - jenkins
   'G@roles:libvirt':
     - libvirt
+    - openqa.nfs_share
+    - openqa.recover-nfs
   'G@roles:external_openqa_hypervisor':
     - libvirt.storage
     - openqa.kvm_firewall
