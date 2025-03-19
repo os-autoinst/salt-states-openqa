@@ -94,9 +94,9 @@ ovs-vsctl set int br1 mtu_request=1460:
 
 # Worker for GRE needs to have defined entry bridge_ip: <uplink_address_of_this_worker> in pillar data
 /etc/wicked/scripts/gre_tunnel_preup.sh:
-{%- if grains['host'] in multihostworkers and multihostworkers|length > 1 -%}
-{%-   set otherworkers = multihostworkers -%}
-{%-   do otherworkers.remove(grains['host']) -%}
+{% if grains['host'] in multihostworkers and multihostworkers|length > 1 %}
+{%   set otherworkers = multihostworkers %}
+{%   do otherworkers.remove(grains['host']) %}
   file.managed:
     - user: root
     - group: root
