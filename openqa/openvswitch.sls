@@ -94,9 +94,9 @@ ovs-vsctl set int br1 mtu_request=1460:
 
 # Worker for GRE needs to have defined entry bridge_ip: <uplink_address_of_this_worker> in pillar data
 /etc/wicked/scripts/gre_tunnel_preup.sh:
-{% if grains['host'] in multihostworkers and multihostworkers|length > 1 %}
-{%   set otherworkers = multihostworkers %}
-{%   do otherworkers.remove(grains['host']) %}
+{%- if grains['host'] in multihostworkers and multihostworkers|length > 1 -%}
+{%-   set otherworkers = multihostworkers -%}
+{%-   do otherworkers.remove(grains['host']) -%}
   file.managed:
     - user: root
     - group: root
@@ -110,23 +110,23 @@ ovs-vsctl set int br1 mtu_request=1460:
       - ovs-vsctl set bridge $bridge stp_enable=false
       - ovs-vsctl set bridge $bridge rstp_enable=true
       - for gre_port in $(ovs-vsctl list-ifaces $bridge | grep gre) ; do ovs-vsctl --if-exists del-port $bridge $gre_port ; done
-     {% for remote in otherworkers %}
-     {%     set remote_conf = pillar['workerconf'][remote] %}
-     {%     if 'bridge_ip' in remote_conf %}
-     {%         set remote_ip = remote_conf['bridge_ip'] %}
-     {%     elif 'bridge_iface' in remote_conf %}
-     {%         set remote_interfaces = salt.mine.get("host:" + remote, 'ip4_interfaces', tgt_type='grain').values()|list %}
-     {%         set remote_bridge_interface = remote_conf['bridge_iface'] %}
-     {%         if remote_interfaces|length > 0 and remote_bridge_interface in remote_interfaces[0] %}
-     {%             set remote_ip = remote_interfaces[0][remote_bridge_interface][0] %}
-     {%         endif %}
-     {%     endif %}
+     {%- for remote in otherworkers -%}
+     {%-     set remote_conf = pillar['workerconf'][remote] -%}
+     {%-     if 'bridge_ip' in remote_conf -%}
+     {%-         set remote_ip = remote_conf['bridge_ip'] -%}
+     {%-     elif 'bridge_iface' in remote_conf -%}
+     {%-         set remote_interfaces = salt.mine.get("host:" + remote, 'ip4_interfaces', tgt_type='grain').values()|list -%}
+     {%-         set remote_bridge_interface = remote_conf['bridge_iface'] -%}
+     {%-         if remote_interfaces|length > 0 and remote_bridge_interface in remote_interfaces[0] -%}
+     {%-             set remote_ip = remote_interfaces[0][remote_bridge_interface][0] -%}
+     {%-         endif -%}
+     {%-     endif -%}
      {% if remote_ip is defined and remote_ip|length %}
       - 'ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }} # {{ remote }}'
-     {% else %}
+     {%- else -%}
      {% do salt.log.warning("remote: \"" + remote + "\" found in workerconf.sls but not in salt mine, host currently offline?") %}
       - '#ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip= # {{ remote }} (offline at point of file generation)'
-     {% endif %}
+     {%- endif -%}
      {% endfor %}
 
 wicked ifup all:
