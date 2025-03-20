@@ -9,6 +9,6 @@ infra_managed_config_exists:
   ini.options_present:
     - sections:
         Interface:
-          MTU: "1292"
+          MTU: "1272"
     - require:
         - file: infra_managed_config_exists
