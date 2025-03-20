@@ -17,8 +17,9 @@ base:
     - rebootmgr
     - etc.zypper
     - ca-certificates
-    - wireguard
     - timezone_utc
+  'G@needs_wireguard:True or ( *.nue2.suse.org and not G@needs_wireguard:False )':
+    - wireguard
   'not G@roles:webui and not G@roles:worker':
     - auto-upgrade
   'G@roles:webui':
