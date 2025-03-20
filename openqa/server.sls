@@ -56,6 +56,8 @@ osd_fstab:
         amqp:
           url: {{ pillar['server']['amqp_url'] }}
           topic_prefix: suse
+        logging:
+          level: debug
         scm git:
           update_remote: 'origin'
           update_branch: 'origin/master'
@@ -66,6 +68,8 @@ osd_fstab:
           archive_preserved_important_jobs: 1
         cleanup:
           concurrent: 1
+        audit:
+          blocklist: 'job_grab job_done'
         audit/storage_duration:
           startup: 180
           jobgroup: 712
@@ -93,12 +97,19 @@ osd_fstab:
           untracked_assets_storage_duration: 4
           result_cleanup_max_free_percentage: 20
           asset_cleanup_max_free_percentage: 20
+          max_online_workers: 960
+          worker_limit_retry_delay: 30
         obs_rsync:
           home: /opt/openqa-trigger-from-ibs
           project_status_url: https://api.suse.de/build/%%PROJECT/_result
           username: openqa-obs-bot
           ssh_key_file: /var/lib/openqa/.ssh/id_ed25519
-
+        scheduler:
+          max_job_scheduled_time: 7
+          # See https://progress.opensuse.org/issues/134927 and
+          # https://progress.opensuse.org/issues/160478
+          # for value selection
+          max_running_jobs: 330
         job_settings_ui:
           keys_to_render_as_links: YAML_SCHEDULE,YAML_SCHEDULE_DEFAULT,YAML_TEST_DATA,AUTOYAST,AGAMA_AUTO
         hooks:
