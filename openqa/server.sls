@@ -17,6 +17,7 @@ server.packages:
       - vsftpd
       - samba
       - postfix
+      - cron
       - os-autoinst-scripts-deps  # for https://github.com/os-autoinst/scripts
       - rsync  # for rsyncd
 
