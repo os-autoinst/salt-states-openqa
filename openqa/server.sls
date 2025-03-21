@@ -34,7 +34,11 @@ osd_fstab:
       - file: /etc/fstab
 {%- endif %}
 
-/etc/openqa/openqa.ini:
+/etc/openqa/openqa.ini.d:
+  file.directory:
+    - user: geekotest
+
+/etc/openqa/openqa.ini.d/openqa-salt.ini:
   ini.options_present:
     - sections:
         global:
@@ -139,14 +143,14 @@ openqa-webui:
     - enable: True
     - reload: True
     - watch:
-      - ini: /etc/openqa/openqa.ini
+      - ini: /etc/openqa/openqa.ini.d/openqa-salt.ini
 
 openqa-gru:
   service.running:
     - enable: True
     - watch:
       - file: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
-      - ini: /etc/openqa/openqa.ini
+      - ini: /etc/openqa/openqa.ini.d/openqa-salt.ini
 {%- endif %}
 
 /etc/openqa/database.ini:
