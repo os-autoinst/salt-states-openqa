@@ -17,6 +17,7 @@ server.packages:
       - vsftpd
       - samba
       - postfix
+      - cron
       - os-autoinst-scripts-deps  # for https://github.com/os-autoinst/scripts
       - rsync  # for rsyncd
 
@@ -34,93 +35,14 @@ osd_fstab:
       - file: /etc/fstab
 {%- endif %}
 
-/etc/openqa/openqa.ini:
-  ini.options_present:
-    - sections:
-        global:
-          plugins: AMQP ObsRsync
-          branding: {{ pillar['server']['branding'] }}
-          scm: git
-          download_domains: {{ pillar['server']['download_domains'] }}
-          recognized_referers: {{ pillar['server']['recognized_referers'] }}
-          max_rss_limit: 250000
-          service_port_delta: 0
-          access_control_allow_origin_header: http://container-dashboard.qe.suse.de
-          # Workaround for missing uploads due to "timestamp mismatch", see https://progress.opensuse.org/issues/164296
-          auto_clone_regex: '^(cache failure: |terminated prematurely: |api failure: Failed to register .* 503|backend died: .*VNC.*(timeout|timed out|refused)|QEMU terminated: Failed to allocate KVM HPT of order 25.* Cannot allocate memory|api failure: 403 response: timestamp mismatch.*)'
-          # Higher value needed due to slow processing of api requests
-          # https://progress.opensuse.org/issues/162038
-          api_hmac_time_tolerance: 600
-        auth:
-          require_for_assets: 1
-        amqp:
-          url: {{ pillar['server']['amqp_url'] }}
-          topic_prefix: suse
-        logging:
-          level: debug
-        scm git:
-          update_remote: 'origin'
-          update_branch: 'origin/master'
-          do_push: 'yes'
-        openid:
-          httpsonly: 1
-        archiving:
-          archive_preserved_important_jobs: 1
-        cleanup:
-          concurrent: 1
-        audit:
-          blocklist: 'job_grab job_done'
-        audit/storage_duration:
-          startup: 180
-          jobgroup: 712
-          jobtemplate: 712
-          table: 712
-          iso: 180
-          user: 180
-          asset: 90
-          needle: 90
-          other: 90
-        assets/storage_duration:
-          CURRENT: 10
-        default_group_limits:
-          asset_size_limit: 5
-          log_storage_duration: 10
-          important_log_storage_duration: 90
-          result_storage_duration: 21
-          important_result_storage_duration: 0
-        no_group_limits:
-          log_storage_duration: 5
-          important_log_storage_duration: 25
-          result_storage_duration: 15
-          important_result_storage_duration: 50
-        misc_limits:
-          untracked_assets_storage_duration: 4
-          result_cleanup_max_free_percentage: 20
-          asset_cleanup_max_free_percentage: 20
-          max_online_workers: 960
-          worker_limit_retry_delay: 30
-        obs_rsync:
-          home: /opt/openqa-trigger-from-ibs
-          project_status_url: https://api.suse.de/build/%%PROJECT/_result
-          username: openqa-obs-bot
-          ssh_key_file: /var/lib/openqa/.ssh/id_ed25519
-        scheduler:
-          max_job_scheduled_time: 7
-          # See https://progress.opensuse.org/issues/134927 and
-          # https://progress.opensuse.org/issues/160478
-          # for value selection
-          max_running_jobs: 330
-        job_settings_ui:
-          keys_to_render_as_links: YAML_SCHEDULE,YAML_SCHEDULE_DEFAULT,YAML_TEST_DATA,AUTOYAST,AGAMA_AUTO
-        hooks:
-          # Some groups excluded that have too many expected failing jobs or special review workflows
-          # BCI tests disabled: poo#134915
-          job_done_hook_failed: env enable_force_result=true email_unreviewed=true from_email=openqa-review@suse.de notification_address=discuss-openqa-auto-r-aaaagmhuypu2hq2kmzgovutmqm@suse.slack.com host=openqa.suse.de exclude_name_regex='.*(SAPHanaSR|saptune).*' exclude_group_regex='.*(Development|Public Cloud|Released|Others|Kernel|Virtualization|BCI).*' grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-and-investigate-hook
-          job_done_hook_incomplete: env enable_force_result=true email_unreviewed=true from_email=openqa-review@suse.de notification_address=discuss-openqa-auto-r-aaaagmhuypu2hq2kmzgovutmqm@suse.slack.com host=openqa.suse.de grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-hook
-          job_done_hook_timeout_exceeded: env email_unreviewed=true from_email=openqa-review@suse.de notification_address=discuss-openqa-auto-r-aaaagmhuypu2hq2kmzgovutmqm@suse.slack.com host=openqa.suse.de grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-hook
-          job_done_hook: env host=openqa.suse.de email_unreviewed=true exclude_group_regex='.*(Development|Public Cloud|Released|Others|Kernel|Virtualization|Containers|BCI).*' grep_timeout=60 nice ionice -c idle /opt/os-autoinst-scripts/openqa-label-known-issues-and-investigate-hook
-        influxdb:
-          ignored_failed_minion_jobs: obs_rsync_run obs_rsync_update_builds_text
+/etc/openqa/openqa.ini.d:
+  file.directory:
+    - user: geekotest
+
+/etc/openqa/openqa.ini.d/openqa-salt.ini:
+  file.managed:
+    - source: salt://openqa/openqa-salt.ini
+    - template: jinja
     - require:
       - pkg: server.packages
 
@@ -139,14 +61,14 @@ openqa-webui:
     - enable: True
     - reload: True
     - watch:
-      - ini: /etc/openqa/openqa.ini
+      - ini: /etc/openqa/openqa.ini.d/openqa-salt.ini
 
 openqa-gru:
   service.running:
     - enable: True
     - watch:
       - file: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
-      - ini: /etc/openqa/openqa.ini
+      - ini: /etc/openqa/openqa.ini.d/openqa-salt.ini
 {%- endif %}
 
 /etc/openqa/database.ini:
