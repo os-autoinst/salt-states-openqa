@@ -70,3 +70,5 @@ base:
     - openqa.recover-nfs
   'openqa-piworker.qe.nue2.suse.org':
     - raspberrypi
+  '*.nue2.suse.org':
+    - network.nue2
