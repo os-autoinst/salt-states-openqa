@@ -43,6 +43,7 @@ osd_fstab:
   file.managed:
     - source: salt://openqa/openqa-salt.ini
     - template: jinja
+    - mode: "0644"
     - require:
       - pkg: server.packages
 
