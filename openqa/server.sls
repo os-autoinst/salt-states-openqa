@@ -62,14 +62,14 @@ openqa-webui:
     - enable: True
     - reload: True
     - watch:
-      - ini: /etc/openqa/openqa.ini.d/openqa-salt.ini
+      - file: /etc/openqa/openqa.ini.d/openqa-salt.ini
 
 openqa-gru:
   service.running:
     - enable: True
     - watch:
       - file: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
-      - ini: /etc/openqa/openqa.ini.d/openqa-salt.ini
+      - file: /etc/openqa/openqa.ini.d/openqa-salt.ini
 {%- endif %}
 
 /etc/openqa/database.ini:
