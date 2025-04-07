@@ -1851,7 +1851,7 @@
           },
           "decimals": 2,
           "mappings": [],
-          "max": 100,
+          "max": 1,
           "thresholds": {
             "mode": "absolute",
             "steps": [
