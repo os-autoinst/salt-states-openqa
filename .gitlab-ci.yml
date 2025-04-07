@@ -105,9 +105,9 @@ test-webui:
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
     - )
-    # file must exist after correct salt application and can be inspected
+    # files must exist after correct salt application and can be inspected
     # manually
-    - cat /etc/openqa/openqa.ini
+    - cat /etc/openqa/openqa.ini.d/*
 
 test-worker:
   <<: *test_setup
