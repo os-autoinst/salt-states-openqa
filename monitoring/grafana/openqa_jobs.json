@@ -18,119 +18,10 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 2,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                8000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "running",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                12000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "blocked",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                14000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "or"
-            },
-            "query": {
-              "params": [
-                "scheduled+blocked",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                10000
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "scheduled+blocked",
-                "12h",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "1m",
-        "frequency": "10s",
-        "handler": 1,
-        "message": "If thresholds are exceeded investigate the following:\n* Are our workers actually working on a reasonable amount of jobs (e.g. running is not near-zero while there are many scheduled jobs)\n* What component/user/system triggers jobs, see https://openqa.suse.de/admin/productlog\n* Find out if there any obvious problems visible on https://openqa.suse.de/tests\n* Calculate the ratio of cloned scheduled jobs to find out if there is a high number of unexpected clones (by users or systems or due to crashing workers, etc.), e.g. using the following SQL query:\n\n```\nselect round ((select count(j1.id) from jobs as j1 where state = 'scheduled' and (select j2.id from jobs as j2 where j1.id = j2.clone_id limit 1) is not null) * 100. / (select count(id) from jobs where state = 'scheduled'), 2) as \"percentage of clones in all scheduled jobs\";\n percentage of clones in all scheduled jobs \n--------------------------------------------\n                                      10.11\n(1 row)\n```\n\n* Find out if most jobs come from particular products, flavors, build, e.g. using something like the following SQL query example for build matching \"livepatch\" or \"kgraft\" in a certain timespan (keep in mind that the database timestamps are in UTC):\n\n```\nselect count(id) from jobs where t_created >= '2021-09-14 17:00' and t_created <= '2021-09-14 18:00' and (build like '%livepatch%' or build like '%kgraft%');\n```\n\n* Especially for SUSE QA maintenance tests look into the incident scheduling pipelines in https://gitlab.suse.de/qa-maintenance/bot-ng/-/pipelines\n\nAlso see https://progress.opensuse.org/issues/98667 for details.",
-        "name": "Queue: State (SUSE) alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -148,6 +39,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -188,8 +80,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -201,7 +92,6 @@
       },
       "id": 9,
       "interval": "40s",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -210,11 +100,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "Running",
@@ -381,6 +272,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -421,8 +313,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -434,7 +325,6 @@
       },
       "id": 11,
       "interval": "30s",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -443,11 +333,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "$tag_group",
@@ -525,6 +416,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -565,8 +457,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -578,7 +469,6 @@
       },
       "id": 12,
       "interval": "30s",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -587,11 +477,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "$tag_arch",
@@ -663,6 +554,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -703,8 +595,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -716,7 +607,6 @@
       },
       "id": 10,
       "interval": "30s",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -725,11 +615,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "$tag_worker",
@@ -806,6 +697,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -847,8 +739,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -859,8 +750,6 @@
         "y": 18
       },
       "id": 14,
-      "interval": "",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -869,11 +758,12 @@
           "showLegend": false
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "Incompletes of last 24h",
@@ -921,45 +811,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                200
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "max"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "30s",
-        "frequency": "10s",
-        "handler": 1,
-        "name": "New incompletes alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -976,6 +827,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -1018,8 +870,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -1030,7 +881,6 @@
         "y": 18
       },
       "id": 16,
-      "interval": "",
       "options": {
         "legend": {
           "calcs": [],
@@ -1039,11 +889,12 @@
           "showLegend": false
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "New incompletes",
@@ -1089,46 +940,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                300
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "10m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "",
-        "name": "Incomplete jobs (not restarted) of last 24h alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -1146,6 +957,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -1187,8 +999,7 @@
               }
             ]
           },
-          "unit": "short",
-          "unitScale": true
+          "unit": "short"
         },
         "overrides": []
       },
@@ -1199,8 +1010,6 @@
         "y": 26
       },
       "id": 17,
-      "interval": "",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -1209,11 +1018,12 @@
           "showLegend": false
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "Incompletes (not restarted) of last 24h",
@@ -1261,46 +1071,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                20
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "ratio_failed_p",
-                "2m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "2m",
-        "frequency": "2m",
-        "handler": 1,
-        "message": "Ratio of failed vs. all jobs over time exceeds threshold. Check for general problems causing unexpected false-positive test failures\n\nhttps://progress.opensuse.org/issues/96191",
-        "name": "openQA job fail ratio alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -1318,6 +1088,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -1358,8 +1129,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1379,11 +1149,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "none"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "ratio of failed openQA jobs",
@@ -1617,11 +1388,12 @@
         },
         "text": {},
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "7.5.7",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "$tag_result",
@@ -1675,46 +1447,6 @@
       "type": "piechart"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                60
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "ratio_mm_failed",
-                "2m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "6m",
-        "frequency": "2m",
-        "handler": 1,
-        "message": "Investigation hints:\n* Investigate what caused the ratio to change that significantly\n* Check https://openqa.suse.de/tests?resultfilter=Failed and look for a correlation\n* Follow https://progress.opensuse.org/projects/openqatests/wiki/Wiki#Statistical-investigation\n\nSee https://progress.opensuse.org/issues/96191 for details",
-        "name": "Ratio of not restarted multi-machine tests by result alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
@@ -1726,11 +1458,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 100,
             "gradientMode": "none",
@@ -1764,7 +1498,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               }
             ]
           },
@@ -1958,11 +1693,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "10.1.0",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "$tag_result",
@@ -2081,11 +1817,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 100,
             "gradientMode": "none",
@@ -2113,12 +1851,13 @@
           },
           "decimals": 2,
           "mappings": [],
-          "max": 100,
+          "max": 1,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2271,11 +2010,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "$tag_result",
@@ -2340,11 +2080,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 100,
             "gradientMode": "none",
@@ -2377,7 +2119,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2530,11 +2273,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "$tag_result",
@@ -2599,11 +2343,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -2635,7 +2381,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2667,11 +2414,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "$tag_host",
@@ -2736,11 +2484,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -2773,7 +2523,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2864,11 +2615,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "multi",
           "sort": "desc"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "alias": "$tag_group_name",
@@ -2928,8 +2680,9 @@
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "",
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": []
@@ -2938,34 +2691,10 @@
     "from": "now-7d",
     "to": "now"
   },
-  "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
-    ]
-  },
+  "timepicker": {},
   "timezone": "",
   "title": "OpenQA Jobs test",
   "uid": "nRDab3Jiz",
-  "version": 65,
+  "version": 66,
   "weekStart": ""
 }
