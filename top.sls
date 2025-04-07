@@ -58,7 +58,9 @@ base:
     - monitoring.certificates
     - certificates.dehydrated
   'G@roles:storage':
-    - backup.rsnapshot
+    - backup.rsnapshot_openqa_data
+  'G@roles:backup_prg2':
+    - backup.rsnapshot_generic
   'G@roles:jenkins':
     - jenkins
   'G@roles:libvirt':

@@ -9,7 +9,7 @@ rsnapshot.pkgs:
 
 /etc/rsnapshot.conf:
   file.managed:
-    - source: salt://etc/backup/rsnapshot.conf
+    - source: salt://etc/backup/rsnapshot_openqa_data.conf
     - user: root
     - group: root
     - mode: "0644"
