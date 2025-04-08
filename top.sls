@@ -61,6 +61,7 @@ base:
     - backup.rsnapshot_openqa_data
   'G@roles:backup_prg2':
     - backup.rsnapshot_generic
+    - openqa.postfix
   'G@roles:jenkins':
     - jenkins
   'G@roles:libvirt':
