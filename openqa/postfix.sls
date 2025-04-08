@@ -1,3 +1,21 @@
+mailserver.packages:
+  pkg.installed:
+    - refresh: False
+    - retry:
+        attempts: 5
+    - pkgs:
+      - postfix
+
+/etc/sysconfig/mail:
+  file.managed:
+    - source: salt://postfix/sysconfig/mail
+    - require:
+      - pkg: mailserver.packages
+
+/etc/sysconfig/postfix:
+  file.managed:
+    - source: salt://postfix/sysconfig/postfix
+
 {%- if not grains.get('noservices', False) %}
 postfix:
   service.running:
