@@ -316,16 +316,6 @@ salt-master.service:
       - file: /etc/salt/master
 {%- endif %}
 
-/etc/sysconfig/mail:
-  file.managed:
-    - source: salt://postfix/sysconfig/mail
-    - require:
-      - pkg: server.packages
-
-/etc/sysconfig/postfix:
-  file.managed:
-    - source: salt://postfix/sysconfig/postfix
-
 /opt/os-autoinst-scripts/:
   file.directory:
     - user: geekotest
