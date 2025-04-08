@@ -18,6 +18,7 @@ base:
     - etc.zypper
     - ca-certificates
     - timezone_utc
+    - openqa.postfix
   'G@needs_wireguard:True or ( *.nue2.suse.org and not G@needs_wireguard:False )':
     - wireguard
   'not G@roles:webui and not G@roles:worker':
@@ -61,7 +62,6 @@ base:
     - backup.rsnapshot_openqa_data
   'G@roles:backup_prg2':
     - backup.rsnapshot_generic
-    - openqa.postfix
   'G@roles:jenkins':
     - jenkins
   'G@roles:libvirt':

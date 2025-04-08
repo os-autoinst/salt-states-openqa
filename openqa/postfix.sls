@@ -5,6 +5,7 @@ mailserver.packages:
         attempts: 5
     - pkgs:
       - postfix
+      - mailx
 
 /etc/sysconfig/mail:
   file.managed:
@@ -15,6 +16,8 @@ mailserver.packages:
 /etc/sysconfig/postfix:
   file.managed:
     - source: salt://postfix/sysconfig/postfix
+    - require:
+      - pkg: mailserver.packages
 
 {%- if not grains.get('noservices', False) %}
 postfix:
@@ -27,16 +30,23 @@ postfix:
       - alias: root_mail_forward
       - file: /etc/sysconfig/mail
       - file: /etc/sysconfig/postfix
+    - require:
+      - pkg: mailserver.packages
 {%- endif %}
 
-configure_relay:
+{%- if salt['pkg.version']('postfix') %}
+configure_relayhost:
   module.run:
-    - name: postfix.set_main
-    - key: relayhost
-    - value: relay.suse.de
-    - name: postfix.set_main
-    - key: myhostname
-    - value: {{ grains['fqdn'] }}
+    - postfix.set_main:
+      - key: relayhost
+      - value: relay.suse.de
+
+configure_myhost:
+  module.run:
+    - postfix.set_main:
+      - key: myhostname
+      - value: {{ grains['fqdn'] }}
+{%- endif %}
 
 root_mail_forward:
   alias.present:
