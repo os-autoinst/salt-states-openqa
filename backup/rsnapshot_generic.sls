@@ -24,6 +24,13 @@ nfs_backup_prg2_mounted:
     - group: root
     - mode: "0644"
 
+/etc/cron.daily/backup_check.sh:
+  file.managed:
+    - source: salt://etc/backup/cron.daily/backup_check.sh
+    - user: root
+    - group: root
+    - mode: "0755"
+
 /etc/cron.d/rsnapshot.cron:
   file.absent
 
