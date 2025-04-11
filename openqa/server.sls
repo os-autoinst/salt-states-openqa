@@ -72,15 +72,6 @@ openqa-gru:
       - file: /etc/openqa/openqa.ini.d/openqa-salt.ini
 {%- endif %}
 
-/etc/openqa/database.ini:
-  ini.options_present:
-    - sections:
-       production:
-         dsn: dbi:Pg:dbname=openqa
-         user: geekotest
-    - require:
-      - pkg: server.packages
-
 /etc/apache2/conf.d/server-status.conf:
   file.managed:
     - source: salt://apache2/conf.d/server-status.conf
