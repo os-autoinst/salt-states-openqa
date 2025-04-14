@@ -27,7 +27,7 @@ postfix:
     - enable: True
     - reload: True
     - watch:
-      - module: configure_relay
+      - module: configure_relayhost
       - alias: root_mail_forward
       - file: /etc/sysconfig/mail
       - file: /etc/sysconfig/postfix
