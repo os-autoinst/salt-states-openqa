@@ -19,6 +19,7 @@ mailserver.packages:
     - require:
       - pkg: mailserver.packages
 
+{%- if salt['pkg.version']('postfix') %}
 {%- if not grains.get('noservices', False) %}
 postfix:
   service.running:
@@ -34,7 +35,6 @@ postfix:
       - pkg: mailserver.packages
 {%- endif %}
 
-{%- if salt['pkg.version']('postfix') %}
 configure_relayhost:
   module.run:
     - postfix.set_main:
