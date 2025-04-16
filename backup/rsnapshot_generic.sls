@@ -24,38 +24,6 @@ nfs_backup_prg2_mounted:
     - group: root
     - mode: "0644"
 
-/usr/local/bin/backup_check.sh:
-  file.managed:
-    - source: salt://usr/local/bin/backup_check.sh
-    - user: root
-    - group: root
-    - mode: "0755"
-
-/etc/systemd/system/backup_check.service:
-  - contents: |
-       [Unit]
-       Description=Check if backup worked
-       [Service]
-       Type=oneshot
-       ExecStart=/usr/local/bin/backup_check.sh
-
-/etc/systemd/system/backup_check.timer:
-  - contents: |
-      [Unit]
-      Description=Check backup
-      [Timer]
-      OnCalendar=23:59
-      Persistent=True
-      Unit=backup_check.service
-      [Install]
-      WantedBy=timers.target
-
-{% if not grains.get('noservices', False) %}
-  service.running:
-    - name: backup_check.timer
-    - enable: true
-{% endif %}
-
 /etc/cron.d/rsnapshot.cron:
   file.absent
 
