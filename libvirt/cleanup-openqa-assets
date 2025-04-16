@@ -1,5 +1,5 @@
 #!/bin/bash -e
 
 if [[ $(df | grep "/var/lib/libvirt/images" | awk '{print $5}' | sed "s/\%//") -gt 70 ]] ; then
-    find /var/lib/libvirt/images/*.qcow2 ! -exec fuser -s "{}" \; -delete
+    find /var/lib/libvirt/images/*.qcow2 ! -exec fuser -s "{}" \; -exec rm -f {} \; -print
 fi
