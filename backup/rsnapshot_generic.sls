@@ -11,7 +11,7 @@ rsnapshot.pkgs:
 nfs_backup_prg2_mounted:
   mount.fstab_present:
     # NFS share on prg2 netapp
-    - name: "10.144.128.241:/openqa-backup-storage"
+    - name: "nfs-prg2-fas-prod.openplatform.suse.com:/openqa-backup-storage"
     - fs_file: /storage
     - fs_vfstype: nfs
     - fs_mntops: "rw,nofail,retry=30,x-systemd.mount-timeout=30m,x-systemd.automount,nolock"
