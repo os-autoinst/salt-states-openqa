@@ -41,7 +41,7 @@ POSTFIX_INET_PROTO=""
 # NOTE: If set, You should have a "MX Record" in DNS for that name
 # and have a valid reverse entry ;)
 #
-POSTFIX_MYHOSTNAME=""
+POSTFIX_MYHOSTNAME="{{ grains['fqdn'] }}"
 
 ## Type:        string
 ## Default:     ""
