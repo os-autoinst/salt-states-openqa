@@ -15,37 +15,29 @@ mailserver.packages:
 
 /etc/sysconfig/postfix:
   file.managed:
+    - template: jinja
     - source: salt://postfix/sysconfig/postfix
     - require:
       - pkg: mailserver.packages
 
-{%- if salt['pkg.version']('postfix') %}
 {%- if not grains.get('noservices', False) %}
+"config.postfix":
+    cmd.run:
+      - onchanges:
+        - file: /etc/sysconfig/mail
+        - file: /etc/sysconfig/postfix
+
 postfix:
   service.running:
     - name: postfix
     - enable: True
     - reload: True
     - watch:
-      - module: configure_relayhost
       - alias: root_mail_forward
       - file: /etc/sysconfig/mail
       - file: /etc/sysconfig/postfix
     - require:
       - pkg: mailserver.packages
-{%- endif %}
-
-configure_relayhost:
-  module.run:
-    - postfix.set_main:
-      - key: relayhost
-      - value: relay.suse.de
-
-configure_myhost:
-  module.run:
-    - postfix.set_main:
-      - key: myhostname
-      - value: {{ grains['fqdn'] }}
 {%- endif %}
 
 root_mail_forward:
