@@ -108,6 +108,8 @@ reverse-proxy-group:
           enabled: true
         date_formats:
           default_timezone: 'UTC'
+        feature_toggles:
+          enable: panelTitleSearch
 
 /etc/grafana/ldap.toml:
   file.managed:
