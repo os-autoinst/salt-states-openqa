@@ -9,7 +9,7 @@ tmpfs   /run              tmpfs   noauto          0 0
 # ssd storage "expensive+fast"
 /dev/vda1 / ext4 defaults 1 1
 
-# 2e55520d-2b90-4100-8892-025c5f4c9949 -> vda2
+# eec2cf86-5cd3-4f0d-bb09-083c6376d9dc -> vda2
 /dev/vda2 swap swap defaults 0 0
 
 # 40c5b7dd-487f-442b-ba95-b6186b18f3a7 -> vdb
