@@ -394,6 +394,10 @@ openqa-enqueue-git-auto-update.timer:
   service.running:
     - enable: True
 
+openqa-dump-db.timer:
+  service.running:
+    - enable: True
+
 {% for type in ['service', 'timer'] %}
 # Prevent server unresponsiveness due to TRIM which is also debatable anyway
 # on virtual machines
@@ -403,9 +407,3 @@ fstrim.{{ type }}:
     - enable: False
 {% endfor %}
 {%- endif %}
-
-/etc/cron.d/dump-openqa:
-  file.managed:
-    - mode: "0644"
-    - contents: |
-        40 23 * * * postgres openqa-dump-db 1>/dev/null
