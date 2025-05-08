@@ -15,6 +15,12 @@ salt-minion:
     - repl: 'server_id_use_crc: adler32'
     - append_if_not_found: True
 
+minion_config:
+  file.managed:
+    - names:
+      - /etc/salt/minion.d/x509.conf:
+        - source: salt://etc/salt/minion.d/x509.conf
+
 # speed up salt a lot, see https://github.com/saltstack/salt/issues/48773#issuecomment-443599880
 speedup_minion:
   file.serialize:
