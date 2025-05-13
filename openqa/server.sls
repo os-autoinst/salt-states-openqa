@@ -408,4 +408,4 @@ fstrim.{{ type }}:
   file.managed:
     - mode: "0644"
     - contents: |
-        40 23 * * * postgres openqa-dump-db
+        40 23 * * * postgres openqa-dump-db 1>/dev/null
