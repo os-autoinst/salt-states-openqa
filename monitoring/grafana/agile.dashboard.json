@@ -162,7 +162,7 @@
               "condition": "AND",
               "key": "title",
               "operator": "=",
-              "value": "\"Overall Backlog\""
+              "value": "\"Combined Backlog (dev+infra)\""
             },
             {
               "condition": "AND",
@@ -222,7 +222,7 @@
               "condition": "AND",
               "key": "title",
               "operator": "=",
-              "value": "\"Overall Backlog\""
+              "value": "\"Combined Backlog (dev+infra)\""
             },
             {
               "condition": "AND",
@@ -282,7 +282,7 @@
               "condition": "AND",
               "key": "title",
               "operator": "=",
-              "value": "\"Overall Backlog\""
+              "value": "\"Combined Backlog (dev+infra)\""
             },
             {
               "condition": "AND",
@@ -342,7 +342,7 @@
               "condition": "AND",
               "key": "title",
               "operator": "=",
-              "value": "\"Overall Backlog\""
+              "value": "\"Combined Backlog (dev+infra)\""
             },
             {
               "condition": "AND",
@@ -402,7 +402,7 @@
               "condition": "AND",
               "key": "title",
               "operator": "=",
-              "value": "\"Overall Backlog\""
+              "value": "\"Combined Backlog (dev+infra)\""
             },
             {
               "condition": "AND",
