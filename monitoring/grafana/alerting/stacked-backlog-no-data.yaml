@@ -1,0 +1,67 @@
+---
+apiVersion: 1
+groups:
+  - folder: Salt
+    interval: 1m
+    name: monitor.qa.suse.de - No Data alert
+    orgId: 1
+    rules:
+      - annotations:
+          __dashboardUid__: ck8uu5f4z
+          __panelId__: "2"
+          runbook_url: https://progress.opensuse.org/issues/181703
+          message: There is no data received by the qa-tools stacked backlog panel. Check that data collection is working properly and the InfluxDB connections are functioning.
+        condition: A
+        dashboardUid: ck8uu5f4z
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - -9999
+                      - 0
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - no-data-query
+                  reducer:
+                    type: last
+              refId: A
+              type: classic_conditions
+            refId: A
+          - datasourceUid: '000000001'
+            model:
+              measurement: slo
+              orderByTime: ASC
+              policy: default
+              refId: no-data-query
+              resultFormat: time_series
+              select:
+                - - params:
+                      - count
+                    type: field
+              tags:
+                - key: team
+                  operator: =
+                  value: '"QE Tools"'
+                - condition: AND
+                  key: title
+                  operator: =
+                  value: '"Combined Backlog (dev+infra)"'
+            refId: no-data-query
+            relativeTimeRange:
+              from: 10
+              to: 0
+        execErrState: Error
+        for: 5m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: belus0ujm61oge
+        noDataState: Alerting
+        panelId: 2
+        title: QE Tools backlog - No Data Alert
+        uid: belus0ujm61oge
