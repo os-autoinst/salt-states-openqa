@@ -5,4 +5,4 @@ network_mtu:
     - append_if_not_found: True
     - separator: '='
     - key_values:
-        MTU: "1360"
+        MTU: "1500"
