@@ -471,6 +471,11 @@ avoid scheduling test jobs across multiple workers (but also don't have to worry
 about impacting the production GRE-network yet).
 
 ## Wireguard
+There are wireguard states prepared to connect machines to other zones. This
+was prepared in particular to connect secured machines from
+non-common-criteria-compliant machines to a common-criteria-compliant. By
+default this is not applied to any machines.
+
 The required package and SSH key for Eng-Infra to connect are configured
 automatically on relevant hosts. Checkout `wireguard/init.sls` for details. The
 first line in that file can be modified to change the definition of "relevant

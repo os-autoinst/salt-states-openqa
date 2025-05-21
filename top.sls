@@ -19,7 +19,7 @@ base:
     - ca-certificates
     - timezone_utc
     - openqa.postfix
-  'G@needs_wireguard:True or ( *.nue2.suse.org and not G@needs_wireguard:False )':
+  'G@needs_wireguard:True':
     - wireguard
   'not G@roles:webui and not G@roles:worker':
     - auto-upgrade
