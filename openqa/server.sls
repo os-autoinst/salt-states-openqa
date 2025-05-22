@@ -297,6 +297,11 @@ webserver_running:
     - enable: True
     - watch:
       - file: /etc/nginx/vhosts.d/openqa.conf
+      - file: /etc/nginx/vhosts.d/openqa-locations.inc
+      - file: /etc/nginx/conf.d/dehydrated.inc
+      - file: /etc/nginx/conf.d/openqa-asset-config.inc
+      - file: /etc/nginx/nginx.conf
+
 {%- endif %}
 
 {%- if not grains.get('noservices', False) %}
