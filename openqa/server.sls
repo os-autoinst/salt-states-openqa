@@ -47,6 +47,12 @@ osd_fstab:
     - require:
       - pkg: server.packages
 
+/etc/systemd/system/openqa-webui.service.d/10-unit-ordering.conf:
+  file.managed:
+    - mode: "0644"
+    - source: salt://openqa/openqa-webui-unit-ordering.conf
+    - makedirs: true
+
 /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf:
   file.managed:
     - name: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
