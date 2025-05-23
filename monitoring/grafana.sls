@@ -21,7 +21,7 @@ grafana:
 /etc/tmpfiles.d/grafana.conf:
   file.managed:
     - contents:
-      - 'd      /run/grafana            0770 root grafana'
+      - 'd      /run/grafana            0770 root grafana -'
 
 'systemd-tmpfiles --create':
   cmd.run:
