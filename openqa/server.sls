@@ -35,6 +35,17 @@ osd_fstab:
       - file: /etc/fstab
 {%- endif %}
 
+/etc/motd:
+  file.managed:
+    - contents: |
+        This host runs the production openQA instance
+        {{ grains.get('primary_webui_domain', grains.get('fqdn')) }}
+        and is managed by
+        https://gitlab.suse.de/openqa/salt-states-openqa.
+
+        Be careful with manual administrative actions!
+
+
 /etc/openqa/openqa.ini.d:
   file.directory:
     - user: geekotest
