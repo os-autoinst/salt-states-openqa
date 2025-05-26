@@ -45,6 +45,7 @@ clone:
       chown root:salt ${DIR:-$REPO} &&
       cd ${DIR:-$REPO} &&
       git status || git clone --depth 3 https://osd_deployment_ci:$TOKEN@gitlab.suse.de/openqa/salt-$REPO-openqa.git . &&
+      git remote set-url origin https://osd_deployment_ci:$TOKEN@gitlab.suse.de/openqa/salt-$REPO-openqa.git &&
       git fetch origin &&
       git reset --hard origin/master &&
       git checkout -f master &&
