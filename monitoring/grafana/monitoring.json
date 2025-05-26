@@ -73,7 +73,7 @@
         "type": "influxdb",
         "uid": "000000001"
       },
-      "description": "Shows packet loss within the the QA network infrastructure.\n\nThe first hostname is a salt managed host. The second hostname is a host listed under `required_external_networks` in `workerconf.sls` in the pillars repository that is pinged from the source host. See https://wiki.suse.net/index.php/SUSE-Quality_Assurance/Labs for details about hosts.",
+      "description": "Shows packet loss within the the QA network infrastructure.\n\nThe first hostname is a salt managed host. The second hostname is a host listed under `required_external_networks` in `workerconf.sls` in the pillars repository that is pinged from the source host. See https://gitlab.suse.de/suse/wiki/-/blob/main/qe_infrastructure.md for details about hosts.",
       "fieldConfig": {
         "defaults": {
           "color": {

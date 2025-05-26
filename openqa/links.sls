@@ -31,5 +31,5 @@
           url: https://monitor.qa.suse.de
           description: » Current openQA monitoring status
         3:
-          url: https://wiki.suse.net/index.php/OpenQA
+          url: https://gitlab.suse.de/suse/wiki/-/blob/main/openqa.md
           description: » Description of internal setup and administration
