@@ -1,20 +1,55 @@
 ---
 apiVersion: 1
 groups:
-  - folder: Salt
-    interval: 1m
+  - orgId: 1
     name: monitor.qa.suse.de - No Data alert
-    orgId: 1
+    folder: Salt
+    interval: 1m
     rules:
-      - annotations:
-          __dashboardUid__: ck8uu5f4z
-          __panelId__: "2"
-          runbook_url: https://progress.opensuse.org/issues/181703
-          message: There is no data received by the qa-tools stacked backlog panel. Check that data collection is working properly and the InfluxDB connections are functioning.
+      - uid: belus0ujm61oge
+        title: QE Tools backlog - No Data Alert
         condition: A
-        dashboardUid: ck8uu5f4z
         data:
-          - datasourceUid: __expr__
+          - refId: no-data-query
+            relativeTimeRange:
+              from: 43200
+              to: 0
+            datasourceUid: '000000001'
+            model:
+              alias: In Feedback
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              intervalMs: 14400000
+              measurement: slo
+              orderByTime: ASC
+              policy: default
+              refId: no-data-query
+              resultFormat: time_series
+              select:
+                - - params:
+                      - count
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: team
+                  operator: =
+                  value: '"QE Tools"'
+                - condition: AND
+                  key: title
+                  operator: =
+                  value: '"Combined Backlog (dev+infra)"'
+                - condition: AND
+                  key: status
+                  operator: =
+                  value: '"Feedback"'
+          - refId: A
+            datasourceUid: __expr__
             model:
               conditions:
                 - evaluator:
@@ -29,39 +64,24 @@ groups:
                       - no-data-query
                   reducer:
                     type: last
+              intervalMs: 1000
+              maxDataPoints: 43200
               refId: A
               type: classic_conditions
-            refId: A
-          - datasourceUid: '000000001'
-            model:
-              measurement: slo
-              orderByTime: ASC
-              policy: default
-              refId: no-data-query
-              resultFormat: time_series
-              select:
-                - - params:
-                      - count
-                    type: field
-              tags:
-                - key: team
-                  operator: =
-                  value: '"QE Tools"'
-                - condition: AND
-                  key: title
-                  operator: =
-                  value: '"Combined Backlog (dev+infra)"'
-            refId: no-data-query
-            relativeTimeRange:
-              from: 10
-              to: 0
+        dashboardUid: ck8uu5f4z
+        panelId: 2
+        noDataState: Alerting
         execErrState: Error
         for: 5m
-        isPaused: false
+        annotations:
+          __dashboardUid__: ck8uu5f4z
+          __panelId__: '2'
+          message: >-
+            There is no data received by the qa-tools stacked backlog panel.
+            Check that data collection is working properly and the InfluxDB
+            connections are functioning.
+          runbook_url: 'https://progress.opensuse.org/issues/181703'
         labels:
           __contacts__: '"osd-admins"'
           rule_uid: belus0ujm61oge
-        noDataState: Alerting
-        panelId: 2
-        title: QE Tools backlog - No Data Alert
-        uid: belus0ujm61oge
+        isPaused: false
