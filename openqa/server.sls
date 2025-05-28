@@ -329,9 +329,19 @@ salt-master.service:
       - file: /etc/salt/master
 {%- endif %}
 
+https://gitlab.suse.de/qe/git-sha-verify:
+  git.latest:
+    - target: /opt/git-sha-verify
+
 /opt/os-autoinst-scripts/:
   file.directory:
     - user: geekotest
+
+# used by /opt/git-sha-verify/checkout-latest-signed-commit
+/var/lib/openqa/.gnupg/:
+  file.directory:
+    - user: geekotest
+    - mode: '0700'
 
 # workaround for salt not being able to find git in test environment
 gitconfig:
@@ -345,14 +355,14 @@ gitconfig:
 # https://github.com/saltstack/salt/issues/55926
 git-clone-os-autoinst-scripts:
   cmd.run:
-    - name: git clone https://github.com/os-autoinst/scripts.git /opt/os-autoinst-scripts/
+    - name: /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts/ https://github.com/os-autoinst/scripts.git
     - creates: /opt/os-autoinst-scripts/.git/
     - runas: geekotest
 
 /etc/cron.d/os-autoinst-scripts-update-git:
   file.managed:
     - contents:
-      - '-*/3    * * * *  geekotest     git -C /opt/os-autoinst-scripts pull --quiet --rebase origin master'
+      - '-*/5    * * * *  geekotest     /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts >/dev/null'
 
 {%- if not grains.get('noservices', False) %}
 cron.service:
