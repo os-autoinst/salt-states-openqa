@@ -44,3 +44,11 @@ root_mail_forward:
   alias.present:
     - name: root
     - target: osd-admins@suse.de, \root
+
+/etc/systemd/system/kdump-notify.service.d/wait-for-postfix.conf:
+  file.managed:
+    - mode: "0644"
+    - makedirs: true
+    - contents: |
+        [Unit]
+        After=postfix.service
