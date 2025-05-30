@@ -329,9 +329,14 @@ salt-master.service:
       - file: /etc/salt/master
 {%- endif %}
 
+/opt/git-sha-verify/:
+  file.directory:
+    - user: geekotest
+
 https://gitlab.suse.de/qe/git-sha-verify:
   git.latest:
     - target: /opt/git-sha-verify
+    - user: geekotest
 
 /opt/os-autoinst-scripts/:
   file.directory:
