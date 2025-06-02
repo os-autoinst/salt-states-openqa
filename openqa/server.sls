@@ -333,10 +333,20 @@ salt-master.service:
   file.directory:
     - user: geekotest
 
-https://gitlab.suse.de/qe/git-sha-verify:
-  git.latest:
-    - target: /opt/git-sha-verify
-    - user: geekotest
+# workaround for salt not being able to find git in test environment
+gitconfig:
+  git.config_unset:
+    - name: foo
+    - global: True
+    - all: False
+
+# workaround for git.cloned not being able to clone into existing directory
+# owned by correct user
+# https://github.com/saltstack/salt/issues/55926
+'git clone https://gitlab.suse.de/qe/git-sha-verify /opt/git-sha-verify/':
+  cmd.run:
+    - runas: geekotest
+    - creates: /opt/git-sha-verify/.git/
 
 /opt/os-autoinst-scripts/:
   file.directory:
@@ -347,13 +357,6 @@ https://gitlab.suse.de/qe/git-sha-verify:
   file.directory:
     - user: geekotest
     - mode: '0700'
-
-# workaround for salt not being able to find git in test environment
-gitconfig:
-  git.config_unset:
-    - name: foo
-    - global: True
-    - all: False
 
 # workaround for git.cloned not being able to clone into existing directory
 # owned by correct user
@@ -370,6 +373,31 @@ git-clone-os-autoinst-scripts:
       - '-*/5    * * * *  geekotest     /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts >/dev/null'
 
 {%- if not grains.get('noservices', False) %}
+/etc/systemd/system/update-git-sha-verify.timer:
+  file.managed:
+    - contents: |
+        [Unit]
+        Description=Daily update of git-sha-verify
+        [Timer]
+        OnCalendar=00:42
+        Persistent=true
+        [Install]
+        WantedBy=timers.target
+
+/etc/systemd/system/update-git-sha-verify.service:
+  file.managed:
+    - contents: |
+        [Unit]
+        Description=Update git-sha-verify
+        [Service]
+        Type=exec
+        User=geekotest
+        ExecStart=/usr/bin/git -C /opt/git-sha-verify/ pull -q --rebase
+
+update-git-sha-verify.timer:
+  service.running:
+    - enable: True
+
 cron.service:
   service.running:
     - enable: True
