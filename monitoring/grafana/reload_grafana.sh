@@ -44,7 +44,7 @@ main() {
     GRAFANA_CONFIG="${CONF_FILE:-/etc/grafana/grafana.ini}" # should be set by the service-file for grafana, otherwise we take a sane default
     PROVISIONING_TO_RELOAD="dashboards datasources plugins access-control alerting"
     GRAFANA_SOCKET_PATH=$(get_grafana_config_value "${GRAFANA_CONFIG}" "socket")
-    GRAFANA_ROOT_URL=$(get_grafana_config_value "${GRAFANA_CONFIG}" "root_url")
+    GRAFANA_ROOT_URL=$(get_grafana_config_value "${GRAFANA_CONFIG}" "root_url" | sed "s@^.*://@@g")
 
     for config in ${PROVISIONING_TO_RELOAD}; do
       grafana_req "api/admin/provisioning/${config}/reload"
