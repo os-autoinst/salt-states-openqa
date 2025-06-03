@@ -195,13 +195,13 @@ groups:
               conditions:
                 - evaluator:
                     params:
-                      5.368709e+08
+                      - 5.368709e+08
                     type: lt
                   operator:
                     type: and
                   query:
                     params:
-                      - Available
+                      - Available_total
                   reducer:
                     type: avg
               refId: A
