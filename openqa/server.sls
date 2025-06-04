@@ -156,6 +156,16 @@ webserver_grain:
     - require:
       - pkg: server.packages
 
+/etc/nginx/vhosts.d/openqa-external-locations.inc:
+  file.managed:
+    - template: jinja
+    - source: salt://nginx/openqa-external-locations.inc
+    - user: root
+    - group: root
+    - mode: "0644"
+    - require:
+      - pkg: server.packages
+
 # ext_pillar is not available with master-less mode so using "noservices"
 # check as workaround to disable the following in our test environment
 {%- if not grains.get('noservices', False) %}
