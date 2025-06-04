@@ -78,6 +78,23 @@ deploy:
     - *setup_script
     - scp $TARGET:salt_\*.log .
 
+grafana:
+  extends: .defaults
+  stage: post-deploy
+  script:
+    - *setup_script
+    - ssh $TARGET "salt \* cmd.run 'sudo timeout -v --kill-after=1m 5m grep \"Failed\" /var/log/grafana/grafana.log 2>&1 && echo \"grafana errors\" || echo \"grafana is fine\"'" | tee salt_post_deploy_checks.log; ! grep 'Failed' salt_post_deploy_checks.log
+  rules:
+    # extends does not deep-merge lists so we have to add our additional "changes" here
+    # also see https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#merge-details for details
+    - if: $CI_PROJECT_NAMESPACE != "openqa"
+      when: never
+    - if: >-
+        $CI_PIPELINE_SOURCE == "push" &&
+        $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      changes:
+        - monitoring/grafana/*
+
 telegraf:
   extends: .defaults
   stage: post-deploy
