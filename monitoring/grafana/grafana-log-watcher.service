@@ -1,0 +1,6 @@
+[Unit]
+Description=Watch logs and fail in case of errors
+
+[Service]
+Type=oneshot
+ExecStart=! tail /var/log/grafana/grafana.log | grep -o '\<error=.*"'
