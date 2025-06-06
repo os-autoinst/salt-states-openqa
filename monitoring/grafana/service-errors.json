@@ -1,0 +1,71 @@
+{
+  "id": 1,
+  "type": "logs",
+  "title": "Grafana Service Errors",
+  "description": "Watches logs of the Grafana service for errors e.g. errors in alert definitions which do not prevent Grafana from starting but need to be looked into",
+  "gridPos": {
+    "x": 0,
+    "y": 0,
+    "h": 8,
+    "w": 12
+  },
+  "fieldConfig": {
+    "defaults": {},
+    "overrides": []
+  },
+  "transformations": [
+    {
+      "id": "extractFields",
+      "options": {
+        "delimiter": ",",
+        "format": "kvp",
+        "keepTime": true,
+        "replace": true,
+        "source": "labels"
+      }
+    },
+    {
+      "id": "filterFieldsByName",
+      "options": {
+        "byVariable": false,
+        "include": {
+          "names": [
+            "Time",
+            "error"
+          ]
+        }
+      }
+    }
+  ],
+  "transparent": true,
+  "pluginVersion": "11.6.1+security01",
+  "targets": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "ee4ewos1kcidcf"
+      },
+      "direction": "backward",
+      "editorMode": "builder",
+      "expr": "{service_name=\"systemd-journal\", unit=\"grafana-server.service\"} |= `error=` | logfmt error | error !~ `user not found`",
+      "legendFormat": "",
+      "queryType": "range",
+      "refId": "A"
+    }
+  ],
+  "datasource": {
+    "type": "loki",
+    "uid": "ee4ewos1kcidcf"
+  },
+  "options": {
+    "showTime": true,
+    "showLabels": false,
+    "showCommonLabels": false,
+    "wrapLogMessage": false,
+    "prettifyLogMessage": false,
+    "enableLogDetails": false,
+    "enableInfiniteScrolling": false,
+    "dedupStrategy": "none",
+    "sortOrder": "Descending"
+  }
+}
