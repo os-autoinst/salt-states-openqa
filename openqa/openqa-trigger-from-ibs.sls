@@ -54,8 +54,8 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLE-15-SP7:GA:Staging:' + i) }}
 {% endfor %}
 
-# SLE 16 Stagings
-{% for i in ['A','B','C','D','E','F','G','H','S','V','Y'] %}
+# SLE 16.0/SL-Micro 6.2 Stagings
+{% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','S','V','Y'] %}
 {{ scriptgen('SUSE:SLFO:Main:Staging:' + i) }}
 {% endfor %}
 
