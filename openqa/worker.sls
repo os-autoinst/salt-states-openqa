@@ -137,6 +137,10 @@ worker.packages:
 
 # setup client.conf based on info in workerconf pillar
 /etc/openqa/client.conf:
+  file.managed:
+    - user: _openqa-worker
+    - group: root
+    - mode: "0644"
   ini.options_present:
     - sections:
         {% set workerhost = grains['host'] %}
