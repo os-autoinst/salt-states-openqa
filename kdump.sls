@@ -38,7 +38,7 @@ kdump-conf:
     - lens: Shellvars.lns
     - context: /files/etc/sysconfig/kdump
     - changes:
-      - set KDUMP_SMTP_SERVER '"relay.suse.de"'
+      - set KDUMP_SMTP_SERVER '"localhost"'
       - set KDUMP_NOTIFICATION_TO '"osd-admins@suse.de"'
 
 {%- if not grains.get('noservices', False) %}
