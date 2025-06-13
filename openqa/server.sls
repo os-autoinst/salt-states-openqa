@@ -482,3 +482,9 @@ fstrim.{{ type }}:
     - enable: False
 {% endfor %}
 {%- endif %}
+
+# Avoiding unintended connection failures with SO_REUSEPORT, see
+# https://progress.opensuse.org/issues/181736#note-17
+net.ipv4.tcp_migrate_req:
+  sysctl.present:
+    - value: 1
