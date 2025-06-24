@@ -229,7 +229,7 @@ groups:
               type: classic_conditions
             refId: B
         execErrState: OK
-        for: 15m
+        for: 2h
         isPaused: false
         labels:
           __contacts__: '"osd-admins"'
