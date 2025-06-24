@@ -48,6 +48,7 @@ base:
     - haveged
   'G@roles:monitor':
     - monitoring.maintenance_queue
+    - monitoring.submissions_queue
     - monitoring.sap_perf
     - monitoring.sleperf
     - monitoring.slo
