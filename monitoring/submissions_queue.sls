@@ -17,3 +17,4 @@ submissions_queue.packages:
 /etc/telegraf/scripts/submissions_queue_monitor.py:
   file.managed:
     - source: salt://monitoring/submissions_queue/scripts/submissions_queue_monitor.py
+    - mode: "0775"
