@@ -17,3 +17,4 @@ maintenance_queue.packages:
 /etc/telegraf/scripts/maintenance_queue_monitor.py:
   file.managed:
     - source: salt://monitoring/maintenance_queue/scripts/maintenance_queue_monitor.py
+    - mode: "0775"
