@@ -30,6 +30,9 @@ base:
     - openqa.links
     - openqa.openqa-trigger-from-ibs
     - certificates.dehydrated
+  'G@roles:suse_metrics':
+    - monitoring.maintenance_queue
+    - monitoring.submissions_queue
   'G@roles:worker':
     - openqa.repos
     - openqa.worker
@@ -47,7 +50,6 @@ base:
   'G@roles:worker and G@osarch:aarch64':
     - haveged
   'G@roles:monitor':
-    - monitoring.maintenance_queue
     - monitoring.sap_perf
     - monitoring.sleperf
     - monitoring.slo
