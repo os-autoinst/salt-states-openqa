@@ -1,0 +1,112 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: network availability
+      folder: Salt
+      interval: 10m
+      rules:
+        - uid: ceqlp0tcxz400b
+          title: Network availability
+          condition: alert_condition
+          data:
+            - refId: data_query
+              relativeTimeRange:
+                from: 3600
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                alias: 'IPv$tag_protocol_version: $tag_host'
+                groupBy:
+                    - params:
+                        - $__interval
+                      type: time
+                    - params:
+                        - host::tag
+                      type: tag
+                    - params:
+                        - protocol_version::tag
+                      type: tag
+                    - params:
+                        - none
+                      type: fill
+                intervalMs: 60000
+                maxDataPoints: 43200
+                measurement: ping
+                orderByTime: ASC
+                policy: default
+                refId: data_query
+                resultFormat: time_series
+                select:
+                    - - params:
+                            - result_code
+                        type: field
+                      - params: []
+                        type: mean
+                tags:
+                    - key: url::tag
+                      operator: =
+                      value: openqa.suse.de
+                    - condition: AND
+                      key: protocol_version::tag
+                      operator: '!~'
+                      value: /^$/
+            - refId: last_datapoint
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params: []
+                      reducer:
+                        params: []
+                        type: avg
+                      type: query
+                datasource:
+                    name: Expression
+                    type: __expr__
+                    uid: __expr__
+                expression: data_query
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: last_datapoint
+                type: reduce
+            - refId: alert_condition
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params: []
+                      reducer:
+                        params: []
+                        type: avg
+                      type: query
+                datasource:
+                    name: Expression
+                    type: __expr__
+                    uid: __expr__
+                expression: last_datapoint
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: alert_condition
+                type: threshold
+          noDataState: KeepLast
+          execErrState: KeepLast
+          annotations: {}
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: osd-admins
