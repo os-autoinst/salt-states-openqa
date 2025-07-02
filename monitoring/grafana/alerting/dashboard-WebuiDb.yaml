@@ -1327,6 +1327,78 @@ groups:
         uid: liA25iB4k
   - folder: Salt
     interval: 1m
+    name: 'web UI: Too many inactive minion workers alert'
+    orgId: 1
+    rules:
+      - annotations:
+          __alertId__: '300'
+          __dashboardUid__: WebuiDb
+          __panelId__: '17'
+          message: |-
+            There are more than 10K inactive minion workers.
+
+            Review inactive minion workers https://openqa.suse.de/minion/jobs?state=inactive
+        condition: A
+        dashboardUid: WebuiDb
+        data:
+          - datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 10000
+                    type: gt
+                  operator:
+                    type: or
+                  query:
+                    params:
+                      - inactive_workers
+                  reducer:
+                    type: last
+              refId: A
+              type: classic_conditions
+            refId: A
+          - datasourceUid: '000000001'
+            model:
+              alias: ''
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - 'null'
+                  type: fill
+              interval: 2m
+              orderByTime: ASC
+              policy: default
+              query: SELECT max(inactive) FROM "openqa_minion_workers" WHERE
+                ("host" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(previous)
+              rawQuery: true
+              refId: inactive_workers
+              resultFormat: time_series
+              select:
+                - - params:
+                      - value
+                    type: field
+                  - params: []
+                    type: mean
+              tags: []
+            refId: inactive_workers
+            relativeTimeRange:
+              from: 600
+              to: 60
+        execErrState: OK
+        for: 15m
+        isPaused: false
+        labels:
+          __contacts__: '"osd-admins"'
+          rule_uid: 8i03cmC5z
+        noDataState: OK
+        panelId: 17
+        title: 'web UI: Inactive minion workers alert'
+        uid: 8i03cmC5z
+  - folder: Salt
+    interval: 1m
     name: 'web UI: Disk I O time alert'
     orgId: 1
     rules:
