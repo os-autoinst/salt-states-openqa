@@ -9,7 +9,7 @@ function get_grafana_config_value() {
 
 function grafana_req() {
   local api_endpoint="$1"
-  ! curl -u "${HTTP_USERNAME}:${HTTP_PASSWORD}" -X POST --unix-socket "${GRAFANA_SOCKET_PATH}" "${GRAFANA_ROOT_URL}/${api_endpoint}" -s | grep -i error
+  ! curl -u "${HTTP_USERNAME}:${HTTP_PASSWORD}" -X POST --unix-socket "${GRAFANA_SOCKET_PATH}" "${GRAFANA_ROOT_URL/https/http}/${api_endpoint}" -s | grep -i error
 }
 
 usage() {
