@@ -1327,17 +1327,17 @@ groups:
         uid: liA25iB4k
   - folder: Salt
     interval: 1m
-    name: 'web UI: Too many inactive minion workers alert'
+    name: 'web UI: Too many inactive minion jobs alert'
     orgId: 1
     rules:
       - annotations:
           __alertId__: '300'
           __dashboardUid__: WebuiDb
-          __panelId__: '17'
+          __panelId__: '19'
           message: |-
-            There are more than 10K inactive minion workers.
+            There are more than 10K inactive minion jobs.
 
-            Review inactive minion workers https://openqa.suse.de/minion/jobs?state=inactive
+            Review inactive minion jobs https://openqa.suse.de/minion/jobs?state=inactive
         condition: A
         dashboardUid: WebuiDb
         data:
@@ -1360,42 +1360,42 @@ groups:
             refId: A
           - datasourceUid: '000000001'
             model:
-              alias: ''
+              alias: Inactive
               groupBy:
                 - params:
                     - $__interval
                   type: time
                 - params:
-                    - 'null'
+                    - previous
                   type: fill
-              interval: 2m
+              measurement: openqa_minion_jobs
               orderByTime: ASC
               policy: default
-              query: SELECT max(inactive) FROM "openqa_minion_workers" WHERE
-                ("host" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(previous)
-              rawQuery: true
-              refId: inactive_workers
+              refId: inactive_jobs
               resultFormat: time_series
               select:
                 - - params:
-                      - value
+                      - inactive
                     type: field
                   - params: []
                     type: mean
-              tags: []
-            refId: inactive_workers
+              tags:
+                - key: host
+                  operator: =
+                  value: openqa
+            refId: inactive_jobs
             relativeTimeRange:
-              from: 600
-              to: 60
+              from: 300
+              to: 0
         execErrState: OK
-        for: 15m
+        for: 5m
         isPaused: false
         labels:
           __contacts__: '"osd-admins"'
           rule_uid: 8i03cmC5z
         noDataState: OK
-        panelId: 17
-        title: 'web UI: Inactive minion workers alert'
+        panelId: 19
+        title: 'web UI: Inactive minion jobs alert'
         uid: 8i03cmC5z
   - folder: Salt
     interval: 1m
