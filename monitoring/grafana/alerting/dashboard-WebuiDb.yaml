@@ -1352,7 +1352,7 @@ groups:
                     type: or
                   query:
                     params:
-                      - inactive_workers
+                      - inactive_jobs
                   reducer:
                     type: last
               refId: A
