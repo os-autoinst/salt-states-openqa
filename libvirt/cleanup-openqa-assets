@@ -1,5 +1,5 @@
 #!/bin/bash -e
 
 if [[ $(df | grep "/var/lib/libvirt/images" | awk '{print $5}' | sed "s/\%//") -gt 70 ]] ; then
-    find /var/lib/libvirt/images/*.qcow2 -ignore_readdir_race ! -exec fuser -s "{}" \; -exec rm -f {} \;
+    find /var/lib/libvirt/images/*.qcow2 -ignore_readdir_race ! -exec fuser -s "{}" \; -exec rm -f {} \; 2>/dev/null
 fi
