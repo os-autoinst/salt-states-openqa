@@ -90,4 +90,4 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 # SL Micro 6.1 Increments
 {{ scriptgen('SUSE:SLFO:Products:SL-Micro:6.1:ToTest') }}
 {{ scriptgen('Devel:YaST:Agama:Head') }}
-
+{{ scriptgen('SUSE:SLFO:Products:SLES:15.99:TEST') }}
