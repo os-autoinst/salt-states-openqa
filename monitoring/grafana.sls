@@ -124,6 +124,7 @@ reverse-proxy-group:
 /etc/grafana/provisioning/alerting/{{ provisioned_alert }}:
   file.managed:
     - makedirs: True
+    - mode: "0644"
     - source: salt://monitoring/grafana/alerting/{{ provisioned_alert }}
 {% endfor %}
 
