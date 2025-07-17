@@ -3854,7 +3854,7 @@
       "30d"
     ]
   },
-  "timezone": "browser",
+  "timezone": "",
   "title": "Dashboard for {{ generic_host }}",
   "uid": "GD{{ generic_host }}",
   "version": 3,
