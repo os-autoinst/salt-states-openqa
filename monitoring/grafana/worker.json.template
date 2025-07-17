@@ -4939,7 +4939,7 @@
       "30d"
     ]
   },
-  "timezone": "browser",
+  "timezone": "",
   "title": "Worker dashboard ({{ worker }})",
   "uid": "WD{{ worker }}",
   "version": 13,
