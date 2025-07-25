@@ -1,0 +1,42 @@
+#!/bin/bash
+
+SECONDS_IN_MINUTE=60
+ELAPSED_DURATION_IN_SEC=$((45 * SECONDS_IN_MINUTE))
+TIMESTAMP_FILE="/tmp/timestamp.date"
+GITLAB_URL="https://gitlab.suse.de/users/sign_in"
+JEYKYLL_SRC_PATH="/srv/jekyll-source/"
+
+HTTPCODE=$(curl $GITLAB_URL -w "%{http_code}" -s -o /dev/null)
+
+if [ "$HTTPCODE" -ge 200 ] && [ "$HTTPCODE" -le 299 ]; then
+	
+	git -C "$JEYKYLL_SRC_PATH" pull -q > /dev/null 2>&1
+	
+	# delete TIMESTAMP_FILE if exists, we do not want a false positive alert
+	# the next time this script runs
+	rm -f "$TIMESTAMP_FILE"
+	exit 0
+else
+	# store first failure timestamp in a tmp file only if TIMESTAMP_FILE
+	# doesn't exists
+	if [ ! -s $TIMESTAMP_FILE ]; then
+		date +%s > "$TIMESTAMP_FILE"
+	fi
+	
+	# read timestamp from TIMESTAMP_FILE
+	PREV_TIMESTAMP=$(cat "$TIMESTAMP_FILE")
+	
+	# calculate difference between current timestamp and previous failed timestamp
+	TIMESTAMP_DIFF=$(($(date +%s) - PREV_TIMESTAMP))
+	
+	# if difference between current timestamp and previous failed timestamp is more than
+	# expected elapsed time duration, then exit with failure
+	# exiting with failure will cause systemd service/cron to eventually fail
+	# and should hopefully trigger an alert via grafana
+	if [ $TIMESTAMP_DIFF -gt $ELAPSED_DURATION_IN_SEC ]; then
+		rm -f "$TIMESTAMP_FILE"
+		echo "Updating $JEYKYLL_SRC_PATH using git pull failed on $(hostname)"
+		echo "HTTP Resp Code from GitLab: $HTTPCODE"
+		exit 1
+	fi
+fi
