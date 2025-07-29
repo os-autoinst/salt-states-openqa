@@ -1,5 +1,5 @@
 [Unit]
-Description=jekyll souce update task
+Description=jekyll source update task
 ConditionPathIsReadWrite=/srv/jekyll-source/
 
 [Service]
