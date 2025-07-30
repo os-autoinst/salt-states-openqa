@@ -1,0 +1,9 @@
+[Unit]
+Description=jekyll source update task
+ConditionPathIsReadWrite=/srv/jekyll-source/
+
+[Service]
+Type=exec
+User=wwwrun
+ExecStart=/usr/local/bin/tumblesle-fetch-jekyll
+
