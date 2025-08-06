@@ -34,5 +34,6 @@ done
 # add an additional rule for SUTs running on that machine
 # OS_AUTOINST_BRIDGE_REWRITE_TARGET defines this network for os-autoinst-openvswitch
 # but we never change the default so we can just hardcode it here.
-ip -4 rule add from 10.1.0.0/16 table nowg prio 1
+netrule="from 10.1.0.0/16 table nowg prio 1"
+ip -4 rule show $netrule &> /dev/null || ip -4 rule add $netrule
 {%- endif %}
