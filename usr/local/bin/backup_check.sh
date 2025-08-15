@@ -15,7 +15,7 @@ exitcode=0
 
 for h in "${CHECK_HOSTS[@]}" ; do
 	bloc="$BDIR/alpha.0/$h"
-	if [[ ! -d "$bloc" ]] ; then
+	if ! retry ls "$bloc" >/dev/null 2>&1 ; then
 			echo "'$bloc' does not exist!"
 			exitcode=1
 	fi
