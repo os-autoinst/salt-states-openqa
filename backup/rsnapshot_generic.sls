@@ -1,3 +1,9 @@
+{#
+ # This file generates all required configuration for backup hosts located at
+ # prg2 in CC N/W Zone which is backup.qe.prg2.suse.org and at nue2 in Non-CC
+ # N/W Zone which is backup-vm.qe.nue2.suse.org
+#}
+
 rsnapshot.pkgs:
   pkg.installed:
     - refresh: False
@@ -6,19 +12,10 @@ rsnapshot.pkgs:
     - pkgs:
       - filesystem
       - rsnapshot
-      - nfs-client
-
-nfs_backup_prg2_mounted:
-  mount.fstab_present:
-    # NFS share on prg2 netapp
-    - name: "nfs-prg2-fas-prod.openplatform.suse.com:/openqa-backup-storage"
-    - fs_file: /storage
-    - fs_vfstype: nfs
-    - fs_mntops: "rw,nofail,retry=30,x-systemd.mount-timeout=30m,x-systemd.automount,nolock"
-    - not_change: False
 
 /etc/rsnapshot.conf:
   file.managed:
+    - template: jinja
     - source: salt://etc/backup/rsnapshot_generic.conf
     - user: root
     - group: root
