@@ -1,0 +1,11 @@
+[Unit]
+Description=rsnapshot alpha backup
+
+[Timer]
+# “At 00:00 on Monday and Thursday.”
+OnCalendar=Mon,Thu *-*-* 00:00:00
+Persistent=true
+Unit=rsnapshot@alpha.service
+
+[Install]
+WantedBy=timers.target
