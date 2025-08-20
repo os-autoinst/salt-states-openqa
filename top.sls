@@ -62,8 +62,10 @@ base:
     - certificates.dehydrated
   'G@roles:storage':
     - backup.rsnapshot_openqa_data
-  'G@roles:backup_prg2':
+  'G@roles:backup_prg2 or G@roles:backup_nue2':
     - backup.rsnapshot_generic
+  'G@roles:backup_prg2':
+    - backup.mount_netapp_nfs
   'G@roles:jenkins':
     - jenkins
   'G@roles:libvirt':
