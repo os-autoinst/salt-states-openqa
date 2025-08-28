@@ -1,8 +1,14 @@
-{#
+{#-
  # This file generates all required configuration for backup hosts located at
  # prg2 in CC N/W Zone which is backup.qe.prg2.suse.org and at nue2 in Non-CC
  # N/W Zone which is backup-vm.qe.nue2.suse.org
-#}
+-#}
+
+{%- if grains.roles == 'backup_prg2' -%}
+  {% set snapshot_root_path = '/storage/rsnapshot' %}
+{%- else -%}
+  {% set snapshot_root_path = '/home/rsnapshot' %}
+{%- endif -%}
 
 rsnapshot.pkgs:
   pkg.installed:
@@ -16,17 +22,22 @@ rsnapshot.pkgs:
 /etc/rsnapshot.conf:
   file.managed:
     - template: jinja
-    - source: salt://etc/backup/rsnapshot_generic.conf
+    - source: salt://etc/backup/rsnapshot_generic.conf.jinja
     - user: root
     - group: root
     - mode: "0644"
+    - defaults:
+        snapshot_root_path: {{ snapshot_root_path }}
 
 /usr/local/bin/backup_check.sh:
   file.managed:
-    - source: salt://usr/local/bin/backup_check.sh
+    - template: jinja
+    - source: salt://usr/local/bin/backup_check.sh.jinja
     - user: root
     - group: root
     - mode: "0755"
+    - defaults:
+        snapshot_root_path: {{ snapshot_root_path }}
 
 /etc/systemd/system/backup_check.service:
   file.managed:
