@@ -4,9 +4,9 @@ BDIR="{{ snapshot_root_path }}"
 
 declare -a CHECK_HOSTS=(
         "localhost"
-{%- if grains.get("roles", '') == 'backup_prg2' -%}
+{%- if grains.get("roles", '') == 'backup_prg2' %}
         "openqa.suse.de"
-{% endif %}
+{%- endif %}
         "openqa.opensuse.org"
         "jenkins.qa.suse.de"
         "openqa-monitor.qa.suse.de"
