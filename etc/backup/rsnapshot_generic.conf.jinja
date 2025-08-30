@@ -31,7 +31,7 @@ backup	root@o3:/var/log/zypp/	openqa.opensuse.org/
 backup	root@o3:/srv/tftpboot/	openqa.opensuse.org/	+rsync_long_args=--exclude=ipxe/images,exclude=linux
 
 {#- Backup OSD only on prg2 backup host in CC N/W Zone -#}
-{%- if grains.get('roles', '') == 'backup_prg2' -%}
+{% if grains.get('roles', '') == 'backup_prg2' %}
 # osd
 backup	root@openqa.suse.de:/etc/	openqa.suse.de/
 backup_exec	ssh root@openqa.suse.de "cd /tmp; sudo -u postgres openqa-dump-db"
