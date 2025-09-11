@@ -7,3 +7,8 @@ kernel.panic:
   sysctl.present:
     - value: 60
 {%- endif %}
+
+# Allow more inotify watches to prevent issues with systemd.path units
+fs.inotify.max_user_instances:
+  sysctl.present:
+    - value: 1024
