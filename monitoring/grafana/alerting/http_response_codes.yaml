@@ -3,7 +3,7 @@ groups:
   - orgId: 1
     name: http_response_codes
     folder: Salt
-    interval: 5m
+    interval: 1m
     rules:
       - uid: b3a53df8-b7ee-48dd-9325-8a541187737f
         title: External http responses
