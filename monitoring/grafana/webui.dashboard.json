@@ -6278,7 +6278,7 @@
         "multi": true,
         "name": "host_disks",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"name\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /vd[a-z]$/ and \"DESCRIPTION\"::tag <> ''",
+        "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"name\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /vd[a-z]$/",
         "refresh": 1,
         "regex": "",
         "type": "query"
