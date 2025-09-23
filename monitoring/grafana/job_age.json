@@ -563,46 +563,6 @@
       "type": "timeseries"
     },
     {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                345600
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "3h",
-        "frequency": "1h",
-        "handler": 1,
-        "message": "Jobs not scheduled for 4 days (345600s).\n\nPossible reasons:\n\n* There are no online workers for selected scheduled jobs, misconfiguration on the side of tests likely\n\nSee https://progress.opensuse.org/issues/73174#note-2 for an explanation of the selection of the specific value",
-        "name": "Job age (scheduled) (max) alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
       "datasource": {
         "type": "influxdb",
         "uid": "000000001"
