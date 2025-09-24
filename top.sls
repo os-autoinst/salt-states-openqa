@@ -75,6 +75,9 @@ base:
     - openqa.kvm_firewall
     - openqa.nfs_share
     - openqa.recover-nfs
+  'G@roles:netboot_server':
+    - openqa.nfs_share
+    - openqa.recover-nfs
   'openqa-piworker.qe.nue2.suse.org':
     - raspberrypi
   'tumblesle.qe.nue2.suse.org':
