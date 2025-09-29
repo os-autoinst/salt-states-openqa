@@ -1019,7 +1019,7 @@ groups:
       panelId: 54694
       noDataState: OK
       execErrState: OK
-      for: 90m
+      for: 20m
       annotations:
         __dashboardUid__: WD{{ worker }}
         __panelId__: "54694"
