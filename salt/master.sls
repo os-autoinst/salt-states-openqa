@@ -32,3 +32,15 @@ master_config:
               pillar_name: 'nodegroups'
         nodegroups:
           all: '*'
+        master_stats: True
+        master_stats_event_iter: 60
+        # Reduce noisy events
+        auth_events: False
+        minion_data_cache_events: False
+        # Remove connection caching
+        con_cache: False
+        # Async strategy threshold
+        batch_async:
+            threshold: 2
+        # Key rotation policy
+        rotate_aes_key: False
