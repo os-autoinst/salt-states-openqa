@@ -377,12 +377,34 @@ git-clone-os-autoinst-scripts:
     - creates: /opt/os-autoinst-scripts/.git/
     - runas: geekotest
 
-/etc/cron.d/os-autoinst-scripts-update-git:
+# Reference: https://progress.opensuse.org/issues/191449
+/etc/systemd/system/update-os-autoinst-scripts.service:
   file.managed:
-    - contents:
-      - '-*/5    * * * *  geekotest     /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts >/dev/null'
+    - contents: |
+        [Unit]
+        Description: Update os-autoinst-scripts git repository
+        [Service]
+        Type=exec
+        User=geekotest
+        WorkingDirectory=/opt
+        ExecStart=/opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts
+
+/etc/systemd/system/update-os-autoinst-scripts.timer:
+  file.managed:
+    - contents: |
+        [Unit]
+        Description: Update os-autoinst-scripts git repository
+        [Timer]
+        OnUnitInactiveSec=5min
+        Persistent=True
+        [Install]
+        WantedBy=timers.target
 
 {%- if not grains.get('noservices', False) %}
+update-os-autoinst-scripts.timer:
+  service.running:
+    - enable: True
+
 /etc/systemd/system/update-git-sha-verify.timer:
   file.managed:
     - contents: |
