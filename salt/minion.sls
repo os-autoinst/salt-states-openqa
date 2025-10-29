@@ -32,6 +32,12 @@ speedup_minion:
           - esxi
         disable_modules:
           - vsphere
+        # Make minions less aggressive on re-authentication
+        random_reauth_delay: 60
+        recon_default: 1000
+        recon_max: 29000
+        recon_randomize: True
+        auth_timeout: 5
 
 # workaround https://github.com/saltstack/salt/issues/59141
 workaround_minion_race:
