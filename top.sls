@@ -4,6 +4,7 @@ base:
     - system.packages.locks
     - network
     - network.accept_ra
+    - network.sysconfig
     - salt.minion
     - sshd
     - sysctl

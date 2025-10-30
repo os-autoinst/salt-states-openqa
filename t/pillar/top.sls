@@ -4,6 +4,7 @@ base:
     - salt.mine
     - disks.descriptions
     - openqa.commonconf
+    - network.sysconfig
   'G@roles:webui':
     - openqa.server
     - certificates.hosts
