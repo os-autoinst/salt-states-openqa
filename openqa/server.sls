@@ -18,7 +18,7 @@ server.packages:
       - samba
       - postfix
       - cron
-      - os-autoinst-scripts-deps  # for https://github.com/os-autoinst/scripts
+      - os-autoinst-scripts-deps  # for https://github.com/os-autoinst/os-autoinst-scripts
       - rsync  # for rsyncd
 
 osd_fstab:
@@ -373,7 +373,7 @@ gitconfig:
 # https://github.com/saltstack/salt/issues/55926
 git-clone-os-autoinst-scripts:
   cmd.run:
-    - name: /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts/ https://github.com/os-autoinst/scripts.git
+    - name: /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts/ https://github.com/os-autoinst/os-autoinst-scripts.git
     - creates: /opt/os-autoinst-scripts/.git/
     - runas: geekotest
 
