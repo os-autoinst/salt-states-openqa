@@ -377,34 +377,12 @@ git-clone-os-autoinst-scripts:
     - creates: /opt/os-autoinst-scripts/.git/
     - runas: geekotest
 
-# Reference: https://progress.opensuse.org/issues/191449
-/etc/systemd/system/update-os-autoinst-scripts.service:
+/etc/cron.d/os-autoinst-scripts-update-git:
   file.managed:
-    - contents: |
-        [Unit]
-        Description: Update os-autoinst-scripts git repository
-        [Service]
-        Type=exec
-        User=geekotest
-        WorkingDirectory=/opt
-        ExecStart=/bin/bash -lc '/opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts || { echo -e "To: osd-admins@suse.de\nFrom: root <root@$(hostname)>\nSubject: update-os-autoinst-scripts.service failed\n\nSee journalctl -u update-os-autoinst-scripts.service -b\n" | /usr/sbin/sendmail -t }'
-
-/etc/systemd/system/update-os-autoinst-scripts.timer:
-  file.managed:
-    - contents: |
-        [Unit]
-        Description: Update os-autoinst-scripts git repository
-        [Timer]
-        OnUnitInactiveSec=5min
-        Persistent=True
-        [Install]
-        WantedBy=timers.target
+    - contents:
+      - '-*/5    * * * *  geekotest     /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts >/dev/null'
 
 {%- if not grains.get('noservices', False) %}
-update-os-autoinst-scripts.timer:
-  service.running:
-    - enable: True
-
 /etc/systemd/system/update-git-sha-verify.timer:
   file.managed:
     - contents: |
