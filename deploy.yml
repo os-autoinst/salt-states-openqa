@@ -69,11 +69,18 @@ refresh:
 deploy:
   extends: .defaults
   stage: deploy
+  variables:
+    INFLUX_URL: "http://monitor.qe.nue2.suse.org:8086"
+    INFLUX_DB: "telegraf"
+    MEASUREMENT: "total_salt_deploy_runtime"
   needs:
     - refresh
   script:
     - *setup_script
-    - retry --retries=2 --sleep=0 -- timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_highstate.log; salt -t 3600 --log-file=salt_highstate.log --log-file-level=debug --state-output=changes \* state.highstate queue=True | awk '/Result..Clean[- ]*Started/ {print > \"salt_profiling.log\"; next} 1'"
+    - time -f '%e' -o .deploy_time retry --retries=2 --sleep=0 -- timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_highstate.log; salt -t 3600 --log-file=salt_highstate.log --log-file-level=debug --state-output=changes \* state.highstate queue=True | awk '/Result..Clean[- ]*Started/ {print > \"salt_profiling.log\"; next} 1'"
+    - status=$?
+    - deploy_time=$(cat .deploy_time)
+    - curl -i -XPOST "$INFLUX_URL/write?db=$INFLUX_DB" --data-binary "$MEASUREMENT,type=deploy value=$deploy_time,status=$status"
   after_script:
     - *setup_script
     - scp $TARGET:salt_\*.log .
