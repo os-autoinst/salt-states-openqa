@@ -14,12 +14,28 @@ jenkins.repo:
     - name: jenkins
     - refresh: False
 
+jenkins_java_pkg:
+  pkg.latest:
+    - name: java-21-openjdk-headless
+    - refresh: False
+
 /usr/local/bin/update-jenkins-plugins:
   file.managed:
     - source: salt://jenkins/update-jenkins-plugins
     - mode: "0755"
 
 {%- if not grains.get('noservices', False) %}
+
+jenkins.service:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: jenkins.repo
+      - pkg: jenkins_java_pkg
+    - watch:
+      - pkg: jenkins.repo
+      - pkg: jenkins_java_pkg
+
 {% for type in ['service', 'timer'] %}
 jenkins_plugins_update_{{ type }}:
   file.managed:
