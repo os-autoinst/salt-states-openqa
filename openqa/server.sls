@@ -396,7 +396,7 @@ git-clone-os-autoinst-scripts:
         Description=Update os-autoinst-scripts git repository
         [Timer]
         OnUnitInactiveSec=5min
-        Persistent=True
+        Persistent=true
         [Install]
         WantedBy=timers.target
 
