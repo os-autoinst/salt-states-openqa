@@ -382,21 +382,21 @@ git-clone-os-autoinst-scripts:
   file.managed:
     - contents: |
         [Unit]
-        Description: Update os-autoinst-scripts git repository
+        Description=Update os-autoinst-scripts git repository
         [Service]
         Type=exec
         User=geekotest
         WorkingDirectory=/opt
-        ExecStart=/bin/bash -lc '/opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts || { echo -e "To: osd-admins@suse.de\nFrom: root <root@$(hostname)>\nSubject: update-os-autoinst-scripts.service failed\n\nSee journalctl -u update-os-autoinst-scripts.service -b\n" | /usr/sbin/sendmail -t }'
+        ExecStart=/bin/bash -lc '/opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts https://github.com/os-autoinst/os-autoinst-scripts.git || { echo -e "To: osd-admins@suse.de\nFrom: root <root@$(hostname)>\nSubject: update-os-autoinst-scripts.service failed\n\nSee journalctl -u update-os-autoinst-scripts.service -b\n" | /usr/sbin/sendmail -t ; }'
 
 /etc/systemd/system/update-os-autoinst-scripts.timer:
   file.managed:
     - contents: |
         [Unit]
-        Description: Update os-autoinst-scripts git repository
+        Description=Update os-autoinst-scripts git repository
         [Timer]
         OnUnitInactiveSec=5min
-        Persistent=True
+        Persistent=true
         [Install]
         WantedBy=timers.target
 
