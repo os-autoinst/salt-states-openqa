@@ -154,7 +154,7 @@
           "measurement": "ping",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"average_response_ms\") FROM \"ping\" WHERE (\"host\" = 'openqa') AND $timeFilter GROUP BY time($__interval), \"url\" fill(null)",
+          "query": "SELECT mean(\"average_response_ms\") FROM \"ping\" WHERE (\"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"url\" fill(null)",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -176,7 +176,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -308,7 +308,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             },
             {
               "condition": "AND",
@@ -503,7 +503,7 @@
               "condition": "AND",
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -703,7 +703,7 @@
               "condition": "AND",
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -998,7 +998,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -1041,7 +1041,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -1084,7 +1084,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -1326,7 +1326,7 @@
           "measurement": "disk",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" = 'openqa' AND \"path\" = '/assets') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" =~ /^$host$/ AND \"path\" = '/assets') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1348,7 +1348,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             },
             {
               "condition": "AND",
@@ -1376,7 +1376,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" = 'openqa' AND \"path\" = '/') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" =~ /^$host$/ AND \"path\" = '/') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1414,7 +1414,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" = 'openqa' AND \"path\" = '/results') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" =~ /^$host$/ AND \"path\" = '/results') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -1452,7 +1452,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" = 'openqa' AND \"path\" = '/srv') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" =~ /^$host$/ AND \"path\" = '/srv') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -1490,7 +1490,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" = 'openqa' AND \"path\" = '/space-slow') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE (\"host\" =~ /^$host$/ AND \"path\" = '/space-slow') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "E",
           "resultFormat": "time_series",
@@ -1623,7 +1623,7 @@
             "type": "influxdb",
             "uid": "000000001"
           },
-          "query": "SELECT mean(\"inodes_used\")/mean(\"inodes_total\") FROM \"autogen\".\"disk\" WHERE (\"host\"::tag = 'openqa') AND $timeFilter GROUP BY time($__interval), \"path\"::tag fill(null)",
+          "query": "SELECT mean(\"inodes_used\")/mean(\"inodes_total\") FROM \"autogen\".\"disk\" WHERE (\"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"path\"::tag fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series"
@@ -1801,7 +1801,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -1825,7 +1825,7 @@
           "measurement": "openqa_minion_workers",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"active\") FROM \"openqa_minion_workers\" WHERE (\"host\" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(previous)",
+          "query": "SELECT max(\"active\") FROM \"openqa_minion_workers\" WHERE (\"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(previous)",
           "rawQuery": false,
           "refId": "active_minion_workers",
           "resultFormat": "time_series",
@@ -1847,7 +1847,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -1870,7 +1870,7 @@
           "hide": true,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(active) + max(inactive) FROM \"openqa_minion_workers\" WHERE (\"host\" = 'openqa') AND $timeFilter GROUP BY time($__interval) fill(previous)",
+          "query": "SELECT max(active) + max(inactive) FROM \"openqa_minion_workers\" WHERE (\"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(previous)",
           "rawQuery": true,
           "refId": "online_workers",
           "resultFormat": "time_series",
@@ -2032,7 +2032,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -2075,7 +2075,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -2118,7 +2118,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -2161,7 +2161,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -2313,7 +2313,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -2470,7 +2470,7 @@
           "measurement": "mem_inactive",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(total) as total, mean(used) as used, mean(cached) as cached, mean(free) as free, mean(buffered) as buffered  FROM \"mem\" WHERE host = 'openqa' AND $timeFilter GROUP BY time($interval), host ORDER BY asc",
+          "query": "SELECT mean(total) as total, mean(used) as used, mean(cached) as cached, mean(free) as free, mean(buffered) as buffered  FROM \"mem\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval), host ORDER BY asc",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2529,7 +2529,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -2797,7 +2797,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -2934,7 +2934,7 @@
           "measurement": "net_bytes_recv",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(bytes_recv),1s)*8 as \"in\"  FROM \"net\" WHERE (host = 'openqa' AND interface = 'eth1' AND $timeFilter) GROUP BY time($interval), * fill(none)",
+          "query": "SELECT non_negative_derivative(mean(bytes_recv),1s)*8 as \"in\"  FROM \"net\" WHERE (\"host\" =~ /^$host$/ AND interface = 'eth1' AND $timeFilter) GROUP BY time($interval), * fill(none)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2984,7 +2984,7 @@
           "measurement": "net_bytes_recv",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(bytes_sent),1s)*8 as \"out\" FROM \"net\" WHERE (host = 'openqa' AND interface = 'eth1' AND $timeFilter)  GROUP BY time($interval), * fill(none)",
+          "query": "SELECT non_negative_derivative(mean(bytes_sent),1s)*8 as \"out\" FROM \"net\" WHERE (\"host\" =~ /^$host$/ AND interface = 'eth1' AND $timeFilter)  GROUP BY time($interval), * fill(none)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3137,7 +3137,7 @@
           "measurement": "net_bytes_recv",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(bytes_recv),1s)*8 as \"in\"  FROM \"net\" WHERE (host = 'openqa' AND interface = 'eth0' AND $timeFilter) GROUP BY time($interval), * fill(none)",
+          "query": "SELECT non_negative_derivative(mean(bytes_recv),1s)*8 as \"in\"  FROM \"net\" WHERE (\"host\" =~ /^$host$/ AND interface = 'eth0' AND $timeFilter) GROUP BY time($interval), * fill(none)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3187,7 +3187,7 @@
           "measurement": "net_bytes_recv",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(bytes_sent),1s)*8 as \"out\" FROM \"net\" WHERE (host = 'openqa' AND interface = 'eth0' AND $timeFilter)  GROUP BY time($interval), * fill(none)",
+          "query": "SELECT non_negative_derivative(mean(bytes_sent),1s)*8 as \"out\" FROM \"net\" WHERE (\"host\" =~ /^$host$/ AND interface = 'eth0' AND $timeFilter)  GROUP BY time($interval), * fill(none)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3314,7 +3314,7 @@
           "measurement": "diskio",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"DESCRIPTION\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /^$host_disks$/",
+          "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"DESCRIPTION\" WHERE \"host\" =~ /^$host$/ and \"name\" =~ /^$host_disks$/",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3471,7 +3471,7 @@
           "measurement": "io_reads",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
+          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE (\"host\" =~ /^$host$/ AND \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3525,7 +3525,7 @@
           "measurement": "io_reads",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(writes),1s) as \"write\" FROM \"diskio\" WHERE   (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
+          "query": "SELECT non_negative_derivative(mean(writes),1s) as \"write\" FROM \"diskio\" WHERE   (\"host\" =~ /^$host$/ AND \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -3681,7 +3681,7 @@
           "measurement": "io_reads",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(read_bytes),1s) as \"read\" FROM \"diskio\" WHERE (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/)  AND $timeFilter GROUP BY time($interval), *",
+          "query": "SELECT non_negative_derivative(mean(read_bytes),1s) as \"read\" FROM \"diskio\" WHERE (\"host\" =~ /^$host$/ AND \"name\" =~ /^$host_disks$/)  AND $timeFilter GROUP BY time($interval), *",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3735,7 +3735,7 @@
           "measurement": "io_reads",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(write_bytes),1s) as \"write\" FROM \"diskio\" WHERE (\"host\" = 'openqa' and \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
+          "query": "SELECT non_negative_derivative(mean(write_bytes),1s) as \"write\" FROM \"diskio\" WHERE (\"host\" =~ /^$host$/ and \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -3891,7 +3891,7 @@
           "measurement": "io_reads",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(read_time),1s) as \"read\" FROM \"diskio\" WHERE  (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/)  AND $timeFilter GROUP BY time($interval), *",
+          "query": "SELECT non_negative_derivative(mean(read_time),1s) as \"read\" FROM \"diskio\" WHERE  (\"host\" =~ /^$host$/ AND \"name\" =~ /^$host_disks$/)  AND $timeFilter GROUP BY time($interval), *",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3945,7 +3945,7 @@
           "measurement": "io_reads",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(write_time),1s) as \"write\" FROM \"diskio\" WHERE  (\"host\" = 'openqa' AND \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
+          "query": "SELECT non_negative_derivative(mean(write_time),1s) as \"write\" FROM \"diskio\" WHERE  (\"host\" =~ /^$host$/ AND \"name\" =~ /^$host_disks$/) AND $timeFilter GROUP BY time($interval), *",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4110,7 +4110,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -4241,7 +4241,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -4436,7 +4436,7 @@
           "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT min(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT min(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" =~ /^$host$/ AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
           "refId": "min_nginx_response",
           "resultFormat": "time_series",
@@ -4458,7 +4458,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             },
             {
               "condition": "AND",
@@ -4492,7 +4492,7 @@
           "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" =~ /^$host$/ AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
           "refId": "max_nginx_response",
           "resultFormat": "time_series",
@@ -4514,7 +4514,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             },
             {
               "condition": "AND",
@@ -4548,7 +4548,7 @@
           "measurement": "nginx_log",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" = 'openqa' AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"response_time_s\") FROM \"nginx_log\" WHERE (\"host\" =~ /^$host$/ AND \"request\" !~ /\\/api\\/v1\\/ws/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": false,
           "refId": "mean_nginx_response",
           "resultFormat": "time_series",
@@ -4570,7 +4570,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             },
             {
               "condition": "AND",
@@ -4698,7 +4698,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -4829,7 +4829,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         },
@@ -4877,7 +4877,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "openqa"
+              "value": "/^$host$/"
             }
           ]
         }
@@ -6254,7 +6254,7 @@
         "hide": 2,
         "label": "Only for reusing",
         "name": "host",
-        "query": "openqa",
+        "query": "openqa.suse.de",
         "skipUrlSync": true,
         "type": "constant"
       },
@@ -6271,14 +6271,14 @@
           "type": "influxdb",
           "uid": "000000001"
         },
-        "definition": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"name\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /vd[a-z]$/",
+        "definition": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"name\" WHERE \"host\" =~ /^$host$/ and \"name\" =~ /vd[a-z]$/",
         "description": "Variable containing all host disks (e.g. vda, vdb, etc.) to populate disk IO query rows",
         "includeAll": true,
         "label": "Disks",
         "multi": true,
         "name": "host_disks",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"name\" WHERE \"host\" =~ /openqa/ and \"name\" =~ /vd[a-z]$/",
+        "query": "SHOW TAG VALUES FROM \"diskio\" WITH KEY = \"name\" WHERE \"host\" =~ /^$host$/ and \"name\" =~ /vd[a-z]$/",
         "refresh": 1,
         "regex": "",
         "type": "query"
