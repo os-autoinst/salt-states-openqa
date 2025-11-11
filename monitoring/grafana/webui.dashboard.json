@@ -6252,9 +6252,9 @@
     "list": [
       {
         "hide": 2,
-        "label": "Only for reusing",
+        "label": "Used by influx queries on this dashboard",
         "name": "host",
-        "query": "openqa.suse.de",
+        "query": "openqa",
         "skipUrlSync": true,
         "type": "constant"
       },
