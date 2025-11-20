@@ -9,7 +9,10 @@ zypper_patch() {
     # "only" call it on official patches
     # See https://progress.opensuse.org/issues/166313
     if [[ $ret == 4 ]]; then
-        zypper "${zypper_args[@]}" --force-resolution || ret=$?
+        set +e
+        zypper "${zypper_args[@]}" --force-resolution
+        ret=$?
+        set -e
     fi
     [[ $ret == 102 ]] && ret=0 # don't interpret exit code [102 - ZYPPER_EXIT_INF_REBOOT_NEEDED] as an error
     return $ret
