@@ -88,4 +88,3 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:ALP:Products:Marble:6.0:ToTest') }}
 # SL Micro 6.1 Increments
 {{ scriptgen('SUSE:SLFO:Products:SL-Micro:6.1:ToTest') }}
-{{ scriptgen('Devel:YaST:Agama:Head') }}
