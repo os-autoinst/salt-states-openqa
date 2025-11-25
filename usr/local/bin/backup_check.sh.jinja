@@ -16,11 +16,11 @@ declare -a CHECK_HOSTS=(
 exitcode=0
 
 for h in "${CHECK_HOSTS[@]}" ; do
-	bloc="$BDIR/alpha.0/$h"
-	if [[ ! -d "$bloc" ]] ; then
-			echo "'$bloc' does not exist!"
-			exitcode=1
-	fi
+    bloc="$BDIR/alpha.0/$h"
+    if [[ ! -d "$bloc" ]] ; then
+            echo "'$bloc' does not exist!"
+            exitcode=1
+    fi
 done
 
 exit $exitcode
