@@ -15,4 +15,15 @@ table ip nat {
         oifname "ovs-system" masquerade
     }
 }
+
+table ip6 nat {
+    chain postrouting {
+        type nat hook postrouting priority 100; policy accept;
+        {%- if 'bridge_iface' in pillar['workerconf'][grains['host']].keys()%}
+        oifname "{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}" masquerade
+        {%- endif %}
+        oifname "br1" masquerade
+        oifname "ovs-system" masquerade
+    }
+}
 {% endif %}

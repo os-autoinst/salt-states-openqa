@@ -60,6 +60,7 @@ ovs-vsctl set int br1 mtu_request=1460:
     - contents:
       - BOOTPROTO='static'
       - IPADDR='10.0.2.2/15'
+      - IPADDR_1='fec0::2/63'
       - STARTMODE='auto'
       - OVS_BRIDGE='yes'
      {% for i in tapdevices %}
