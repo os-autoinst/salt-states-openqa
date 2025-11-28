@@ -2,6 +2,7 @@ include:
  - openqa.repos
  - openqa.journal
  - logrotate
+ - debug_poo189027
 
 server.packages:
   pkg.installed:
