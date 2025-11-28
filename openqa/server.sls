@@ -87,6 +87,12 @@ openqa-gru:
     - watch:
       - file: /etc/systemd/system/openqa-gru.service.d/30-openqa-hook-timeout.conf
       - file: /etc/openqa/openqa.ini.d/openqa-salt.ini
+
+{% for task in ('audit-event-cleanup', 'scheduled-product-cleanup', 'git-auto-update') %}
+openqa-enqueue-{{ task }}.timer:
+  service.running:
+    - enable: True
+{% endfor %}
 {%- endif %}
 
 /etc/apache2/conf.d/server-status.conf:
@@ -486,10 +492,6 @@ rsyncd:
     - enable: True
     - watch:
       - file: /etc/rsyncd.conf
-
-openqa-enqueue-git-auto-update.timer:
-  service.running:
-    - enable: True
 
 openqa-dump-db.timer:
   service.running:
