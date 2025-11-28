@@ -20,6 +20,7 @@ base:
     - ca-certificates
     - timezone_utc
     - openqa.postfix
+    - debug_poo189027
   'G@needs_wireguard:True':
     - wireguard
   'not G@roles:webui and not G@roles:worker':
