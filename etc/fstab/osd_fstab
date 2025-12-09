@@ -29,17 +29,13 @@ UUID=b5377fcf-6273-4f38-a471-cefff08c60b7 /results xfs defaults,logbsize=256k,no
 
 # 0b735e2d-b300-4a37-b39b-65fdc41d1ad1 -> vde
 # rotating disk "cheap+slow"
-UUID=0b735e2d-b300-4a37-b39b-65fdc41d1ad1 /space-slow xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 0
-# disabled in favor of overlayfs (see below and https://progress.opensuse.org/issues/192328) while rsync is copying files to btrfs
-#/space-slow/assets/factory/iso/fixed /var/lib/openqa/share/factory/iso/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind,nofail 0 0
-#/space-slow/assets/factory/hdd/fixed /var/lib/openqa/share/factory/hdd/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind,nofail 0 0
-#/space-slow/archive /var/lib/openqa/archive none x-systemd.requires=/var/lib/openqa,x-systemd.automount,bind,nofail 0 0
-
-/srv/homes.img /home ext4 defaults,nofail 1 0
+UUID=0b735e2d-b300-4a37-b39b-65fdc41d1ad1 /space-slow-old xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 0
 
 # 6aa0b264-524a-4150-96ae-12b0f1b6ad49 -> vdf
 # rotating disk "cheap+slow"
-UUID=6aa0b264-524a-4150-96ae-12b0f1b6ad49 /space-slow-new btrfs noatime,nodiratime,nofail,compress-force=zstd:3 0 0
-overlay /var/lib/openqa/share/factory/iso/fixed overlay x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,nofail,lowerdir=/space-slow/assets/factory/iso/fixed,upperdir=/space-slow-new/assets/factory/iso/fixed,workdir=/space-slow-new/assets_iso_workdir 0 0
-overlay /var/lib/openqa/share/factory/hdd/fixed overlay x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,nofail,lowerdir=/space-slow/assets/factory/hdd/fixed,upperdir=/space-slow-new/assets/factory/hdd/fixed,workdir=/space-slow-new/assets_hdd_workdir 0 0
-overlay /var/lib/openqa/archive overlay x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,nofail,lowerdir=/space-slow/archive,upperdir=/space-slow-new/archive,workdir=/space-slow-new/archive_workdir 0 0
+UUID=6aa0b264-524a-4150-96ae-12b0f1b6ad49 /space-slow btrfs noatime,nodiratime,nofail,compress-force=zstd:3 0 0
+/space-slow/assets/factory/iso/fixed /var/lib/openqa/share/factory/iso/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind,nofail 0 0
+/space-slow/assets/factory/hdd/fixed /var/lib/openqa/share/factory/hdd/fixed none x-systemd.requires=/var/lib/openqa/share,x-systemd.automount,bind,nofail 0 0
+/space-slow/archive /var/lib/openqa/archive none x-systemd.requires=/var/lib/openqa,x-systemd.automount,bind,nofail 0 0
+
+/srv/homes.img /home ext4 defaults,nofail 1 0
