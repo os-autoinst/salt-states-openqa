@@ -1,0 +1,83 @@
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: Deployment run time
+    folder: Salt
+    interval: 1m
+    rules:
+      - uid: af5egvsjtt9tsc
+        title: 'monitor: Deployment run time'
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: "000000001"
+            model:
+              groupBy:
+                - params:
+                    - $__interval
+                  type: time
+                - params:
+                    - "null"
+                  type: fill
+              interval: 5m
+              intervalMs: 1000
+              maxDataPoints: 43200
+              measurement: ""
+              orderByTime: ASC
+              policy: default
+              query: SELECT max("value") FROM "total_salt_deploy_runtime" WHERE ("type"::tag = 'deploy') AND $timeFilter GROUP BY time($__interval) fill(null)
+              rawQuery: true
+              refId: A
+              resultFormat: time_series
+              select:
+                - - params:
+                      - result_code
+                    type: field
+                  - params: []
+                    type: mean
+              tags:
+                - key: url
+                  operator: =
+                  value: monitor.qe.nue2.suse.org
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 3600
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                  reducer:
+                    params: []
+                    type: max
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: classic_conditions
+        dashboardUid: cf5blcld4sxdsc
+        panelId: 1
+        noDataState: OK
+        execErrState: OK
+        annotations:
+          __alertId__: "321"
+          __dashboardUid__: cf5blcld4sxdsc
+          __panelId__: "1"
+          message: |-
+              A salt deployment took longer than usual to complete.
+
+              See https://progress.opensuse.org/issues/184855 for context about this alert.
+        labels:
+          __contacts__: '"osd-admins"'
+          hostname: monitor
+          type: generic
+        isPaused: false
+        notification_settings:
+          receiver: osd-admins
