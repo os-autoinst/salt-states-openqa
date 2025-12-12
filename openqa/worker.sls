@@ -163,6 +163,17 @@ worker.packages:
     - require:
       - pkg: worker.packages
 
+# Enable IO resource monitoring/limiting to prevent load issues
+/etc/systemd/system/openqa-worker-auto-restart@.service.d/50-io-accounting.conf:
+  file.managed:
+    - contents: |
+        [Service]
+        IOAccounting=true
+    - mode: "0644"
+    - makedirs: true
+    - require:
+      - pkg: worker.packages
+
 {%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
 {% set worker_slot_count = pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) %}
