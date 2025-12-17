@@ -27,10 +27,6 @@ UUID=37972261-7411-44eb-bae9-90d1cc1c9a38 /assets xfs defaults,logbsize=256k,noa
 UUID=b5377fcf-6273-4f38-a471-cefff08c60b7 /results xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 0
 /results /var/lib/openqa none bind,nofail 0 0
 
-# 0b735e2d-b300-4a37-b39b-65fdc41d1ad1 -> vde
-# rotating disk "cheap+slow"
-UUID=0b735e2d-b300-4a37-b39b-65fdc41d1ad1 /space-slow-old xfs defaults,logbsize=256k,noatime,nodiratime,nofail 1 0
-
 # 6aa0b264-524a-4150-96ae-12b0f1b6ad49 -> vdf
 # rotating disk "cheap+slow"
 UUID=6aa0b264-524a-4150-96ae-12b0f1b6ad49 /space-slow btrfs noatime,nodiratime,nofail,compress-force=zstd:3 0 0
