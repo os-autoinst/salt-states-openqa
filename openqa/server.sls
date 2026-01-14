@@ -402,6 +402,7 @@ git-clone-os-autoinst-scripts:
         [Unit]
         Description=Update os-autoinst-scripts git repository
         [Timer]
+        OnBootSec=1min
         OnUnitInactiveSec=5min
         Persistent=true
         [Install]
