@@ -21,18 +21,18 @@
 /etc/sysconfig/network/ifcfg-{{ bond_slave_iface }}:
   file.managed:
     - contents: |
-      BOOTPROTO='none'
-      STARTMODE='hotplug'
+        BOOTPROTO='none'
+        STARTMODE='hotplug'
 {% endfor %}
 /etc/sysconfig/network/ifcfg-{{ bridge_iface }}:
   file.managed:
     - contents: |
-      BOOTPROTO='dhcp'
-      STARTMODE='auto'
-      BONDING_MASTER='yes'
-      {%- for bond_slave_iface in bond_slave_ifaces %}
-      BONDING_SLAVE{{ loop.index0 }}='{{ bond_slave_iface }}'
-      {%- endfor %}
-      BONDING_MODULE_OPTS='mode=active-backup miimon=100'
+        BOOTPROTO='dhcp'
+        STARTMODE='auto'
+        BONDING_MASTER='yes'
+        {%- for bond_slave_iface in bond_slave_ifaces %}
+        BONDING_SLAVE{{ loop.index0 }}='{{ bond_slave_iface }}'
+        {%- endfor %}
+        BONDING_MODULE_OPTS='mode=active-backup miimon=100'
 {% endif %}
 {% endif %}
