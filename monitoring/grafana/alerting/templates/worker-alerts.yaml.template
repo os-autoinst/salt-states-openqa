@@ -833,17 +833,6 @@ groups:
         conditions:
         - evaluator:
             params:
-            - 200
-            type: gt
-          operator:
-            type: and
-          query:
-            params:
-            - B
-          reducer:
-            type: avg
-        - evaluator:
-            params:
             - {{ pillar.get('commonconf', {}).get(worker, {}).get('partitions_usage_alert_threshold', '85') }}
             type: gt
           operator:
