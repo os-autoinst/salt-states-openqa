@@ -263,6 +263,14 @@ smt_off:
   file.managed:
     - contents:
       - 'KERNEL=="kvm", MODE="0666", GROUP="kvm"'
+
+{%- if '5.3.18-150300' in grains.kernelrelease %}
+/etc/openqa/workers.ini.d/kvm-cap.ini:
+  file.managed:
+    - contents: |
+        [global]
+        QEMUMACHINE=usb=off,cap-ail-mode-3=off
+{%- endif %}
 {% endif %}
 
 # os-autoinst starts local Xvnc with xterm and ssh - apparmor's chains are too strict for that
