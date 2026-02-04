@@ -60,6 +60,7 @@ base:
     - monitoring.loki
     - monitoring.influxdb
     - monitoring.certificates
+    - monitoring.bot-ng
     - certificates.dehydrated
   'G@roles:storage':
     - backup.rsnapshot_openqa_data
