@@ -264,7 +264,7 @@ smt_off:
     - contents:
       - 'KERNEL=="kvm", MODE="0666", GROUP="kvm"'
 
-{%- if '5.3.18-150300' in grains.kernelrelease %}
+{%- if salt['pkg.version_cmp'](grains['kernelrelease'], '5.3.18') <= 0 %}
 /etc/openqa/workers.ini.d/kvm-cap.ini:
   file.managed:
     - contents: |
