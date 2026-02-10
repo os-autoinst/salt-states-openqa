@@ -169,6 +169,7 @@ worker.packages:
     - contents: |
         [Service]
         IOAccounting=true
+        IOWeight=80
     - mode: "0644"
     - makedirs: true
     - require:
