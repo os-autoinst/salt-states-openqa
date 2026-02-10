@@ -7,96 +7,131 @@ groups:
     orgId: 1
     rules:
       - annotations:
-          __alertId__: '326'
+          __alertId__: "326"
           __dashboardUid__: GD{{ generic_host }}
-          __panelId__: '56720'
-          message: ''
-        condition: A
+          __panelId__: "56720"
+        condition: C
         dashboardUid: GD{{ generic_host }}
         data:
-          - datasourceUid: __expr__
-            model:
-              conditions:
-                - evaluator:
-                    params:
-                      - 20000
-                    type: gt
-                  operator:
-                    type: and
-                  query:
-                    params:
-                      - C
-                  reducer:
-                    type: avg
-              refId: A
-              type: classic_conditions
-            refId: A
-          - datasourceUid: '000000001'
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: "000000001"
             model:
               alias: $tag_name
               groupBy:
-                - params:
-                    - $__interval
-                  type: time
-                - params:
-                    - name
-                  type: tag
-                - params:
-                    - 'null'
-                  type: fill
+                  - params:
+                      - $__interval
+                    type: time
+                  - params:
+                      - name
+                    type: tag
+                  - params:
+                      - "null"
+                    type: fill
               interval: 1m
+              intervalMs: 1000
+              maxDataPoints: 43200
               measurement: diskio
               orderByTime: ASC
               policy: default
               query: SELECT non_negative_derivative(mean("io_time"), 1s) FROM "diskio" WHERE ("host" = '{{ generic_host }}' AND "name" <> 'nvme0n1' AND ("name" = 'nvme1n1' OR "name" = 'sda' OR "name" = 'sdb')) AND $timeFilter GROUP BY time($__interval), "name" fill(null)
               rawQuery: true
-              refId: C
+              refId: A
               resultFormat: time_series
               select:
-                - - params:
-                      - read_time
-                    type: field
-                  - params: []
-                    type: mean
-                  - params:
-                      - 1s
-                    type: non_negative_derivative
+                  - - params:
+                          - read_time
+                      type: field
+                    - params: []
+                      type: mean
+                    - params:
+                          - 1s
+                      type: non_negative_derivative
               tags:
-                - key: host
-                  operator: =
-                  value: {{ generic_host }}
-                - condition: AND
-                  key: name
-                  operator: <>
-                  value: nvme0n1
-                - condition: OR
-                  key: name
-                  operator: =
-                  value: nvme1n1
-                - condition: OR
-                  key: name
-                  operator: =
-                  value: sda
-                - condition: OR
-                  key: name
-                  operator: =
-                  value: sdb
-            refId: C
-            relativeTimeRange:
-              from: 300
-              to: 0
+                  - key: host
+                    operator: =
+                    value: {{ generic_host }}
+                  - condition: AND
+                    key: name
+                    operator: <>
+                    value: nvme0n1
+                  - condition: OR
+                    key: name
+                    operator: =
+                    value: nvme1n1
+                  - condition: OR
+                    key: name
+                    operator: =
+                    value: sda
+                  - condition: OR
+                    key: name
+                    operator: =
+                    value: sdb
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params:
+                          - 0
+                          - 0
+                      type: gt
+                    operator:
+                      type: and
+                    query:
+                      params: []
+                    reducer:
+                      params: []
+                      type: avg
+                    type: query
+              datasource:
+                  name: Expression
+                  type: __expr__
+                  uid: __expr__
+              expression: A
+              hide: false
+              reducer: mean
+              refId: B
+              type: reduce
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              conditions:
+                  - evaluator:
+                      params:
+                          - 20000
+                          - 0
+                      type: gt
+                    operator:
+                      type: and
+                    query:
+                      params: []
+                    reducer:
+                      params: []
+                      type: avg
+                    type: query
+              datasource:
+                  name: Expression
+                  type: __expr__
+                  uid: __expr__
+              expression: B
+              hide: false
+              refId: C
+              type: threshold
         execErrState: OK
-        for: 5m
         isPaused: false
         labels:
           __contacts__: '"osd-admins"'
+          hostname: {{ generic_host }}
           rule_uid: disk_io_time_alert_{{ generic_host }}
           type: generic
-          hostname: {{ generic_host }}
         noDataState: OK
         panelId: 56720
         title: '{{ generic_host }}: Disk I/O time alert'
         uid: '{{ (("disk_io_time_alert_" + generic_host ) | sha512)[:40] }}'
+        for: 5m
   - folder: Generic
     interval: 1m
     name: '{{ generic_host }}: Memory usage alert'
