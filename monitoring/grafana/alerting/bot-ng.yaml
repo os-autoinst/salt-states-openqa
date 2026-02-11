@@ -1,0 +1,106 @@
+---
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: default
+      folder: bot-ng
+      interval: 10m
+      rules:
+        - uid: dfcwxe0j7s2rkf
+          title: bot-ng job queue too big
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                alias: gitlab job queue length
+                groupBy:
+                    - params:
+                        - $__interval
+                      type: time
+                    - params:
+                        - "null"
+                      type: fill
+                intervalMs: 1000
+                maxDataPoints: 43200
+                measurement: bot-ng_job_queue_length
+                orderByTime: ASC
+                policy: default
+                query: SELECT sum("count") FROM "bot-ng_job_queue_length" WHERE $timeFilter GROUP BY time($__interval) fill(null)
+                rawQuery: false
+                refId: A
+                resultFormat: time_series
+                select:
+                    - - params:
+                            - count
+                        type: field
+                      - params: []
+                        type: sum
+                tags: []
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                settings:
+                    mode: dropNN
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: OK
+          execErrState: KeepLast
+          for: 6h
+          annotations:
+            Additional notes: The query of this alert can return "no data" as telegraf can only collect values if there are actual pending jobs. If everything goes well, "no data" is expected.
+            description: This alert checks the REST API of gitlab.suse.de for pending jobs for the bot-ng project. If too many accumulate over time, this hints to a regression either in infrastructure or qem-bot itself.
+            runbook_url: https://progress.opensuse.org/projects/qa/wiki/Tools#Process
+            summary: bot-ng is having a too big job queue on gitlab for too long. Please check https://gitlab.suse.de/qa-maintenance/bot-ng/-/jobs for logs and potential regressions.
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: osd-admins
