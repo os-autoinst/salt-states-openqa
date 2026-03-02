@@ -162,9 +162,7 @@
               "type": "time"
             },
             {
-              "params": [
-                "null"
-              ],
+              "params": ["0"],
               "type": "fill"
             }
           ],
@@ -337,9 +335,7 @@
               "type": "time"
             },
             {
-              "params": [
-                "null"
-              ],
+              "params": ["0"],
               "type": "fill"
             }
           ],
@@ -511,9 +507,7 @@
               "type": "time"
             },
             {
-              "params": [
-                "null"
-              ],
+              "params": ["0"],
               "type": "fill"
             }
           ],
@@ -681,9 +675,7 @@
               "type": "time"
             },
             {
-              "params": [
-                "null"
-              ],
+              "params": ["0"],
               "type": "fill"
             }
           ],
@@ -852,9 +844,7 @@
               "type": "time"
             },
             {
-              "params": [
-                "null"
-              ],
+              "params": ["0"],
               "type": "fill"
             }
           ],
@@ -1023,9 +1013,7 @@
               "type": "time"
             },
             {
-              "params": [
-                "null"
-              ],
+              "params": ["0"],
               "type": "fill"
             }
           ],
