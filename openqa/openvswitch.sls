@@ -136,7 +136,7 @@ ovs-vsctl set int br1 mtu_request=1460:
       - '#ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip= # {{ remote }} (offline at point of file generation)'
      {%- endif -%}
      {% endfor %}
-     - fi
+      - fi
 
 wicked ifup all:
   cmd.run:
