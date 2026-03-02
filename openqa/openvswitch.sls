@@ -105,8 +105,15 @@ ovs-vsctl set int br1 mtu_request=1460:
     - makedirs: true
     - contents:
       - '#!/bin/sh'
+      - OVS_CMD=$(command -v ovs-vsctl)
+      - if [ -z "$OVS_CMD" ]; then
+      -     'logger "Error: ovs-vsctl not found. Skipping script $0"'
+      -     exit 0 # Exit 0 to avoid breaking NetworkManager's flow
+      - fi
+      - TARGET_BRIDGE=$("$OVS_CMD" list-br) # We expect only one Open-vSwitch bridge to be present
       - action="$1"
       - bridge="$2"
+      - if [ "$bridge" = "$TARGET_BRIDGE" ] && ([ "$action" = "pre-up" ] || [ "$action" = "up" ]); then
       - '# enable STP for the multihost bridges'
       - ovs-vsctl set bridge $bridge stp_enable=false
       - ovs-vsctl set bridge $bridge rstp_enable=true
@@ -129,6 +136,7 @@ ovs-vsctl set int br1 mtu_request=1460:
       - '#ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip= # {{ remote }} (offline at point of file generation)'
      {%- endif -%}
      {% endfor %}
+     - fi
 
 wicked ifup all:
   cmd.run:
