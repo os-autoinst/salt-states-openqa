@@ -29,7 +29,7 @@ groups:
                 measurement: bot-ng_job_queue_length
                 orderByTime: ASC
                 policy: default
-                query: SELECT sum("count") FROM "bot-ng_job_queue_length" WHERE $timeFilter GROUP BY time($__interval) fill(null)
+                query: SELECT last("count") FROM "bot-ng_job_queue_length" WHERE $timeFilter GROUP BY time($__interval) fill(null)
                 rawQuery: false
                 refId: A
                 resultFormat: time_series
