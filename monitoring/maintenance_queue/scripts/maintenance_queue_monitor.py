@@ -13,7 +13,7 @@ from datetime import datetime, timedelta, timezone
 
 
 ASSIGNMENT_PATTERN = re.compile(r"<MTUI: PR - UV assigned to user: .*? - group: qam-sle >")
-GITEA_TOKEN = "{{ pillar['credentials']['gitea']['gitea_api_key'] }}"
+GITEA_TOKEN = "{{ pillar.get('credentials', {}).get('gitea', {}).get('gitea_api_key', '') }}"
 
 def gql_query(url, first=100, offset=0):
     query = f"""query {{
