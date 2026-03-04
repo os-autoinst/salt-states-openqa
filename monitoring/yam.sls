@@ -1,6 +1,6 @@
 /etc/telegraf/telegraf.d/yam.conf:
   file.managed:
-    - makedirs: True
+    - makedirs: true
     - contents: |
         [[inputs.exec]]
           commands = [ "/etc/telegraf/scripts/backlogger/backlogger.py --output=influxdb /etc/telegraf/scripts/tools-yam-backlog/queries.yaml" ]

@@ -3,8 +3,8 @@ monitoring-software.repo:
   pkgrepo.managed:
     - humanname: Server Monitoring Software
     - baseurl: http://download.opensuse.org/repositories/devel:/openQA:/monitoring/{{ repo }}
-    - gpgautoimport: True
-    - refresh: True
+    - gpgautoimport: true
+    - refresh: true
     - priority: 90
     - require_in:
       - pkg: grafana

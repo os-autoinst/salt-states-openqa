@@ -6,7 +6,7 @@ nginx:
 webserver_running:
   service.running:
     - name: nginx
-    - enable: True
+    - enable: true
     - watch:
       - file: /etc/nginx/vhosts.d/02-grafana.conf
       - file: /etc/nginx/vhosts.d/03-loki.conf
@@ -27,11 +27,11 @@ webserver_running:
 {%- if pillar.get("http_basic_auth_users", False) %}
     - contents_pillar: http_basic_auth_users
 {%- endif %}
-    - allow_empty: True
+    - allow_empty: true
     - user: root
     - group: root
     - mode: "0664"
-    - makedirs: True
+    - makedirs: true
 
 webserver_grain:
   grains.present:

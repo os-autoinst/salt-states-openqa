@@ -4,6 +4,8 @@ extends: default
 rules:
   document-start: disable
   line-length: disable
+  truthy:
+    level: error
   indentation:
     ignore:
       - monitoring/grafana/alerting/*

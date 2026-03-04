@@ -71,7 +71,7 @@ reverse-proxy-group:
 /etc/grafana/grafana.ini:
   ini.options_present:
     - separator: '='
-    - strict: True
+    - strict: true
     - sections:
         server:
           protocol: socket
@@ -124,7 +124,7 @@ reverse-proxy-group:
 {% for provisioned_alert in provisioned_alerts %}
 /etc/grafana/provisioning/alerting/{{ provisioned_alert }}:
   file.managed:
-    - makedirs: True
+    - makedirs: true
     - mode: "0644"
     - source: salt://monitoring/grafana/alerting/{{ provisioned_alert }}
 {% endfor %}
@@ -147,7 +147,7 @@ dashboard-cleanup:
 {% else %}
   file.directory: #if we have absolutely no node, just purge the folder
     - name: {{ dashboard_template_folder }}
-    - clean: True
+    - clean: true
 {% endif %}
 
 #create dashboards manually defined but managed by salt
@@ -227,7 +227,7 @@ alert-cleanup:
 {% else %}
   file.directory:
     - name: {{ provisioned_alerts_folder }}
-    - clean: True
+    - clean: true
 {% endif %}
 
 # remove alerts explicitly mentioned by a deletionRule
@@ -239,8 +239,8 @@ alert-cleanup:
 {%- if not grains.get('noservices', False) %}
 grafana-server:
   service.running:
-    - enable: True
-    - reload: True
+    - enable: true
+    - reload: true
     - watch:
 {% for plugin in grafana_plugins %}
       - cmd: install_{{ plugin }}

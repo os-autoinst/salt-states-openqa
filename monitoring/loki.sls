@@ -6,8 +6,8 @@ loki:
         attempts: 5
 {%- if not grains.get('noservices', False) %}
   service.running:
-    - enable: True
-    - reload: True
+    - enable: true
+    - reload: true
     - watch:
       - file: /etc/loki/loki.yaml
 {%- endif %}
