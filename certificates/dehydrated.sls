@@ -56,6 +56,13 @@ dehydrated.packages:
         Restart=on-failure
         RestartSec=60
 
+# We want to create temp-files on systems without init and
+# since our systems without init are ephemeral, we don't need idempotence
+{%- if grains.get('noservices', False) %}
+'systemd-tmpfiles --create':
+  cmd.run
+{%- endif %}
+
 'dehydrated --register --accept-terms':
   cmd.run:
     - runas: dehydrated

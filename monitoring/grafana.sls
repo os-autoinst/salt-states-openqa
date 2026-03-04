@@ -23,8 +23,9 @@ grafana:
     - contents:
       - 'd      /run/grafana            0770 root grafana -'
 
-'systemd-tmpfiles --create':
+adjust_tmpfiles:
   cmd.run:
+    - name: 'systemd-tmpfiles --create'
     - onchanges:
       - file: /etc/tmpfiles.d/grafana.conf
 
