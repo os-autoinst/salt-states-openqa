@@ -6,3 +6,5 @@ credentials:
     admin_password: aaaaabbbbbcccccddddd
   gitlab:
     bot-ng_token: abcde-Vae2kooB_OhWohz1k
+  gitea:
+    gitea_api_key: somedummykeythatlookslikethegiteakey
