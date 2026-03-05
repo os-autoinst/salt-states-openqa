@@ -12,8 +12,13 @@ from types import SimpleNamespace
 from datetime import datetime, timedelta, timezone
 
 
-ASSIGNMENT_PATTERN = re.compile(r"<MTUI: PR - UV assigned to user: .*? - group: qam-sle >")
 GITEA_TOKEN = "{{ pillar.get('credentials', {}).get('gitea', {}).get('gitea_api_key', '') }}"
+
+# Tell jinja not to evaluate the rest of the code
+{% raw %} 
+
+ASSIGNMENT_PATTERN = re.compile(r"<MTUI: PR - UV assigned to user: .*? - group: qam-sle >")
+
 
 def gql_query(url, first=100, offset=0):
     query = f"""query {{
@@ -574,3 +579,4 @@ res_string = (
 )
 
 print(res_string)
+{% endraw %}
