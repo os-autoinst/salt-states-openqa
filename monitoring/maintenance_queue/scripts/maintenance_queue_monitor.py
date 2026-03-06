@@ -501,15 +501,14 @@ def get_merged_ids(items, after_date=None):
                     if step.get("name") == "testing":
                         finished_at_str = step.get("finished_at")
                         if finished_at_str:
-                            finished_at_str = finished_at_str.replace('Z', '+00:00')
                             try:
-                                finished_at = datetime.fromisoformat(finished_at_str)
-                                if finished_at > after_date:
-                                    date_condition_met = True
-                                    break
+                               finished_at = dateutil.parser.isoparse(finished_at_str)
+                               if finished_at > after_date:
+                                   date_condition_met = True
+                                   break
                             except ValueError:
                                 pass
-                
+
                 if not date_condition_met:
                     continue
 
