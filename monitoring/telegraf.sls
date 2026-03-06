@@ -26,7 +26,7 @@ telegraf.packages:
 {%- if not grains.get('noservices', False) %}
 telegraf:
   service.running:
-    - enable: True
+    - enable: true
     - watch:
       - file: /etc/telegraf/telegraf.conf
     {%- if grains.get('roles', '') in ['webui', 'worker'] %}
@@ -40,7 +40,7 @@ telegraf:
     - user: root
     - group: root
     - mode: "0700"
-    - makedirs: True
+    - makedirs: true
     - require:
       - pkg: telegraf.packages
 

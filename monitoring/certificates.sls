@@ -6,4 +6,4 @@
     - user: root
     - group: root
     - mode: "0600"
-    - makedirs: True
+    - makedirs: true
