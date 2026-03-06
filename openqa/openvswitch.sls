@@ -107,16 +107,29 @@ ovs-vsctl set int br1 mtu_request=1460:
       - '#!/bin/sh'
       - OVS_CMD=$(command -v ovs-vsctl)
       - if [ -z "$OVS_CMD" ]; then
-      -     'logger "Error: ovs-vsctl not found. Skipping script $0"'
+      -     'logger -- "Error: ovs-vsctl not found. Skipping script $0"'
       -     exit 0 # Exit 0 to avoid breaking NetworkManager's flow
       - fi
       - TARGET_BRIDGE=$("$OVS_CMD" list-br) # We expect only one Open-vSwitch bridge to be present
-      - action="$1"
-      - bridge="$2"
-      - if [ "$bridge" = "$TARGET_BRIDGE" ] && ([ "$action" = "pre-up" ] || [ "$action" = "up" ]); then
-      - '# enable STP for the multihost bridges'
-      - ovs-vsctl set bridge $bridge stp_enable=false
-      - ovs-vsctl set bridge $bridge rstp_enable=true
+      - # NM_DISPATCHER_ACTION env var is set when NM calls scripts via dispatcher service
+      - # Ref: https://networkmanager.dev/docs/api/1.44.4/NetworkManager-dispatcher.html
+      - # 2. Argument Normalization (NetworkManager vs. wicked)
+      - # NetworkManager: $1 = interface name, $2 = action
+      - # wicked: $1 = action, $2 = interface name
+      - if [ -n "$NM_DISPATCHER_ACTION" ]; then
+      -     # Environment detected as NetworkManager
+      -     bridge="$1"
+      -     action="$2"
+      - else
+      -     # Environment detected as wicked (or manual call)
+      -     action="$1"
+      -     bridge="$2"
+      - fi
+      - if "$OVS_CMD" list-br | grep -qx "$bridge"; then
+      - if [ "$action" = "pre-up" ] || [ "$action" = "up" ]; then
+      -     '# enable STP for the multihost bridges'
+      -     ovs-vsctl set bridge $bridge stp_enable=false
+      -     ovs-vsctl set bridge $bridge rstp_enable=true
       - for gre_port in $(ovs-vsctl list-ifaces $bridge | grep gre) ; do ovs-vsctl --if-exists del-port $bridge $gre_port ; done
      {%- for remote in otherworkers -%}
      {%-     set remote_conf = pillar['workerconf'][remote] -%}
@@ -130,12 +143,13 @@ ovs-vsctl set int br1 mtu_request=1460:
      {%-         endif -%}
      {%-     endif -%}
      {% if remote_ip is defined and remote_ip|is_ip %}
-      - 'ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }} # {{ remote }}'
+      -     'ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip={{ remote_ip }} # {{ remote }}'
      {%- else -%}
      {% do salt.log.warning("remote: \"" + remote + "\" found in workerconf.sls but not in salt mine, host currently offline?") %}
-      - '#ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip= # {{ remote }} (offline at point of file generation)'
+      -     '#ovs-vsctl --may-exist add-port $bridge gre{{- loop.index }} -- set interface gre{{- loop.index }} type=gre options:remote_ip= # {{ remote }} (offline at point of file generation)'
      {%- endif -%}
      {% endfor %}
+      - fi
       - fi
 
 wicked ifup all:
