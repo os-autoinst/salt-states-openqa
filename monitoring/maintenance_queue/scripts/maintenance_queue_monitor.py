@@ -224,7 +224,7 @@ def search_closed_prs(gitea_url, repo_owner, repo_name, token, days=5, search_st
             # check updated_at to know when to stop fetching pages
             updated_at_str = pr.get("updated_at")
             if updated_at_str:
-                pr_updated = datetime.fromisoformat(updated_at_str.replace('Z', '+00:00'))
+                pr_updated = dateutil.parser.isoparse(updated_at_str)
                 if pr_updated < cutoff_date:
                     # If it wasn't even updated in our window, it couldn't have been closed in our window
                     keep_fetching = False
@@ -235,7 +235,7 @@ def search_closed_prs(gitea_url, repo_owner, repo_name, token, days=5, search_st
             if not closed_at_str:
                 continue # Edge case fallback
                 
-            pr_closed = datetime.fromisoformat(closed_at_str.replace('Z', '+00:00'))
+            pr_closed = dateutil.parser.isoparse(closed_at_str)
             if pr_closed < cutoff_date:
                 continue # It was closed before our 5-day window, skip processing
                 
