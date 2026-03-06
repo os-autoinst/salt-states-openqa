@@ -6,7 +6,7 @@ maintenance_queue.packages:
         attempts: 5
     - pkgs:
         - python3-pandas
-        - dateutil
+        - python3-python-dateutil
 
 
 /etc/telegraf/telegraf.d/maintenance_queue.conf:
