@@ -168,7 +168,7 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "browser",
+  "timezone": "",
   "title": "Deployment runtime",
   "uid": "cf5blcld4sxdsc",
   "version": 3
