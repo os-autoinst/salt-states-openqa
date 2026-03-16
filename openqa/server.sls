@@ -507,6 +507,50 @@ fstrim.{{ type }}:
   service.dead:
     - enable: False
 {% endfor %}
+
+# salt-keys-check
+/etc/salt-keys-check-keys-not_accepted_reasons.json:
+  file.managed:
+    - source: salt://openqa/salt-keys-check-keys-not_accepted_reasons.json
+    - mode: "0644"
+
+/usr/local/bin/salt-keys-check:
+  file.managed:
+    - source: salt://openqa/salt-keys-check.py
+    - user: root
+    - group: root
+    - mode: "0755"
+
+/etc/systemd/system/salt-keys-check.service:
+  file.managed:
+    - mode: "0644"
+    - content: |
+    [Unit]
+    Description=Salt keys check
+    After=salt-master.service
+    Wants=salt-master.service
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/local/bin/salt-keys-check
+
+/etc/systemd/system/salt-keys-check.timer:
+  file.managed:
+    - mode: "0644"
+    - content: |
+    [Unit]
+    Description=Timer to enqueue salt keys check every day
+
+    [Timer]
+    OnCalendar=daily
+    Persistent=true
+
+    [Install]
+    WantedBy=timers.target
+
+salt-keys-check.timer:
+  service.running:
+    - enable: True
 {%- endif %}
 
 # Avoiding unintended connection failures with SO_REUSEPORT, see
