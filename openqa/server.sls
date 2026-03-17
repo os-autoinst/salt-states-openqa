@@ -524,7 +524,7 @@ fstrim.{{ type }}:
 /etc/systemd/system/salt-keys-check.service:
   file.managed:
     - mode: "0644"
-    - content: |
+    - contents: |
         [Unit]
         Description=Salt keys check
         After=salt-master.service
@@ -536,7 +536,7 @@ fstrim.{{ type }}:
 /etc/systemd/system/salt-keys-check.timer:
   file.managed:
     - mode: "0644"
-    - content: |
+    - contents: |
         [Unit]
         Description=Timer to enqueue salt keys check every day
         [Timer]
