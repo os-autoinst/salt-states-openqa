@@ -525,28 +525,25 @@ fstrim.{{ type }}:
   file.managed:
     - mode: "0644"
     - content: |
-    [Unit]
-    Description=Salt keys check
-    After=salt-master.service
-    Wants=salt-master.service
-
-    [Service]
-    Type=oneshot
-    ExecStart=/usr/local/bin/salt-keys-check
+        [Unit]
+        Description=Salt keys check
+        After=salt-master.service
+        Wants=salt-master.service
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/local/bin/salt-keys-check
 
 /etc/systemd/system/salt-keys-check.timer:
   file.managed:
     - mode: "0644"
     - content: |
-    [Unit]
-    Description=Timer to enqueue salt keys check every day
-
-    [Timer]
-    OnCalendar=daily
-    Persistent=true
-
-    [Install]
-    WantedBy=timers.target
+        [Unit]
+        Description=Timer to enqueue salt keys check every day
+        [Timer]
+        OnCalendar=daily
+        Persistent=true
+        [Install]
+        WantedBy=timers.target
 
 salt-keys-check.timer:
   service.running:
