@@ -1,0 +1,104 @@
+---
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: inodes-xfs
+      folder: Salt
+      interval: 1m
+      rules:
+        - uid: 262a1958-8c0e-4834-a78c-36154193661e
+          title: Inode utilization (xfs)
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                adhocFilters: []
+                alias: '$tag_host: $tag_path'
+                datasource:
+                    type: influxdb
+                    uid: "000000001"
+                intervalMs: 1000
+                limit: ""
+                maxDataPoints: 43200
+                measurement: ""
+                policy: ""
+                query: SELECT mean("inodes_total")/mean("total") FROM "autogen"."disk" WHERE $timeFilter AND "fstype"::tag = 'xfs' AND ("origin"::tag = 'salt') GROUP BY time($__interval), "path"::tag, "host"::tag fill(null)
+                rawQuery: true
+                refId: A
+                resultFormat: time_series
+                slimit: ""
+                tz: ""
+            - refId: C
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0.0025
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+            - refId: B
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params: []
+                      reducer:
+                        params: []
+                        type: avg
+                      type: query
+                datasource:
+                    name: Expression
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                settings:
+                    mode: dropNN
+                type: reduce
+          noDataState: OK
+          execErrState: OK
+          for: 5m
+          annotations:
+            summary: Inode utilization on XFS is too high. Check affected hosts and consider adjusting `imaxpct` of the filesystem or clean up unneeded files.
+          labels:
+            __contacts__: '"osd-admins"'
+          isPaused: false
+          notification_settings:
+            receiver: osd-admins
