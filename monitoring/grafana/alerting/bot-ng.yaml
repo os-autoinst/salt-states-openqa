@@ -29,7 +29,7 @@ groups:
                 measurement: bot-ng_job_queue_length
                 orderByTime: ASC
                 policy: default
-                query: SELECT last("count") FROM "bot-ng_job_queue_length" WHERE $timeFilter GROUP BY time($__interval) fill(null)
+                query: SELECT last("count") FROM "bot-ng_job_queue_length" WHERE $timeFilter GROUP BY time($__interval) fill(0)
                 rawQuery: false
                 refId: A
                 resultFormat: time_series
@@ -92,11 +92,11 @@ groups:
                 maxDataPoints: 43200
                 refId: C
                 type: threshold
-          noDataState: OK
+          noDataState: Alerting
           execErrState: KeepLast
           for: 6h
           annotations:
-            Additional notes: The query of this alert can return "no data" as telegraf can only collect values if there are actual pending jobs. If everything goes well, "no data" is expected.
+            Additional notes: If no data is received for 10 or more minutes, this alert will fire. This indicates a broken pipeline such as an expired token or telegraf being down, rather than a healthy empty queue.
             description: This alert checks the REST API of gitlab.suse.de for pending jobs for the bot-ng project. If too many accumulate over time, this hints to a regression either in infrastructure or qem-bot itself.
             runbook_url: https://progress.opensuse.org/projects/qa/wiki/Tools#Process
             summary: bot-ng is having a too big job queue on gitlab for too long. Please check https://gitlab.suse.de/qa-maintenance/bot-ng/-/jobs for logs and potential regressions.
