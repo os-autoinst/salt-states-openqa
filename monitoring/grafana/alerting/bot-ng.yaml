@@ -73,7 +73,7 @@ groups:
                 conditions:
                     - evaluator:
                         params:
-                            - 0
+                            - 20
                         type: gt
                       operator:
                         type: and
