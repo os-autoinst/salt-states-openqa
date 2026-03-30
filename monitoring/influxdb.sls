@@ -11,7 +11,7 @@ databases.repo:
       - pkg: influxdb
 {% endif %}
 
-  pkg.latest:
+  pkg.installed:
     - name: influxdb
     - refresh: False
 

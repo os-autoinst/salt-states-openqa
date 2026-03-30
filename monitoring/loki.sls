@@ -1,6 +1,6 @@
 {% from 'openqa/repo_config.sls' import repo %}
 loki:
-  pkg.latest:
+  pkg.installed:
     - refresh: False
     - retry:
         attempts: 5
