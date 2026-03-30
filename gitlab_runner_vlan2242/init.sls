@@ -1,22 +1,18 @@
 gitlab_runner_vlan2242_config:
   file.managed:
-    - mode: "0644"
+    - mode: "0600"
     - user: root
     - group: root
     - makedirs: True
     - names:
       - /etc/gitlab_runner/config1/.runner_system_id:
-        - mode: "0600"
-        - contents_pillar: config1/.runner_system_id
+        - contents_pillar: gitlab_runner:{{ grains['fqdn'] }}:config1:runner_system_id
       - /etc/gitlab_runner/config2/.runner_system_id:
-        - mode: "0600"
-        - contents_pillar: config2/.runner_system_id
+        - contents_pillar: gitlab_runner:{{ grains['fqdn'] }}:config2:runner_system_id
       - /etc/gitlab_runner/config1/config.toml:
-        - mode: "0600"
-        - contents_pillar: config1/config.toml
+        - contents_pillar: gitlab_runner:{{ grains['fqdn'] }}:config1:config_toml
       - /etc/gitlab_runner/config2/config.toml:
-        - mode: "0600"
-        - contents_pillar: config2/config.toml
+        - contents_pillar: gitlab_runner:{{ grains['fqdn'] }}:config2:config_toml
 
 server.packages:
   pkg.installed:
