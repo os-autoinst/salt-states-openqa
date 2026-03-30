@@ -13,7 +13,7 @@
 {% set provisioned_alerts = ['stacked-backlog-no-data.yaml', 'dashboard-automatic-actions.yaml', 'failed-systemd-services.yaml', 'dashboard-job-age.yaml', 'dashboard-monitoring.yaml', 'dashboard-openqa-jobs-test.yaml', 'dashboard-WebuiDb.yaml', 'inodes.yaml', 'http_response_codes.yaml', 'network-availability.yaml', 'deployment-run-time.yaml', 'bot-ng.yaml'] %}
 
 grafana:
-  pkg.latest:
+  pkg.installed:
     - refresh: False
     - retry:  # some packages can change rapidly in our repos needing a retry as zypper does not do that
         attempts: 5

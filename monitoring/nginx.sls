@@ -1,5 +1,5 @@
 nginx:
-  pkg.latest:
+  pkg.installed:
     - refresh: False
 
 {%- if not grains.get('noservices', False) %}

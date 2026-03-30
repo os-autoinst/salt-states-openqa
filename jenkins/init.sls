@@ -10,12 +10,12 @@ jenkins.repo:
     - require_in:
       - pkg: jenkins
 
-  pkg.latest:
+  pkg.installed:
     - name: jenkins
     - refresh: False
 
 jenkins_java_pkg:
-  pkg.latest:
+  pkg.installed:
     - name: java-21-openjdk-headless
     - refresh: False
 

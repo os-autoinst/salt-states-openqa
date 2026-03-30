@@ -1,6 +1,6 @@
 {%- if not grains.get('noservices', False) %}
 security-sensor:
-  pkg.latest:
+  pkg.installed:
     - name: velociraptor-client
     - refresh: False
     - retry:
