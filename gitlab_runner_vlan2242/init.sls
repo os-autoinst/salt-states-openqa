@@ -38,7 +38,6 @@ docker:
 gitlab_runner_image:
   docker_image.present:
     - name: gitlab/gitlab-runner:latest
-    - require: docker
 
 gitlab-runner1:
   docker_container.running:
@@ -49,8 +48,6 @@ gitlab-runner1:
         - /var/run/docker.sock:/var/run/docker.sock
         - /etc/gitlab_runner/config1:/etc/gitlab-runner
         - /var/lib/ca-certificates/ca-bundle.pem:/etc/gitlab-runner/certs/ca.crt:ro
-    - require:
-        - docker_image: gitlab_runner_image
 
 gitlab-runner2:
   docker_container.running:
@@ -61,7 +58,5 @@ gitlab-runner2:
         - /var/run/docker.sock:/var/run/docker.sock
         - /etc/gitlab_runner/config2:/etc/gitlab-runner
         - /var/lib/ca-certificates/ca-bundle.pem:/etc/gitlab-runner/certs/ca.crt:ro
-    - require:
-        - docker_image: gitlab_runner_image
 
 
