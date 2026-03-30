@@ -80,6 +80,8 @@ base:
   'G@roles:netboot_server':
     - openqa.nfs_share
     - openqa.recover-nfs
+  'G@roles:gitlab_runner_vlan2242':
+    - gitlab_runner_vlan2242
   'openqa-piworker.qe.nue2.suse.org':
     - raspberrypi
   'tumblesle.qe.nue2.suse.org':
