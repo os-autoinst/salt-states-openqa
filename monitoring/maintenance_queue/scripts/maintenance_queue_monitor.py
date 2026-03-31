@@ -69,7 +69,7 @@ def gql_query(url, first=100, offset=0):
 
 
 def gql_query_dec(url, first=100, offset=0):
-    today = datetime.utcnow() - timedelta(days=1)
+    today = datetime.now(timezone.utc) - timedelta(days=1)
     today = today.isoformat()
     query = f"""query {{
         requests(review_AssignedByGroup_Name_Iexact: "qam-sle", status_Name_Iexact:"declined", endDate_Gt: "{today}", first: 100, offset: {offset}) {{
