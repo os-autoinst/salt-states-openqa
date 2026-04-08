@@ -509,11 +509,6 @@ fstrim.{{ type }}:
 {% endfor %}
 
 # salt-keys-check
-/etc/salt-keys-check-keys-not_accepted_reasons.json:
-  file.managed:
-    - source: salt://openqa/salt-keys-check-keys-not_accepted_reasons.json
-    - mode: "0644"
-
 /usr/local/bin/salt-keys-check:
   file.managed:
     - source: salt://openqa/salt-keys-check.py
