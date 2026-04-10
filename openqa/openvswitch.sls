@@ -1,35 +1,27 @@
 # https://github.com/os-autoinst/openQA/blob/master/docs/Networking.asciidoc
 
-{%- if not grains.get('noservices', False) %}
+{%- set backend = grains.get('network_backend', 'wicked') %}
+{%- set noservices = grains.get('noservices', False) %}
+{%- if backend == 'NetworkManager' %}
+  {%- set gre_tunnel_script_path = '/etc/NetworkManager/dispatcher.d/gre_tunnel_preup.sh' %}
+{%- else %}
+  {%- set gre_tunnel_script_path = '/etc/wicked/scripts/gre_tunnel_preup.sh' %}
+{%- endif %}
+
+{%- if not noservices %}
 openvswitch:
   service.running:
     - enable: True
     - watch:
       - file: /etc/sysconfig/network/ifcfg-br1
-{%- endif %}
 
-wicked:
-  pkg.installed:
-    - refresh: False
-    - retry:
-        attempts: 5
-
-{%- if not grains.get('noservices', False) %}
-wicked ifup br1:
+reload_network_on_script_change:
   cmd.run:
-    - onchanges:
+    - name: {% if backend == 'wicked' %}wicked ifup all{% else %}nmcli connection up br1{% endif %}
+    - onchanges_any:
       - file: /etc/sysconfig/network/ifcfg-br1
-{%- endif %}
+      - file: {{ gre_tunnel_script_path }}
 
-# Add 3 tap devices per worker slot; pretend there is one more worker slot to have one more set of tap devices for debugging
-{% set tapdevices = [] %}
-{% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) + 1) %}
-{%   for network in range(0, 3) %}
-{%      do tapdevices.append(i+network*64) %}
-{%     endfor %}
-{%  endfor %}
-
-{%- if not grains.get('noservices', False) %}
 # Ensure forwarding of traffic for the bridge:
 net.ipv4.ip_forward:
   sysctl.present:
@@ -42,7 +34,23 @@ net.ipv4.conf.{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}.forward
   sysctl.present:
     - value: 1
 {%- endif %}
+{%- endif %}
 
+{{ backend }}:
+  pkg.installed:
+    - refresh: False
+    - retry:
+        attempts: 5
+
+# Add 3 tap devices per worker slot; pretend there is one more worker slot to have one more set of tap devices for debugging
+{% set tapdevices = [] %}
+{% for i in range(pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) + 1) %}
+{%   for network in range(0, 3) %}
+{%      do tapdevices.append(i+network*64) %}
+{%     endfor %}
+{%  endfor %}
+
+{%- if not noservices %}
 # See https://progress.opensuse.org/issues/151310
 ovs-vsctl set int br1 mtu_request=1460:
   cmd.run:
@@ -94,7 +102,7 @@ ovs-vsctl set int br1 mtu_request=1460:
 {% endfor %}
 
 # Worker for GRE needs to have defined entry bridge_ip: <uplink_address_of_this_worker> in pillar data
-/etc/wicked/scripts/gre_tunnel_preup.sh:
+{{ gre_tunnel_script_path }}:
 {% if grains['host'] in multihostworkers and multihostworkers|length > 1 %}
 {%   set otherworkers = multihostworkers %}
 {%   do otherworkers.remove(grains['host']) %}
@@ -151,11 +159,6 @@ ovs-vsctl set int br1 mtu_request=1460:
      {% endfor %}
       - fi
       - fi
-
-wicked ifup all:
-  cmd.run:
-    - onchanges:
-      - file: /etc/wicked/scripts/gre_tunnel_preup.sh
 {% else %}
   file.absent
 {% endif %}
@@ -178,7 +181,7 @@ wicked ifup all:
     - source: salt://openqa/os-autoinst-openvswitch-init-timeout.conf
     - makedirs: true
 
-{%- if not grains.get('noservices', False) %}
+{%- if not noservices %}
 openvswitch override reload:
   module.wait:
     - name: service.systemctl_reload
@@ -193,5 +196,5 @@ os-autoinst-openvswitch:
       - file: /etc/sysconfig/os-autoinst-openvswitch
     - onchanges_any:
       - file: /etc/sysconfig/network/ifcfg-br1
-      - file: /etc/wicked/scripts/gre_tunnel_preup.sh
+      - file: {{ gre_tunnel_script_path }}
 {%- endif %}
