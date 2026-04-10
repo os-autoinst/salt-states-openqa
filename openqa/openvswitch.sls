@@ -119,17 +119,17 @@ ovs-vsctl set int br1 mtu_request=1460:
       -     exit 0 # Exit 0 to avoid breaking NetworkManager's flow
       - fi
       - TARGET_BRIDGE=$("$OVS_CMD" list-br) # We expect only one Open-vSwitch bridge to be present
-      - # NM_DISPATCHER_ACTION env var is set when NM calls scripts via dispatcher service
-      - # Ref: https://networkmanager.dev/docs/api/1.44.4/NetworkManager-dispatcher.html
-      - # 2. Argument Normalization (NetworkManager vs. wicked)
-      - # NetworkManager: $1 = interface name, $2 = action
-      - # wicked: $1 = action, $2 = interface name
+      - '# NM_DISPATCHER_ACTION env var is set when NM calls scripts via dispatcher service'
+      - '# Ref: https://networkmanager.dev/docs/api/1.44.4/NetworkManager-dispatcher.html'
+      - '# 2. Argument Normalization (NetworkManager vs. wicked)'
+      - '# NetworkManager: $1 = interface name, $2 = action'
+      - '# wicked: $1 = action, $2 = interface name'
       - if [ -n "$NM_DISPATCHER_ACTION" ]; then
-      -     # Environment detected as NetworkManager
+      -     '# Environment detected as NetworkManager'
       -     bridge="$1"
       -     action="$2"
       - else
-      -     # Environment detected as wicked (or manual call)
+      -     '# Environment detected as wicked'
       -     action="$1"
       -     bridge="$2"
       - fi
