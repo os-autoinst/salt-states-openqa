@@ -59,6 +59,12 @@ osd_fstab:
     - require:
       - pkg: server.packages
 
+/etc/openqa/openqa.ini.d/suseid-oauth2.ini:
+  file.managed:
+    - source: salt://openqa/suseid-oauth2.ini
+    - template: jinja
+    - mode: "0644"
+
 /etc/systemd/system/openqa-webui.service.d/10-unit-ordering.conf:
   file.managed:
     - mode: "0644"
