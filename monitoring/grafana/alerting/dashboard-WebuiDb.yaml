@@ -1,6 +1,92 @@
 apiVersion: 1
 groups:
     - orgId: 1
+      name: Web proxy Response Time alert
+      folder: Salt
+      interval: 1m
+      rules:
+        - uid: IeChie2He
+          title: Web proxy Response Time alert
+          condition: A
+          data:
+            - refId: A
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0.6
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - min_nginx_response
+                      reducer:
+                        type: median
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: A
+                type: classic_conditions
+            - refId: min_nginx_response
+              relativeTimeRange:
+                from: 1800
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                alias: Min
+                groupBy:
+                    - params:
+                        - $__interval
+                      type: time
+                    - params:
+                        - "null"
+                      type: fill
+                interval: 12s
+                intervalMs: 1000
+                maxDataPoints: 43200
+                measurement: nginx_log
+                orderByTime: ASC
+                policy: default
+                query: SELECT min("response_time_s") FROM "nginx_log" WHERE ("host" = 'openqa' AND "request" !~ /\/api\/v1\/ws/) AND $timeFilter GROUP BY time($__interval) fill(0)
+                rawQuery: false
+                refId: min_nginx_response
+                resultFormat: time_series
+                select:
+                    - - params:
+                            - response_time_s
+                        type: field
+                      - params: []
+                        type: min
+                tags:
+                    - key: host
+                      operator: =
+                      value: openqa
+                    - condition: AND
+                      key: request
+                      operator: '!~'
+                      value: /\/api\/v1\/ws/
+          dashboardUid: WebuiDb
+          panelId: 84
+          noDataState: OK
+          execErrState: OK
+          for: 30m
+          annotations:
+            __alertId__: "307"
+            __dashboardUid__: WebuiDb
+            __panelId__: "84"
+            message: |-
+                The nginx response time exceeded the alert threshold.
+
+                * Check the load of the web UI host
+                * Consider restarting the openQA web UI service and/or nginx
+
+                Also see https://progress.opensuse.org/issues/73633
+          labels:
+            __contacts__: '"osd-admins"'
+            rule_uid: IeChie2He
+          isPaused: false
+    - orgId: 1
       name: 'web UI: Too many inactive minion jobs alert'
       folder: Salt
       interval: 1m
