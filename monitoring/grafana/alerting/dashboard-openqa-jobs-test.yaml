@@ -245,7 +245,7 @@ groups:
                     type: last
                 - evaluator:
                     params:
-                      - 12000
+                      - 26000
                     type: gt
                   operator:
                     type: or
@@ -256,7 +256,7 @@ groups:
                     type: last
                 - evaluator:
                     params:
-                      - 14000
+                      - 32000
                     type: gt
                   operator:
                     type: or
@@ -267,7 +267,7 @@ groups:
                     type: last
                 - evaluator:
                     params:
-                      - 10000
+                      - 28000
                     type: gt
                   operator:
                     type: and
