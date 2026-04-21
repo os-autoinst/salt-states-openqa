@@ -184,7 +184,7 @@ groups:
               query: SELECT mean("scheduled")+mean("blocked") FROM "openqa_jobs" WHERE ("url"
                 = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval) fill(null)
               rawQuery: true
-              refId: A
+              refId: scheduled+blocked-hours
               resultFormat: time_series
               select:
                 - - params:
@@ -194,7 +194,7 @@ groups:
                 - key: url
                   operator: =
                   value: https://openqa.suse.de
-            refId: A
+            refId: scheduled+blocked-hours
             relativeTimeRange:
               from: 43200
               to: 0
@@ -215,7 +215,7 @@ groups:
               query: SELECT mean("scheduled")+mean("blocked") FROM "openqa_jobs" WHERE ("url"
                 = 'https://openqa.suse.de') AND $timeFilter GROUP BY time($__interval) fill(null)
               rawQuery: true
-              refId: B
+              refId: scheduled+blocked-minutes
               resultFormat: time_series
               select:
                 - - params:
@@ -225,7 +225,7 @@ groups:
                 - key: url
                   operator: =
                   value: https://openqa.suse.de
-            refId: B
+            refId: scheduled+blocked-minutes
             relativeTimeRange:
               from: 60
               to: 0
@@ -245,7 +245,7 @@ groups:
                     type: last
                 - evaluator:
                     params:
-                      - 12000
+                      - 26000
                     type: gt
                   operator:
                     type: or
@@ -256,24 +256,24 @@ groups:
                     type: last
                 - evaluator:
                     params:
-                      - 14000
+                      - 32000
                     type: gt
                   operator:
                     type: or
                   query:
                     params:
-                      - B
+                      - scheduled+blocked-minutes
                   reducer:
                     type: last
                 - evaluator:
                     params:
-                      - 10000
+                      - 28000
                     type: gt
                   operator:
                     type: and
                   query:
                     params:
-                      - A
+                      - scheduled+blocked-hours
                   reducer:
                     type: last
               refId: C
