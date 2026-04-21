@@ -31,6 +31,8 @@
 {% set nmconn_uuid = salt['cmd.run']('uuidgen --sha1 --namespace @dns --name ' ~ bond_slave_iface) %}
 /etc/NetworkManager/system-connections/{{ bridge_iface }}-{{ bond_slave_iface }}.nmconnection:
   file.managed:
+    - user: root
+    - mode: '0600'
     - contents: |
         [connection]
         id={{ bridge_iface }}-{{ bond_slave_iface }}
@@ -39,10 +41,6 @@
         controller={{ bridge_iface }}
         interface-name={{ bond_slave_iface }}
         port-type=bond
-
-        [ethernet]
-
-        [bond-port]
 {%- endif %}
 {% endfor %}
 {%- if backend == 'wicked' %}
@@ -60,6 +58,8 @@
 {% set bond_uuid = salt['cmd.run']('uuidgen --sha1 --namespace @dns --name ' ~ bridge_iface) %}
 /etc/NetworkManager/system-connections/{{ bridge_iface }}.nmconnection:
   file.managed:
+    - user: root
+    - mode: '0600'
     - contents: |
         [connection]
         id={{ bridge_iface }}
@@ -77,8 +77,6 @@
         [ipv6]
         addr-gen-mode=default
         method=auto
-
-        [proxy]
 {% endif %}
 {% endif %}
 {% endif %}
