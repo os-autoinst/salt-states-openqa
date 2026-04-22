@@ -37,7 +37,6 @@ speedup_minion:
         recon_default: 1000
         recon_max: 29000
         recon_randomize: True
-        auth_timeout: 5
 
 # workaround https://github.com/saltstack/salt/issues/59141
 workaround_minion_race:
