@@ -37,6 +37,9 @@ speedup_minion:
         recon_default: 1000
         recon_max: 29000
         recon_randomize: True
+        # Make minions try to reconnect more
+        master_tries: -1
+        auth_safemode: True
 
 # workaround https://github.com/saltstack/salt/issues/59141
 workaround_minion_race:
