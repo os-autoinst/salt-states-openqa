@@ -243,7 +243,7 @@
               },
               {
                 "color": "red",
-                "value": 250
+                "value": 300
               }
             ]
           }
@@ -429,13 +429,21 @@
           },
           "decimals": 0,
           "mappings": [],
-          "max": 100,
+          "max": 300,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 200
+              },
+              {
+                "color": "red",
+                "value": 300
               }
             ]
           }
