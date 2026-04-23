@@ -17,7 +17,7 @@ openvswitch:
 
 reload_network_on_script_change:
   cmd.run:
-    - name: {% if backend == 'wicked' %}wicked ifup all{% endif %}
+    - name: {% if backend == 'wicked' %}wicked ifup all{% else %}nmcli connection reload{% endif %}
     - onchanges_any:
       - file: /etc/sysconfig/network/ifcfg-br1
       - file: {{ gre_tunnel_script_path }}
