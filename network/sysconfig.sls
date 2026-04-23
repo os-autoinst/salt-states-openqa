@@ -75,7 +75,8 @@
         method=auto
 
         [ipv6]
-        addr-gen-mode=default
+        addr-gen-mode=eui64
+        ip6-privacy=disabled
         method=auto
 {% endif %}
 {% endif %}
