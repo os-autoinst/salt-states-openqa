@@ -69,6 +69,22 @@ groups:
                     key: name
                     operator: =
                     value: sdb
+                  - condition: OR
+                    key: name
+                    operator: =
+                    value: sdc
+                  - condition: OR
+                    key: name
+                    operator: =
+                    value: sdd
+                  - condition: OR
+                    key: name
+                    operator: =
+                    value: sde
+                  - condition: OR
+                    key: name
+                    operator: =
+                    value: sdf
           - refId: B
             datasourceUid: __expr__
             model:

@@ -48,7 +48,7 @@ groups:
         measurement: diskio
         orderByTime: ASC
         policy: default
-        query: SELECT non_negative_derivative(mean("io_time"), 1s) FROM "diskio" WHERE ("host" = '{{ worker }}' AND "name" <> 'nvme0n1' AND ("name" = 'nvme1n1' OR "name" = 'sda' OR "name" = 'sdb')) AND $timeFilter GROUP BY time($__interval), "name" fill(null)
+        query: SELECT non_negative_derivative(mean("io_time"), 1s) FROM "diskio" WHERE ("host" = '{{ worker }}' AND "name" <> 'nvme0n1' AND ("name" = 'nvme1n1' OR "name" = 'sda' OR "name" = 'sdb' OR "name" == 'sdc' OR "name" == 'sdd' OR "name" == 'sde' OR "name" == 'sdf')) AND $timeFilter GROUP BY time($__interval), "name" fill(null)
         rawQuery: true
         refId: C
         resultFormat: time_series
@@ -81,6 +81,22 @@ groups:
           key: name
           operator: =
           value: sdb
+        - condition: OR
+          key: name
+          operator: =
+          value: sdc
+        - condition: OR
+          key: name
+          operator: =
+          value: sdd
+        - condition: OR
+          key: name
+          operator: =
+          value: sde
+        - condition: OR
+          key: name
+          operator: =
+          value: sdf
       refId: C
       relativeTimeRange:
         from: 300
@@ -1024,4 +1040,3 @@ groups:
         rule_uid: system_load_alert_{{ worker }}
         type: worker
         hostname: {{ worker }}
-
