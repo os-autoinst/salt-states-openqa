@@ -8,7 +8,6 @@ import socket
 import requests
 
 script_path = os.path.abspath(sys.argv[0])
-host = socket.gethostbyaddr(socket.gethostname())[0]
 
 js = subprocess.check_output(["salt-key", "--out=json"])
 j = json.loads(js)
@@ -23,7 +22,8 @@ backlog = requests.get("https://progress.opensuse.org/issues.json?query_id=757")
 
 def get_ticket(minion):
     for issue in backlog["issues"]:
-        if minion in issue["subject"]:
+        hostname = minion.split(".", 1)[0]
+        if any(match in issue["subject"] for match in [minion, hostname]):
             return f"https://progress.opensuse.org/issues/{issue['id']}"
 
 if states["rejected"]:
