@@ -76,7 +76,7 @@
 
         [ipv6]
         addr-gen-mode=eui64
-        ip6-privacy=disabled
+        ip6-privacy=0
         method=auto
 {% endif %}
 {% endif %}
