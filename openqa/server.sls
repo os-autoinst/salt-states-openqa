@@ -284,11 +284,27 @@ postgresql-listen_address:
     - pattern: "^#?(listen_addresses = ')[^']*('.*$)"
     - repl: '\1*\2'
 
-postgresql-work_mem:
+{% set pg_settings = {
+    'work_mem': '64MB',
+    'shared_buffers': '8GB',
+    'effective_cache_size': '24GB',
+    'maintenance_work_mem': '2GB',
+    'max_worker_processes': '32',
+    'max_parallel_workers': '32',
+    'max_parallel_workers_per_gather': '8'
+} %}
+
+# Gives Postgres dedicated memory for caching its working dataset. 8GB is a
+# safe 25% of our (OSD) baseline 32GB RAM that avoids swapping even if the
+# hypervisor balloons memory down.
+{% for param, value in pg_settings.items() %}
+postgresql-{{ param }}:
   file.replace:
     - name: /srv/PSQL/data/postgresql.conf
-    - pattern: "^#?(work_mem =)[^B]*(.*$)"
-    - repl: '\1 64M\2'
+    - pattern: "^#?({{ param }}\s*=).*$"
+    - repl: '\1 {{ value }}'
+{% endfor %}
+
 
 /srv/PSQL/data/pg_hba.conf:
   file.append:
@@ -553,14 +569,16 @@ salt-keys-check.timer:
 
 # Avoiding unintended connection failures with SO_REUSEPORT, see
 # https://progress.opensuse.org/issues/181736#note-17
-net.ipv4.tcp_migrate_req:
+# Tuning for PostgreSQL and system performance, see
+# https://progress.opensuse.org/issues/199847
+{%- set sysctl_settings = {
+    'net.ipv4.tcp_migrate_req': 1,
+    'vm.swappiness': 1,
+    'vm.vfs_cache_pressure': 200,
+    'vm.vfs_cache_pressure_denom': 100,
+} %}
+{% for sysctl, value in sysctl_settings.items() %}
+{{ sysctl }}:
   sysctl.present:
-    - value: 1
-
-vm.swappiness:
-  sysctl.present:
-    - value: 1
-
-vm.vfs_cache_pressure:
-  sysctl.present:
-    - value: 50
+    - value: {{ value }}
+{% endfor %}
