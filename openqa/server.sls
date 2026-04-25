@@ -556,3 +556,11 @@ salt-keys-check.timer:
 net.ipv4.tcp_migrate_req:
   sysctl.present:
     - value: 1
+
+vm.swappiness:
+  sysctl.present:
+    - value: 1
+
+vm.vfs_cache_pressure:
+  sysctl.present:
+    - value: 50
