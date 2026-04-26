@@ -276,34 +276,41 @@ readonly_db_access_{{ table }}:
     - maintenance_db: openqa
 {% endfor %}
 
-# allow access to postgres database from outside so far this does not ensure
-# that the configuration becomes effective which needs a server restart
-postgresql-listen_address:
-  file.replace:
+# Ensure postgresql reads from conf.d
+postgresql-include_dir:
+  file.keyvalue:
     - name: /srv/PSQL/data/postgresql.conf
-    - pattern: "^#?(listen_addresses = ')[^']*('.*$)"
-    - repl: '\1*\2'
+    - key: include_dir
+    - value: "'conf.d'"
+    - separator: ' = '
+    - uncomment: '#'
 
-{% set pg_settings = {
-    'work_mem': '64MB',
-    'shared_buffers': '8GB',
-    'effective_cache_size': '24GB',
-    'maintenance_work_mem': '2GB',
-    'max_worker_processes': '32',
-    'max_parallel_workers': '32',
-    'max_parallel_workers_per_gather': '8'
-} %}
+/srv/PSQL/data/conf.d:
+  file.directory:
+    - user: postgres
+    - group: postgres
+    - mode: "0755"
 
-# Gives Postgres dedicated memory for caching its working dataset. 8GB is a
-# safe 25% of our (OSD) baseline 32GB RAM that avoids swapping even if the
-# hypervisor balloons memory down.
-{% for param, value in pg_settings.items() %}
-postgresql-{{ param }}:
-  file.replace:
-    - name: /srv/PSQL/data/postgresql.conf
-    - pattern: "^#?({{ param }}\s*=).*$"
-    - repl: '\1 {{ value }}'
-{% endfor %}
+/srv/PSQL/data/conf.d/50-openqa.conf:
+  file.managed:
+    - user: postgres
+    - group: postgres
+    - mode: "0644"
+    - contents: |
+        # allow access to postgres database from outside so far this does not ensure
+        # that the configuration becomes effective which needs a server restart
+        listen_addresses = '*'
+
+        # Gives Postgres dedicated memory for caching its working dataset. 8GB is a
+        # safe 25% of our (OSD) baseline 32GB RAM that avoids swapping even if the
+        # hypervisor balloons memory down.
+        work_mem = 64MB
+        shared_buffers = 8GB
+        effective_cache_size = 24GB
+        maintenance_work_mem = 2GB
+        max_worker_processes = 32
+        max_parallel_workers = 32
+        max_parallel_workers_per_gather = 8
 
 
 /srv/PSQL/data/pg_hba.conf:
@@ -318,6 +325,7 @@ postgresql.service:
     - reload: True
     - watch:
       - file: /srv/PSQL/data/postgresql.conf
+      - file: /srv/PSQL/data/conf.d/50-openqa.conf
       - file: /srv/PSQL/data/pg_hba.conf
 {%- endif %}
 
