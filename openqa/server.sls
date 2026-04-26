@@ -301,16 +301,17 @@ postgresql-include_dir:
         # that the configuration becomes effective which needs a server restart
         listen_addresses = '*'
 
-        # Gives Postgres dedicated memory for caching its working dataset. 8GB is a
-        # safe 25% of our (OSD) baseline 32GB RAM that avoids swapping even if the
-        # hypervisor balloons memory down.
         work_mem = 64MB
-        shared_buffers = 8GB
-        effective_cache_size = 24GB
-        maintenance_work_mem = 2GB
-        max_worker_processes = 32
-        max_parallel_workers = 32
-        max_parallel_workers_per_gather = 8
+
+        # shared_buffers: Dedicated memory for caching PostgreSQL working dataset.
+        # effective_cache_size: Planner hint about total available cache (OS + DB).
+        # Note: effective_cache_size does not allocate memory.
+        shared_buffers = {{ (grains['mem_total'] * 0.25) | int }}MB
+        effective_cache_size = {{ (grains['mem_total'] * 0.75) | int }}MB
+        maintenance_work_mem = {{ [((grains['mem_total'] * 0.0625) | int), 2048] | min }}MB
+        max_worker_processes = {{ grains['num_cpus'] }}
+        max_parallel_workers = {{ grains['num_cpus'] }}
+        max_parallel_workers_per_gather = {{ [(grains['num_cpus'] / 4) | int, 2] | max }}
 
 
 /srv/PSQL/data/pg_hba.conf:
