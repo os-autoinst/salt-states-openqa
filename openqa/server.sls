@@ -276,6 +276,7 @@ readonly_db_access_{{ table }}:
       - SELECT
     - maintenance_db: openqa
 {% endfor %}
+{%- endif %}
 
 # Ensure postgresql reads from conf.d
 {% set psql_user = 'postgres' if not grains.get('noservices', False) else 'root' %}
@@ -283,17 +284,18 @@ postgresql-include_dir:
   file.keyvalue:
     - name: /srv/PSQL/data/postgresql.conf
     - key: include_dir
-    - value: "'conf.d'"
+    - value: "'/etc/postgresql/conf.d'"
     - separator: ' = '
     - uncomment: '#'
 
-/srv/PSQL/data/conf.d:
+/etc/postgresql/conf.d:
   file.directory:
     - user: {{ psql_user }}
     - group: {{ psql_user }}
     - mode: "0755"
+    - makedirs: True
 
-/srv/PSQL/data/conf.d/50-openqa.conf:
+/etc/postgresql/conf.d/50-openqa.conf:
   file.managed:
     - user: {{ psql_user }}
     - group: {{ psql_user }}
@@ -322,13 +324,14 @@ postgresql-include_dir:
         host    all             openqa          0.0.0.0/0               md5
         host    all             openqa          ::/0                    md5
 
+{%- if not grains.get('noservices', False) %}
 postgresql.service:
   service.running:
     - enable: True
     - reload: True
     - watch:
       - file: /srv/PSQL/data/postgresql.conf
-      - file: /srv/PSQL/data/conf.d/50-openqa.conf
+      - file: /etc/postgresql/conf.d/50-openqa.conf
       - file: /srv/PSQL/data/pg_hba.conf
 {%- endif %}
 

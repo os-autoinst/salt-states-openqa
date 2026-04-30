@@ -101,6 +101,8 @@ test-webui:
   script:
     - "echo 'roles: webui' >> /etc/salt/grains"
     - "echo 'webserver: apache2' >> /etc/salt/grains"
+    - mkdir -p /srv/PSQL/data
+    - echo "#include_dir = 'none'" > /srv/PSQL/data/postgresql.conf
     - (
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
@@ -108,6 +110,8 @@ test-webui:
     # files must exist after correct salt application and can be inspected
     # manually
     - cat /etc/openqa/openqa.ini.d/*
+    - grep -q "^include_dir = '/etc/postgresql/conf.d'" /srv/PSQL/data/postgresql.conf
+    - grep -q "effective_cache_size =" /etc/postgresql/conf.d/50-openqa.conf
 
 test-worker:
   <<: *test_setup
