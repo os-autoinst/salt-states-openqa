@@ -575,8 +575,10 @@ salt-keys-check.timer:
     'net.ipv4.tcp_migrate_req': 1,
     'vm.swappiness': 1,
     'vm.vfs_cache_pressure': 200,
-    'vm.vfs_cache_pressure_denom': 100,
 } %}
+{%- if grains['kernelrelease'] is defined and salt['pkg.version_cmp'](grains['kernelrelease'], '6.16') >= 0 %}
+{%-   set _ = sysctl_settings.update({'vm.vfs_cache_pressure_denom': 100}) %}
+{%- endif %}
 {% for sysctl, value in sysctl_settings.items() %}
 {{ sysctl }}:
   sysctl.present:
