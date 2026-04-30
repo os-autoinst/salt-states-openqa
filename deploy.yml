@@ -57,14 +57,28 @@ refresh:
   stage: deploy
   needs:
     - clone
+  artifacts:
+    when: always
+    paths:
+      - salt_*.log
+      - down_minions.txt
+    expire_in: 1 day
   script:
     - *setup_script
     - ssh $TARGET "echo 'Currently the following minions are down:'; diff <(sudo salt --timeout 1 '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort) <(sudo salt --timeout 1 --hide-timeout '*' test.ping --out json 2>/dev/null | jq 'keys[]' | sort); echo '==================='" | tee salt_ping.log
+    - grep '< "' salt_ping.log | sed 's/.*< "\(.*\)"/\1/' > down_minions.txt || true
+    - |
+      SALT_TARGET="'*'"
+      if [ -s down_minions.txt ]; then
+        DOWN_LIST=$(cat down_minions.txt | paste -sd,)
+        SALT_TARGET="-C 'not L@${DOWN_LIST}'"
+        echo "WARNING: Excluding down minions from deployment: $DOWN_LIST"
+      fi
     # exit code of compound commands are not reliable hence looking for
     # Traceback error in output
     # https://progress.opensuse.org/issues/137984
     # https://github.com/saltstack/salt/issues/42814
-    - timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_syncupdate.log; salt -t 300 --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed \* saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,, | (! ack --passthru --color Traceback)"
+    - timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_syncupdate.log; salt -t 300 --log-file=salt_syncupdate.log --log-file-level=debug --state-output=mixed ${SALT_TARGET} saltutil.sync_grains,saltutil.refresh_grains,saltutil.refresh_pillar,mine.update ,,, | (! ack --passthru --color Traceback)"
 
 deploy:
   extends: .defaults
@@ -77,7 +91,14 @@ deploy:
     - refresh
   script:
     - *setup_script
-    - /usr/bin/time -f '%e' -o .deploy_time retry --retries=2 --sleep=0 -- timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_highstate.log; salt -t 3600 --log-file=salt_highstate.log --log-file-level=debug --state-output=changes \* state.highstate queue=True | awk '/Result..Clean[- ]*Started/ {print > \"salt_profiling.log\"; next} 1'"
+    - |
+      SALT_TARGET="'*'"
+      if [ -s down_minions.txt ]; then
+        DOWN_LIST=$(cat down_minions.txt | paste -sd,)
+        SALT_TARGET="-C 'not L@${DOWN_LIST}'"
+        echo "WARNING: Excluding down minions from deployment: $DOWN_LIST"
+      fi
+    - /usr/bin/time -f '%e' -o .deploy_time retry --retries=2 --sleep=0 -- timeout -v --kill-after=10m 90m ssh $TARGET "set -eo pipefail; rm -f salt_highstate.log; salt -t 3600 --log-file=salt_highstate.log --log-file-level=debug --state-output=changes ${SALT_TARGET} state.highstate queue=True | awk '/Result..Clean[- ]*Started/ {print > \"salt_profiling.log\"; next} 1'"
     - status=$?
     - deploy_time=$(cat .deploy_time)
     - curl -i -XPOST "$INFLUX_URL/write?db=$INFLUX_DB" --data-binary "$MEASUREMENT,type=deploy value=$deploy_time,status=$status"

@@ -1,0 +1,2 @@
+mania.qe.prg2.suse.org
+dead-minion.suse.org
