@@ -277,6 +277,7 @@ readonly_db_access_{{ table }}:
 {% endfor %}
 
 # Ensure postgresql reads from conf.d
+{% set psql_user = 'postgres' if not grains.get('noservices', False) else 'root' %}
 postgresql-include_dir:
   file.keyvalue:
     - name: /srv/PSQL/data/postgresql.conf
@@ -287,14 +288,14 @@ postgresql-include_dir:
 
 /srv/PSQL/data/conf.d:
   file.directory:
-    - user: postgres
-    - group: postgres
+    - user: {{ psql_user }}
+    - group: {{ psql_user }}
     - mode: "0755"
 
 /srv/PSQL/data/conf.d/50-openqa.conf:
   file.managed:
-    - user: postgres
-    - group: postgres
+    - user: {{ psql_user }}
+    - group: {{ psql_user }}
     - mode: "0644"
     - contents: |
         # allow access to postgres database from outside so far this does not ensure
