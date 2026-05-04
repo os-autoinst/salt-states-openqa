@@ -144,6 +144,7 @@ webserver_grain:
 
 /etc/nginx/vhosts.d/openqa-locations.inc:
   file.managed:
+    - template: jinja
     - source: salt://nginx/openqa-locations.inc
     - user: root
     - group: root
@@ -162,6 +163,7 @@ webserver_grain:
 
 /etc/nginx/conf.d/openqa-asset-config.inc:
   file.managed:
+    - template: jinja
     - source: salt://nginx/openqa-asset-config.inc
     - user: root
     - group: root
