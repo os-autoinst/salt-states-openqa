@@ -277,19 +277,44 @@ readonly_db_access_{{ table }}:
     - maintenance_db: openqa
 {% endfor %}
 
-# allow access to postgres database from outside so far this does not ensure
-# that the configuration becomes effective which needs a server restart
-postgresql-listen_address:
-  file.replace:
+# Ensure postgresql reads from conf.d
+{% set psql_user = 'postgres' if not grains.get('noservices', False) else 'root' %}
+postgresql-include_dir:
+  file.keyvalue:
     - name: /srv/PSQL/data/postgresql.conf
-    - pattern: "^#?(listen_addresses = ')[^']*('.*$)"
-    - repl: '\1*\2'
+    - key: include_dir
+    - value: "'conf.d'"
+    - separator: ' = '
+    - uncomment: '#'
 
-postgresql-work_mem:
-  file.replace:
-    - name: /srv/PSQL/data/postgresql.conf
-    - pattern: "^#?(work_mem =)[^B]*(.*$)"
-    - repl: '\1 64M\2'
+/srv/PSQL/data/conf.d:
+  file.directory:
+    - user: {{ psql_user }}
+    - group: {{ psql_user }}
+    - mode: "0755"
+
+/srv/PSQL/data/conf.d/50-openqa.conf:
+  file.managed:
+    - user: {{ psql_user }}
+    - group: {{ psql_user }}
+    - mode: "0644"
+    - contents: |
+        # allow access to postgres database from outside so far this does not ensure
+        # that the configuration becomes effective which needs a server restart
+        listen_addresses = '*'
+
+        work_mem = 64MB
+
+        # shared_buffers: Dedicated memory for caching PostgreSQL working dataset.
+        # effective_cache_size: Planner hint about total available cache (OS + DB).
+        # Note: effective_cache_size does not allocate memory.
+        shared_buffers = {{ (grains['mem_total'] * 0.25) | int }}MB
+        effective_cache_size = {{ (grains['mem_total'] * 0.75) | int }}MB
+        maintenance_work_mem = {{ [((grains['mem_total'] * 0.0625) | int), 2048] | min }}MB
+        max_worker_processes = {{ grains['num_cpus'] }}
+        max_parallel_workers = {{ grains['num_cpus'] }}
+        max_parallel_workers_per_gather = {{ [(grains['num_cpus'] / 4) | int, 2] | max }}
+
 
 /srv/PSQL/data/pg_hba.conf:
   file.append:
@@ -303,6 +328,7 @@ postgresql.service:
     - reload: True
     - watch:
       - file: /srv/PSQL/data/postgresql.conf
+      - file: /srv/PSQL/data/conf.d/50-openqa.conf
       - file: /srv/PSQL/data/pg_hba.conf
 {%- endif %}
 
@@ -554,14 +580,18 @@ salt-keys-check.timer:
 
 # Avoiding unintended connection failures with SO_REUSEPORT, see
 # https://progress.opensuse.org/issues/181736#note-17
-net.ipv4.tcp_migrate_req:
+# Tuning for PostgreSQL and system performance, see
+# https://progress.opensuse.org/issues/199847
+{%- set sysctl_settings = {
+    'net.ipv4.tcp_migrate_req': 1,
+    'vm.swappiness': 1,
+    'vm.vfs_cache_pressure': 200,
+} %}
+{%- if grains['kernelrelease'] is defined and salt['pkg.version_cmp'](grains['kernelrelease'], '6.16') >= 0 %}
+{%-   set _ = sysctl_settings.update({'vm.vfs_cache_pressure_denom': 100}) %}
+{%- endif %}
+{% for sysctl, value in sysctl_settings.items() %}
+{{ sysctl }}:
   sysctl.present:
-    - value: 1
-
-vm.swappiness:
-  sysctl.present:
-    - value: 1
-
-vm.vfs_cache_pressure:
-  sysctl.present:
-    - value: 50
+    - value: {{ value }}
+{% endfor %}
