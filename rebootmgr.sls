@@ -26,7 +26,7 @@ ensure_legacy_config:
 {%- if grains.get('noservices', False) %}
     - ignore_if_missing: True # the previous file creation gets mocked in tests
 {%- endif %}
-{%- elif is_legacy %}
+{%- else %}
 ensure_absent:
   file.absent:
     - name: {{ legacy_config }}
@@ -50,7 +50,10 @@ rebootmgr.service:
   service.running:
     - enable: True
     - watch:
-      - file: {{ rebootmgr_config }}
+      {%- if is_legacy %}
       - file: {{ legacy_config }}
+      {%- else %}
+      - file: {{ rebootmgr_config }}
+      {%- endif %}
 {%- endif %}
 
