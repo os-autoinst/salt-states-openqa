@@ -14,6 +14,14 @@
         {{ config_key }}: {{ config_value }}
 {%- endfor -%}
 {% endfor %}
+{%- else %}
+# Global settings for all hosts running NetworkManager
+/etc/NetworkManager/conf.d/ipv6.conf:
+  file.managed:
+    - contents: |
+        [connection]
+        ipv6.ip6-privacy=0
+        ipv6.addr-gen-mode=eui64
 {%- endif %}
 
 {% if grains.get('roles') == 'worker' and grains['host'] in pillar['workerconf'].keys() %}
@@ -75,8 +83,6 @@
         method=auto
 
         [ipv6]
-        addr-gen-mode=eui64
-        ip6-privacy=0
         method=auto
 {% endif %}
 {% endif %}
