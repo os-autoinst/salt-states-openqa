@@ -7,7 +7,7 @@ sap_perf.packages:
     - pkgs:
       - python3-requests
 ## newer python versions include dataclasses directly
-{% if 'Tumbleweed' not in grains['oscodename'] %}
+{% if 'Tumbleweed' not in grains['oscodename'] and grains['osmajorrelease']|int < 16  %}
       - python3-dataclasses
 {% endif %}
 
