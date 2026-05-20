@@ -16,9 +16,14 @@
 {% endfor %}
 {%- else %}
 # Global settings for all hosts running NetworkManager
-/etc/NetworkManager/conf.d/ipv6.conf:
+# hostname-mode=none is used to tell NetworkManager not
+# to manage transient hostname.
+# Reference: https://progress.opensuse.org/issues/200892
+/etc/NetworkManager/conf.d/99-static-identity.conf:
   file.managed:
     - contents: |
+        [main]
+        hostname-mode=none
         [connection]
         ipv6.ip6-privacy=0
         ipv6.addr-gen-mode=eui64
