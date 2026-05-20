@@ -1,7 +1,8 @@
 {% set dashboard_template_folder = '/var/lib/grafana/dashboards' %}
 
 
-{% set workernames = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
+{% set workernames_list = salt['mine.get']('roles:worker', 'nodename', tgt_type='grain').values()|list %} #list of all worker names (no fqdn, just the name)
+{% set workernames = workernames_list|reject('match', '^d[0-9]+')|list %} # remove any worker with hostname in format d100, d200 etc
 {% set worker_dashboardnames = (workernames | map('regex_replace', '^(.*)$', 'worker-\\1.json'))|list %} #we name our dashboards "worker-$nodename.json"
 {% set templated_dashboardnames = ['webui.services.json', 'certificates.json'] %}
 {% set manual_dashboardnames = ['webui.dashboard.json', 'failed_systemd_services.json', 'automatic_actions.json', 'job_age.json', 'openqa_jobs.json', 'status_overview.json', 'monitoring.json', 'maintenance_update_queue.json', 'agile.dashboard.json', 'sap_perf_gitlab_commits.json', 'sleperf_metrics.json', 'deploy_runtime.json', 'iam_metrics.json'] %}
