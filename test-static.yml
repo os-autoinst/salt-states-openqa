@@ -14,3 +14,8 @@ test-salt-lint:
     entrypoint: [""]
   script:
     - salt-lint -v $(if command -v git >/dev/null; then git ls-files "*.sls"; else find -name '*.sls'; fi)
+
+test-no-mail:
+  stage: test-static
+  script:
+    - '! grep -Eir --exclude "grafana-error-mail.service" "^\s*Exec.*=.*mail.*$" *'
