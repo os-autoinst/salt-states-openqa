@@ -188,7 +188,9 @@ openqa-worker-auto-restart@{{ i }}:
         args:
           - openqa-worker-auto-restart@{{ i }}
     - watch:
+      {%- if grains.get('openqa_store') or (grains.get('SSDs', grains.get('ssds'))|map('regex_search', '(nvme)')|select|list|length > 0 and grains.get('format_nvme', True)) %}
       - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf
+      {%- endif %}
       - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf
       - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/50-io-accounting.conf
 {% if loop.first %}
