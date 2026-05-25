@@ -188,7 +188,9 @@ openqa-worker-auto-restart@{{ i }}:
         args:
           - openqa-worker-auto-restart@{{ i }}
     - watch:
+      - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf
       - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf
+      - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/50-io-accounting.conf
 {% if loop.first %}
     - require:
       - pkg: worker.packages
