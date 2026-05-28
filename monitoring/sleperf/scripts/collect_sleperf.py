@@ -97,10 +97,12 @@ def fetch_test_status(role, product):
             q_kernel = q_product['q_kernel']
             category_list = q_product['category_list']
             if q_release == release and q_build == build and (q_kernel.endswith('-default') or q_kernel.endswith('-rt')):
-                if q_kernel in fetched_kernels:
+                # Need filter arch and kernel together
+                q_arch_kernel = f"{q_arch}_{q_kernel}"
+                if q_arch_kernel in fetched_kernels:
                     # Mainly for Virt-Performance, avoid re-calculate for same kernel
                     continue
-                fetched_kernels.append(q_kernel)
+                fetched_kernels.append(q_arch_kernel)
                 for category, value in category_list.items():
                     for i in value:
                         if i:
