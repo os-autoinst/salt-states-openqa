@@ -79,9 +79,10 @@ base:
     - openqa.recover-nfs
   'G@roles:libvirt_cleanup':
     - libvirt.cleanup
-  'G@roles:netboot_server':
+  'G@roles:netboot_server or G@roles:netboot_server_nue2':
     - openqa.nfs_share
     - openqa.recover-nfs
+    - openqa.netboot_server
   'G@roles:gitlab_runner_vlan2242':
     - gitlab_runner_vlan2242
   'openqa-piworker.qe.nue2.suse.org':
