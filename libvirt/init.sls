@@ -15,15 +15,6 @@ include:
  - openqa.nfs_share
 {% endif %}
 
-/usr/local/bin/cleanup-openqa-assets:
-  file.managed:
-    - source: salt://libvirt/cleanup-openqa-assets
-{%- if not grains.get('noservices', False) %}
-  cron.present:
-    - user: root
-    - minute: '*/10'
-{%- endif %}
-
 {% if grains['osarch'] == 's390x' %}
 /etc/modules-load.d/kvm.conf:
   file.managed:
