@@ -77,6 +77,8 @@ base:
     - openqa.kvm_firewall
     - openqa.nfs_share
     - openqa.recover-nfs
+  'G@roles:libvirt_cleanup':
+    - libvirt.cleanup
   'G@roles:netboot_server':
     - openqa.nfs_share
     - openqa.recover-nfs
