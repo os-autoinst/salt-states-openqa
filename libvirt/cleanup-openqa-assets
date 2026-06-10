@@ -2,7 +2,12 @@
 
 [[ $(df --output=pcent "/var/lib/libvirt/images" | tail -1 | tr -dc '0-9') -gt 70 ]] || exit 0
 
-USED=$(virsh list --all --name | xargs -r -n 1 virsh domblklist --details | awk '/file|block/{print $4}')
+USED=$(virsh list --all --name | xargs -r -n 1 virsh domblklist --details --inactive | awk '/file|block/{print $4}')
+
+[[ -n "$USED" ]] || exit 0
+
+# Enable nullglob to handle case where no .qcow2 files exist
+shopt -s nullglob
 
 for img in /var/lib/libvirt/images/*.qcow2; do
     [[ -e "$img" ]] && \
