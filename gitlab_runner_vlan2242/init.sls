@@ -55,4 +55,22 @@ gitlab-runner2:
         - /etc/gitlab_runner/config2:/etc/gitlab-runner
         - /var/lib/ca-certificates/ca-bundle.pem:/etc/gitlab-runner/certs/ca.crt:ro
 
+/etc/systemd/system/docker-cleanup.service:
+  file.managed:
+    - source: salt://gitlab_runner_vlan2242/files/docker-cleanup.service
+    - user: root
+    - group: root
+    - mode: "0644"
 
+/etc/systemd/system/docker-cleanup.timer:
+  file.managed:
+    - source: salt://gitlab_runner_vlan2242/files/docker-cleanup.timer
+    - user: root
+    - group: root
+    - mode: "0644"
+
+docker-cleanup.timer:
+  service.running:
+    - enable: True
+    - watch:
+      - file: /etc/systemd/system/docker-cleanup.timer
