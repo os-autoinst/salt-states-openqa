@@ -1,0 +1,8 @@
+[Unit]
+Description=Manual prune of unused Docker images, [as recommended in gitlabs docs](https://docs.gitlab.com/runner/executors/docker/#clear-docker-build-images)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker image prune -a -f --filter until=168h
