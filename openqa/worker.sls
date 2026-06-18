@@ -175,6 +175,19 @@ worker.packages:
     - require:
       - pkg: worker.packages
 
+# Workaround for https://progress.opensuse.org/issues/201351
+# Loosen limits to allow reloads in rapid succession e.g. for deployments
+/etc/systemd/system/openqa-worker-auto-restart@.service.d/60-poo201351-reloadspam.conf:
+  file.managed:
+    - contents: |
+        [Unit]
+        StartLimitIntervalSec=5s
+        StartLimitBurst=10
+    - mode: "0644"
+    - makedirs: true
+    - require:
+      - pkg: worker.packages
+
 {%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
 {% set worker_slot_count = pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) %}
