@@ -4,7 +4,7 @@
 
 USED=$(virsh list --all --name | while read -r vm; do
   if [ -n "$vm" ]; then
-    virsh domblklist "$vm" --details --inactive
+    virsh domblklist "$vm" --details --inactive 2>/dev/null || true
     sleep 0.2
   fi
 done | awk '/file|block/{print $4}')
