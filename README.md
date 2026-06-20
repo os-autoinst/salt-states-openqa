@@ -136,6 +136,34 @@ monitoring instance:
 podman run --rm -it -v $PWD:/srv/salt -v $PWD/../salt-pillars-openqa:/srv/pillar registry.opensuse.org/home/okurz/container/containers/tumbleweed:salt-minion-git-core sh -c 'echo -e "noservices: True\nroles: monitor" >> /etc/salt/grains && salt-call -l debug --local state.apply monitoring.grafana && cat /etc/grafana/ldap.toml'
 ```
 
+### Full systemd service testing with Podman
+
+Modern versions of Podman support running systemd as the init process inside unprivileged, rootless containers. This can be used to test the full lifecycle (enable, start, stop) of managed services:
+
+```sh
+# 1. Start a systemd-enabled background container:
+podman run -d --name salt-test --systemd=always \
+  -v $PWD:/srv/salt:ro \
+  -v $PWD/../salt-pillars-openqa:/srv/pillar:ro \
+  registry.opensuse.org/home/okurz/container/ca/containers/tumbleweed:salt-minion-git-core-ssh \
+  /usr/lib/systemd/systemd
+
+# 2. Wait for systemd to reach running state inside the container:
+until podman exec salt-test systemctl is-system-running | grep -E "running|degraded"; do sleep 0.05; done
+
+# 3. Setup the role/grains inside the container:
+podman exec salt-test sh -c "echo 'roles: monitor' >> /etc/salt/grains"
+
+# 4. Apply the Salt states:
+podman exec salt-test salt-call --local state.apply
+
+# 5. Verify service states directly using systemctl inside the container:
+podman exec salt-test systemctl status telegraf
+
+# 6. Stop and remove the test container when finished:
+podman rm -f salt-test
+```
+
 To test out a single state, e.g. that `workers.ini` is generated correctly for a
 specific worker instance, use a command like:
 
