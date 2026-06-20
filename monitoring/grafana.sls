@@ -35,13 +35,14 @@ adjust_tmpfiles:
     - source: salt://monitoring/grafana/reload_grafana.sh
     - mode: "0755"
 
-{%- if not grains.get('noservices', False) %}
+{%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
 {% for grafana_overwrite in ['00-enable-reload', '01-service-fail-mail'] %}
 /etc/systemd/system/grafana-server.service.d/{{ grafana_overwrite }}.conf:
   file.managed:
     - source: salt://monitoring/grafana/{{ grafana_overwrite }}.conf
     - template: jinja
     - mode: "0644"
+    - makedirs: True
   module.run:
     - name: service.systemctl_reload
     - onchanges:
@@ -237,7 +238,7 @@ alert-cleanup:
     - source: salt://monitoring/grafana/alerting/alerts_to_delete.yaml
     - mode: "0644"
 
-{%- if not grains.get('noservices', False) %}
+{%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
 grafana-server:
   service.running:
     - enable: true

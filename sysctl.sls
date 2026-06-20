@@ -2,7 +2,7 @@
 # panics to restore services
 # https://docs.kernel.org/admin-guide/sysctl/kernel.html#panic recommends 60
 # if soft_watchdog=1
-{%- if not grains.get('noservices', False) %}
+{%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
 kernel.panic:
   sysctl.present:
     - value: 60
