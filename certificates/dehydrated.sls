@@ -68,7 +68,7 @@ dehydrated.packages:
     - runas: dehydrated
     - unless: test -n "$(ls -A /etc/dehydrated/accounts/*/)"
 
-{%- if not grains.get('noservices', False) %}
+{%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
 dehydrated-postrun-hooks:
   service.enabled
 

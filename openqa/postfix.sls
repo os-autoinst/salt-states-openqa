@@ -20,7 +20,7 @@ mailserver.packages:
     - require:
       - pkg: mailserver.packages
 
-{%- if not grains.get('noservices', False) %}
+{%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
 "config.postfix":
     cmd.run:
       - onchanges:

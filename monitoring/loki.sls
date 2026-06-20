@@ -4,7 +4,7 @@ loki:
     - refresh: False
     - retry:
         attempts: 5
-{%- if not grains.get('noservices', False) %}
+{%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
   service.running:
     - enable: true
     - reload: true
