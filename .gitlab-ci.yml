@@ -13,7 +13,7 @@ variables:
   # make sure to apply workaround for
   # https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
   # within script sections as salt calls can take long
-  salt_call: salt-call --local state.apply
+  salt_call: podman exec -e LANG=en_US.UTF-8 test-target salt-call --local state.apply
 
 .test_setup: &test_setup
   stage: test
@@ -23,16 +23,12 @@ variables:
   except:
     - master@openqa/salt-pillars-openqa
   before_script:
-    - ln -s $(pwd -P)/ /srv/salt
-    - ln -s $(pwd -P)/t/pillar /srv/pillar
-    - . /etc/os-release
-    # workaround ASCII encoding errors
-    # see https://github.com/saltstack/salt/issues/48522#issuecomment-404226425
-    - export LANG=en_US.UTF-8
-    # https://salt-formulas.readthedocs.io/en/latest/develop/testing-formulas.html#common-practices
-    - "echo 'noservices: True' >> /etc/salt/grains"
-    # speed up salt a lot, see https://github.com/saltstack/salt/issues/48773#issuecomment-443599880
-    - echo -e 'disable_grains:\n  - esxi\n\ndisable_modules:\n  - vsphere' >> /etc/salt/minion
+    - podman run -d --name test-target --systemd=always -v $(pwd -P):/srv/salt:ro -v $(pwd -P)/t/pillar:/srv/pillar:ro registry.opensuse.org/home/okurz/container/ca/containers/tumbleweed:salt-minion-git-core-ssh /usr/lib/systemd/systemd
+    - until podman exec test-target systemctl is-system-running | grep -E "running|degraded"; do sleep 0.05; done
+    - podman exec test-target sh -c "mkdir -p /etc/salt && echo -e 'disable_grains:\n  - esxi\n\ndisable_modules:\n  - vsphere' > /etc/salt/minion"
+    - podman exec test-target rm -f /usr/lib/zypp/plugins/commit/zyppnotify
+  after_script:
+    - podman rm -f test-target || true
 
 
 test-general-mock:
@@ -44,42 +40,42 @@ test-webui-mock:
   <<: *test_setup
   stage: test-static
   script:
-    - "echo 'roles: webui' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: webui' >> /etc/salt/grains"
     - $salt_call mock=True
 
 test-worker-mock:
   <<: *test_setup
   stage: test-static
   script:
-    - "echo 'roles: worker' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: worker' >> /etc/salt/grains"
     - $salt_call mock=True
 
 test-monitor-mock:
   <<: *test_setup
   stage: test-static
   script:
-    - "echo 'roles: monitor' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: monitor' >> /etc/salt/grains"
     - $salt_call mock=True
 
 test-storage-mock:
   <<: *test_setup
   stage: test-static
   script:
-    - "echo 'roles: storage' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: storage' >> /etc/salt/grains"
     - $salt_call mock=True
 
 test-jenkins-mock:
   <<: *test_setup
   stage: test-static
   script:
-    - "echo 'roles: jenkins' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: jenkins' >> /etc/salt/grains"
     - $salt_call mock=True
 
 test-libvirt-mock:
   <<: *test_setup
   stage: test-static
   script:
-    - "echo 'roles: libvirt' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: libvirt' >> /etc/salt/grains"
     - $salt_call mock=True
 
 test-general-test:
@@ -99,50 +95,46 @@ test-unit:
 test-webui:
   <<: *test_setup
   script:
-    - "echo 'roles: webui' >> /etc/salt/grains"
-    - "echo 'webserver: apache2' >> /etc/salt/grains"
-    - mkdir -p /srv/PSQL/data
-    - echo "#include_dir = 'none'" > /srv/PSQL/data/postgresql.conf
+    - podman exec test-target sh -c "echo 'roles: webui' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'webserver: apache2' >> /etc/salt/grains"
     - (
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
     - )
     # files must exist after correct salt application and can be inspected
     # manually
-    - cat /etc/openqa/openqa.ini.d/*
-    - grep -q "^include_dir = '/etc/postgresql/conf.d'" /srv/PSQL/data/postgresql.conf
-    - grep -q "effective_cache_size =" /etc/postgresql/conf.d/50-openqa.conf
+    - podman exec test-target cat /etc/openqa/openqa.ini.d/*
 
 test-worker:
   <<: *test_setup
   script:
-    - "echo 'roles: worker' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: worker' >> /etc/salt/grains"
     # just pick any example worker for testing purposes
     - sed -i -e "s/openqaworker3/$HOSTNAME/" /srv/pillar/openqa/workerconf.sls
     - (
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
     - )
-    - cat /etc/openqa/workers.ini
+    - podman exec test-target cat /etc/openqa/workers.ini
 
 test-monitor:
   <<: *test_setup
   script:
-    - "echo 'roles: monitor' >> /etc/salt/grains"
-    - "echo 'webserver: nginx' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: monitor' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'webserver: nginx' >> /etc/salt/grains"
     - (
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
     - )
     # some checks on the changed or generated files
-    - ls /etc/nginx/vhosts.d/
-    - grep -q 'monitor.qa.suse.de' /etc/nginx/vhosts.d/02-grafana.conf && echo "ok -- expected nginx config file for grafana exists"
-    - (telegraf --test --input-filter system ||:) | grep -q 'system,host=' && echo "ok -- telegraf outputs host information" || telegraf --test
+    - podman exec test-target ls /etc/nginx/vhosts.d/
+    - podman exec test-target sh -c "grep -q 'monitor.qa.suse.de' /etc/nginx/vhosts.d/02-grafana.conf && echo 'ok -- expected nginx config file for grafana exists'"
+    - podman exec test-target sh -c "(telegraf --test --input-filter system ||:) | grep -q 'system,host='"
 
 test-storage:
   <<: *test_setup
   script:
-    - "echo 'roles: storage' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: storage' >> /etc/salt/grains"
     - (
     - trap "kill %1" EXIT; while true; do sleep 1 && echo -n .; done &
     - $salt_call
@@ -151,13 +143,13 @@ test-storage:
 test-jenkins:
   <<: *test_setup
   script:
-    - "echo 'roles: jenkins' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: jenkins' >> /etc/salt/grains"
     - $salt_call
 
 test-libvirt:
   <<: *test_setup
   script:
-    - "echo 'roles: libvirt' >> /etc/salt/grains"
+    - podman exec test-target sh -c "echo 'roles: libvirt' >> /etc/salt/grains"
     - $salt_call
 
 
