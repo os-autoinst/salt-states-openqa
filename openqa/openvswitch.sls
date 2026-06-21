@@ -29,7 +29,7 @@ net.ipv4.ip_forward:
 net.ipv4.conf.br1.forwarding:
   sysctl.present:
     - value: 1
-{%- if 'bridge_iface' in pillar['workerconf'][grains['host']].keys() %}
+{%- if grains['host'] in pillar['workerconf'] and 'bridge_iface' in pillar['workerconf'][grains['host']] %}
 net.ipv4.conf.{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}.forwarding:
   sysctl.present:
     - value: 1
