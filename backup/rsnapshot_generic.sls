@@ -60,7 +60,7 @@ rsnapshot.pkgs:
         [Install]
         WantedBy=timers.target
 
-{% if not grains.get('noservices', False) %}
+{% if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
   service.running:
     - name: backup_check.timer
     - enable: true
@@ -87,7 +87,7 @@ rsnapshot.pkgs:
         [Install]
         WantedBy=timers.target
 
-{% if not grains.get('noservices', False) %}
+{% if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
   service.running:
     - name: rsnapshot-{{ backup_type }}.timer
     - enable: true
