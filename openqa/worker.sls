@@ -162,6 +162,8 @@ worker.packages:
     - makedirs: true
     - require:
       - pkg: worker.packages
+    - onchanges_in:
+      - systemd_daemon_reload
 
 # Enable IO resource monitoring/limiting to prevent load issues
 /etc/systemd/system/openqa-worker-auto-restart@.service.d/50-io-accounting.conf:
@@ -174,6 +176,8 @@ worker.packages:
     - makedirs: true
     - require:
       - pkg: worker.packages
+    - onchanges_in:
+      - systemd_daemon_reload
 
 # Workaround for https://progress.opensuse.org/issues/201351
 # Loosen limits to allow reloads in rapid succession e.g. for deployments
@@ -187,6 +191,9 @@ worker.packages:
     - makedirs: true
     - require:
       - pkg: worker.packages
+    - onchanges_in:
+      - systemd_daemon_reload
+      - aksdfasfdascaljhflcasbclsaj
 
 {%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
@@ -200,12 +207,6 @@ openqa-worker-auto-restart@{{ i }}:
       - fun: service.masked
         args:
           - openqa-worker-auto-restart@{{ i }}
-    - watch:
-      {%- if grains.get('openqa_store') or (grains.get('SSDs', grains.get('ssds'))|map('regex_search', '(nvme)')|select|list|length > 0 and grains.get('format_nvme', True)) %}
-      - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf
-      {%- endif %}
-      - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/30-openqa-max-inactive-caching-downloads.conf
-      - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/50-io-accounting.conf
 {% if loop.first %}
     - require:
       - pkg: worker.packages
@@ -395,3 +396,10 @@ kernel.softlockup_panic:
   file.managed:
     - source: salt://openqa/openqa-worker-services.sh
     - mode: "0755"
+
+{%- if not grains.get('noservices', False) %}
+# only gets executed if other states require it via onchanges_in (e.g. drop-in config overrides)
+systemd_daemon_reload:
+  cmd.run:
+    - name: systemctl daemon-reload
+{% endif %}
