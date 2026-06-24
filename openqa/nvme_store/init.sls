@@ -15,12 +15,16 @@ server.packages:
     - name: /etc/systemd/system/openqa_nvme_format.service
     - mode: "0644"
     - source: salt://openqa/nvme_store/openqa_nvme_format.service
+    - onchanges_in:
+      - systemd_daemon_reload
 
 /etc/systemd/system/openqa_nvme_prepare.service:
   file.managed:
     - name: /etc/systemd/system/openqa_nvme_prepare.service
     - mode: "0644"
     - source: salt://openqa/nvme_store/openqa_nvme_prepare.service
+    - onchanges_in:
+      - systemd_daemon_reload
 
 /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf:
   file.managed:
@@ -28,6 +32,8 @@ server.packages:
     - mode: "0644"
     - source: salt://openqa/nvme_store/openqa-worker@_override.conf
     - makedirs: true
+    - onchanges_in:
+      - systemd_daemon_reload
 
 /var/lib/openqa:
   mount.mounted:
@@ -46,6 +52,8 @@ server.packages:
     - mode: "0644"
     - source: salt://openqa/nvme_store/var-lib-openqa.mount_override.conf
     - makedirs: true
+    - onchanges_in:
+      - systemd_daemon_reload
 
 /usr/local/bin/openqa-establish-nvme-setup:
   file.managed:
@@ -53,15 +61,4 @@ server.packages:
     - mode: "0755"
     - source: salt://openqa/nvme_store/openqa-establish-nvme-setup.sh
     - makedirs: true
-
-{%- if not grains.get('noservices', False) %}
-nvme mount overrides reload:
-  module.wait:
-    - name: service.systemctl_reload
-    - watch:
-      - file: /etc/systemd/system/var-lib-openqa.mount.d/override.conf
-      - file: /etc/systemd/system/openqa-worker-auto-restart@.service.d/20-nvme-autoformat.conf
-      - file: /etc/systemd/system/openqa_nvme_format.service
-      - file: /etc/systemd/system/openqa_nvme_prepare.service
-{% endif %}
 {% endif %}
