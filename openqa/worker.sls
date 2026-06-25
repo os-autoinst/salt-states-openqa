@@ -193,7 +193,6 @@ worker.packages:
       - pkg: worker.packages
     - onchanges_in:
       - systemd_daemon_reload
-      - aksdfasfdascaljhflcasbclsaj
 
 {%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
