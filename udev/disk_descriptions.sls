@@ -6,7 +6,7 @@
     - group: root
     - mode: '0644'
     - makedirs: True
-{%- if not grains.get('noservices', False) %}
+{%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
   cmd.run:
     - name: 'udevadm trigger'
     - onchanges:

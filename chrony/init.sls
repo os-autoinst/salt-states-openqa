@@ -11,7 +11,7 @@ ntp:
   file.managed:
     - source: salt://chrony/suse.conf
 
-{%- if not grains.get('noservices', False) %}
+{%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
 chronyd:
   service.running:
     - enable: True

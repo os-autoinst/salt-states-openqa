@@ -11,7 +11,7 @@ nfs-client:
 
 {%- if not grains.get('noservices', False) %}
 {#- Refer https://gitlab.suse.de/openqa/salt-pillars-openqa/-/blob/master/openqa/commonconf.sls -#}
-{%- if pillar['commonconf']['nfspath']['source'] != 'None' %}
+{%- if pillar['commonconf']['nfspath'] is mapping and pillar['commonconf']['nfspath']['source'] != 'None' %}
 {%- if pillar['commonconf']['nfspath']['source'] | length == pillar['commonconf']['nfspath']['mountpoint'] | length -%}
 {%- if pillar['commonconf']['nfspath']['source'] is iterable and pillar['commonconf']['nfspath']['mountpoint'] is iterable %}
 {%- for src, mnt in pillar['commonconf']['nfspath']['source'] | zip(pillar['commonconf']['nfspath']['mountpoint']) %}

@@ -14,7 +14,7 @@ rsnapshot.pkgs:
     - group: root
     - mode: "0644"
 
-{%- if not grains.get('noservices', False) %}
+{%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
 # add the service and timers for rsnapshot
 rsnapshot_service:
   file.managed:
