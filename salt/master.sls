@@ -42,3 +42,6 @@ master_config:
         auth_events: false
         # https://www.uyuni-project.org/uyuni-docs/en/uyuni/specialized-guides/large-deployments/tuning.html#minion-data-cache-events
         minion_data_cache_events: false
+        # https://progress.opensuse.org/issues/200012
+        rotate_aes_key: true
+        ping_on_rotate: true
