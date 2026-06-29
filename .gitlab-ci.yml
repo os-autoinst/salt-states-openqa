@@ -13,7 +13,7 @@ variables:
   # make sure to apply workaround for
   # https://gitlab.com/gitlab-org/gitlab-runner/issues/4119
   # within script sections as salt calls can take long
-  salt_call: salt-call --local state.apply
+  salt_call: salt-call --local --log-file=salt_$CI_JOB_NAME.log --log-file-level=info --state-output=changes state.apply
 
 .test_setup: &test_setup
   stage: test
@@ -33,6 +33,11 @@ variables:
     - "echo 'noservices: True' >> /etc/salt/grains"
     # speed up salt a lot, see https://github.com/saltstack/salt/issues/48773#issuecomment-443599880
     - echo -e 'disable_grains:\n  - esxi\n\ndisable_modules:\n  - vsphere' >> /etc/salt/minion
+  artifacts:
+    when: always
+    paths:
+      - salt_*.log
+    expire_in: 1 week
 
 
 test-general-mock:
