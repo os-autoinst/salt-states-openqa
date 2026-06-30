@@ -77,6 +77,8 @@ base:
     - openqa.kvm_firewall
     - openqa.nfs_share
     - openqa.recover-nfs
+  'G@drbd_single_node:True':
+    - libvirt.drbd_single_node
   'G@roles:libvirt_cleanup':
     - libvirt.cleanup
   'G@roles:netboot_server or G@roles:netboot_server_nue2':
