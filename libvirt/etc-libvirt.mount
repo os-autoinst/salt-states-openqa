@@ -1,0 +1,18 @@
+[Unit]
+Description=Mount DRBD device with libvirtd configs
+After=network.target
+After=drbd-promote@r0.service
+BindsTo=drbd-promote@r0.service
+Before=libvirtd.service
+Before=virtqemud.service
+DefaultDependencies=No
+
+[Mount]
+What=/dev/drbd0
+Where=/etc/libvirt
+Type=btrfs
+Options=defaults,subvol=libvirt-configs
+
+[Install]
+WantedBy=multi-user.target
+RequiredBy=virtqemud.socket
