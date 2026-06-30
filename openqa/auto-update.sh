@@ -14,7 +14,7 @@ zypper_patch() {
         ret=$?
         set -e
     fi
-    [[ $ret == 102 ]] && ret=0 # don't interpret exit code [102 - ZYPPER_EXIT_INF_REBOOT_NEEDED] as an error
+    [[ $ret == 102 || $ret == 103 || $ret == 107 ]] && ret=0
     return $ret
 }
 
