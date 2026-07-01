@@ -31,6 +31,7 @@ base:
     - openqa.links
     - openqa.openqa-trigger-from-ibs
     - certificates.dehydrated
+    - certificates.uefi-cert-update
   'G@roles:suse_metrics':
     - monitoring.maintenance_queue
     - monitoring.submissions_queue

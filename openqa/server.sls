@@ -2,6 +2,7 @@ include:
  - openqa.repos
  - openqa.journal
  - logrotate
+ - ca-certificates
 
 server.packages:
   pkg.installed:
@@ -396,10 +397,13 @@ gitconfig:
 # workaround for git.cloned not being able to clone into existing directory
 # owned by correct user
 # https://github.com/saltstack/salt/issues/55926
-'git clone https://gitlab.suse.de/qe/git-sha-verify /opt/git-sha-verify/':
+git-sha-verify:
   cmd.run:
+    - name: git clone https://gitlab.suse.de/qe/git-sha-verify /opt/git-sha-verify/
     - runas: geekotest
     - creates: /opt/git-sha-verify/.git/
+    - require:
+      - pkg: ca-certificates-suse
 
 /opt/os-autoinst-scripts/:
   file.directory:
@@ -419,6 +423,8 @@ git-clone-os-autoinst-scripts:
     - name: /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts/ https://github.com/os-autoinst/os-autoinst-scripts.git
     - creates: /opt/os-autoinst-scripts/.git/
     - runas: geekotest
+    - require:
+      - cmd: git-sha-verify
 
 # Reference: https://progress.opensuse.org/issues/191449
 /etc/systemd/system/update-os-autoinst-scripts.service:
