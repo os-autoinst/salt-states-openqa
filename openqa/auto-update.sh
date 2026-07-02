@@ -14,7 +14,11 @@ zypper_patch() {
         ret=$?
         set -e
     fi
-    [[ $ret == 102 ]] && ret=0 # don't interpret exit code [102 - ZYPPER_EXIT_INF_REBOOT_NEEDED] as an error
+    # Forgive Zypper informational exit codes (>= 100):
+    # - 102: ZYPPER_EXIT_INF_REBOOT_NEEDED (a system reboot is suggested)
+    # - 103: ZYPPER_EXIT_INF_RESTART_NEEDED (zypp itself updated; next loop iteration will continue updates)
+    # - 107: ZYPPER_EXIT_INF_RPM_SCRIPT_FAILED (post-install scriptlet failed but packages are unpacked/installed)
+    [[ $ret == 102 || $ret == 103 || $ret == 107 ]] && ret=0
     return $ret
 }
 
