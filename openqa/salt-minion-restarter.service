@@ -1,0 +1,7 @@
+
+[Unit]
+Description=Restart salt minion service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl restart salt-minion
