@@ -47,8 +47,6 @@ kdump-conf:
 kdump-service:
   service.enabled:
     - name: kdump.service
-    - watch:
-      - augeas: kdump-conf
 
 check-for-kernel-crash:
   service.enabled
