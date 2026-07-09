@@ -45,3 +45,6 @@ master_config:
         # https://progress.opensuse.org/issues/200012
         rotate_aes_key: true
         ping_on_rotate: true
+        # hide information for successful states by default
+        state_verbose: false
+        state_output: changes
