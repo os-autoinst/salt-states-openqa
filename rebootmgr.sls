@@ -16,6 +16,7 @@ ensure_legacy_file:
   file.managed:
     - name: {{ legacy_config }}
     - makedirs: True
+    - replace: False
 
 ensure_legacy_config:
   file.replace:
@@ -35,6 +36,7 @@ ensure_file:
   file.managed:
     - name: {{ rebootmgr_config }}
     - makedirs: True
+    - replace: False
 
 ensure_config:
   ini.options_present:
