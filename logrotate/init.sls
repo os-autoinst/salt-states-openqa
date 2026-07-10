@@ -30,7 +30,6 @@ logrotate timer reload:
   module.wait:
     - name: service.systemctl_reload
     - watch:
-      - file: /etc/systemd/system/logrotate.service.d/override.conf
       - file: /etc/systemd/system/logrotate-openqa.service
       - file: /etc/systemd/system/logrotate-openqa.timer
 {%- endif %}
