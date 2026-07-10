@@ -4,11 +4,6 @@ logrotate:
     - retry:
         attempts: 5
 
-/etc/systemd/system/logrotate.service.d/override.conf:
-  file.managed:
-    - source: salt://logrotate/override.conf
-    - makedirs: True
-
 /etc/systemd/system/logrotate.timer.d/override.conf:
    file.absent
 
