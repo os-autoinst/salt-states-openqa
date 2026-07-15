@@ -1,0 +1,10 @@
+[Unit]
+Description=Perform a salt connectivity check from the minion host and try to automatically recover the salt-minion service if that fails - see https://progress.opensuse.org/issues/203598
+After=network.target
+StartLimitInterval=3600
+StartLimitBurst=12
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/salt-call test.ping
+OnFailure=salt-minion-restarter.service
