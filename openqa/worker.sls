@@ -203,7 +203,7 @@ worker.packages:
 {% for unit in ['check.service', 'check.timer', 'restarter.conf'] %}
 salt-minion-{{ unit }}:
   file.managed:
-    - name: /etc/systemd/system/salt-minion-{{ unit }}:
+    - name: /etc/systemd/system/salt-minion-{{ unit }}
     - source: salt://openqa/salt-minion-{{ unit }}
   module.run:
     - name: service.systemctl_reload
