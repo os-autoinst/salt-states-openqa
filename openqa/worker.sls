@@ -200,7 +200,7 @@ worker.packages:
       - systemd_daemon_reload
 
 {%- if not grains.get('noservices', False) %}
-{% for unit in ['check.service', 'check.timer', 'restarter.conf'] %}
+{% for unit in ['check.service', 'check.timer', 'restarter.service'] %}
 salt-minion-{{ unit }}:
   file.managed:
     - name: /etc/systemd/system/salt-minion-{{ unit }}
