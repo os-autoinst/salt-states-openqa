@@ -700,7 +700,7 @@ groups:
                 conditions:
                     - evaluator:
                         params:
-                            - 90
+                            - 92
                         type: gt
                       operator:
                         type: or
@@ -722,7 +722,7 @@ groups:
                         type: avg
                     - evaluator:
                         params:
-                            - 90
+                            - 92
                         type: gt
                       operator:
                         type: or
@@ -744,7 +744,7 @@ groups:
                         type: avg
                     - evaluator:
                         params:
-                            - 90
+                            - 92
                         type: gt
                       operator:
                         type: or
