@@ -208,7 +208,7 @@ salt-minion-{{ unit }}:
   module.run:
     - name: service.systemctl_reload
     - onchanges:
-      - file: salt_minion_{{ unit }}
+      - file: salt-minion-{{ unit }}
 {% endfor %}
 
 # start services based on numofworkers set in workerconf pillar
