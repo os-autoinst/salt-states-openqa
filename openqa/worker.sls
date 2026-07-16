@@ -44,7 +44,11 @@ worker.packages:
       - net-snmp # for generalhw backend
       - libcap-progs # for TAPSCRIPT
       - bridge-utils # for TAPSCRIPT and TAP support
-      - ffmpeg-4 # For VP9/AV-1 support in os-autoinst
+      {%- if salt['pkg.version_cmp'](grains['osrelease'], '15.6') <= 0 %}
+      - ffmpeg-4 # For VP9 support in os-autoinst; Leap <=15.6 has no newer ffmpeg
+      {%- else %}
+      - ffmpeg-7 # For VP9/AV-1 support in os-autoinst; bump explicitly once newer OS drops ffmpeg-7
+      {%- endif %}
       - qemu: '>=2.3'
       {% if grains['osarch'] == 'x86_64' %}
       - qemu-x86
