@@ -4,7 +4,7 @@ rebootmgr:
     - retry:
         attempts: 5
 
-{% set rebootmgr_version = salt['pkg.version']('rebootmgr') %}
+{% set rebootmgr_version = grains.get('rebootmgr_version') %}
 {% set is_legacy = salt['pkg.version_cmp'](rebootmgr_version, '3.0') == -1 %}
 {% set legacy_config = "/etc/rebootmgr.conf" %}
 {% set rebootmgr_config = "/etc/rebootmgr/rebootmgr.conf.d/20-old-rebootmgr.conf" %}
