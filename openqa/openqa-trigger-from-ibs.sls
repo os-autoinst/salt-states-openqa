@@ -76,7 +76,6 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 
 {{ scriptgen('SUSE:SLFO:Products:SL-Micro:6.2:ToTest') }}
 {{ scriptgen('SUSE:SLFO:Products:SLES:16.0:TEST') }}
-{{ scriptgen('SUSE:SLFO:Products:SLES:16.1:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP7:Update:QR:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP4:Update:Products:SLERT') }}
 # BCI repo trigger
