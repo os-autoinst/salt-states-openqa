@@ -1,537 +1,144 @@
 {
-  "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": {
-          "type": "datasource",
-          "uid": "grafana"
-        },
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "target": {
-          "limit": 100,
-          "matchAny": false,
-          "tags": [],
-          "type": "dashboard"
-        },
-        "type": "dashboard"
-      }
-    ]
+  "id": 4,
+  "type": "table",
+  "title": "Packet loss between worker hosts and other hosts",
+  "description": "Shows packet loss within the the QA network infrastructure.\n\nThe first hostname is a salt managed host. The second hostname is a host listed under `required_external_networks` in `workerconf.sls` in the pillars repository that is pinged from the source host. See https://gitlab.suse.de/suse/wiki/-/blob/main/qe_infrastructure.md for details about hosts.",
+  "gridPos": {
+    "x": 0,
+    "y": 0,
+    "h": 9,
+    "w": 12
   },
-  "description": "Panels/alerts for the monitoring itself",
-  "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 1,
-  "links": [],
-  "liveNow": false,
-  "panels": [
-    {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
+  "fieldConfig": {
+    "defaults": {
+      "custom": {
+        "align": "auto",
+        "footer": {
+          "reducers": []
+        },
+        "cellOptions": {
+          "type": "auto"
+        },
+        "inspect": false
+      },
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
           {
-            "evaluator": {
-              "params": [
-                50
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "4h",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "At least one host listed under `required_external_networks` in `workerconf.sls` in the pillars repository is not pingable from at least one openQA worker host.\n\nCheck the panel associated with the alert. The legend table on the right shows the problematic hosts on top.",
-        "name": "Packet loss between worker hosts and other hosts alert",
-        "noDataState": "keep_state",
-        "notifications": [
+            "color": "green",
+            "value": null
+          },
           {
-            "uid": "2ACofrdWz"
+            "color": "red",
+            "value": 80
           }
         ]
       },
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
+      "color": {
+        "mode": "thresholds"
       },
-      "description": "Shows packet loss within the the QA network infrastructure.\n\nThe first hostname is a salt managed host. The second hostname is a host listed under `required_external_networks` in `workerconf.sls` in the pillars repository that is pinged from the source host. See https://gitlab.suse.de/suse/wiki/-/blob/main/qe_infrastructure.md for details about hosts.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "Packet loss reported by ping",
-            "axisPlacement": "left",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 4,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "sortBy": "Last *",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "alias": "$tag_host - $tag_url",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "url"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ping",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"percent_packet_loss\") FROM \"ping\" AND $timeFilter GROUP BY time($__interval), \"url\" fill(null)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "percent_packet_loss"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "network::tag",
-              "operator": "=",
-              "value": "external"
-            }
-          ]
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "op": "gt",
-          "value": 50,
-          "visible": true
-        }
-      ],
-      "title": "Packet loss between worker hosts and other hosts",
-      "type": "timeseries"
+      "max": 100,
+      "min": 0,
+      "unit": "percent"
+    },
+    "overrides": []
+  },
+  "transformations": [
+    {
+      "id": "seriesToRows",
+      "options": {}
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "HTPP response time",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 5,
-      "interval": "1m",
+      "id": "filterByValue",
       "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "sortBy": "Max",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "targets": [
-        {
-          "alias": "$tag_server - $tag_host",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "000000001"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host::tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "server::tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "http_response",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "response_time"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ]
-        }
-      ],
-      "title": "HTTP response time between worker hosts and other hosts",
-      "type": "timeseries"
-    },
-    {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
+        "filters": [
           {
-            "evaluator": {
-              "params": [
-                0
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "no-data-query",
-                "10s",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "20m",
-        "frequency": "15s",
-        "handler": 1,
-        "message": "InfluxDB not reachable for too long. The means the rest of the monitoring is currently broken. Check `systemctl status influxdb.service` on the monitoring host. InfluxDB is supposed to respond to HTTP requests on port 8086, use e.g. `curl http://localhost:8086/query` on the monitoring host to verify whether it responds.",
-        "name": "InfluxDB not reachable",
-        "noDataState": "ok",
-        "notifications": [
-          {
-            "uid": "2ACofrdWz"
-          }
-        ]
-      },
-      "datasource": {
-        "type": "influxdb",
-        "uid": "000000001"
-      },
-      "description": "This panel contains no data. Its only purpose is the InfluxDB alert.\n\nThis alert is only supposed to catch \"execution errors\" like `tsdb.HandleRequest() error Get \"http://localhost:8086/query?…: dial tcp [::1]:8086: connect: connection refused`. Hence there's just a query which is never supposed to return any data which is treated as \"ok\" and only execution errors trigger the alert.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "line+area"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "transparent",
-                "value": null
-              },
-              {
-                "color": "red",
+            "fieldName": "Value",
+            "config": {
+              "id": "greater",
+              "options": {
                 "value": 0
               }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 4,
-        "x": 10,
-        "y": 9
-      },
-      "id": 2,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "10.1.5",
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "non-existant",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "no-data-query",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "failed"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "title": "Panel for InfluxDB alert",
-      "type": "timeseries"
+            }
+          }
+        ],
+        "type": "include",
+        "match": "any"
+      }
     }
   ],
-  "refresh": "",
-  "schemaVersion": 38,
-  "style": "dark",
-  "tags": [],
-  "templating": {
-    "list": []
+  "pluginVersion": "12.4.5",
+  "targets": [
+    {
+      "alias": "$tag_host - $tag_url",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "000000001"
+      },
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "url"
+          ],
+          "type": "tag"
+        },
+        {
+          "params": [
+            "host"
+          ],
+          "type": "tag"
+        },
+        {
+          "params": [
+            "null"
+          ],
+          "type": "fill"
+        }
+      ],
+      "measurement": "ping",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "query": "SELECT mean(\"percent_packet_loss\") FROM \"ping\" WHERE (\"network\"::tag = 'external') AND $timeFilter GROUP BY time($__interval), \"url\", \"host\" fill(null)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "percent_packet_loss"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "mean"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "network::tag",
+          "operator": "=",
+          "value": "external"
+        }
+      ]
+    }
+  ],
+  "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
   },
-  "time": {
-    "from": "now-6h",
-    "to": "now"
-  },
-  "timepicker": {},
-  "timezone": "",
-  "title": "Monitoring",
-  "uid": "EML0bpuGk",
-  "version": 16,
-  "weekStart": ""
+  "options": {
+    "showHeader": true,
+    "cellHeight": "sm",
+    "frameIndex": 2
+  }
 }
