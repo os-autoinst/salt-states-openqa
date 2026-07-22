@@ -3,8 +3,8 @@ Description=Perform a salt connectivity check from the minion host and try to au
 After=network.target
 StartLimitInterval=3600
 StartLimitBurst=12
+OnFailure=salt-minion-restarter.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/salt-call test.ping
-OnFailure=salt-minion-restarter.service
+ExecStart=/bin/bash -c "/usr/bin/ss -nt -p | /usr/bin/grep salt-minion"
