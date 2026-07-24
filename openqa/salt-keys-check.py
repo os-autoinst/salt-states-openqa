@@ -18,7 +18,10 @@ states = {
     "denied": j["minions_denied"],
 }
 
-backlog = requests.get("https://progress.opensuse.org/issues.json?query_id=757").json()
+backlog = requests.get(
+    "https://progress.opensuse.org/issues.json?query_id=757&limit=999"
+).json()
+
 
 def get_ticket(minion):
     for issue in backlog["issues"]:
