@@ -21,9 +21,9 @@ others.
 5. Configure the machine's role by putting e.g. `/etc/salt/grains` in
    `roles: worker` if applicable. By default with a role only generic states
    will be applied.
-6. If the machine have only one NVMe with its rootfs on it, set `format_nvme: False` in `/etc/salt/grains`.
-7. If it is an openQA worker, add it to `workerconf.sls` in our Salt pillars.
-8. Invoke `systemctl enable --now salt-minion` and use to see what is happening
+6. If the machine has only one NVMe with its rootfs on it, set `format_nvme: False` in `/etc/salt/grains`.
+7. If it is an openQA worker, add its desired config to `workerconf.sls` in our Salt pillars.
+8. Invoke `systemctl enable --now salt-minion` and tail its logs to see what is happening
    `tail -f /var/log/salt/minion`.
 9. Invoke `sudo salt-key --accept=…` on the "master" (e.g. OSD).
 10. Run a command like `sudo salt -C 'G@nodename:… or G@nodename:…' -l error --state-output=changes state.apply`
