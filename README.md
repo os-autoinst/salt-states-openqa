@@ -20,12 +20,13 @@ others.
     * Most importantly, set the "master", e.g. `echo 'master: openqa.suse.de' >> /etc/salt/minion`
 5. Configure the machine's role by putting e.g. `/etc/salt/grains` in
    `roles: worker` if applicable. By default with a role only generic states
-   will be
-6. If it is an openQA worker, add it to `workerconf.sls` in our Salt pillars.
-7. Invoke `systemctl enable --now salt-minion` and use to see what is happening
+   will be applied.
+6. If the machine have only one NVMe with its rootfs on it, set `format_nvme: False` in `/etc/salt/grains`.
+7. If it is an openQA worker, add it to `workerconf.sls` in our Salt pillars.
+8. Invoke `systemctl enable --now salt-minion` and use to see what is happening
    `tail -f /var/log/salt/minion`.
-8. Invoke `sudo salt-key --accept=…` on the "master" (e.g. OSD).
-9. Run a command like `sudo salt -C 'G@nodename:… or G@nodename:…' -l error --state-output=changes state.apply`
+9. Invoke `sudo salt-key --accept=…` on the "master" (e.g. OSD).
+10. Run a command like `sudo salt -C 'G@nodename:… or G@nodename:…' -l error --state-output=changes state.apply`
    on the "master" until no failing salt states are remaining
 
 ### Clone repositories for using Salt locally
