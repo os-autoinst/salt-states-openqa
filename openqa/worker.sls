@@ -186,6 +186,7 @@ worker.packages:
 # Workaround for https://progress.opensuse.org/issues/201351
 # Loosen limits to allow reloads in rapid succession e.g. for deployments
 # Use exponential backoff to slow down restarts
+# Count failure due to auto restart as successful to avoid alerts
 /etc/systemd/system/openqa-worker-auto-restart@.service.d/60-poo201351-reloadspam.conf:
   file.managed:
     - contents: |
@@ -196,6 +197,7 @@ worker.packages:
         RestartSec=3
         RestartMaxDelaySec=1m
         RestartSteps=5
+        SuccessExitStatus=FAILURE
     - mode: "0644"
     - makedirs: true
     - require:
