@@ -27,6 +27,11 @@ mailserver.packages:
         - file: /etc/sysconfig/mail
         - file: /etc/sysconfig/postfix
 
+root_mail_forward:
+  alias.present:
+    - name: root
+    - target: osd-admins@suse.de, \root
+
 postfix:
   service.running:
     - name: postfix
@@ -39,11 +44,6 @@ postfix:
     - require:
       - pkg: mailserver.packages
 {%- endif %}
-
-root_mail_forward:
-  alias.present:
-    - name: root
-    - target: osd-admins@suse.de, \root
 
 /etc/systemd/system/kdump-notify.service.d/wait-for-postfix.conf:
   file.managed:
