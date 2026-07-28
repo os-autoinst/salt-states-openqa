@@ -1377,12 +1377,12 @@ groups:
       interval: 1m
       rules:
         - uid: d471ecd1-2d5c-418b-bd03-2b6b206fd27a
-          title: 'Disk I/O time for $host_disks'
+          title: 'Disk I/O time'
           condition: C
           data:
             - refId: A
               relativeTimeRange:
-                from: 3600
+                from: 300
                 to: 0
               datasourceUid: "000000001"
               model:
@@ -1450,7 +1450,7 @@ groups:
                 expression: A
                 intervalMs: 1000
                 maxDataPoints: 43200
-                reducer: max
+                reducer: median
                 refId: B
                 type: reduce
             - refId: C
