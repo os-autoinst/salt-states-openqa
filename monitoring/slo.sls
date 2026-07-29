@@ -21,4 +21,4 @@ tools:
     - name: https://github.com/os-autoinst/qa-tools-backlog-assistant.git
     - target: /etc/telegraf/scripts/tools-backlog
     - depth: 1
-    - rev: master
+    - rev: main
