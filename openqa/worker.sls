@@ -197,7 +197,7 @@ worker.packages:
         RestartSec=3
         RestartMaxDelaySec=1m
         RestartSteps=5
-        SuccessExitStatus=FAILURE
+        SuccessExitStatus=FAILURE HUP
     - mode: "0644"
     - makedirs: true
     - require:
