@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+import subprocess
+import network_backend
+
 # use salt.utils.network directly (instead of salt.modules.network) to workaround
 # https://github.com/saltstack/salt/issues/58860 and https://progress.opensuse.org/issues/94994
 import salt.utils.network
@@ -51,3 +54,27 @@ def default_interface():
             grains['default_interface'] = fields[0]
             break
     return grains
+
+def _run_nmcli(args):
+    try:
+        # Pass the command and arguments as a list
+        result = subprocess.run(
+            ['nmcli'] + args,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing nmcli: {e.stderr.strip()}")
+        return None
+
+def default_nmconnection():
+    nm_conn_grain = {}
+    nw_backend = network_backend.network_backend()
+    print(nw_backend['network_backend'])
+    if nw_backend['network_backend'] == 'NetworkManager':
+        def_iface = default_interface()
+        nm_conn = _run_nmcli(['-g', 'GENERAL.CONNECTION', 'device', 'show', def_iface['default_interface']])
+        nm_conn_grain['default_nmconnection'] = nm_conn
+    return nm_conn_grain
