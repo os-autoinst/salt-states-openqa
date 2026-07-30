@@ -11,8 +11,7 @@ network_mtu:
     - key_values:
         MTU: "1500"
 {%- else %}
-{%- set nm_conn = salt['cmd.run']('nmcli -g GENERAL.CONNECTION device show ' ~ def_iface) %}
   cmd.run:
-    - name: nmcli connection modify "{{ nm_conn }}" 802-3-ethernet.mtu 1500
+    - name: nmcli connection modify "$(nmcli -g GENERAL.CONNECTION device show {{ def_iface }})" 802-3-ethernet.mtu 1500
 {%- endif %}
 {%- endif %}
