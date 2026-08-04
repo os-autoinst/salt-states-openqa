@@ -103,6 +103,7 @@ deploy:
         '
         exit $status
       fi
+  timeout: 2h
   after_script:
     - *setup_script
     - scp $TARGET:salt_\*.log . || true
