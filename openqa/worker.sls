@@ -234,8 +234,6 @@ openqa-worker-auto-restart@{{ i }}:
       - pkg: worker.packages
       - stop_and_disable_all_not_configured_workers
 {% endif %}
-    - onchanges_in:
-      - systemd_daemon_reload
 
 openqa-reload-worker-auto-restart@{{ i }}.path:
   service.running:
@@ -248,8 +246,6 @@ openqa-reload-worker-auto-restart@{{ i }}.path:
       - fun: service.masked
         args:
           - openqa-reload-worker-auto-restart@{{ i }}
-    - onchanges_in:
-      - systemd_daemon_reload
 {% endfor %}
 
 # switch from openqa-worker-plain@ to openqa-worker-auto-restart@
