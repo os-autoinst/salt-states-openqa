@@ -216,6 +216,46 @@ openqa_user_ssh:
               IdentityFile ~/.ssh/id_ed25519.gitlab
               IdentitiesOnly yes
 
+{% set github_token = salt['pillar.get']('github:token', '') %}
+{% set git_credentials_file = '/var/lib/openqa/.git-credentials' %}
+
+{% if not github_token %}
+{{ git_credentials_file }}:
+  file.absent:
+    - name: {{ git_credentials_file }}
+
+git_credential_helper_unset:
+  git.config_unset:
+    - name: credential.helper
+    - user: geekotest
+    - global: True
+    - all: False
+
+require_github_token:
+  test.fail_without_changes:
+    - name: "The github:token pillar is missing! It is required to prevent GitHub rate-limiting."
+    - require:
+      - file: {{ git_credentials_file }}
+      - git: git_credential_helper_unset
+{% else %}
+{{ git_credentials_file }}:
+  file.managed:
+    - user: geekotest
+    - group: nogroup
+    - mode: "0600"
+    - contents: "https://x-access-token:{{ github_token }}@github.com"
+    - show_changes: False
+
+git_credential_helper:
+  git.config_set:
+    - name: credential.helper
+    - value: store
+    - user: geekotest
+    - global: True
+    - require:
+      - file: {{ git_credentials_file }}
+{% endif %}
+
 {%- endif %}
 
 # this relies on presence of devices and mounted partitions which are only
