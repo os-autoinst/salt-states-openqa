@@ -8,7 +8,6 @@ base:
   'G@roles:webui':
     - openqa.server
     - certificates.hosts
-    - github.credentials
   'G@roles:monitor':
     - certificates.hosts
     - openqa.monitoring
