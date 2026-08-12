@@ -24,7 +24,7 @@ openqa-trigger-from-ibs:
       - python3
 
   git.latest:
-    - name: https://github.com/os-autoinst/openqa-trigger-from-obs
+    - name: git@github.com:os-autoinst/openqa-trigger-from-obs.git
     - target: {{ dir }}
     - user: geekotest
 
@@ -44,7 +44,7 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
     - cwd: {{ dir }}
     - onchanges_any:
       - file: {{ dir }}{{ prj }}
-      - git: https://github.com/os-autoinst/openqa-trigger-from-obs
+      - git: git@github.com:os-autoinst/openqa-trigger-from-obs.git
       - git: https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin
 {%- endmacro %}
 
