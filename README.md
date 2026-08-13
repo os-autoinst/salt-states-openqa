@@ -12,7 +12,7 @@ others.
    that the involved DNS server(s) need to have a valid reverse DNS entry so
    that each host is easily discoverable.
 2. Ensure Salt and a few useful utilities are installed:
-   `zypper in salt-minion git-core htop vim systemd-coredump`
+   `zypper in salt-minion git-core htop vim systemd-coredump hostname`
 3. Set `/etc/salt/minion_id` and `/etc/hostname` to the FQDN and hostname
    respectively.
 4. Configure `/etc/salt/minion` similar to the other production hosts (by just
