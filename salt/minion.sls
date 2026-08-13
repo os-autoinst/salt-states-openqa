@@ -8,26 +8,27 @@ salt-minion:
     - name: salt-minion
 {%- endif %}
 
-# see https://build.opensuse.org/package/view_file/openSUSE:Leap:15.1/salt/use-adler32-algorithm-to-compute-string-checksums.patch
-/etc/salt/minion:
+# Clean up old tuning/workaround configurations from /etc/salt/minion on existing nodes
+# as they are now consolidated into /etc/salt/minion.d/99-tuning.conf
+clean_old_minion_tweaks:
   file.replace:
-    - pattern: '^(server_id_use_crc: )(.*)$'
-    - repl: 'server_id_use_crc: adler32'
-    - append_if_not_found: True
-
-minion_config:
-  file.managed:
-    - names:
-      - /etc/salt/minion.d/x509.conf:
-        - source: salt://etc/salt/minion.d/x509.conf
-
-# speed up salt a lot, see https://github.com/saltstack/salt/issues/48773#issuecomment-443599880
-speedup_minion:
-  file.serialize:
     - name: /etc/salt/minion
+    - pattern: '(?m)^(server_id_use_crc|random_reauth_delay|recon_default|recon_max|recon_randomize|master_tries|auth_safemode|multiprocessing):.*(?:\n|$)|^disable_(grains|modules):\n(?:[ \t]*- .*(?:\n|$))*'
+    - repl: ''
+    - require:
+      - pkg: salt-minion
+
+# Consolidate minion tweaks into a dedicated drop-in file instead of clobbering /etc/salt/minion
+minion_tuning:
+  file.serialize:
+    - name: /etc/salt/minion.d/99-tuning.conf
     - serializer: yaml
     - merge_if_exists: True
     - dataset:
+        # see https://build.opensuse.org/package/view_file/openSUSE:Leap:15.1/salt/use-adler32-algorithm-to-compute-string-checksums.patch
+        server_id_use_crc: adler32
+
+        # speed up salt a lot, see https://github.com/saltstack/salt/issues/48773#issuecomment-443599880
         disable_grains:
           - esxi
         disable_modules:
@@ -41,11 +42,11 @@ speedup_minion:
         master_tries: -1
         auth_safemode: True
 
-# workaround https://github.com/saltstack/salt/issues/59141
-workaround_minion_race:
-  file.serialize:
-    - name: /etc/salt/minion
-    - serializer: yaml
-    - merge_if_exists: True
-    - dataset:
+        # workaround https://github.com/saltstack/salt/issues/59141
         multiprocessing: False
+
+minion_config:
+  file.managed:
+    - names:
+      - /etc/salt/minion.d/x509.conf:
+        - source: salt://etc/salt/minion.d/x509.conf
