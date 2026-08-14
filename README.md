@@ -15,9 +15,8 @@ others.
    `zypper in salt-minion git-core htop vim systemd-coredump`
 3. Set `/etc/salt/minion_id` and `/etc/hostname` to the FQDN and hostname
    respectively.
-4. Configure `/etc/salt/minion` similar to the other production hosts (by just
-   appending what is configured on other production hosts)
-    * Most importantly, set the "master", e.g. `echo 'master: openqa.suse.de' >> /etc/salt/minion`
+4. Configure the salt minion to point to the master:
+    * Set the "master", e.g. `echo 'master: openqa.suse.de' > /etc/salt/minion.d/master.conf`
 5. Configure the machine's role by putting e.g. `/etc/salt/grains` in
    `roles: worker` if applicable. By default with a role only generic states
    will be applied.
