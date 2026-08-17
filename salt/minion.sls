@@ -15,6 +15,7 @@ clean_old_minion_tweaks:
     - name: /etc/salt/minion
     - pattern: '(?m)^(server_id_use_crc|random_reauth_delay|recon_default|recon_max|recon_randomize|master_tries|auth_safemode|multiprocessing):.*(?:\n|$)|^disable_(grains|modules):\n(?:[ \t]*- .*(?:\n|$))*'
     - repl: ''
+    - ignore_if_missing: True
     - require:
       - pkg: salt-minion
 
