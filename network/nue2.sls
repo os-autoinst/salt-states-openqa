@@ -26,4 +26,3 @@ reload_network_on_mtu_change:
     - onchanges:
       - {% if backend == 'wicked' %}file{% else %}ini{% endif %}: network_mtu
 {%- endif %}
-{%- endif %}
