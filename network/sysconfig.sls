@@ -89,6 +89,9 @@
 
         [ipv6]
         method=auto
+
+        [ethernet]
+        mtu=1500
 {% endif %}
 {% endif %}
 {% endif %}

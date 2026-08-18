@@ -1,4 +1,6 @@
-# MTU for this network is 1360 bytes
+# Configure the defined MTU on the default network interface
+# and reload the network if MTU is changed
+{%- set mtu_value = "1500" %}
 {%- set backend = grains.get('network_backend', 'wicked') %}
 {%- set def_iface = grains.get('default_interface', none) %}
 {%- if def_iface is not none %}
@@ -9,9 +11,19 @@ network_mtu:
     - append_if_not_found: True
     - separator: '='
     - key_values:
-        MTU: "1500"
+        MTU: {{ mtu_value }}
 {%- else %}
+{%- set nm_conn = grains.get('default_nmconnection', none) %}
+  ini.options_present:
+    - name: /etc/NetworkManager/system-connections/{{ nm_conn }}.nmconnection
+    - sections:
+        ethernet:
+          mtu: {{ mtu_value }}
+{%- endif %}
+reload_network_on_mtu_change:
   cmd.run:
-    - name: nmcli connection modify "$(nmcli -g GENERAL.CONNECTION device show {{ def_iface }})" 802-3-ethernet.mtu 1500
+    - name: {% if backend == 'wicked' %}wicked ifup all{% else %}nmcli connection reload{% endif %}
+    - onchanges:
+      - {% if backend == 'wicked' %}file{% else %}ini{% endif %}: network_mtu
 {%- endif %}
 {%- endif %}
