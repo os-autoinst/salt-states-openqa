@@ -193,9 +193,8 @@ webserver_grain:
     - separator: ' '
     - uncomment: '#'
 
-# ssh key files and config for needle pushing and salt deployements.
+# ssh key files and config for needle pushing
 # https://progress.opensuse.org/issues/67804
-# https://progress.opensuse.org/issues/204651
 # Generated with
 # ``ssh-keygen -t ed25519 -N '' -C 'geekotest@openqa.suse.de, openqa-pusher needle pushing to gitlab' -f id_ed25519.gitlab`
 openqa_user_ssh:
@@ -210,23 +209,12 @@ openqa_user_ssh:
         - contents_pillar: id_ed25519.gitlab
       - /var/lib/openqa/.ssh/id_ed25519.gitlab.pub:
         - contents_pillar: id_ed25519.gitlab.pub
-      - /var/lib/openqa/.ssh/id_rsa:
-        - mode: "0600"
-        - contents_pillar: id_rsa
-      - /var/lib/openqa/.ssh/id_rsa.pub:
-        - contents_pillar: id_rsa.pub
       - /var/lib/openqa/.ssh/config:
         - contents: |
             Host gitlab.suse.de
               User gitlab
               IdentityFile ~/.ssh/id_ed25519.gitlab
               IdentitiesOnly yes
-
-            Host github.com
-              User git
-              IdentityFile ~/.ssh/id_rsa
-              IdentitiesOnly yes
-              StrictHostKeyChecking accept-new
 
 {%- endif %}
 
@@ -427,21 +415,12 @@ git-sha-verify:
     - user: geekotest
     - mode: '0700'
 
-# transition the existing clone to use the new SSH remote
-update-os-autoinst-scripts-remote:
-  cmd.run:
-    - name: git remote set-url origin git@github.com:os-autoinst/os-autoinst-scripts.git
-    - cwd: /opt/os-autoinst-scripts/
-    - runas: geekotest
-    - onlyif: test -d .git
-    - unless: test "$(git remote get-url origin)" = "git@github.com:os-autoinst/os-autoinst-scripts.git"
-
 # workaround for git.cloned not being able to clone into existing directory
 # owned by correct user
 # https://github.com/saltstack/salt/issues/55926
 git-clone-os-autoinst-scripts:
   cmd.run:
-    - name: /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts/ git@github.com:os-autoinst/os-autoinst-scripts.git
+    - name: /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts/ https://github.com/os-autoinst/os-autoinst-scripts.git
     - creates: /opt/os-autoinst-scripts/.git/
     - runas: geekotest
     - require:
@@ -457,7 +436,7 @@ git-clone-os-autoinst-scripts:
         Type=exec
         User=geekotest
         WorkingDirectory=/opt
-        ExecStart=/bin/bash -lc '/opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts git@github.com:os-autoinst/os-autoinst-scripts.git'
+        ExecStart=/bin/bash -lc '/opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts https://github.com/os-autoinst/os-autoinst-scripts.git'
 
 /etc/systemd/system/update-os-autoinst-scripts.timer:
   file.managed:
