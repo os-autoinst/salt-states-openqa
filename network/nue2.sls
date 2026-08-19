@@ -14,11 +14,13 @@ network_mtu:
         MTU: {{ mtu_value }}
 {%- else %}
 {%- set nm_conn = grains.get('default_nmconnection', none) %}
+{%- if nm_conn is not none %}
   ini.options_present:
     - name: /etc/NetworkManager/system-connections/{{ nm_conn }}.nmconnection
     - sections:
         ethernet:
           mtu: {{ mtu_value }}
+{%- endif %}
 {%- endif %}
 reload_network_on_mtu_change:
   cmd.run:

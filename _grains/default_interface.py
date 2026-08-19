@@ -60,19 +60,18 @@ def _run_nmcli(args):
         # Pass the command and arguments as a list
         result = subprocess.run(
             ['nmcli'] + args,
-            capture_output=True,
-            text=True,
+            stdout=subprocess.PIPE,         # Replaces capture_output=True
+            stderr=subprocess.PIPE,         # Replaces capture_output=True
+            universal_newlines=True,        # Replaces text=True
             check=True
         )
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
-        print(f"Error executing nmcli: {e.stderr.strip()}")
         return None
 
 def default_nmconnection():
     nm_conn_grain = {}
     nw_backend = network_backend.network_backend()
-    print(nw_backend['network_backend'])
     if nw_backend['network_backend'] == 'NetworkManager':
         def_iface = default_interface()
         nm_conn = _run_nmcli(['-g', 'GENERAL.CONNECTION', 'device', 'show', def_iface['default_interface']])
