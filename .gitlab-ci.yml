@@ -37,6 +37,16 @@ variables:
     - ln -s $(pwd -P)/ /srv/salt
     - ln -s $(pwd -P)/t/pillar /srv/pillar
     - . /etc/os-release
+    # Setup global SSH auth for GitHub to avoid anonymous rate limits during CI
+    # Fallback to HTTPS for contributor forks that do not have the SSH_PRIVATE_KEY variable set
+    - |
+      if [ -n "$SSH_PRIVATE_KEY" ]; then
+        echo "$SSH_PRIVATE_KEY" > /etc/ssh/github_id_rsa
+        chmod 600 /etc/ssh/github_id_rsa
+        echo -e "Host github.com\n\tStrictHostKeyChecking accept-new\n\tIdentityFile /etc/ssh/github_id_rsa" >> /etc/ssh/ssh_config
+      else
+        git config --system url."https://github.com/".insteadOf git@github.com:
+      fi
     # workaround ASCII encoding errors
     # see https://github.com/saltstack/salt/issues/48522#issuecomment-404226425
     - export LANG=en_US.UTF-8
