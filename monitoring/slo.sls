@@ -15,6 +15,10 @@ backlogger:
     - target: /etc/telegraf/scripts/backlogger
     - depth: 1
     - rev: main
+    - branch: main
+    - force_reset: True
+    - force_fetch: True
+
 
 tools:
   git.latest:
@@ -22,3 +26,6 @@ tools:
     - target: /etc/telegraf/scripts/tools-backlog
     - depth: 1
     - rev: main
+    - branch: main
+    - force_reset: True
+    - force_fetch: True
