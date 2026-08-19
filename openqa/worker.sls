@@ -205,6 +205,25 @@ worker.packages:
     - onchanges_in:
       - systemd_daemon_reload
 
+
+# Workaround for https://progress.opensuse.org/issues/203220
+# An idle worker slot handles the reload SIGHUP by going offline and exiting
+# immediately, so the slot deactivates mid-reload and systemctl exits 1
+# ("Unit cannot be reloaded because it is inactive"). The HUP was delivered and
+# systemd auto-restarts the slot, so treat exit 1 as success to avoid a spurious
+# failed reload unit.
+/etc/systemd/system/openqa-reload-worker-auto-restart@.service.d/60-poo203220-tolerate-inactive-reload.conf:
+  file.managed:
+    - contents: |
+        [Service]
+        SuccessExitStatus=1
+    - mode: "0644"
+    - makedirs: true
+    - require:
+      - pkg: worker.packages
+    - onchanges_in:
+      - systemd_daemon_reload
+
 {%- if not grains.get('noservices', False) %}
 {% for unit in ['check.service', 'check.timer', 'restarter.service'] %}
 /etc/systemd/system/salt-minion-{{ unit }}:
