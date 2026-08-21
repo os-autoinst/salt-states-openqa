@@ -37,6 +37,8 @@ variables:
     - ln -s $(pwd -P)/ /srv/salt
     - ln -s $(pwd -P)/t/pillar /srv/pillar
     - . /etc/os-release
+    # In the CI environment, force Git to use HTTPS for Github since we can't use the real pillar's key here.
+    - 'git config --system url."https://github.com/".insteadOf git@github.com:'
     # workaround ASCII encoding errors
     # see https://github.com/saltstack/salt/issues/48522#issuecomment-404226425
     - export LANG=en_US.UTF-8
