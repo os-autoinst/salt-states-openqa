@@ -30,6 +30,7 @@ worker.packages:
     - refresh: False
     - retry:  # some packages can change rapidly in our repos needing a retry as zypper does not do that
         attempts: 5
+    - resolve_capabilities: True
     - pkgs:
       - openQA-worker
       - xterm-console
