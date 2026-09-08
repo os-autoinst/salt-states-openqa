@@ -169,7 +169,7 @@
           "tags": []
         }
       ],
-      "title": "Currently failing services",
+      "title": "Failing services in selected time range",
       "transform": "table",
       "transparent": true,
       "type": "table-old"
