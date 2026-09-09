@@ -277,7 +277,7 @@ telegraf_db_{{ table }}:
 readonly_db_access:
   postgres_user.present:
     - name: openqa
-    - password: openqa
+    - password: {{ pillar['server'].get('db_readonly_password', 'openqa') }}
 
 {% for table in ['jobs', 'job_settings', 'job_modules', 'job_dependencies', 'job_groups', 'job_group_parents', 'workers', 'audit_events'] %}
 readonly_db_access_{{ table }}:
