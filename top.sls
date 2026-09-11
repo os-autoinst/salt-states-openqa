@@ -74,10 +74,11 @@ base:
   'G@roles:libvirt':
     - libvirt
   'G@roles:external_openqa_hypervisor':
-    - libvirt.storage
     - openqa.kvm_firewall
     - openqa.nfs_share
     - openqa.recover-nfs
+  'G@roles:libvirt_storage':
+    - libvirt.storage
   'G@drbd_single_node:True':
     - libvirt.drbd_single_node
   'G@roles:libvirt_cleanup':
