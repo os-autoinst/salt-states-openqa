@@ -18,7 +18,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 200,
   "links": [],
   "panels": [
     {
@@ -26,7 +25,6 @@
         "type": "influxdb",
         "uid": "000000001"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -56,6 +54,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -71,7 +70,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -103,7 +103,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.6.7",
+      "pluginVersion": "12.4.10",
       "targets": [
         {
           "datasource": {
@@ -124,7 +124,6 @@
               "type": "fill"
             }
           ],
-          "hide": false,
           "measurement": "total_salt_deploy_runtime",
           "orderByTime": "ASC",
           "policy": "default",
@@ -158,7 +157,7 @@
     }
   ],
   "preload": false,
-  "schemaVersion": 41,
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": []
@@ -171,5 +170,6 @@
   "timezone": "",
   "title": "Deployment runtime",
   "uid": "cf5blcld4sxdsc",
-  "version": 3
+  "version": 3,
+  "weekStart": ""
 }
