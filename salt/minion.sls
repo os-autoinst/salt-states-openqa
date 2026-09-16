@@ -51,3 +51,22 @@ minion_config:
     - names:
       - /etc/salt/minion.d/x509.conf:
         - source: salt://etc/salt/minion.d/x509.conf
+
+{%- if not grains.get('noservices', False) %}
+{% for unit in ['check.service', 'check.timer', 'restarter.service'] %}
+/etc/systemd/system/salt-minion-{{ unit }}:
+  file.managed:
+    - source: salt://salt/units/salt-minion-{{ unit }}
+    - onchanges_in:
+      - systemd_daemon_reload
+{% endfor %}
+
+# only gets executed if other states require it via onchanges_in (e.g. drop-in config overrides)
+systemd_daemon_reload:
+  cmd.run:
+    - name: systemctl daemon-reload
+{% endif %}
+
+salt-minion-check.timer:
+  service.running:
+    - enable: True

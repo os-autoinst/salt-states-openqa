@@ -226,18 +226,6 @@ worker.packages:
       - systemd_daemon_reload
 
 {%- if not grains.get('noservices', False) %}
-{% for unit in ['check.service', 'check.timer', 'restarter.service'] %}
-/etc/systemd/system/salt-minion-{{ unit }}:
-  file.managed:
-    - source: salt://openqa/salt-minion-{{ unit }}
-    - onchanges_in:
-      - systemd_daemon_reload
-{% endfor %}
-
-salt-minion-check.timer:
-  service.running:
-    - enable: True
-
 # start services based on numofworkers set in workerconf pillar
 {% set worker_slot_count = pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) %}
 {% for i in range(worker_slot_count) %}
