@@ -13,6 +13,7 @@
 {% endif %}
 
 include:
+  - systemd_reload
   - sudo
   - openqa.repos
   - openqa.journal
@@ -226,18 +227,6 @@ worker.packages:
       - systemd_daemon_reload
 
 {%- if not grains.get('noservices', False) %}
-{% for unit in ['check.service', 'check.timer', 'restarter.service'] %}
-/etc/systemd/system/salt-minion-{{ unit }}:
-  file.managed:
-    - source: salt://openqa/salt-minion-{{ unit }}
-    - onchanges_in:
-      - systemd_daemon_reload
-{% endfor %}
-
-salt-minion-check.timer:
-  service.running:
-    - enable: True
-
 # start services based on numofworkers set in workerconf pillar
 {% set worker_slot_count = pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) %}
 {% for i in range(worker_slot_count) %}
@@ -438,10 +427,3 @@ kernel.softlockup_panic:
   file.managed:
     - source: salt://openqa/openqa-worker-services.sh
     - mode: "0755"
-
-{%- if not grains.get('noservices', False) %}
-# only gets executed if other states require it via onchanges_in (e.g. drop-in config overrides)
-systemd_daemon_reload:
-  cmd.run:
-    - name: systemctl daemon-reload
-{% endif %}

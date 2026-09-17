@@ -7,4 +7,4 @@ OnFailure=salt-minion-restarter.service
 
 [Service]
 Type=simple
-ExecStart=/bin/bash -c "/usr/bin/ss -nt -p | /usr/bin/grep salt-minion"
+ExecStart=/bin/bash -c "[[ $(/usr/bin/ss -Htupn dport 4505 | wc -l) -gt 0 ]]"
