@@ -22,7 +22,21 @@ zypper_patch() {
     return $ret
 }
 
-zypper -n --gpg-auto-import-keys ref
+# Retry use of zypper to prevent sporadic failures
+# https://progress.opensuse.org/issues/207231
+zypper_ref() {
+    local ret attempt
+    for attempt in {1..3}; do
+        ret=0
+        zypper -n --gpg-auto-import-keys ref || ret=$?
+        [[ $ret == 0 ]] && return 0
+        echo "zypper ref failed with exit code $ret (attempt $attempt/3)"
+        [[ $attempt -lt 3 ]] && sleep 60
+    done
+    return $ret
+}
+zypper_ref
+
 for i in {1..2} ; do
     # 1st patch call will update zypp, 2nd will update the system
     if ! zypper_patch ; then
