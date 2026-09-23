@@ -22,7 +22,7 @@ zypper_patch() {
     return $ret
 }
 
-zypper -n --gpg-auto-import-keys ref
+retry -r 6 -s 15 -e zypper -n --gpg-auto-import-keys ref
 for i in {1..2} ; do
     # 1st patch call will update zypp, 2nd will update the system
     if ! zypper_patch ; then
