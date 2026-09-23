@@ -277,7 +277,6 @@ telegraf_db_{{ table }}:
 readonly_db_access:
   postgres_user.present:
     - name: openqa
-    - password: {{ pillar['server'].get('db_readonly_password', 'openqa') }}
 
 {% for table in ['jobs', 'job_settings', 'job_modules', 'job_dependencies', 'job_groups', 'job_group_parents', 'workers', 'audit_events'] %}
 readonly_db_access_{{ table }}:
@@ -334,8 +333,12 @@ postgresql-include_dir:
 /srv/PSQL/data/pg_hba.conf:
   file.append:
     - text: |
-        host    all             openqa          0.0.0.0/0               md5
-        host    all             openqa          ::/0                    md5
+        # Allow passwordless read-only access for openQA from SUSE internal subnets only
+        host    all             openqa          10.0.0.0/8              trust
+        host    all             openqa          137.65.0.0/16           trust
+        host    all             openqa          2a07:de40::/32          trust
+        host    all             openqa          127.0.0.1/32            trust
+        host    all             openqa          ::1/128                 trust
 
 {%- if not grains.get('noservices', False) %}
 postgresql.service:
