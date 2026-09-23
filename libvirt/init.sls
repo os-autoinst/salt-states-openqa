@@ -19,5 +19,10 @@ include:
 /etc/modules-load.d/kvm.conf:
   file.managed:
     - contents:
+      - 'kvm'
+
+/etc/modprobe.d/kvm.conf:
+  file.managed:
+    - contents:
       - 'options kvm nested=1'
 {% endif %}
