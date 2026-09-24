@@ -73,7 +73,7 @@ groups:
             refId: B
         execErrState: OK
         for: 3h
-        isPaused: false
+        isPaused: true
         labels:
           __contacts__: '"osd-admins"'
           rule_uid: QkA25iBVk
