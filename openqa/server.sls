@@ -21,6 +21,8 @@ server.packages:
       - cron
       - os-autoinst-scripts-deps  # for https://github.com/os-autoinst/os-autoinst-scripts
       - rsync  # for rsyncd
+      - logwarn
+      - ripgrep # for https://github.com/os-autoinst/openqa-logwarn
 
 osd_fstab:
   file.managed:
@@ -492,6 +494,33 @@ update-os-autoinst-scripts.timer:
         ExecStart=/usr/bin/git -C /opt/git-sha-verify/ pull -q --rebase
 
 update-git-sha-verify.timer:
+  service.running:
+    - enable: True
+
+/etc/systemd/system/logwarn.timer:
+  file.managed:
+    - contents: |
+        [Unit]
+        Description=Hourly timer for logwarn
+        [Timer]
+        OnCalendar=*:10:00
+        Persistent=true
+        [Install]
+        WantedBy=timers.target
+
+/etc/systemd/system/logwarn.service:
+  file.managed:
+    - contents: |
+        [Unit]
+        Description=Logwarn E-Mail job
+        [Service]
+        Type=oneshot
+        Environment=REPORTTO=osd-admins@suse.de
+        ExecStart=/opt/git-sha-verify/checkout-latest-signed-commit /opt/openqa-logwarn/ https://github.com/os-autoinst/openqa-logwarn.git
+        ExecStart=/opt/openqa-logwarn/pretty_logwarn logwarn_openqa_webui
+        ExecStart=/opt/openqa-logwarn/pretty_logwarn logwarn_gru
+
+logwarn.timer:
   service.running:
     - enable: True
 
