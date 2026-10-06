@@ -101,6 +101,7 @@ reverse-proxy-group:
           name: 'SUSEID'
           allow_sign_up: true
           auto_login: true
+          signout_redirect_url: '/'
           client_id: {{ pillar['credentials']['grafana']['oauth2']['client_id'] }}
           client_secret: {{ pillar['credentials']['grafana']['oauth2']['client_secret'] }}
           scopes: 'openid profile email'
