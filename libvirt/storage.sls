@@ -14,10 +14,30 @@ libvirtd.socket:
     - enable: True
 {%- endif %}
 
-{%- if grains['fqdn'] in pillar['libvirtd-image-partitions'] %}
+{%- set zfcp_adapters = salt['pillar.get']('zfcp-adapters', []) %}
+{%- if grains.get('osarch') == 's390x' and zfcp_adapters %}
+multipathd:
+  service.running:
+    - enable: True
+
+{%- for adapter in zfcp_adapters %}
+zfcp_cio_ignore_{{ adapter }}:
+  cmd.run:
+    - name: cio_ignore -r {{ adapter }}
+    - unless: test -d /sys/bus/ccw/devices/{{ adapter }}
+
+zfcp_online_{{ adapter }}:
+  cmd.run:
+    - name: zfcp_host_configure {{ adapter }} 1
+    - unless: test "$(cat /sys/bus/ccw/devices/{{ adapter }}/online 2>/dev/null)" = "1"
+{%- endfor %}
+{%- endif %}
+
+{%- set image_partitions = salt['pillar.get']('libvirtd-image-partitions', {}) %}
+{%- if grains['fqdn'] in image_partitions %}
 /var/lib/libvirt/images:
   mount.mounted:
-    - device: {{ pillar['libvirtd-image-partitions'][grains['fqdn']] }}
+    - device: {{ image_partitions[grains['fqdn']] }}
     - fstype: ext4
     - opts: rw,nobarrier,data=writeback
     - pass_num: 0
