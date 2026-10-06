@@ -46,7 +46,7 @@ groups:
               conditions:
                 - evaluator:
                     params:
-                      - 300
+                      - 160
                     type: gt
                   operator:
                     type: and
