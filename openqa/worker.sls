@@ -26,6 +26,17 @@ include:
   - firewall.nftables
 {%- endif %}
 
+{%- if not grains.get('noservices', False) %}
+{% set worker_slot_count = pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) %}
+# Stop and disable all openqa-worker-auto-restart@ service instances which are exceeding the configured
+# number of worker slots
+stop_and_disable_all_not_configured_workers:
+  cmd.run:
+    - name: services=$(systemctl list-units --all 'openqa-worker-auto-restart@*.service' | sed -e '/.*openqa-worker-auto-restart@.*\.service.*/!d' -e 's|.*openqa-worker-auto-restart@\(.*\)\.service.*|\1|' | awk '{ if($0 > {{ worker_slot_count }}) print "openqa-worker-auto-restart@" $0 ".service openqa-reload-worker-auto-restart@" $0 ".path" }' | tr '\n' ' '); [ -z "$services" ] || systemctl disable --now $services
+    - unless: test $(systemctl list-units --legend=false 'openqa-worker-auto-restart@*.service' | wc -l) -le {{ worker_slot_count }}
+
+{%- endif %}
+
 worker.packages:
   pkg.installed:
     - refresh: False
@@ -208,27 +219,8 @@ worker.packages:
       - systemd_daemon_reload
 
 
-# Workaround for https://progress.opensuse.org/issues/203220
-# An idle worker slot handles the reload SIGHUP by going offline and exiting
-# immediately, so the slot deactivates mid-reload and systemctl exits 1
-# ("Unit cannot be reloaded because it is inactive"). The HUP was delivered and
-# systemd auto-restarts the slot, so treat exit 1 as success to avoid a spurious
-# failed reload unit.
-/etc/systemd/system/openqa-reload-worker-auto-restart@.service.d/60-poo203220-tolerate-inactive-reload.conf:
-  file.managed:
-    - contents: |
-        [Service]
-        SuccessExitStatus=1
-    - mode: "0644"
-    - makedirs: true
-    - require:
-      - pkg: worker.packages
-    - onchanges_in:
-      - systemd_daemon_reload
-
 {%- if not grains.get('noservices', False) %}
 # start services based on numofworkers set in workerconf pillar
-{% set worker_slot_count = pillar['workerconf'].get(grains['host'], {}).get('numofworkers', 0) %}
 {% for i in range(worker_slot_count) %}
 {% set i = i+1 %}
 openqa-worker-auto-restart@{{ i }}:
@@ -241,7 +233,6 @@ openqa-worker-auto-restart@{{ i }}:
 {% if loop.first %}
     - require:
       - pkg: worker.packages
-      - stop_and_disable_all_not_configured_workers
 {% endif %}
 
 openqa-reload-worker-auto-restart@{{ i }}.path:
@@ -277,12 +268,6 @@ openqa-worker-cacheservice-minion:
     - require:
       - pkg: worker.packages
 
-# Stop and disable all openqa-worker-auto-restart@ service instances which are exceeding the configured
-# number of worker slots
-stop_and_disable_all_not_configured_workers:
-  cmd.run:
-    - name: services=$(systemctl list-units --all 'openqa-worker-auto-restart@*.service' | sed -e '/.*openqa-worker-auto-restart@.*\.service.*/!d' -e 's|.*openqa-worker-auto-restart@\(.*\)\.service.*|\1|' | awk '{ if($0 > {{ worker_slot_count }}) print "openqa-worker-auto-restart@" $0 ".service openqa-reload-worker-auto-restart@" $0 ".path" }' | tr '\n' ' '); [ -z "$services" ] || systemctl disable --now $services
-    - unless: test $(systemctl list-units --legend=false 'openqa-worker-auto-restart@*.service' | wc -l) -le {{ worker_slot_count }}
 {%- endif %}
 
 {% if grains['osarch'] == 'aarch64' %}
