@@ -48,22 +48,18 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
       - git: https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin
 {%- endmacro %}
 
-{{ scriptgen('SUSE:SLE-15-SP7:GA:TEST') }}
-
-{% for i in ['A','B','C','D','E','F','G','H','S','Y','V'] %}
-{{ scriptgen('SUSE:SLE-15-SP7:GA:Staging:' + i) }}
-{% endfor %}
-
-# SLE 16.0/SL-Micro 6.2 Stagings
-{% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','S','V','Y'] %}
-{{ scriptgen('SUSE:SLFO:Main:Staging:' + i) }}
-{% endfor %}
-
-{{ scriptgen('SUSE:SLFO:Products:SL-Micro:6.2:ToTest') }}
+# SLES 16.0 Quarterly Updates
 {{ scriptgen('SUSE:SLFO:Products:SLES:16.0:TEST') }}
+
+# SLES 15-SP7 Quarterly Updates
 {{ scriptgen('SUSE:SLE-15-SP7:Update:QR:TEST') }}
+
+# SLES 15-SP4 RT
 {{ scriptgen('SUSE:SLE-15-SP4:Update:Products:SLERT') }}
+
+# Agama development
+{{ scriptgen('Devel:YaST:Agama:Head') }}
+
 # BCI repo trigger
 {{ scriptgen('SUSE:SLE-15-SP6:Update:BCI') }}
 {{ scriptgen('SUSE:SLE-15-SP7:Update:BCI') }}
-{{ scriptgen('Devel:YaST:Agama:Head') }}
