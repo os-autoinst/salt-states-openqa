@@ -95,8 +95,21 @@ reverse-proxy-group:
           org_name: 'SUSE'
           org_role: 'Viewer'
         auth.ldap:
+          enabled: false
+        auth.generic_oauth:
           enabled: true
-          config_file: '/etc/grafana/ldap.toml'
+          name: 'SUSEID'
+          allow_sign_up: true
+          auto_login: true
+          client_id: {{ pillar['credentials']['grafana']['oauth2']['client_id'] }}
+          client_secret: {{ pillar['credentials']['grafana']['oauth2']['client_secret'] }}
+          scopes: 'openid profile email'
+          auth_url: 'https://id.suse.com/application/o/authorize/'
+          token_url: 'https://id.suse.com/application/o/token/'
+          api_url: 'https://id.suse.com/application/o/userinfo/'
+          login_attribute_path: 'sub'
+          name_attribute_path: 'name'
+          email_attribute_path: 'email'
           skip_org_role_sync: true
         smtp:
           enabled: true
@@ -115,9 +128,7 @@ reverse-proxy-group:
           enable: panelTitleSearch
 
 /etc/grafana/ldap.toml:
-  file.managed:
-    - source: salt://monitoring/grafana/ldap.toml
-    - mode: "0644"
+  file.absent
 
 /etc/grafana/provisioning/dashboards/salt.yaml:
   file.managed:
