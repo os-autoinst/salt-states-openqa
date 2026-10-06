@@ -59,21 +59,6 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
 {{ scriptgen('SUSE:SLFO:Main:Staging:' + i) }}
 {% endfor %}
 
-# SL Micro 6.0 Staging Updates (Maintenance)
-{% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'] %}
-{{ scriptgen('SUSE:ALP:Source:Standard:1.0:Staging:' + i) }}
-{% endfor %}
-
-# SL Micro 6.1 Staging Updates (Maintenance)
-{% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'] %}
-{{ scriptgen('SUSE:SLFO:1.1:Staging:' + i) }}
-{% endfor %}
-
-# SLFO Kernel Staging Updates (Maintenance)
-{% for i in ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'] %}
-{{ scriptgen('SUSE:SLFO:Kernel:1.0:Staging:' + i) }}
-{% endfor %}
-
 {{ scriptgen('SUSE:SLFO:Products:SL-Micro:6.2:ToTest') }}
 {{ scriptgen('SUSE:SLFO:Products:SLES:16.0:TEST') }}
 {{ scriptgen('SUSE:SLE-15-SP7:Update:QR:TEST') }}
