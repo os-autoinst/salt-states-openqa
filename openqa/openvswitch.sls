@@ -12,8 +12,26 @@
 openvswitch:
   service.running:
     - enable: True
+# Restarting openvswitch restarts ovsdb-server and ovs-vswitchd as well. ifcfg-br1 is
+# not used by NetworkManager so do not restart the OVS database for nothing there,
+# see https://progress.opensuse.org/issues/207975
+{%- if backend == 'wicked' %}
     - watch:
       - file: /etc/sysconfig/network/ifcfg-br1
+{%- endif %}
+
+{%- if backend == 'NetworkManager' %}
+# NetworkManager keeps a cached copy of the OVS database and does not recover when
+# ovsdb-server is restarted underneath it ("short read from ovsdb", '"where" clause test
+# failed'): br1 vanishes while the profile is still shown as activated. So restart
+# NetworkManager after salt restarted openvswitch, never before.
+# See https://progress.opensuse.org/issues/207975
+restart_networkmanager_after_openvswitch:
+  cmd.run:
+    - name: systemctl restart NetworkManager && nm-online --startup --quiet --timeout 60
+    - onchanges:
+      - service: openvswitch
+{%- endif %}
 
 reload_network_on_script_change:
   cmd.run:
@@ -52,15 +70,42 @@ net.ipv4.conf.{{ pillar['workerconf'][grains['host']]['bridge_iface'] }}.forward
 {%  endfor %}
 
 {%- if not noservices %}
+# Fail the salt run if br1 is missing instead of only noticing it from incomplete jobs,
+# see https://progress.opensuse.org/issues/207975
+ovs-vsctl br-exists br1:
+  cmd.run:
+    - retry:
+        attempts: 6
+        interval: 5
+   {%- if backend == 'NetworkManager' %}
+    - require:
+      - cmd: restart_networkmanager_after_openvswitch
+   {%- endif %}
+
 # See https://progress.opensuse.org/issues/151310
 ovs-vsctl set int br1 mtu_request=1460:
   cmd.run:
     - unless: 'ovs-vsctl get int br1 mtu_request | grep -q 1460'
+    - require:
+      - cmd: ovs-vsctl br-exists br1
 {%- endif %}
 
 # Create list "multihostworkers" of all multi-host workers to be connected over GRE tunnel(s)
 {% set multihostworkers = salt['gre_peers.compute'](grains['host'], pillar['workerconf']) | unique | sort | list %}
 
+{%- if backend == 'NetworkManager' %}
+# The wicked config is not used by NetworkManager, br1 and the tap devices are defined as
+# NetworkManager connection profiles instead
+/etc/sysconfig/network/ifcfg-br1:
+  file.absent
+
+remove_wicked_tap_config:
+  file.tidied:
+    - name: /etc/sysconfig/network
+    - onlyif: test -d /etc/sysconfig/network
+    - matches:
+      - '^ifcfg-tap[0-9]+$'
+{%- else %}
 # Make openvswitch bridge br1 persistant
 /etc/sysconfig/network/ifcfg-br1:
   file.managed:
@@ -101,6 +146,7 @@ ovs-vsctl set int br1 mtu_request=1460:
     - require:
       - pkg: worker.packages
 {% endfor %}
+{%- endif %}
 
 # Worker for GRE needs to have defined entry bridge_ip: <uplink_address_of_this_worker> in pillar data
 {{ gre_tunnel_script_path }}:
@@ -198,4 +244,7 @@ os-autoinst-openvswitch:
     - onchanges_any:
       - file: /etc/sysconfig/network/ifcfg-br1
       - file: {{ gre_tunnel_script_path }}
+     {%- if backend == 'NetworkManager' %}
+      - cmd: restart_networkmanager_after_openvswitch
+     {%- endif %}
 {%- endif %}
