@@ -18,8 +18,12 @@ states = {
     "denied": j["minions_denied"],
 }
 
+req_headers = {
+    "Content-Type": "application/json"
+}
+
 backlog = requests.get(
-    "https://progress.opensuse.org/issues.json?query_id=757&limit=999"
+    "https://progress.opensuse.org/issues.json?query_id=757&limit=100"
 ).json()
 
 
