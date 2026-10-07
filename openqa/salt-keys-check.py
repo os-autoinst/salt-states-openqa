@@ -19,13 +19,17 @@ states = {
 }
 
 req_headers = {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "X-Redmine-API-Key": os.environ.get("REDMINE_API_KEY")
 }
 
 backlog = requests.get(
-    "https://progress.opensuse.org/issues.json?query_id=757&limit=100"
+    "https://progress.opensuse.org/issues.json?query_id=757&limit=100",
+    headers=req_headers
 ).json()
 
+if len(backlog["issues"]) != backlog["total_count"]:
+    print("WARNING: API indicates more issues than actually fetched, expect missing issues.", file=sys.stderr)
 
 def get_ticket(minion):
     for issue in backlog["issues"]:
