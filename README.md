@@ -20,7 +20,7 @@ others.
 5. Configure the machine's role by putting e.g. `/etc/salt/grains` in
    `roles: worker` if applicable. By default with a role only generic states
    will be applied.
-6. If the machine has only one NVMe with its rootfs on it, set `format_nvme: False` in `/etc/salt/grains`.
+6. If the machine has only one NVMe with its rootfs on it, or if we don't want salt to re-format the NVMEs (eg it's been done already during installation) set `format_nvme: False` in `/etc/salt/grains`.
 7. If it is an openQA worker, add its desired config to `workerconf.sls` in our Salt pillars.
 8. Invoke `systemctl enable --now salt-minion` and tail its logs to see what is happening
    `tail -f /var/log/salt/minion`.
