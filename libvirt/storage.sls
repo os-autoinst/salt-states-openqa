@@ -14,7 +14,7 @@ libvirtd.socket:
     - enable: True
 {%- endif %}
 
-{%- set zfcp_adapters = salt['pillar.get']('zfcp-adapters', []) %}
+{%- set zfcp_adapters = salt['pillar.get']('zfcp-adapters', {}).get(grains['host'], []) %}
 {%- if grains.get('osarch') == 's390x' and zfcp_adapters %}
 multipathd:
   service.running:
