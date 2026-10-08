@@ -1,3 +1,6 @@
+include:
+  - openqa.repos
+
 jenkins.repo:
   pkgrepo.managed:
     - humanname: Jenkins CI
@@ -18,6 +21,20 @@ jenkins_java_pkg:
   pkg.installed:
     - name: java-21-openjdk-headless
     - refresh: False
+
+jenkins_workflow_packages:
+  pkg.installed:
+    - refresh: False
+    - retry:
+        attempts: 5
+    - pkgs:
+        - os-autoinst-scripts-deps
+
+/opt/os-autoinst-scripts:
+  git.latest:
+    - name: https://github.com/os-autoinst/os-autoinst-scripts.git
+    - target: /opt/os-autoinst-scripts
+    - force_reset: True
 
 /usr/local/bin/update-jenkins-plugins:
   file.managed:
