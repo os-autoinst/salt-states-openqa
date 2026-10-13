@@ -34,6 +34,44 @@ telegraf:
     {%- endif %}
 {%- endif %}
 
+/etc/telegraf/scripts/telegraf_config_check.sh:
+  file.managed:
+    - source: salt://monitoring/telegraf/scripts/telegraf_config_check.sh
+    - user: root
+    - group: root
+    - mode: "0700"
+    - makedirs: true
+    - require:
+      - pkg: telegraf.packages
+
+{% for unit in ['telegraf-config-check.service', 'telegraf-config-check.path', 'telegraf-config-check.timer'] %}
+/etc/systemd/system/{{ unit }}:
+  file.managed:
+    - source: salt://monitoring/telegraf/{{ unit }}
+    - require:
+      - pkg: telegraf.packages
+{%- if not grains.get('noservices', False) %}
+  module.run:
+    - name: service.systemctl_reload
+    - onchanges:
+      - file: /etc/systemd/system/{{ unit }}
+{%- endif %}
+{% endfor %}
+
+{%- if not grains.get('noservices', False) %}
+telegraf-config-check.path:
+  service.running:
+    - enable: true
+    - require:
+      - file: /etc/systemd/system/telegraf-config-check.path
+
+telegraf-config-check.timer:
+  service.running:
+    - enable: true
+    - require:
+      - file: /etc/systemd/system/telegraf-config-check.timer
+{%- endif %}
+
 /etc/telegraf/scripts/systemd_list_service_by_state_for_telegraf.sh:
   file.managed:
     - source: salt://monitoring/telegraf/scripts/systemd_list_service_by_state_for_telegraf.sh
