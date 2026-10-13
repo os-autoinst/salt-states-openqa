@@ -11,6 +11,7 @@ server.packages:
         attempts: 5
     - pkgs:
       - openQA
+      - openQA-mcp
       - apache2
       - nginx
       - perl-Mojo-RabbitMQ-Client
