@@ -3,18 +3,22 @@
 
 set -euo pipefail
 
-jenkins_host=$(</etc/hostname)
-jenkins_port=$(curl -s --head http://$jenkins_host/login | grep -oP "^X-SSH-Endpoint: $jenkins_host.*:\K[0-9]{4,5}")
+jenkins_host="localhost"
+jenkins_port=$(curl -s --head http://localhost:8080/login http://localhost/login 2>/dev/null | grep -oP '^X-SSH-Endpoint:.*:\K[0-9]+' | head -n1 || :)
+if [ -z "$jenkins_port" ]; then
+    echo "Failed to determine Jenkins SSH port from login endpoint" >&2
+    exit 1
+fi
 
 function jenkins_cli {
-    ssh -o StrictHostKeyChecking=no -p $jenkins_port "$jenkins_host" "$@"
+    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -p "$jenkins_port" "$jenkins_host" "$@"
 }
 
-update_list=$( jenkins_cli list-plugins | grep -e ')$' | awk '{ print $1 }' ||:)
+update_list=$(jenkins_cli list-plugins | grep -e ')$' | awk '{ print $1 }' || :)
 if [ -z "${update_list}" ]; then
     echo "No updates available"
     exit
 fi
-echo Updating Jenkins Plugins: ${update_list}
+echo "Updating Jenkins Plugins: ${update_list}"
 jenkins_cli install-plugin ${update_list}
 jenkins_cli safe-restart
