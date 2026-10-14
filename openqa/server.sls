@@ -549,13 +549,18 @@ cron.service:
 
 # Explicitly mention our required mount points to avoid a non-booting machine
 # See https://progress.opensuse.org/issues/162356 for details
+# The mount points backed by the slow /space-slow btrfs disk only require their
+# automount units so the web UI can start before /space-slow is mounted (which
+# can take minutes). Any access to them is delayed until the mount is complete.
 /etc/systemd/system/openqa-webui.service.d/storage.conf:
   file.managed:
     - mode: "0644"
     - makedirs: true
     - contents: |
         [Unit]
-        RequiresMountsFor=/var/lib/openqa /var/lib/openqa/archive /var/lib/openqa/share /var/lib/openqa/share/factory/hdd/fixed /var/lib/openqa/share/factory/iso/fixed
+        RequiresMountsFor=/var/lib/openqa /var/lib/openqa/share
+        Requires=var-lib-openqa-archive.automount var-lib-openqa-share-factory-hdd-fixed.automount var-lib-openqa-share-factory-iso-fixed.automount
+        After=var-lib-openqa-archive.automount var-lib-openqa-share-factory-hdd-fixed.automount var-lib-openqa-share-factory-iso-fixed.automount
 
 /etc/systemd/system/auditd.service.d/storage.conf:
   file.managed:
