@@ -269,6 +269,10 @@ Run `make check` to check YAML files (e.g. for duplicate keys).
 You can also run `make tidy` to automatically format the YAML files.
 
 ## Take out or re-configure production worker slots temporarily
+**You might need to take our more than one slot** as slots can be duplicated for
+redundancy. Check the list of worker classes for a class with `…:limit=1` and
+take out all slots that share this class.
+
 **The easiest** way to take out worker slots temporarily is to keep them running
 and [reserve them](https://open.qa/docs/#reserving-workers).
 
