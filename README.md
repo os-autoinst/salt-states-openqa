@@ -268,15 +268,26 @@ Run `make check` to check YAML files (e.g. for duplicate keys).
 
 You can also run `make tidy` to automatically format the YAML files.
 
-## Take out worker slots from production temporarily
+## Take out or re-configure production worker slots temporarily
+**You might need to take our more than one slot** as slots can be duplicated for
+redundancy. Check the list of worker classes for a class with `…:limit=1` and
+take out all slots that share this class.
+
 **The easiest** way to take out worker slots temporarily is to keep them running
-and just remove any production worker classes from `/etc/openqa/workers.ini`.
+and [reserve them](https://open.qa/docs/#reserving-workers).
+
+Alternatively, you can also just remove any production worker classes from
+`/etc/openqa/workers.ini`. This also allows you to do other configuration
+changes you might want to try out.
 You need to stop Salt via `systemctl stop salt-minion.service` so it will not
-change the config back. Otherwise, you don't have to invoke any systemd commands
-because the workers will apply the config change automatically.
+change the config back. Otherwise, do *not* invoke any systemd commands because
+the workers will apply the config change automatically.
 
 If you really want to stop the worker slots, read the next section for how to do
 it correctly.
+
+Also, be aware of the more generic documentation in our
+[Wiki](https://progress.opensuse.org/projects/openqav3/wiki#Use-a-production-host-for-testing-backend-changes-locally-eg-svirt-powerVM-IPMI-bare-metal-s390x-etc).
 
 ## Remarks about the systemd-units used to start workers
 The salt states achieve a setup which allows stopping/restarting workers without
