@@ -56,6 +56,7 @@ if [[ $I -gt 1 ]]; then
     UNITS_TAGS="${UNITS_HUMAN_TAG},${TAGS_PER_UNIT}"
 fi
 
-hostname=$(hostname -f)
-[[ $hostname ]] || hostname=$(hostname)
+# gracefully fall back if the FQDN cannot be resolved (e.g. no reverse DNS
+# entry), otherwise `hostname -f` fails and, due to `set -e`, aborts the script
+hostname="$(hostname -f 2>/dev/null || hostname 2>/dev/null || cat /etc/hostname 2>/dev/null || echo "unknown")"
 echo systemd_"${state}",machine="${hostname}${UNITS_TAGS}" "${state}"="${UNITS_COUNT}i"
