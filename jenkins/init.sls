@@ -1,6 +1,15 @@
 include:
   - openqa.repos
 
+{% set latest_java = salt['cmd.run']("zypper --xmlout --no-refresh --non-interactive search --provides java-openjdk-headless | grep -oE 'name=\"java-[0-9]+-openjdk-headless\"' | cut -d'\"' -f2 | sort -V | tail -n 1", python_shell=True, ignore_retcode=True) | trim %}
+
+{% if not latest_java %}
+java_determination_failed:
+  test.fail_without_changes:
+    - name: "Failed to determine the latest java-openjdk-headless package via zypper."
+    - failhard: True
+{% endif %}
+
 jenkins.repo:
   pkgrepo.managed:
     - humanname: Jenkins CI
@@ -19,7 +28,7 @@ jenkins.repo:
 
 jenkins_java_pkg:
   pkg.installed:
-    - name: java-21-openjdk-headless
+    - name: {{ latest_java | tojson }}
     - refresh: False
 
 jenkins_workflow_packages:
