@@ -286,6 +286,9 @@ the workers will apply the config change automatically.
 If you really want to stop the worker slots, read the next section for how to do
 it correctly.
 
+Also, be aware of the more generic documentation in our
+[Wiki](https://progress.opensuse.org/projects/openqav3/wiki#Use-a-production-host-for-testing-backend-changes-locally-eg-svirt-powerVM-IPMI-bare-metal-s390x-etc).
+
 ## Remarks about the systemd-units used to start workers
 The salt states achieve a setup which allows stopping/restarting workers without
 interrupting currently running jobs following the corresponding [upstream
