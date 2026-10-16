@@ -427,7 +427,7 @@ git-sha-verify:
   file.directory:
     - user: geekotest
 
-# used by /opt/git-sha-verify/checkout-latest-signed-commit
+# used by /opt/git-sha-verify/checkout_last_signed_commit.py
 /var/lib/openqa/.gnupg/:
   file.directory:
     - user: geekotest
@@ -438,7 +438,7 @@ git-sha-verify:
 # https://github.com/saltstack/salt/issues/55926
 git-clone-os-autoinst-scripts:
   cmd.run:
-    - name: /opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts/ git@github.com:os-autoinst/os-autoinst-scripts.git
+    - name: /opt/git-sha-verify/checkout_last_signed_commit.py /opt/os-autoinst-scripts/ git@github.com:os-autoinst/os-autoinst-scripts.git
     - creates: /opt/os-autoinst-scripts/.git/
     - runas: geekotest
     - require:
@@ -454,7 +454,7 @@ git-clone-os-autoinst-scripts:
         Type=exec
         User=geekotest
         WorkingDirectory=/opt
-        ExecStart=/bin/bash -lc '/opt/git-sha-verify/checkout-latest-signed-commit /opt/os-autoinst-scripts git@github.com:os-autoinst/os-autoinst-scripts.git'
+        ExecStart=/bin/bash -lc '/opt/git-sha-verify/checkout_last_signed_commit.py /opt/os-autoinst-scripts git@github.com:os-autoinst/os-autoinst-scripts.git'
 
 /etc/systemd/system/update-os-autoinst-scripts.timer:
   file.managed:
@@ -517,7 +517,7 @@ update-git-sha-verify.timer:
         [Service]
         Type=oneshot
         Environment=REPORTTO=osd-admins@suse.de
-        ExecStart=/opt/git-sha-verify/checkout-latest-signed-commit /opt/openqa-logwarn/ https://github.com/os-autoinst/openqa-logwarn.git
+        ExecStart=/opt/git-sha-verify/checkout_last_signed_commit.py /opt/openqa-logwarn/ https://github.com/os-autoinst/openqa-logwarn.git
         ExecStart=/opt/openqa-logwarn/pretty_logwarn logwarn_openqa_webui
         ExecStart=/opt/openqa-logwarn/pretty_logwarn logwarn_gru
 
