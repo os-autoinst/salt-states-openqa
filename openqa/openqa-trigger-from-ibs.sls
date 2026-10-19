@@ -48,6 +48,9 @@ https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin:
       - git: https://gitlab.suse.de/openqa/openqa-trigger-from-ibs-plugin
 {%- endmacro %}
 
+# SLES 16.2 dev
+{{ scriptgen('SUSE:SLFO:Products:SLES:16.2:TEST') }}
+
 # SLES 16.0 Quarterly Updates
 {{ scriptgen('SUSE:SLFO:Products:SLES:16.0:TEST') }}
 
