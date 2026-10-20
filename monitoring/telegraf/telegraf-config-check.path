@@ -1,0 +1,9 @@
+[Unit]
+Description=Run telegraf configuration check after the telegraf binary changes
+
+[Path]
+PathChanged=/usr/bin/telegraf
+Unit=telegraf-config-check.service
+
+[Install]
+WantedBy=multi-user.target

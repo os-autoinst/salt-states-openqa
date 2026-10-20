@@ -1,0 +1,8 @@
+[Unit]
+Description=Check telegraf configuration for errors and warnings
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/telegraf/scripts/telegraf_config_check.sh
+TimeoutStartSec=10min
