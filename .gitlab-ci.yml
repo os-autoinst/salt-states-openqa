@@ -157,6 +157,7 @@ test-monitor:
     - ls /etc/nginx/vhosts.d/
     - grep -q 'monitor.qa.suse.de' /etc/nginx/vhosts.d/02-grafana.conf && echo "ok -- expected nginx config file for grafana exists"
     - (telegraf --test --input-filter system ||:) | grep -q 'system,host=' && echo "ok -- telegraf outputs host information" || telegraf --test
+    - grep -q 'server = "udp://127.0.0.1:323"' /etc/telegraf/telegraf.conf && echo "ok -- telegraf queries chronyd over the UDP command port"
 
 test-storage:
   <<: *test_setup
