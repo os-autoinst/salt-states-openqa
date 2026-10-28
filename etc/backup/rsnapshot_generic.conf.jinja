@@ -47,5 +47,6 @@ backup	root@jenkins.qa.suse.de:/var/lib/jenkins/	jenkins.qa.suse.de/
 backup	root@openqa-monitor.qa.suse.de:/var/lib/grafana/grafana.db	openqa-monitor.qa.suse.de/
 backup	root@s.qa.suse.de:/srv/www/schort/data/links.sqlite	s.qa.suse.de/
 # qam2 is not managed by salt and the DB is in a systemd container only accessible locally, so we use ssh to dump the DB.
-backup_exec	ssh root@qam2.suse.de "systemd-run --machine=postgresql --quiet --pipe ionice -c3 nice -n19 pg_dump -U postgres -Fc -c dashboard_db" > /tmp/dashboard_db.dump
-backup	/tmp/dashboard_db.dump	qam2.suse.de/
+backup_exec	mkdir -p /tmp/dashboard_db_dump
+backup_exec	ssh root@qam2.suse.de "systemd-run --machine=postgresql --quiet --pipe ionice -c3 nice -n19 pg_dump -U postgres -Fc -c dashboard_db" > /tmp/dashboard_db_dump/dashboard_db.dump
+backup	/tmp/dashboard_db_dump/	qam2.suse.de/
