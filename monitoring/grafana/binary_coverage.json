@@ -1,0 +1,760 @@
+{
+ "annotations": {
+  "list": [
+   {
+    "builtIn": 1,
+    "datasource": {
+     "type": "grafana",
+     "uid": "-- Grafana --"
+    },
+    "enable": true,
+    "hide": true,
+    "iconColor": "rgba(0, 211, 255, 1)",
+    "name": "Annotations & Alerts",
+    "type": "dashboard"
+   }
+  ]
+ },
+ "editable": true,
+ "graphTooltip": 0,
+ "id": null,
+ "panels": [
+  {
+   "collapsed": false,
+   "gridPos": {
+    "h": 1,
+    "w": 24,
+    "x": 0,
+    "y": 0
+   },
+   "id": 1,
+   "panels": [],
+   "title": "Health",
+   "type": "row"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "color": {
+      "mode": "thresholds"
+     },
+     "mappings": [
+      {
+       "type": "value",
+       "options": {
+        "0": {
+         "index": 0,
+         "text": "OK",
+         "color": "green"
+        },
+        "1": {
+         "index": 1,
+         "text": "NEW FAILING MODULES",
+         "color": "red"
+        },
+        "2": {
+         "index": 2,
+         "text": "NO COVERAGE REPORT",
+         "color": "red"
+        },
+        "3": {
+         "index": 3,
+         "text": "STALE",
+         "color": "red"
+        },
+        "4": {
+         "index": 4,
+         "text": "COLLECTOR ERROR",
+         "color": "red"
+        }
+       }
+      },
+      {
+       "type": "special",
+       "options": {
+        "match": "null",
+        "result": {
+         "index": 0,
+         "text": "NO DATA",
+         "color": "red"
+        }
+       }
+      }
+     ],
+     "noValue": "NO DATA",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "red",
+        "value": null
+       }
+      ]
+     }
+    }
+   },
+   "gridPos": {
+    "h": 6,
+    "w": 7,
+    "x": 0,
+    "y": 1
+   },
+   "id": 2,
+   "options": {
+    "colorMode": "background",
+    "graphMode": "none",
+    "justifyMode": "center",
+    "orientation": "auto",
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "showPercentChange": false,
+    "text": {},
+    "textMode": "auto",
+    "wideLayout": true
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT last(\"status\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3' AND time > now() - 3h",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "time_series"
+    }
+   ],
+   "title": "Measurement status",
+   "type": "stat"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "color": {
+      "mode": "thresholds"
+     },
+     "mappings": [
+      {
+       "type": "value",
+       "options": {
+        "": {
+         "index": 0,
+         "text": "none",
+         "color": "green"
+        }
+       }
+      },
+      {
+       "type": "special",
+       "options": {
+        "match": "null",
+        "result": {
+         "index": 0,
+         "text": "NO DATA",
+         "color": "red"
+        }
+       }
+      }
+     ],
+     "noValue": "NO DATA",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "red",
+        "value": null
+       }
+      ]
+     }
+    }
+   },
+   "gridPos": {
+    "h": 6,
+    "w": 6,
+    "x": 7,
+    "y": 1
+   },
+   "id": 3,
+   "options": {
+    "colorMode": "value",
+    "graphMode": "none",
+    "justifyMode": "center",
+    "orientation": "auto",
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "showPercentChange": false,
+    "text": {},
+    "textMode": "value",
+    "wideLayout": true
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT last(\"new_failure_names\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3' AND time > now() - 3h",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "time_series"
+    }
+   ],
+   "title": "Newly failing modules",
+   "type": "stat"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "color": {
+      "mode": "thresholds"
+     },
+     "noValue": "NO DATA",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "green",
+        "value": null
+       },
+       {
+        "color": "red",
+        "value": 36
+       }
+      ]
+     },
+     "decimals": 0
+    }
+   },
+   "gridPos": {
+    "h": 6,
+    "w": 4,
+    "x": 13,
+    "y": 1
+   },
+   "id": 4,
+   "options": {
+    "colorMode": "value",
+    "graphMode": "none",
+    "justifyMode": "center",
+    "orientation": "auto",
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "showPercentChange": false,
+    "text": {},
+    "textMode": "auto",
+    "wideLayout": true
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT last(\"hours_since_last_ok\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3' AND time > now() - 3h",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "time_series"
+    }
+   ],
+   "title": "Hours since last good run",
+   "type": "stat"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "color": {
+      "mode": "thresholds"
+     },
+     "noValue": "NO DATA",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "red",
+        "value": null
+       }
+      ]
+     },
+     "links": [
+      {
+       "title": "openQA job",
+       "url": "https://openqa.opensuse.org/tests/${__value.raw}",
+       "targetBlank": true
+      }
+     ]
+    }
+   },
+   "gridPos": {
+    "h": 6,
+    "w": 3,
+    "x": 17,
+    "y": 1
+   },
+   "id": 5,
+   "options": {
+    "colorMode": "value",
+    "graphMode": "none",
+    "justifyMode": "center",
+    "orientation": "auto",
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "showPercentChange": false,
+    "text": {},
+    "textMode": "value",
+    "wideLayout": true
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT last(\"last_job_id\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3' AND time > now() - 3h",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "time_series"
+    }
+   ],
+   "title": "Last job",
+   "type": "stat"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "color": {
+      "mode": "thresholds"
+     },
+     "mappings": [
+      {
+       "type": "value",
+       "options": {
+        "0": {
+         "index": 0,
+         "text": "idle",
+         "color": "green"
+        }
+       }
+      }
+     ],
+     "noValue": "NO DATA",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "blue",
+        "value": null
+       }
+      ]
+     },
+     "links": [
+      {
+       "title": "openQA job",
+       "url": "https://openqa.opensuse.org/tests/${__value.raw}",
+       "targetBlank": true
+      }
+     ]
+    }
+   },
+   "gridPos": {
+    "h": 6,
+    "w": 4,
+    "x": 20,
+    "y": 1
+   },
+   "id": 6,
+   "options": {
+    "colorMode": "value",
+    "graphMode": "none",
+    "justifyMode": "center",
+    "orientation": "auto",
+    "reduceOptions": {
+     "calcs": [
+      "lastNotNull"
+     ],
+     "fields": "",
+     "values": false
+    },
+    "showPercentChange": false,
+    "text": {},
+    "textMode": "value",
+    "wideLayout": true
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT last(\"running_job_id\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3' AND time > now() - 3h",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "time_series"
+    }
+   ],
+   "title": "Running",
+   "type": "stat"
+  },
+  {
+   "collapsed": false,
+   "gridPos": {
+    "h": 1,
+    "w": 24,
+    "x": 0,
+    "y": 7
+   },
+   "id": 7,
+   "panels": [],
+   "title": "Trend",
+   "type": "row"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "fillOpacity": 10,
+      "lineWidth": 2,
+      "showPoints": "always"
+     },
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "green",
+        "value": null
+       }
+      ]
+     },
+     "unit": "percent"
+    }
+   },
+   "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 8
+   },
+   "id": 8,
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT \"coverage_pct\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND \"report_ok\" = 1 AND $timeFilter",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "time_series"
+    }
+   ],
+   "title": "Average coverage %",
+   "type": "timeseries"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "fillOpacity": 10,
+      "lineWidth": 2,
+      "showPoints": "always"
+     },
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "green",
+        "value": null
+       }
+      ]
+     },
+     "unit": "short"
+    }
+   },
+   "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 12,
+    "y": 8
+   },
+   "id": 9,
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT \"total_functions\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "time_series"
+    },
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT \"total_executed\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "rawQuery": true,
+     "refId": "B",
+     "resultFormat": "time_series"
+    }
+   ],
+   "title": "Functions",
+   "type": "timeseries"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "fillOpacity": 10,
+      "lineWidth": 2,
+      "showPoints": "always"
+     },
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "green",
+        "value": null
+       }
+      ]
+     },
+     "unit": "short"
+    }
+   },
+   "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 16
+   },
+   "id": 10,
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT \"images\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "time_series"
+    }
+   ],
+   "title": "Instrumented images",
+   "type": "timeseries"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "drawStyle": "bars",
+      "fillOpacity": 10,
+      "lineWidth": 2,
+      "showPoints": "always"
+     },
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "green",
+        "value": null
+       }
+      ]
+     },
+     "unit": "short"
+    }
+   },
+   "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 12,
+    "y": 16
+   },
+   "id": 11,
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT \"modules_failed\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "time_series"
+    },
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT \"new_failures\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "rawQuery": true,
+     "refId": "B",
+     "resultFormat": "time_series"
+    }
+   ],
+   "title": "Failed modules per run",
+   "type": "timeseries"
+  },
+  {
+   "collapsed": false,
+   "gridPos": {
+    "h": 1,
+    "w": 24,
+    "x": 0,
+    "y": 24
+   },
+   "id": 12,
+   "panels": [],
+   "title": "Runs",
+   "type": "row"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "align": "auto",
+      "cellOptions": {
+       "type": "auto"
+      },
+      "filterable": true,
+      "inspect": false
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "job_id"
+      },
+      "properties": [
+       {
+        "id": "links",
+        "value": [
+         {
+          "title": "openQA job",
+          "url": "https://openqa.opensuse.org/tests/${__value.raw}",
+          "targetBlank": true
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "gridPos": {
+    "h": 10,
+    "w": 24,
+    "x": 0,
+    "y": 25
+   },
+   "id": 13,
+   "options": {
+    "cellHeight": "sm",
+    "footer": {
+     "countRows": false,
+     "fields": "",
+     "reducer": [
+      "sum"
+     ],
+     "show": false
+    },
+    "showHeader": true,
+    "sortBy": [
+     {
+      "desc": true,
+      "displayName": "time"
+     }
+    ]
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "query": "SELECT \"job_id\",\"snapshot\",\"coverage_pct\",\"total_functions\",\"total_executed\",\"images\",\"modules_failed\",\"new_failure_names\",\"test_git_hash\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "table"
+    }
+   ],
+   "title": "Coverage runs",
+   "type": "table"
+  }
+ ],
+ "refresh": "1h",
+ "schemaVersion": 39,
+ "tags": [
+  "coverage",
+  "openqa"
+ ],
+ "time": {
+  "from": "now-90d",
+  "to": "now"
+ },
+ "timezone": "utc",
+ "title": "Binary function coverage",
+ "uid": "binary-coverage",
+ "version": 1
+}
