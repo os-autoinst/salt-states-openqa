@@ -128,3 +128,4 @@ telegraf:
       changes:
         - monitoring/telegraf/*
         - monitoring/binary_coverage/*
+        - monitoring/binary_coverage/**/*
