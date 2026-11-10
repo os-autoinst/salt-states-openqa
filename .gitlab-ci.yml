@@ -80,6 +80,13 @@ test-monitor-mock:
     - "echo 'roles: monitor' >> /etc/salt/grains"
     - $salt_call mock=True
 
+test-suse_metrics-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: suse_metrics' >> /etc/salt/grains"
+    - $salt_call mock=True
+
 test-storage-mock:
   <<: *test_setup
   stage: test-static

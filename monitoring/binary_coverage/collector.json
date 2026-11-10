@@ -1,0 +1,15 @@
+{%- set defaults = {
+  'instances': [{'name': 'o3', 'url': 'https://openqa.opensuse.org'}],
+  'test': 'binary_coverage_ultimate',
+  'distri': 'opensuse',
+  'version': 'Tumbleweed',
+  'group_id': 145,
+  'lookback_days': 45,
+  'stale_hours': 36,
+  'cache_dir': '/var/cache/binary_coverage',
+  'http_timeout': 60,
+  'http_retries': 2
+} %}
+{%- set overrides = salt['pillar.get']('binary_coverage:collector', {}) %}
+{%- do defaults.update(overrides) %}
+{{ defaults | json }}
