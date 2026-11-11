@@ -734,6 +734,250 @@
    ],
    "title": "Coverage runs",
    "type": "table"
+  },
+  {
+   "collapsed": false,
+   "gridPos": {
+    "h": 1,
+    "w": 24,
+    "x": 0,
+    "y": 35
+   },
+   "id": 14,
+   "panels": [],
+   "title": "Per binary",
+   "type": "row"
+  },
+  {
+   "datasource": {
+    "type": "influxdb",
+    "uid": "000000001"
+   },
+   "description": "Latest run compared with the previous run. 'change' is the coverage difference in percentage points: negative means the tests cover less of the binary, positive is progress. 'dfunc' shows whether the binary also gained functions (upstream growth) which can lower coverage without a test regression. Sorted by change; click a column header to re-sort.",
+   "fieldConfig": {
+    "defaults": {
+     "custom": {
+      "align": "auto",
+      "cellOptions": {
+       "type": "auto"
+      },
+      "filterable": true,
+      "inspect": false
+     }
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "coverage"
+      },
+      "properties": [
+       {
+        "id": "unit",
+        "value": "percent"
+       },
+       {
+        "id": "decimals",
+        "value": 1
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "previous"
+      },
+      "properties": [
+       {
+        "id": "unit",
+        "value": "percent"
+       },
+       {
+        "id": "decimals",
+        "value": 1
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "change (pp)"
+      },
+      "properties": [
+       {
+        "id": "unit",
+        "value": "short"
+       },
+       {
+        "id": "decimals",
+        "value": 2
+       },
+       {
+        "id": "thresholds",
+        "value": {
+         "mode": "absolute",
+         "steps": [
+          {
+           "color": "red",
+           "value": null
+          },
+          {
+           "color": "green",
+           "value": 0
+          }
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "dfunc"
+      },
+      "properties": [
+       {
+        "id": "unit",
+        "value": "short"
+       },
+       {
+        "id": "decimals",
+        "value": 0
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "functions"
+      },
+      "properties": [
+       {
+        "id": "unit",
+        "value": "short"
+       },
+       {
+        "id": "decimals",
+        "value": 0
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "covered"
+      },
+      "properties": [
+       {
+        "id": "unit",
+        "value": "short"
+       },
+       {
+        "id": "decimals",
+        "value": 0
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "new"
+      },
+      "properties": [
+       {
+        "id": "mappings",
+        "value": [
+         {
+          "type": "value",
+          "options": {
+           "0": {
+            "index": 0,
+            "text": ""
+           },
+           "1": {
+            "index": 1,
+            "text": "new",
+            "color": "blue"
+           }
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "image"
+      },
+      "properties": [
+       {
+        "id": "custom.width",
+        "value": 260
+       }
+      ]
+     }
+    ]
+   },
+   "gridPos": {
+    "h": 16,
+    "w": 24,
+    "x": 0,
+    "y": 36
+   },
+   "id": 15,
+   "options": {
+    "cellHeight": "sm",
+    "footer": {
+     "countRows": false,
+     "fields": "",
+     "reducer": [
+      "sum"
+     ],
+     "show": false
+    },
+    "showHeader": true,
+    "sortBy": [
+     {
+      "desc": false,
+      "displayName": "change (pp)"
+     }
+    ]
+   },
+   "targets": [
+    {
+     "datasource": {
+      "type": "influxdb",
+      "uid": "000000001"
+     },
+     "rawQuery": true,
+     "refId": "A",
+     "resultFormat": "table",
+     "query": "SELECT last(\"coverage_pct\") AS \"coverage\", last(\"prev_pct\") AS \"previous\", last(\"delta_pct\") AS \"change (pp)\", last(\"delta_total\") AS \"dfunc\", last(\"total_functions\") AS \"functions\", last(\"called_functions\") AS \"covered\", last(\"new_image\") AS \"new\" FROM \"binary_coverage_image\" WHERE \"instance\" = 'o3' AND \"job_id\" = $latest_job GROUP BY \"image\""
+    }
+   ],
+   "title": "Coverage change per binary",
+   "transformations": [
+    {
+     "id": "organize",
+     "options": {
+      "excludeByName": {
+       "Time": true
+      },
+      "indexByName": {
+       "image": 0,
+       "coverage": 1,
+       "previous": 2,
+       "change (pp)": 3,
+       "dfunc": 4,
+       "functions": 5,
+       "covered": 6,
+       "new": 7
+      }
+     }
+    }
+   ],
+   "type": "table"
   }
  ],
  "refresh": "1h",
@@ -749,5 +993,29 @@
  "timezone": "utc",
  "title": "Binary function coverage",
  "uid": "binary-coverage",
- "version": 1
+ "version": 1,
+ "templating": {
+  "list": [
+   {
+    "current": {},
+    "datasource": {
+     "type": "influxdb",
+     "uid": "000000001"
+    },
+    "definition": "SELECT last(\"last_ok_job_id\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3'",
+    "hide": 2,
+    "includeAll": false,
+    "label": "latest job",
+    "multi": false,
+    "name": "latest_job",
+    "options": [],
+    "query": "SELECT last(\"last_ok_job_id\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3'",
+    "refresh": 2,
+    "regex": "",
+    "skipUrlSync": false,
+    "sort": 0,
+    "type": "query"
+   }
+  ]
+ }
 }
