@@ -753,7 +753,7 @@
     "type": "influxdb",
     "uid": "000000001"
    },
-   "description": "Latest run compared with the previous run. 'change' is the coverage difference in percentage points: negative means the tests cover less of the binary, positive is progress. 'dfunc' shows whether the binary also gained functions (upstream growth) which can lower coverage without a test regression. Sorted by change; click a column header to re-sort.",
+   "description": "Binaries whose coverage differs from the previous run, plus binaries that are new. 'change' is the difference in percentage points: negative means the tests cover less of the binary, positive is progress. 'dfunc' shows whether the binary also gained functions (upstream growth) which can lower coverage without a test regression. Sorted by change; click a column header to re-sort.",
    "fieldConfig": {
     "defaults": {
      "custom": {
@@ -953,7 +953,7 @@
      "rawQuery": true,
      "refId": "A",
      "resultFormat": "table",
-     "query": "SELECT last(\"coverage_pct\") AS \"coverage\", last(\"prev_pct\") AS \"previous\", last(\"delta_pct\") AS \"change (pp)\", last(\"delta_total\") AS \"dfunc\", last(\"total_functions\") AS \"functions\", last(\"called_functions\") AS \"covered\", last(\"new_image\") AS \"new\" FROM \"binary_coverage_image\" WHERE \"instance\" = 'o3' AND \"job_id\" = $latest_job GROUP BY \"image\""
+     "query": "SELECT * FROM (SELECT last(\"coverage_pct\") AS \"coverage\", last(\"prev_pct\") AS \"previous\", last(\"delta_pct\") AS \"change (pp)\", last(\"delta_total\") AS \"dfunc\", last(\"total_functions\") AS \"functions\", last(\"called_functions\") AS \"covered\", last(\"new_image\") AS \"new\" FROM \"binary_coverage_image\" WHERE \"instance\" = 'o3' AND \"job_id\" = $latest_job GROUP BY \"image\") WHERE \"change (pp)\" != 0 OR \"new\" = 1"
     }
    ],
    "title": "Coverage change per binary",
