@@ -22,7 +22,10 @@ zypper_patch() {
     return $ret
 }
 
-retry -r 6 -s 15 -e zypper -n --gpg-auto-import-keys ref
+# Repositories are usually mid-publish (OBS/devel:openQA) rather than dead, so
+# give the refresh a ~42 min window to settle. A skipped repo (106) leaves the
+# solver pool incomplete, so patching must not run and the unit keeps failing.
+retry -r 8 -s 10 -e zypper -n --gpg-auto-import-keys ref
 for i in {1..2} ; do
     # 1st patch call will update zypp, 2nd will update the system
     if ! zypper_patch ; then
