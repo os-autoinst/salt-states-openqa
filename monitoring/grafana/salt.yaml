@@ -9,8 +9,8 @@ providers:
     folder: Salt
     # <string, required> provider type. Required
     type: file
-    # <bool> disable dashboard deletion
-    disableDeletion: true
+    # false: delete dashboards from the DB once salt removes their file
+    disableDeletion: false
     # <bool> enable dashboard editing
     editable: true
     # <int> how often Grafana will scan for changed dashboards

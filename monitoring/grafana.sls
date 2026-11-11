@@ -35,6 +35,20 @@ adjust_tmpfiles:
     - source: salt://monitoring/grafana/reload_grafana.sh
     - mode: "0755"
 
+grafana-cleanup-deps:
+  pkg.installed:
+    - refresh: False
+    - pkgs:
+      - curl
+      - jq
+
+/usr/local/bin/cleanup-stale-grafana.sh:
+  file.managed:
+    - source: salt://monitoring/grafana/cleanup_stale_alerts.sh
+    - mode: "0755"
+    - require:
+      - pkg: grafana-cleanup-deps
+
 {%- if not grains.get('noservices', False) and grains.get('virtual', '') != 'container' %}
 {% for grafana_overwrite in ['00-enable-reload', '01-service-fail-mail'] %}
 /etc/systemd/system/grafana-server.service.d/{{ grafana_overwrite }}.conf:
@@ -261,4 +275,14 @@ grafana-server:
 {% endfor %}
       - file: /etc/grafana/*
       - file: {{ dashboard_template_folder }}*
+
+# remove stale alert rules from grafana's database (dashboards are handled by dashboard-cleanup)
+cleanup-stale-grafana:
+  cmd.run:
+    - name: {{ ('/usr/local/bin/cleanup-stale-grafana.sh admin ' ~ (pillar['credentials']['grafana']['admin_password'] | quote)) | yaml_encode }}
+    - require:
+      - file: /usr/local/bin/cleanup-stale-grafana.sh
+      - alert-cleanup
+      - dashboard-cleanup
+      - service: grafana-server
 {%- endif %}
