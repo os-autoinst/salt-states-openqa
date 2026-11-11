@@ -1,0 +1,68 @@
+{
+ "job": {
+  "clone_id": null,
+  "id": 6190943,
+  "result": "failed",
+  "state": "done",
+  "t_finished": "2026-08-29T23:18:59",
+  "test": "binary_coverage_ultimate",
+  "testresults": [
+   {
+    "name": "prepare_profile",
+    "result": "passed"
+   },
+   {
+    "name": "isosize",
+    "result": "passed"
+   },
+   {
+    "name": "coverage_setup",
+    "result": "passed"
+   },
+   {
+    "name": "ping",
+    "result": "failed"
+   },
+   {
+    "name": "aa_status",
+    "result": "failed"
+   },
+   {
+    "name": "aa_disable",
+    "result": "failed"
+   },
+   {
+    "name": "aa_autodep",
+    "result": "failed"
+   },
+   {
+    "name": "aa_easyprof",
+    "result": "failed"
+   },
+   {
+    "name": "snapper_create",
+    "result": "failed"
+   },
+   {
+    "name": "snapper_cleanup",
+    "result": "failed"
+   },
+   {
+    "name": "snapper_used_space",
+    "result": "failed"
+   },
+   {
+    "name": "irqbalance",
+    "result": "failed"
+   },
+   {
+    "name": "shar",
+    "result": "failed"
+   },
+   {
+    "name": "coverage_report",
+    "result": "passed"
+   }
+  ]
+ }
+}
