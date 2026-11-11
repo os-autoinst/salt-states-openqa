@@ -17,7 +17,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-USER_AGENT = "binary-coverage-monitor"
+# o3's bot protection challenges unknown user agents; this one is allowed
+USER_AGENT = "openqa-monitoring"
 FINAL_STATES = ("done",)
 INELIGIBLE_RESULTS = (
     "obsoleted",

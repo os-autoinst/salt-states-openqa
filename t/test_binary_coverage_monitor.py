@@ -442,7 +442,7 @@ def test_challenged_aggregate_is_retried_not_cached(tmp_path, capsys):
     assert status_line(lines)["last_ok_job_id"] == 6190943
 
 
-def test_http_get_sends_accept_header(monkeypatch):
+def test_http_get_sends_allowed_headers(monkeypatch):
     seen = {}
 
     class Resp:
@@ -461,7 +461,9 @@ def test_http_get_sends_accept_header(monkeypatch):
 
     monkeypatch.setattr(monitor.urllib.request, "urlopen", fake_urlopen)
     assert monitor.http_get("https://o3.test/x") == b"ok"
-    assert seen.get("Accept") == "*/*"
+    sent = dict((key.lower(), value) for key, value in seen.items())
+    assert sent.get("accept") == "*/*"
+    assert sent.get("user-agent") == "openqa-monitoring"
 
 
 def test_new_failures_ignore_a_run_without_report():
