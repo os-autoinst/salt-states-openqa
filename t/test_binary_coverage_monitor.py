@@ -382,7 +382,7 @@ def test_end_to_end_collector_error(tmp_path):
     assert status_line(lines)["status"] == monitor.STATUS_COLLECTOR_ERROR
 
 
-def test_one_point_per_run_and_no_per_image_series(tmp_path):
+def test_one_point_per_run_and_images_for_the_latest(tmp_path):
     aggregate = load("aggregate_6190943.html")
     jobs = []
     fetch = Fetcher()
@@ -398,7 +398,41 @@ def test_one_point_per_run_and_no_per_image_series(tmp_path):
     runs = [x for x in lines if x.startswith("binary_coverage,")]
     assert len(runs) == 45
     assert all(",images=3i," in x for x in runs)
-    assert not [x for x in lines if x.startswith("binary_coverage_image")]
+    images = [x for x in lines if x.startswith("binary_coverage_image")]
+    assert len(images) == 3
+    assert all("delta_pct=0.0" in x and "prev_job_id=6300043i" in x for x in images)
+
+
+def test_image_coverage_deltas(tmp_path):
+    old_aggregate = (
+        load("aggregate_6190943.html")
+        .replace("<td>1247</td>", "<td>1300</td>", 1)
+        .replace("<td>0</td>", "<td>65</td>", 1)
+        .replace('bar-label">0.0%', 'bar-label">5.0%', 1)
+    )
+    new_aggregate = load("aggregate_6190943.html")
+    old = good_job(6190943, "2026-08-29T23:18:59")
+    new = good_job(6200000, "2026-08-30T10:00:00")
+    details = load_json("details_6190943.json")
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [old, new]})
+    fetch.add_job(old, details, {"TEST_GIT_HASH": "a" * 40}, old_aggregate)
+    fetch.add_job(new, details, {"TEST_GIT_HASH": "b" * 40}, new_aggregate)
+    now = monitor.parse_openqa_time("2026-08-30T11:00:00")
+    lines = collect(make_config(tmp_path), fetch, now)
+    lines = [
+        x
+        for x in lines
+        if x.startswith("binary_coverage_image,") and "image=libperl.so" in x
+    ]
+    assert len(lines) == 1
+    line = lines[0]
+    assert "coverage_pct=0.0" in line
+    assert "prev_pct=5.0" in line
+    assert "delta_pct=-5.0" in line
+    assert "delta_total=-53i" in line
+    assert "prev_job_id=6190943i" in line
+    assert "new_image=0i" in line
 
 
 def test_cache_avoids_refetching_finished_jobs(tmp_path):
@@ -549,3 +583,98 @@ def test_prune_cache_removes_entries_past_the_window(tmp_path):
     assert not old.exists()
     assert new.exists()
     assert other.exists()
+
+
+def add_image_row(aggregate, name):
+    row = (
+        "<tr>\n<td>%s</td>\n<td>300</td>\n<td>30</td>\n"
+        '<td>\n<div class="bar">\n<span class="bar-label">10.0%%</span>\n'
+        "</div>\n</td>\n</tr>\n" % name
+    )
+    return aggregate.replace("</tbody>", row + "</tbody>", 1)
+
+
+def image_lines(lines):
+    return [x for x in lines if x.startswith("binary_coverage_image,")]
+
+
+def test_new_image_marker_clears_on_the_next_run(tmp_path):
+    base = load("aggregate_6190943.html")
+    with_new = add_image_row(base, "libnew.so")
+    details = load_json("details_6190943.json")
+    a = good_job(6190943, "2026-08-29T23:18:59")
+    b = good_job(6200000, "2026-08-30T10:00:00")
+    c = good_job(6200001, "2026-08-31T10:00:00")
+    fetch = Fetcher()
+    fetch.add_job(a, details, {"TEST_GIT_HASH": "a" * 40}, base)
+    fetch.add_job(b, details, {"TEST_GIT_HASH": "b" * 40}, with_new)
+    fetch.add_job(c, details, {"TEST_GIT_HASH": "c" * 40}, with_new)
+    cfg = make_config(tmp_path)
+
+    fetch.add(JOBS_PATH, {"jobs": [a]})
+    run1 = image_lines(
+        collect(cfg, fetch, monitor.parse_openqa_time("2026-08-30T00:00:00"))
+    )
+    assert all("new_image=0i" in x for x in run1)
+    assert all("prev_job_id=0i" in x for x in run1)
+
+    fetch.add(JOBS_PATH, {"jobs": [a, b]})
+    run2 = image_lines(
+        collect(cfg, fetch, monitor.parse_openqa_time("2026-08-30T11:00:00"))
+    )
+    new_rows = [x for x in run2 if "image=libnew.so" in x]
+    assert len(new_rows) == 1
+    assert "new_image=1i" in new_rows[0]
+    assert all("new_image=0i" in x for x in run2 if "image=libnew.so" not in x)
+
+    fetch.add(JOBS_PATH, {"jobs": [a, b, c]})
+    run3 = image_lines(
+        collect(cfg, fetch, monitor.parse_openqa_time("2026-08-31T11:00:00"))
+    )
+    old_new = [x for x in run3 if "image=libnew.so" in x]
+    assert len(old_new) == 1
+    assert "new_image=0i" in old_new[0]
+    assert "prev_job_id=6200000i" in old_new[0]
+    assert "delta_pct=0.0" in old_new[0]
+
+
+def test_image_data_is_backfilled_into_the_cache(tmp_path):
+    job = good_job(6190943)
+    details = load_json("details_6190943.json")
+    aggregate = load("aggregate_6190943.html")
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [job]})
+    fetch.add_job(job, details, {"TEST_GIT_HASH": "a" * 40}, aggregate)
+    cfg = make_config(tmp_path)
+    now = monitor.parse_openqa_time("2026-08-30T00:00:00")
+    collect(cfg, fetch, now)
+    path = tmp_path / "o3-6190943.json"
+    entry = json.loads(path.read_text())
+    del entry["classified"]["image_data"]
+    path.write_text(json.dumps(entry))
+    lines = collect(cfg, fetch, now)
+    assert image_lines(lines)
+    entry = json.loads(path.read_text())
+    assert entry["classified"]["image_data"]
+
+
+def test_images_skipped_when_previous_run_is_unavailable(tmp_path, capsys):
+    a = good_job(6190943, "2026-08-29T23:18:59")
+    b = good_job(6200000, "2026-08-30T10:00:00")
+    details = load_json("details_6190943.json")
+    aggregate = load("aggregate_6190943.html")
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [a, b]})
+    fetch.add_job(a, details, {"TEST_GIT_HASH": "a" * 40}, aggregate)
+    fetch.add_job(b, details, {"TEST_GIT_HASH": "b" * 40}, aggregate)
+    cfg = make_config(tmp_path)
+    now = monitor.parse_openqa_time("2026-08-30T11:00:00")
+    collect(cfg, fetch, now)
+    path = tmp_path / "o3-6190943.json"
+    entry = json.loads(path.read_text())
+    del entry["classified"]["image_data"]
+    path.write_text(json.dumps(entry))
+    del fetch.routes["/tests/6190943/file/coverage_report-aggregate.html"]
+    lines = collect(cfg, fetch, now)
+    assert not image_lines(lines)
+    assert "no image data for job 6190943" in capsys.readouterr().err

@@ -208,6 +208,20 @@ def _summary(aggregate):
     }
 
 
+def _image_data(aggregate):
+    """Per-image functions and coverage from an aggregate report."""
+    if not aggregate:
+        return {}
+    return {
+        image["image"]: {
+            "total": int(image["total_functions"]),
+            "called": int(image["called_functions"]),
+            "pct": float(image["coverage_pct"]),
+        }
+        for image in aggregate.get("images", [])
+    }
+
+
 def classify_job(job, details, aggregate, test_git_hash=None):
     results = {}
     for tr in _testresults(details):
@@ -245,6 +259,7 @@ def classify_job(job, details, aggregate, test_git_hash=None):
         "t_finished": t_finished,
         "t_finished_epoch": parse_openqa_time(t_finished) if t_finished else 0,
         "aggregate": _summary(aggregate),
+        "image_data": _image_data(aggregate),
         "test_git_hash": test_git_hash or "",
     }
 
@@ -458,6 +473,29 @@ def collect_instance(instance, cfg, now, fetch, write):
         if cache_dir:
             store_cached(cache_path(cache_dir, name, job_id), entry)
 
+    def ensure_images(job):
+        """Fill image_data for a report_ok job; False if it is unavailable."""
+        if not job or not job.get("report_ok"):
+            return False
+        if job.get("image_data"):
+            return True
+        try:
+            data = _image_data(fetch_aggregate(instance, job["job_id"], fetch))
+        except Exception as exc:
+            sys.stderr.write(
+                "%s: no image data for job %s: %s\n" % (name, job["job_id"], exc)
+            )
+            return False
+        if not data:
+            sys.stderr.write("%s: no image data for job %s\n" % (name, job["job_id"]))
+            return False
+        job["image_data"] = data
+        entry = cached(job["job_id"])
+        if entry is not None:
+            entry["classified"]["image_data"] = data
+            save(job["job_id"], entry)
+        return True
+
     jobs = fetch_jobs(instance, cfg, fetch)
     threshold = now - cfg.get("lookback_days", 45) * 86400
     if cache_dir:
@@ -547,6 +585,63 @@ def collect_instance(instance, cfg, now, fetch, write):
                 "binary_coverage", tags, fields, job["t_finished_epoch"] * 10**9
             )
         )
+
+    ok_jobs = [job for job in eligible if job.get("report_ok")]
+    latest_ok = ok_jobs[-1] if ok_jobs else None
+    previous_ok = ok_jobs[-2] if len(ok_jobs) > 1 else None
+    # Emit only when both runs are readable: a row without the full field set
+    # would keep stale prev_pct/delta_pct/new_image values alive in InfluxDB.
+    if latest_ok and not ensure_images(latest_ok):
+        latest_ok = None
+    if latest_ok and previous_ok is not None and not ensure_images(previous_ok):
+        latest_ok = None
+    if latest_ok:
+        prev_images = (previous_ok or {}).get("image_data") or {}
+        for image, current in sorted(latest_ok["image_data"].items()):
+            fields = {
+                "job_id": latest_ok["job_id"],
+                "coverage_pct": current["pct"],
+                "total_functions": current["total"],
+                "called_functions": current["called"],
+                "new_image": 0,
+            }
+            previous = prev_images.get(image)
+            if previous:
+                fields.update(
+                    {
+                        "prev_job_id": previous_ok["job_id"],
+                        "prev_pct": previous["pct"],
+                        "delta_pct": current["pct"] - previous["pct"],
+                        "delta_total": current["total"] - previous["total"],
+                    }
+                )
+            elif previous_ok is not None:
+                fields.update(
+                    {
+                        "new_image": 1,
+                        "prev_job_id": previous_ok["job_id"],
+                        "prev_pct": 0.0,
+                        "delta_pct": 0.0,
+                        "delta_total": current["total"],
+                    }
+                )
+            else:
+                fields.update(
+                    {
+                        "prev_job_id": 0,
+                        "prev_pct": 0.0,
+                        "delta_pct": 0.0,
+                        "delta_total": 0,
+                    }
+                )
+            lines.append(
+                format_line(
+                    "binary_coverage_image",
+                    {"instance": name, "image": image},
+                    fields,
+                    latest_ok["t_finished_epoch"] * 10**9,
+                )
+            )
 
     status = compute_status(eligible, running_job, now, cfg)
     if skipped and status["status"] == STATUS_OK:
