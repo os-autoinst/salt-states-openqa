@@ -502,9 +502,9 @@ update-git-sha-verify.timer:
   file.managed:
     - contents: |
         [Unit]
-        Description=Hourly timer for logwarn
+        Description=Run logwarn every 12 hours
         [Timer]
-        OnCalendar=*:10:00
+        OnCalendar=00,12:00:00
         Persistent=true
         [Install]
         WantedBy=timers.target
