@@ -156,17 +156,6 @@
          "color": "green"
         }
        }
-      },
-      {
-       "type": "special",
-       "options": {
-        "match": "null",
-        "result": {
-         "index": 0,
-         "text": "NO DATA",
-         "color": "red"
-        }
-       }
       }
      ],
      "noValue": "NO DATA",
@@ -178,8 +167,12 @@
         "value": null
        }
       ]
+     },
+     "custom": {
+      "align": "center"
      }
-    }
+    },
+    "overrides": []
    },
    "gridPos": {
     "h": 6,
@@ -189,21 +182,8 @@
    },
    "id": 3,
    "options": {
-    "colorMode": "value",
-    "graphMode": "none",
-    "justifyMode": "center",
-    "orientation": "auto",
-    "reduceOptions": {
-     "calcs": [
-      "lastNotNull"
-     ],
-     "fields": "",
-     "values": false
-    },
-    "showPercentChange": false,
-    "text": {},
-    "textMode": "value",
-    "wideLayout": true
+    "showHeader": false,
+    "cellHeight": "sm"
    },
    "targets": [
     {
@@ -214,11 +194,24 @@
      "query": "SELECT last(\"new_failure_names\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3' AND time > now() - 3h",
      "rawQuery": true,
      "refId": "A",
-     "resultFormat": "time_series"
+     "resultFormat": "table"
     }
    ],
    "title": "Newly failing modules",
-   "type": "stat"
+   "transformations": [
+    {
+     "id": "organize",
+     "options": {
+      "excludeByName": {
+       "Time": true
+      },
+      "renameByName": {
+       "last": "Modules"
+      }
+     }
+    }
+   ],
+   "type": "table"
   },
   {
    "datasource": {
