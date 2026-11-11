@@ -127,3 +127,5 @@ telegraf:
         $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
       changes:
         - monitoring/telegraf/*
+        - monitoring/binary_coverage/*
+        - monitoring/binary_coverage/**/*

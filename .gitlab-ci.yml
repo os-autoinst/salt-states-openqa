@@ -80,6 +80,15 @@ test-monitor-mock:
     - "echo 'roles: monitor' >> /etc/salt/grains"
     - $salt_call mock=True
 
+test-suse_metrics-mock:
+  <<: *test_setup
+  stage: test-static
+  script:
+    - "echo 'roles: suse_metrics' >> /etc/salt/grains"
+    # the state installs this file, so it must exist before this MR can land
+    - test -f monitoring/binary_coverage/scripts/binary_coverage_monitor.py
+    - $salt_call mock=True
+
 test-storage-mock:
   <<: *test_setup
   stage: test-static

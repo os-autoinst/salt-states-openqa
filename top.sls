@@ -35,6 +35,7 @@ base:
   'G@roles:suse_metrics':
     - monitoring.maintenance_queue
     - monitoring.submissions_queue
+    - monitoring.binary_coverage
   'G@roles:worker':
     - openqa.repos
     - openqa.worker
