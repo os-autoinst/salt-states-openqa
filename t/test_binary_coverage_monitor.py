@@ -207,6 +207,7 @@ def test_classify_job_report_ok_and_snapshot():
     aggregate = monitor.parse_aggregate_html(load("aggregate_6190943.html"))
     classified = monitor.classify_job(job, details, aggregate, "abc123")
     assert classified["report_ok"] == 1
+    assert classified["setup_ok"] == 1
     assert classified["snapshot"] == "20260828"
     assert classified["modules_failed"] == 10
     assert "ping" in classified["failed_set"]
@@ -217,6 +218,39 @@ def test_classify_job_without_report():
     job = good_job(6237424)
     job["result"] = "incomplete"
     classified = monitor.classify_job(job, {"job": {"testresults": []}}, None)
+    assert classified["report_ok"] == 0
+
+
+def test_classify_job_marks_failed_setup_as_not_ok():
+    job = good_job(6338558)
+    job["result"] = "failed"
+    details = {
+        "job": {
+            "testresults": [
+                {"name": "system_prepare", "result": "passed"},
+                {"name": "coverage_setup", "result": "failed"},
+                {"name": "curl_https", "result": "skipped"},
+            ]
+        }
+    }
+    classified = monitor.classify_job(job, details, None)
+    assert classified["setup_ok"] == 0
+    assert classified["report_ok"] == 0
+
+
+def test_classify_job_without_coverage_setup_is_aborted():
+    job = good_job(6338558)
+    job["result"] = "failed"
+    details = {
+        "job": {
+            "testresults": [
+                {"name": "bootloader_start", "result": "passed"},
+                {"name": "system_prepare", "result": "failed"},
+            ]
+        }
+    }
+    classified = monitor.classify_job(job, details, None)
+    assert classified["setup_ok"] == 0
     assert classified["report_ok"] == 0
 
 
@@ -233,9 +267,9 @@ def test_is_eligible_excludes_obsoleted_cloned_running():
 
 
 def test_compute_new_failures():
-    first = {"failed_set": ["a", "b"], "report_ok": 1}
-    second = {"failed_set": ["b", "c"], "report_ok": 1}
-    third = {"failed_set": ["b", "c"], "report_ok": 1}
+    first = {"failed_set": ["a", "b"], "report_ok": 1, "setup_ok": 1}
+    second = {"failed_set": ["b", "c"], "report_ok": 1, "setup_ok": 1}
+    third = {"failed_set": ["b", "c"], "report_ok": 1, "setup_ok": 1}
     jobs = [first, second, third]
     monitor.compute_new_failures(jobs)
     assert first["new_failures"] == []
@@ -247,6 +281,7 @@ def classified(job_id, failed, report_ok=1, epoch=1788045539, git="abc"):
     return {
         "job_id": job_id,
         "report_ok": report_ok,
+        "setup_ok": 1,
         "failed_set": failed,
         "new_failures": [],
         "modules_passed": 1,
@@ -263,6 +298,15 @@ def classified(job_id, failed, report_ok=1, epoch=1788045539, git="abc"):
         },
         "test_git_hash": git,
     }
+
+
+def test_new_failures_ignore_a_run_that_never_started():
+    good = {"failed_set": ["a"], "report_ok": 1, "setup_ok": 1}
+    aborted = {"failed_set": ["coverage_setup"], "report_ok": 0, "setup_ok": 0}
+    next_good = {"failed_set": ["a"], "report_ok": 1, "setup_ok": 1}
+    monitor.compute_new_failures([good, aborted, next_good])
+    assert aborted["new_failures"] == []
+    assert next_good["new_failures"] == []
 
 
 def test_status_ok():
@@ -363,6 +407,88 @@ def test_end_to_end_new_failure_then_recovery(tmp_path):
     assert status_line(lines)["status"] == monitor.STATUS_OK
 
 
+def aborted_details():
+    return {
+        "job": {
+            "testresults": [
+                {"name": "system_prepare", "result": "passed"},
+                {"name": "coverage_setup", "result": "failed"},
+                {"name": "curl_https", "result": "skipped"},
+            ]
+        }
+    }
+
+
+def test_aborted_run_has_no_coverage_failures(tmp_path):
+    good = good_job(6190943, "2026-08-29T23:18:59")
+    aborted = good_job(6338558, "2026-08-30T10:00:00")
+    aborted["result"] = "failed"
+
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [good, aborted]})
+    fetch.add_job(
+        good,
+        load_json("details_6190943.json"),
+        {"TEST_GIT_HASH": "a" * 40},
+        load("aggregate_6190943.html"),
+    )
+    fetch.add_job(aborted, aborted_details(), {"TEST_GIT_HASH": "b" * 40})
+
+    now = monitor.parse_openqa_time("2026-08-30T11:00:00")
+    lines = collect(make_config(tmp_path), fetch, now)
+
+    runs = [x for x in lines if x.startswith("binary_coverage,")]
+    assert len(runs) == 2
+    good_line = [x for x in runs if "job_id=6190943i" in x][0]
+    aborted_line = [x for x in runs if "job_id=6338558i" in x][0]
+    assert "report_ok=1i" in good_line and "setup_ok=1i" in good_line
+    assert "report_ok=0i" in aborted_line and "setup_ok=0i" in aborted_line
+    assert "new_failures=0i" in aborted_line
+    assert 'new_failure_names=""' in aborted_line
+
+    status = status_line(lines)
+    assert status["last_job_id"] == 6338558
+    assert status["last_job_result"] == "failed"
+    assert status["status"] == monitor.STATUS_NO_REPORT
+    assert status["new_failure_names"] == ""
+
+
+def test_aborted_run_between_good_runs_keeps_the_baseline(tmp_path):
+    first = good_job(6190943, "2026-08-29T23:18:59")
+    aborted = good_job(6338558, "2026-08-30T10:00:00")
+    aborted["result"] = "failed"
+    last = good_job(6200001, "2026-08-31T10:00:00")
+    last_details = load_json("details_6190943.json")
+    last_details["job"]["testresults"].append(
+        {"name": "synthetic_extra", "result": "failed"}
+    )
+
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [first, aborted, last]})
+    fetch.add_job(
+        first,
+        load_json("details_6190943.json"),
+        {"TEST_GIT_HASH": "a" * 40},
+        load("aggregate_6190943.html"),
+    )
+    fetch.add_job(aborted, aborted_details(), {"TEST_GIT_HASH": "b" * 40})
+    fetch.add_job(
+        last,
+        last_details,
+        {"TEST_GIT_HASH": "c" * 40},
+        load("aggregate_6190943.html"),
+    )
+
+    now = monitor.parse_openqa_time("2026-08-31T11:00:00")
+    lines = collect(make_config(tmp_path), fetch, now)
+    runs = [x for x in lines if x.startswith("binary_coverage,")]
+    aborted_line = [x for x in runs if "job_id=6338558i" in x][0]
+    last_line = [x for x in runs if "job_id=6200001i" in x][0]
+    assert "new_failures=0i" in aborted_line
+    assert "new_failures=1i" in last_line
+    assert 'new_failure_names="synthetic_extra"' in last_line
+
+
 def test_end_to_end_stale(tmp_path):
     fetch = Fetcher()
     fetch.add(
@@ -457,6 +583,54 @@ def test_cache_avoids_refetching_finished_jobs(tmp_path):
     assert not [c for c in fetch.calls if "coverage_report-aggregate" in c]
 
 
+def test_old_good_cache_entry_is_upgraded_without_refetch(tmp_path):
+    job = good_job(6190943)
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [job]})
+    fetch.add_job(
+        job,
+        load_json("details_6190943.json"),
+        {"TEST_GIT_HASH": "a" * 40},
+        load("aggregate_6190943.html"),
+    )
+    cfg = make_config(tmp_path)
+    now = monitor.parse_openqa_time("2026-08-29T23:18:59") + 3600
+    collect(cfg, fetch, now)
+
+    path = monitor.cache_path(str(tmp_path), "o3", 6190943)
+    entry = json.loads(open(path).read())
+    entry.pop("version")
+    entry["classified"].pop("setup_ok")
+    monitor.store_cached(path, entry)
+
+    fetch.calls = []
+    collect(cfg, fetch, now)
+    assert not [c for c in fetch.calls if "/details" in c]
+    upgraded = json.loads(open(path).read())
+    assert upgraded["version"] == monitor.CACHE_VERSION
+    assert upgraded["classified"]["setup_ok"] == 1
+
+
+def test_old_entry_without_report_is_refetched(tmp_path):
+    job = good_job(6190943)
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [job]})
+    fetch.add_job(
+        job,
+        load_json("details_6190943.json"),
+        {"TEST_GIT_HASH": "a" * 40},
+        load("aggregate_6190943.html"),
+    )
+    cfg = make_config(tmp_path)
+    now = monitor.parse_openqa_time("2026-08-29T23:18:59") + 3600
+    monitor.store_cached(
+        monitor.cache_path(str(tmp_path), "o3", 6190943),
+        {"job": {"id": 6190943}, "classified": {"report_ok": 0}},
+    )
+    collect(cfg, fetch, now)
+    assert [c for c in fetch.calls if "/details" in c]
+
+
 def test_challenged_aggregate_is_retried_not_cached(tmp_path, capsys):
     job = good_job(6190943)
     details = load_json("details_6190943.json")
@@ -501,9 +675,9 @@ def test_http_get_sends_allowed_headers(monkeypatch):
 
 
 def test_new_failures_ignore_a_run_without_report():
-    good = {"failed_set": ["a"], "report_ok": 1}
-    timed_out = {"failed_set": ["x"], "report_ok": 0}
-    next_good = {"failed_set": ["a"], "report_ok": 1}
+    good = {"failed_set": ["a"], "report_ok": 1, "setup_ok": 1}
+    timed_out = {"failed_set": ["x"], "report_ok": 0, "setup_ok": 1}
+    next_good = {"failed_set": ["a"], "report_ok": 1, "setup_ok": 1}
     monitor.compute_new_failures([good, timed_out, next_good])
     assert timed_out["new_failures"] == ["x"]
     assert next_good["new_failures"] == []

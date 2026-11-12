@@ -30,6 +30,7 @@ INELIGIBLE_RESULTS = (
 RUNNING_STATES = ("scheduled", "assigned", "setup", "running", "uploading")
 OK_MODULE_RESULTS = ("passed", "softfailed")
 JOBS_LIMIT = 500
+CACHE_VERSION = 2
 
 DEFAULTS = {
     "instances": [{"name": "o3", "url": "https://openqa.opensuse.org"}],
@@ -229,10 +230,8 @@ def classify_job(job, details, aggregate, test_git_hash=None):
     failed_set = sorted(name for name, res in results.items() if res == "failed")
     modules_passed = sum(1 for res in results.values() if res in OK_MODULE_RESULTS)
     modules_failed = sum(1 for res in results.values() if res == "failed")
-    modules_ok = (
-        results.get("coverage_setup") in OK_MODULE_RESULTS
-        and results.get("coverage_report") in OK_MODULE_RESULTS
-    )
+    setup_ok = results.get("coverage_setup") in OK_MODULE_RESULTS
+    modules_ok = setup_ok and results.get("coverage_report") in OK_MODULE_RESULTS
     report_ok = (
         modules_ok and aggregate is not None and aggregate.get("total_functions", 0) > 0
     )
@@ -250,6 +249,7 @@ def classify_job(job, details, aggregate, test_git_hash=None):
     return {
         "job_id": int(job.get("id", 0)),
         "report_ok": 1 if report_ok else 0,
+        "setup_ok": 1 if setup_ok else 0,
         "aggregate_missing": bool(modules_ok and not report_ok),
         "failed_set": failed_set,
         "modules_passed": modules_passed,
@@ -272,14 +272,24 @@ def is_eligible(job):
     )
 
 
+def is_aborted(job):
+    """A run whose coverage environment was never set up."""
+    return job.get("setup_ok") != 1
+
+
 def compute_new_failures(classified_jobs):
     """Annotate each job with failures not present in the last good run.
 
-    A run without a report (timeout, incomplete) stops early, so its failed
-    modules are not a reliable baseline.
+    A run that never set up coverage did not exercise the test modules, so
+    its failures are not coverage failures. A run that started but stopped
+    before producing a report (timeout) still ran tests, so its failures are
+    kept.
     """
     baseline = None
     for job in classified_jobs:
+        if is_aborted(job):
+            job["new_failures"] = []
+            continue
         if baseline is None:
             new = []
         else:
@@ -434,6 +444,21 @@ def store_cached(path, entry):
     os.rename(tmp, path)
 
 
+def upgrade_cache_entry(entry):
+    """Return an entry usable by this version, or None to refetch it."""
+    if entry.get("version") == CACHE_VERSION:
+        return entry
+    classified = entry.get("classified") or {}
+    if classified.get("report_ok") == 1:
+        # A report implies that coverage_setup passed, so the good entry does
+        # not need a refetch to learn the new field.
+        classified["setup_ok"] = 1
+        entry["classified"] = classified
+        entry["version"] = CACHE_VERSION
+        return entry
+    return None
+
+
 def prune_cache(cache_dir, instance_name, threshold):
     prefix = instance_name + "-"
     for entry in os.listdir(cache_dir):
@@ -520,6 +545,10 @@ def collect_instance(instance, cfg, now, fetch, write):
             if epoch < threshold:
                 continue
             entry = cached(int(job["id"]))
+            if entry is not None and entry.get("version") != CACHE_VERSION:
+                entry = upgrade_cache_entry(entry)
+                if entry is not None:
+                    save(int(job["id"]), entry)
             classified = (
                 classify_with_sources(instance, job, fetch) if entry is None else None
             )
@@ -529,6 +558,7 @@ def collect_instance(instance, cfg, now, fetch, write):
             continue
         if entry is None:
             entry = {
+                "version": CACHE_VERSION,
                 "job": {
                     "id": int(job["id"]),
                     "test": job.get("test"),
@@ -565,6 +595,7 @@ def collect_instance(instance, cfg, now, fetch, write):
         fields = {
             "job_id": job["job_id"],
             "report_ok": job["report_ok"],
+            "setup_ok": job.get("setup_ok", 0),
             "images": (job.get("aggregate") or {}).get("images", 0),
             "modules_passed": job["modules_passed"],
             "modules_failed": job["modules_failed"],
