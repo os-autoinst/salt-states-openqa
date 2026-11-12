@@ -182,15 +182,111 @@
    },
    "fieldConfig": {
     "defaults": {
-     "noValue": "NO DATA",
-     "links": [
-      {
-       "title": "openQA job",
-       "url": "https://openqa.opensuse.org/tests/${__value.raw}",
-       "targetBlank": true
-      }
-     ]
-    }
+     "noValue": "NO DATA"
+    },
+    "overrides": [
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "job"
+      },
+      "properties": [
+       {
+        "id": "links",
+        "value": [
+         {
+          "title": "openQA job",
+          "url": "https://openqa.opensuse.org/tests/${__value.raw}",
+          "targetBlank": true
+         }
+        ]
+       },
+       {
+        "id": "decimals",
+        "value": 0
+       }
+      ]
+     },
+     {
+      "matcher": {
+       "id": "byName",
+       "options": "result"
+      },
+      "properties": [
+       {
+        "id": "mappings",
+        "value": [
+         {
+          "type": "value",
+          "options": {
+           "passed": {
+            "index": 0,
+            "text": "passed",
+            "color": "green"
+           },
+           "softfailed": {
+            "index": 1,
+            "text": "softfailed",
+            "color": "green"
+           },
+           "failed": {
+            "index": 2,
+            "text": "failed",
+            "color": "red"
+           },
+           "incomplete": {
+            "index": 3,
+            "text": "incomplete",
+            "color": "orange"
+           },
+           "timeout_exceeded": {
+            "index": 4,
+            "text": "timeout_exceeded",
+            "color": "red"
+           }
+          }
+         },
+         {
+          "type": "special",
+          "options": {
+           "match": "null",
+           "result": {
+            "index": 0,
+            "text": "NO DATA",
+            "color": "red"
+           }
+          }
+         }
+        ]
+       },
+       {
+        "id": "custom.cellOptions",
+        "value": {
+         "type": "color-background",
+         "mode": "basic"
+        }
+       },
+       {
+        "id": "color",
+        "value": {
+         "mode": "thresholds"
+        }
+       },
+       {
+        "id": "thresholds",
+        "value": {
+         "mode": "absolute",
+         "steps": [
+          {
+           "color": "orange",
+           "value": null
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
    },
    "gridPos": {
     "h": 6,
@@ -200,21 +296,16 @@
    },
    "id": 5,
    "options": {
-    "colorMode": "none",
-    "graphMode": "none",
-    "justifyMode": "center",
-    "orientation": "auto",
-    "reduceOptions": {
-     "calcs": [
-      "lastNotNull"
-     ],
+    "cellHeight": "sm",
+    "footer": {
+     "countRows": false,
      "fields": "",
-     "values": false
+     "reducer": [
+      "sum"
+     ],
+     "show": false
     },
-    "showPercentChange": false,
-    "text": {},
-    "textMode": "value",
-    "wideLayout": true
+    "showHeader": true
    },
    "targets": [
     {
@@ -222,14 +313,24 @@
       "type": "influxdb",
       "uid": "000000001"
      },
-     "query": "SELECT last(\"last_job_id\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3' AND time > now() - 3h",
+     "query": "SELECT last(\"last_job_id\") AS \"job\", last(\"last_job_result\") AS \"result\" FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3' AND time > now() - 3h",
      "rawQuery": true,
      "refId": "A",
-     "resultFormat": "time_series"
+     "resultFormat": "table"
     }
    ],
    "title": "Last job",
-   "type": "stat"
+   "transformations": [
+    {
+     "id": "organize",
+     "options": {
+      "excludeByName": {
+       "Time": true
+      }
+     }
+    }
+   ],
+   "type": "table"
   },
   {
    "datasource": {
