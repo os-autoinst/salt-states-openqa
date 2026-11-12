@@ -519,6 +519,48 @@ Feel free to add issues in the project or send pull requests.
 If this is too much hassle for you feel free to provide incomplete pull
 requests for consideration or create an issue with a code change proposal.
 
+### Merge and review policy
+
+This repository has long relied on trust-based conventions: maintainers can
+merge, and changes are expected to get a review when reasonably possible. We
+propose to make that expectation explicit so that every change gets a real
+opportunity for review without blocking work when reviewer capacity is limited.
+Until the team confirms it, treat this section as a proposal.
+
+We agree on a "lazy consensus with a review window":
+
+1. **Review window.** When opening a merge request, the author tags at least
+   two potential reviewers and waits for a review window before merging.
+   Proposed window: **2 working days** (weekends and public holidays do not
+   count). <!-- adjustable: window length -->
+2. **Silence means consent.** If nobody comments, approves, or asks to hold
+   the MR within the window, the author may merge it.
+3. **Any comment or a hold stops the merge.** The MR stays unmerged until the
+   concern is resolved or the reviewer withdraws it.
+4. **Active review always wins.** If a reviewer starts a review within the
+   window, the author waits for that review to finish.
+5. **No silent blocking.** Once the author has addressed a reviewer's
+   comments, the reviewer responds within **24 hours** (proposed; adjustable).
+   If there is no response in that time, the author may treat the review as
+   approved and merge. <!-- adjustable: response deadline -->
+6. **Urgent infrastructure fixes** (outages, broken deployments) may be merged
+   immediately by repository maintainers, followed by a post-merge review. The
+   author notes in the MR why it was urgent.
+7. **Risky changes are not eligible for any timeout** and require explicit
+   approval from at least one reviewer. For now, risky changes include anything
+   that can affect production deployment or many hosts at once.
+   <!-- adjustable: refine this list with the team -->
+8. **Trivial changes** (typos, comments, documentation-only) may be merged
+   without waiting, at the author's discretion.
+
+#### Rationale
+
+Reviewer capacity is limited, so this policy guarantees an opportunity to
+review rather than a guaranteed review, and it prevents an MR from being blocked
+silently after review has started. It makes the existing implicit convention
+explicit and visible to new contributors, keeps the trust-based culture with
+clear exceptions, and does not require changes to GitLab roles or permissions.
+
 ## License
 
 This project is licensed under the MIT license, see LICENSE file for details.
