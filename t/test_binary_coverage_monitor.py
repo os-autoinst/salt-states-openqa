@@ -220,6 +220,23 @@ def test_classify_job_without_report():
     assert classified["report_ok"] == 0
 
 
+def test_classify_job_marks_failed_setup_as_not_started():
+    job = good_job(6338558)
+    job["result"] = "failed"
+    details = {
+        "job": {
+            "testresults": [
+                {"name": "system_prepare", "result": "passed"},
+                {"name": "coverage_setup", "result": "failed"},
+                {"name": "curl_https", "result": "skipped"},
+            ]
+        }
+    }
+    classified = monitor.classify_job(job, details, None)
+    assert classified["started"] == 0
+    assert classified["report_ok"] == 0
+
+
 def test_is_eligible_excludes_obsoleted_cloned_running():
     assert monitor.is_eligible(good_job())
     for key, value in (
@@ -263,6 +280,15 @@ def classified(job_id, failed, report_ok=1, epoch=1788045539, git="abc"):
         },
         "test_git_hash": git,
     }
+
+
+def test_new_failures_ignore_a_run_that_never_started():
+    good = {"failed_set": ["a"], "report_ok": 1, "started": 1}
+    aborted = {"failed_set": ["coverage_setup"], "report_ok": 0, "started": 0}
+    next_good = {"failed_set": ["a"], "report_ok": 1, "started": 1}
+    monitor.compute_new_failures([good, aborted, next_good])
+    assert aborted["new_failures"] == []
+    assert next_good["new_failures"] == []
 
 
 def test_status_ok():
@@ -363,6 +389,44 @@ def test_end_to_end_new_failure_then_recovery(tmp_path):
     assert status_line(lines)["status"] == monitor.STATUS_OK
 
 
+def test_aborted_run_is_not_counted_in_coverage_stats(tmp_path):
+    good = good_job(6190943, "2026-08-29T23:18:59")
+    aborted = good_job(6338558, "2026-08-30T10:00:00")
+    aborted["result"] = "failed"
+    aborted_details = {
+        "job": {
+            "testresults": [
+                {"name": "system_prepare", "result": "passed"},
+                {"name": "coverage_setup", "result": "failed"},
+                {"name": "curl_https", "result": "skipped"},
+            ]
+        }
+    }
+
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [good, aborted]})
+    fetch.add_job(
+        good,
+        load_json("details_6190943.json"),
+        {"TEST_GIT_HASH": "a" * 40},
+        load("aggregate_6190943.html"),
+    )
+    fetch.add_job(aborted, aborted_details, {"TEST_GIT_HASH": "b" * 40})
+
+    now = monitor.parse_openqa_time("2026-08-30T11:00:00")
+    lines = collect(make_config(tmp_path), fetch, now)
+
+    runs = [x for x in lines if x.startswith("binary_coverage,")]
+    assert len(runs) == 1
+    assert "job_id=6190943i" in runs[0]
+
+    status = status_line(lines)
+    assert status["last_job_id"] == 6338558
+    assert status["last_job_result"] == "failed"
+    assert status["status"] == monitor.STATUS_NO_REPORT
+    assert status["new_failure_names"] == ""
+
+
 def test_end_to_end_stale(tmp_path):
     fetch = Fetcher()
     fetch.add(
@@ -455,6 +519,26 @@ def test_cache_avoids_refetching_finished_jobs(tmp_path):
     collect(cfg, fetch, now)
     assert not [c for c in fetch.calls if "/details" in c]
     assert not [c for c in fetch.calls if "coverage_report-aggregate" in c]
+
+
+def test_cache_entry_without_started_flag_is_refetched(tmp_path):
+    job = good_job(6190943)
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [job]})
+    fetch.add_job(
+        job,
+        load_json("details_6190943.json"),
+        {"TEST_GIT_HASH": "a" * 40},
+        load("aggregate_6190943.html"),
+    )
+    cfg = make_config(tmp_path)
+    now = monitor.parse_openqa_time("2026-08-29T23:18:59") + 3600
+    monitor.store_cached(
+        monitor.cache_path(str(tmp_path), "o3", 6190943),
+        {"job": {"id": 6190943}, "classified": {"report_ok": 1}},
+    )
+    collect(cfg, fetch, now)
+    assert [c for c in fetch.calls if "/details" in c]
 
 
 def test_challenged_aggregate_is_retried_not_cached(tmp_path, capsys):
