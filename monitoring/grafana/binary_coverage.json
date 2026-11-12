@@ -192,18 +192,23 @@
       },
       "properties": [
        {
-        "id": "links",
-        "value": [
-         {
-          "title": "openQA job",
-          "url": "https://openqa.opensuse.org/tests/${__value.raw}",
-          "targetBlank": true
-         }
-        ]
-       },
-       {
         "id": "decimals",
         "value": 0
+       },
+       {
+        "id": "mappings",
+        "value": [
+         {
+          "type": "value",
+          "options": {
+           "0": {
+            "index": 0,
+            "text": "none",
+            "color": "orange"
+           }
+          }
+         }
+        ]
        }
       ]
      },
@@ -242,6 +247,31 @@
            "timeout_exceeded": {
             "index": 4,
             "text": "timeout_exceeded",
+            "color": "red"
+           },
+           "parallel_failed": {
+            "index": 5,
+            "text": "parallel_failed",
+            "color": "red"
+           },
+           "user_cancelled": {
+            "index": 6,
+            "text": "user_cancelled",
+            "color": "orange"
+           },
+           "obsoleted": {
+            "index": 7,
+            "text": "obsoleted",
+            "color": "orange"
+           },
+           "skipped": {
+            "index": 8,
+            "text": "skipped",
+            "color": "orange"
+           },
+           "": {
+            "index": 9,
+            "text": "NO DATA",
             "color": "red"
            }
           }
@@ -508,7 +538,7 @@
       "type": "influxdb",
       "uid": "000000001"
      },
-     "query": "SELECT \"total_functions\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "query": "SELECT \"total_functions\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND \"report_ok\" = 1 AND $timeFilter",
      "rawQuery": true,
      "refId": "A",
      "resultFormat": "time_series"
@@ -518,7 +548,7 @@
       "type": "influxdb",
       "uid": "000000001"
      },
-     "query": "SELECT \"total_executed\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "query": "SELECT \"total_executed\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND \"report_ok\" = 1 AND $timeFilter",
      "rawQuery": true,
      "refId": "B",
      "resultFormat": "time_series"
@@ -564,7 +594,7 @@
       "type": "influxdb",
       "uid": "000000001"
      },
-     "query": "SELECT \"images\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "query": "SELECT \"images\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND \"report_ok\" = 1 AND $timeFilter",
      "rawQuery": true,
      "refId": "A",
      "resultFormat": "time_series"
@@ -611,7 +641,7 @@
       "type": "influxdb",
       "uid": "000000001"
      },
-     "query": "SELECT \"modules_failed\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "query": "SELECT \"modules_failed\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND \"report_ok\" = 1 AND $timeFilter",
      "rawQuery": true,
      "refId": "A",
      "resultFormat": "time_series"
@@ -621,7 +651,7 @@
       "type": "influxdb",
       "uid": "000000001"
      },
-     "query": "SELECT \"new_failures\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "query": "SELECT \"new_failures\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND \"report_ok\" = 1 AND $timeFilter",
      "rawQuery": true,
      "refId": "B",
      "resultFormat": "time_series"
@@ -711,7 +741,7 @@
       "type": "influxdb",
       "uid": "000000001"
      },
-     "query": "SELECT \"job_id\",\"snapshot\",\"coverage_pct\",\"total_functions\",\"total_executed\",\"images\",\"modules_failed\",\"new_failure_names\",\"test_git_hash\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND $timeFilter",
+     "query": "SELECT \"job_id\",\"snapshot\",\"coverage_pct\",\"total_functions\",\"total_executed\",\"images\",\"modules_failed\",\"new_failure_names\",\"test_git_hash\" FROM \"binary_coverage\" WHERE \"instance\" = 'o3' AND \"report_ok\" = 1 AND $timeFilter",
      "rawQuery": true,
      "refId": "A",
      "resultFormat": "table"
