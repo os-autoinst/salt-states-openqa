@@ -46,110 +46,6 @@
       {
        "type": "value",
        "options": {
-        "0": {
-         "index": 0,
-         "text": "OK",
-         "color": "green"
-        },
-        "1": {
-         "index": 1,
-         "text": "NEW FAILING MODULES",
-         "color": "red"
-        },
-        "2": {
-         "index": 2,
-         "text": "NO COVERAGE REPORT",
-         "color": "red"
-        },
-        "3": {
-         "index": 3,
-         "text": "STALE",
-         "color": "red"
-        },
-        "4": {
-         "index": 4,
-         "text": "COLLECTOR ERROR",
-         "color": "red"
-        }
-       }
-      },
-      {
-       "type": "special",
-       "options": {
-        "match": "null",
-        "result": {
-         "index": 0,
-         "text": "NO DATA",
-         "color": "red"
-        }
-       }
-      }
-     ],
-     "noValue": "NO DATA",
-     "thresholds": {
-      "mode": "absolute",
-      "steps": [
-       {
-        "color": "red",
-        "value": null
-       }
-      ]
-     }
-    }
-   },
-   "gridPos": {
-    "h": 6,
-    "w": 7,
-    "x": 0,
-    "y": 1
-   },
-   "id": 2,
-   "options": {
-    "colorMode": "background",
-    "graphMode": "none",
-    "justifyMode": "center",
-    "orientation": "auto",
-    "reduceOptions": {
-     "calcs": [
-      "lastNotNull"
-     ],
-     "fields": "",
-     "values": false
-    },
-    "showPercentChange": false,
-    "text": {},
-    "textMode": "auto",
-    "wideLayout": true
-   },
-   "targets": [
-    {
-     "datasource": {
-      "type": "influxdb",
-      "uid": "000000001"
-     },
-     "query": "SELECT last(\"status\") FROM \"binary_coverage_status\" WHERE \"instance\" = 'o3' AND time > now() - 3h",
-     "rawQuery": true,
-     "refId": "A",
-     "resultFormat": "time_series"
-    }
-   ],
-   "title": "Measurement status",
-   "type": "stat"
-  },
-  {
-   "datasource": {
-    "type": "influxdb",
-    "uid": "000000001"
-   },
-   "fieldConfig": {
-    "defaults": {
-     "color": {
-      "mode": "thresholds"
-     },
-     "mappings": [
-      {
-       "type": "value",
-       "options": {
         "": {
          "index": 0,
          "text": "none",
@@ -176,8 +72,8 @@
    },
    "gridPos": {
     "h": 6,
-    "w": 6,
-    "x": 7,
+    "w": 9,
+    "x": 0,
     "y": 1
    },
    "id": 3,
@@ -242,8 +138,8 @@
    },
    "gridPos": {
     "h": 6,
-    "w": 4,
-    "x": 13,
+    "w": 5,
+    "x": 9,
     "y": 1
    },
    "id": 4,
@@ -286,19 +182,7 @@
    },
    "fieldConfig": {
     "defaults": {
-     "color": {
-      "mode": "thresholds"
-     },
      "noValue": "NO DATA",
-     "thresholds": {
-      "mode": "absolute",
-      "steps": [
-       {
-        "color": "red",
-        "value": null
-       }
-      ]
-     },
      "links": [
       {
        "title": "openQA job",
@@ -310,13 +194,13 @@
    },
    "gridPos": {
     "h": 6,
-    "w": 3,
-    "x": 17,
+    "w": 5,
+    "x": 14,
     "y": 1
    },
    "id": 5,
    "options": {
-    "colorMode": "value",
+    "colorMode": "none",
     "graphMode": "none",
     "justifyMode": "center",
     "orientation": "auto",
@@ -390,8 +274,8 @@
    },
    "gridPos": {
     "h": 6,
-    "w": 4,
-    "x": 20,
+    "w": 5,
+    "x": 19,
     "y": 1
    },
    "id": 6,
