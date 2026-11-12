@@ -12,7 +12,6 @@ This repository has long relied on trust-based conventions: maintainers can
 merge, and changes are expected to get a review when reasonably possible. We
 propose to make that expectation explicit so that every change gets a real
 opportunity for review without blocking work when reviewer capacity is limited.
-Until the team confirms it, treat this section as a proposal.
 
 We agree on a "lazy consensus with a review window":
 
