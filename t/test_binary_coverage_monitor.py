@@ -508,6 +508,68 @@ def test_end_to_end_collector_error(tmp_path):
     assert status_line(lines)["status"] == monitor.STATUS_COLLECTOR_ERROR
 
 
+def test_backfill_job_is_included_outside_the_group(tmp_path):
+    group_job = good_job(6190943, "2026-08-29T23:18:59")
+    backfill_job = good_job(6342473, "2026-08-30T10:00:00")
+    details = load_json("details_6190943.json")
+    aggregate = load("aggregate_6190943.html")
+
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [group_job]})
+    fetch.add_job(group_job, details, {"TEST_GIT_HASH": "a" * 40}, aggregate)
+    fetch.add_job(backfill_job, details, {"TEST_GIT_HASH": "b" * 40}, aggregate)
+
+    cfg = make_config(tmp_path, backfill_job_ids={"o3": [6342473]})
+    now = monitor.parse_openqa_time("2026-08-30T11:00:00")
+    lines = collect(cfg, fetch, now)
+
+    runs = [x for x in lines if x.startswith("binary_coverage,")]
+    backfill = [x for x in runs if "job_id=6342473i" in x]
+    assert len(backfill) == 1
+    assert "report_ok=1i" in backfill[0]
+    images = [x for x in lines if x.startswith("binary_coverage_image")]
+    assert images and all("job_id=6342473i" in x for x in images)
+
+
+def test_missing_backfill_job_does_not_break_the_run(tmp_path, capsys):
+    group_job = good_job(6190943, "2026-08-29T23:18:59")
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [group_job]})
+    fetch.add_job(
+        group_job,
+        load_json("details_6190943.json"),
+        {"TEST_GIT_HASH": "a" * 40},
+        load("aggregate_6190943.html"),
+    )
+
+    cfg = make_config(tmp_path, backfill_job_ids={"o3": [9999999]})
+    now = monitor.parse_openqa_time("2026-08-30T11:00:00")
+    lines = collect(cfg, fetch, now)
+
+    assert status_line(lines)["last_ok_job_id"] == 6190943
+    assert "cannot fetch backfill job 9999999" in capsys.readouterr().err
+
+
+def test_backfill_job_already_in_group_is_not_duplicated(tmp_path):
+    job = good_job(6190943, "2026-08-29T23:18:59")
+    fetch = Fetcher()
+    fetch.add(JOBS_PATH, {"jobs": [job]})
+    fetch.add_job(
+        job,
+        load_json("details_6190943.json"),
+        {"TEST_GIT_HASH": "a" * 40},
+        load("aggregate_6190943.html"),
+    )
+
+    cfg = make_config(tmp_path, backfill_job_ids={"o3": [6190943]})
+    now = monitor.parse_openqa_time("2026-08-30T11:00:00")
+    lines = collect(cfg, fetch, now)
+
+    runs = [x for x in lines if x.startswith("binary_coverage,")]
+    assert len(runs) == 1
+    assert "job_id=6190943i" in runs[0]
+
+
 def test_one_point_per_run_and_images_for_the_latest(tmp_path):
     aggregate = load("aggregate_6190943.html")
     jobs = []
