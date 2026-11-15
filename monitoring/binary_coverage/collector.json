@@ -4,6 +4,7 @@
   'distri': 'opensuse',
   'version': 'Tumbleweed',
   'group_id': 145,
+  'backfill_job_ids': {},
   'lookback_days': 45,
   'stale_hours': 36,
   'cache_dir': '/var/cache/binary_coverage',

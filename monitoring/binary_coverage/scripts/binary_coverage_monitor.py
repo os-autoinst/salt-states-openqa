@@ -38,6 +38,7 @@ DEFAULTS = {
     "distri": "opensuse",
     "version": "Tumbleweed",
     "group_id": 145,
+    "backfill_job_ids": {},
     "lookback_days": 45,
     "stale_hours": 36,
     "cache_dir": "/var/cache/binary_coverage",
@@ -400,6 +401,13 @@ def fetch_jobs(instance, cfg, fetch):
     return jobs
 
 
+def fetch_job(instance, job_id, fetch):
+    data = json.loads(
+        fetch(_job_url(instance, "/api/v1/jobs/%d" % int(job_id))).decode("utf-8")
+    )
+    return data.get("job", data)
+
+
 def fetch_details(instance, job_id, fetch):
     data = json.loads(
         fetch(_job_url(instance, "/api/v1/jobs/%d/details" % job_id)).decode("utf-8")
@@ -522,6 +530,18 @@ def collect_instance(instance, cfg, now, fetch, write):
         return True
 
     jobs = fetch_jobs(instance, cfg, fetch)
+    known_ids = {int(job["id"]) for job in jobs}
+    for job_id in cfg.get("backfill_job_ids", {}).get(name, []):
+        try:
+            job_id = int(job_id)
+            if job_id in known_ids:
+                continue
+            jobs.append(fetch_job(instance, job_id, fetch))
+            known_ids.add(job_id)
+        except Exception as exc:
+            sys.stderr.write(
+                "%s: cannot fetch backfill job %s: %s\n" % (name, job_id, exc)
+            )
     threshold = now - cfg.get("lookback_days", 45) * 86400
     if cache_dir:
         prune_cache(cache_dir, name, threshold)
